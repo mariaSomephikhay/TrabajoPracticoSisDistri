@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+package managerservice;
+option  java_multiple_files=true;
+option java_package="com.grupoK.grpc";
+option  java_outer_classname="ManagerServiceProto";
+
+
+//PARA CUANDO ES NULO
+message Empty{}
+
+message Usuario {
+    int32 id = 1;
+    string username = 2;
+    string password = 3;
+    string email = 4;
+    string nombre = 5;
+    string apellido = 6;
+    string telefono = 7;
+    bool activo = 8;
+    Rol rol = 9;
+}
+
+message Rol {
+    int32 id = 1;
+    string descripcion = 2;
+}
+
+message UsuarioList {
+    repeated Usuario usuarios = 1;
+}
+
+service ManagerService{
+
+  rpc getAllUsers (Empty) returns (UsuarioList) {};
+  rpc insertOrUpdateUser (Usuario) returns (Usuario) {};
+  //AGREGAR ACA TODOS LOS SERVICIOS
+  
+}
