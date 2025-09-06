@@ -48,5 +48,7 @@ public class UsuarioService implements IUsuarioService {
 			preUpdated.setEmail(updated.getEmail());
 		if(updated.getActivo() != null)
 			preUpdated.setActivo(updated.getActivo());
+		if(updated.getRol() != null)
+			preUpdated.setRol(updated.getRol());
 	}
 }
