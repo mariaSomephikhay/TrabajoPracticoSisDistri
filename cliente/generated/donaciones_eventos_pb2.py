@@ -24,7 +24,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x18\x64onaciones_eventos.proto\x12\x0emanagerservice\"\x07\n\x05\x45mpty\"\xae\x01\n\x07Usuario\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x10\n\x08username\x18\x02 \x01(\t\x12\x10\n\x08password\x18\x03 \x01(\t\x12\r\n\x05\x65mail\x18\x04 \x01(\t\x12\x0e\n\x06nombre\x18\x05 \x01(\t\x12\x10\n\x08\x61pellido\x18\x06 \x01(\t\x12\x10\n\x08telefono\x18\x07 \x01(\t\x12\x0e\n\x06\x61\x63tivo\x18\x08 \x01(\x08\x12 \n\x03rol\x18\t \x01(\x0b\x32\x13.managerservice.Rol\"&\n\x03Rol\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x13\n\x0b\x64\x65scripcion\x18\x02 \x01(\t\"8\n\x0bUsuarioList\x12)\n\x08usuarios\x18\x01 \x03(\x0b\x32\x17.managerservice.Usuario2\x9f\x01\n\x0eManagerService\x12\x43\n\x0bgetAllUsers\x12\x15.managerservice.Empty\x1a\x1b.managerservice.UsuarioList\"\x00\x12H\n\x12insertOrUpdateUser\x12\x17.managerservice.Usuario\x1a\x17.managerservice.Usuario\"\x00\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x18\x64onaciones_eventos.proto\x12\x0emanagerservice\"\x07\n\x05\x45mpty\"\x14\n\x06UserId\x12\n\n\x02id\x18\x01 \x01(\x05\"\xae\x01\n\x07Usuario\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x10\n\x08username\x18\x02 \x01(\t\x12\x10\n\x08password\x18\x03 \x01(\t\x12\r\n\x05\x65mail\x18\x04 \x01(\t\x12\x0e\n\x06nombre\x18\x05 \x01(\t\x12\x10\n\x08\x61pellido\x18\x06 \x01(\t\x12\x10\n\x08telefono\x18\x07 \x01(\t\x12\x0e\n\x06\x61\x63tivo\x18\x08 \x01(\x08\x12 \n\x03rol\x18\t \x01(\x0b\x32\x13.managerservice.Rol\"&\n\x03Rol\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x13\n\x0b\x64\x65scripcion\x18\x02 \x01(\t\"8\n\x0bUsuarioList\x12)\n\x08usuarios\x18\x01 \x03(\x0b\x32\x17.managerservice.Usuario2\xdd\x01\n\x0eManagerService\x12<\n\x07getUser\x12\x16.managerservice.UserId\x1a\x17.managerservice.Usuario\"\x00\x12\x43\n\x0bgetAllUsers\x12\x15.managerservice.Empty\x1a\x1b.managerservice.UsuarioList\"\x00\x12H\n\x12insertOrUpdateUser\x12\x17.managerservice.Usuario\x1a\x17.managerservice.Usuario\"\x00\x62\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -33,12 +33,14 @@ if not _descriptor._USE_C_DESCRIPTORS:
   DESCRIPTOR._loaded_options = None
   _globals['_EMPTY']._serialized_start=44
   _globals['_EMPTY']._serialized_end=51
-  _globals['_USUARIO']._serialized_start=54
-  _globals['_USUARIO']._serialized_end=228
-  _globals['_ROL']._serialized_start=230
-  _globals['_ROL']._serialized_end=268
-  _globals['_USUARIOLIST']._serialized_start=270
-  _globals['_USUARIOLIST']._serialized_end=326
-  _globals['_MANAGERSERVICE']._serialized_start=329
-  _globals['_MANAGERSERVICE']._serialized_end=488
+  _globals['_USERID']._serialized_start=53
+  _globals['_USERID']._serialized_end=73
+  _globals['_USUARIO']._serialized_start=76
+  _globals['_USUARIO']._serialized_end=250
+  _globals['_ROL']._serialized_start=252
+  _globals['_ROL']._serialized_end=290
+  _globals['_USUARIOLIST']._serialized_start=292
+  _globals['_USUARIOLIST']._serialized_end=348
+  _globals['_MANAGERSERVICE']._serialized_start=351
+  _globals['_MANAGERSERVICE']._serialized_end=572
 # @@protoc_insertion_point(module_scope)

@@ -8,7 +8,7 @@ from routes.userRouter import api as userNS
 def create_app(config_name='development'):
     app = Flask(__name__)
     app.config.from_object(config[config_name])
-    CORS(app)
+    CORS(app, supports_credentials=True, resources={r"*": {"origins": "*"}})
 
     # Crear API con Swagger
     api = Api(
