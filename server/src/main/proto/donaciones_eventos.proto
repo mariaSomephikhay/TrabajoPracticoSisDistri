@@ -9,6 +9,10 @@ option  java_outer_classname="ManagerServiceProto";
 //PARA CUANDO ES NULO
 message Empty{}
 
+message UserId {
+    int32 id = 1;
+}
+
 message Usuario {
     int32 id = 1;
     string username = 2;
@@ -31,7 +35,7 @@ message UsuarioList {
 }
 
 service ManagerService{
-
+  rpc getUser (UserId) returns (Usuario) {};
   rpc getAllUsers (Empty) returns (UsuarioList) {};
   rpc insertOrUpdateUser (Usuario) returns (Usuario) {};
   //AGREGAR ACA TODOS LOS SERVICIOS
