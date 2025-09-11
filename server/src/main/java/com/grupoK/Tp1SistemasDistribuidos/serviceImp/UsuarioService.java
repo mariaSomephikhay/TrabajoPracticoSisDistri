@@ -21,6 +21,8 @@ public class UsuarioService implements IUsuarioService {
 	public List<Usuario> findAll() {
 		return usuarioRepository.findAll();
 	}
+	
+	
 
 	@Override
 	public Usuario saveOrUpdate(Usuario usuario) {		
@@ -46,9 +48,22 @@ public class UsuarioService implements IUsuarioService {
 			preUpdated.setUsername(updated.getUsername());
 		if(!StringUtils.isEmpty(updated.getEmail()))
 			preUpdated.setEmail(updated.getEmail());
+		if(!StringUtils.isEmpty(updated.getTelefono()))
+			preUpdated.setTelefono(updated.getTelefono());
 		if(updated.getActivo() != null)
 			preUpdated.setActivo(updated.getActivo());
 		if(updated.getRol() != null)
 			preUpdated.setRol(updated.getRol());
+	}
+
+
+
+	@Override
+	public Usuario findById(Integer idUser) {
+		Optional<Usuario> user = usuarioRepository.findById(idUser);
+		if(user.isEmpty()) 
+			return null;
+		else
+			return user.get();
 	}
 }

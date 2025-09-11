@@ -2,10 +2,10 @@ package com.grupoK.Tp1SistemasDistribuidos.enums;
 
 public enum TipoRoles {
 	
-    PRESIDENTE("Presidente"),
-    VOCAL("Vocal"),
-    COORDINADOR("Coordinador"),
-    VOLUNTARIO("Voluntario");
+    PRESIDENTE("PRESIDENTE"),
+    VOCAL("VOCAL"),
+    COORDINADOR("COORDINADOR"),
+    VOLUNTARIO("VOLUNTARIO");
 
     private final String description;
 
