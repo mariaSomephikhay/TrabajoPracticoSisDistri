@@ -13,6 +13,9 @@
 
 
 import ApiClient from "../ApiClient";
+import Error from '../model/Error';
+import Login from '../model/Login';
+import Token from '../model/Token';
 import Usuario from '../model/Usuario';
 import UsuarioList from '../model/UsuarioList';
 
@@ -66,7 +69,7 @@ export default class UserApi {
       let formParams = {
       };
 
-      let authNames = [];
+      let authNames = ['Bearer Auth'];
       let contentTypes = [];
       let accepts = ['application/json'];
       let returnType = Usuario;
@@ -102,7 +105,7 @@ export default class UserApi {
       let formParams = {
       };
 
-      let authNames = [];
+      let authNames = ['Bearer Auth'];
       let contentTypes = [];
       let accepts = ['application/json'];
       let returnType = UsuarioList;
@@ -114,24 +117,65 @@ export default class UserApi {
     }
 
     /**
-     * Callback function to receive the result of the postUserList operation.
-     * @callback module:api/UserApi~postUserListCallback
+     * Callback function to receive the result of the postUserLogin operation.
+     * @callback module:api/UserApi~postUserLoginCallback
+     * @param {String} error Error message, if any.
+     * @param {module:model/Token} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Login de usuario y devolución de JWT
+     * @param {module:model/Login} payload 
+     * @param {module:api/UserApi~postUserLoginCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link module:model/Token}
+     */
+    postUserLogin(payload, callback) {
+      let postBody = payload;
+      // verify the required parameter 'payload' is set
+      if (payload === undefined || payload === null) {
+        throw new Error("Missing the required parameter 'payload' when calling postUserLogin");
+      }
+
+      let pathParams = {
+      };
+      let queryParams = {
+      };
+      let headerParams = {
+      };
+      let formParams = {
+      };
+
+      let authNames = [];
+      let contentTypes = ['application/json'];
+      let accepts = ['application/json'];
+      let returnType = Token;
+      return this.apiClient.callApi(
+        '/user/login', 'POST',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, null, callback
+      );
+    }
+
+    /**
+     * Callback function to receive the result of the postUserRegister operation.
+     * @callback module:api/UserApi~postUserRegisterCallback
      * @param {String} error Error message, if any.
      * @param {module:model/Usuario} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
      */
 
     /**
-     * Crear un nuevo usuario
+     * Registrar un nuevo usuario
      * @param {module:model/Usuario} payload 
-     * @param {module:api/UserApi~postUserListCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/UserApi~postUserRegisterCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/Usuario}
      */
-    postUserList(payload, callback) {
+    postUserRegister(payload, callback) {
       let postBody = payload;
       // verify the required parameter 'payload' is set
       if (payload === undefined || payload === null) {
-        throw new Error("Missing the required parameter 'payload' when calling postUserList");
+        throw new Error("Missing the required parameter 'payload' when calling postUserRegister");
       }
 
       let pathParams = {
@@ -148,7 +192,7 @@ export default class UserApi {
       let accepts = ['application/json'];
       let returnType = Usuario;
       return this.apiClient.callApi(
-        '/user/', 'POST',
+        '/user/register', 'POST',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, null, callback
       );
@@ -190,7 +234,7 @@ export default class UserApi {
       let formParams = {
       };
 
-      let authNames = [];
+      let authNames = ['Bearer Auth'];
       let contentTypes = ['application/json'];
       let accepts = ['application/json'];
       let returnType = Usuario;

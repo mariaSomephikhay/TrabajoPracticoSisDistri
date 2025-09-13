@@ -13,7 +13,10 @@
 
 
 import ApiClient from './ApiClient';
+import Error from './model/Error';
+import Login from './model/Login';
 import Rol from './model/Rol';
+import Token from './model/Token';
 import Usuario from './model/Usuario';
 import UsuarioList from './model/UsuarioList';
 import UserApi from './api/UserApi';
@@ -58,10 +61,28 @@ export {
     ApiClient,
 
     /**
+     * The Error model constructor.
+     * @property {module:model/Error}
+     */
+    Error,
+
+    /**
+     * The Login model constructor.
+     * @property {module:model/Login}
+     */
+    Login,
+
+    /**
      * The Rol model constructor.
      * @property {module:model/Rol}
      */
     Rol,
+
+    /**
+     * The Token model constructor.
+     * @property {module:model/Token}
+     */
+    Token,
 
     /**
      * The Usuario model constructor.

@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import UserService from '../../services/UserService'
+import UserService from '../../../services/UserService.js'
 
 export const UserUpdateForm = () => {
   const { id } = useParams()
-  const navigate = useNavigate() // Para redirigir después de modificar al usuario
+  const navigate = useNavigate()
   const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(true)
 
-  // Roles hardcodeados (Se puede mejorar la manera)
   const roles = [
     { id: 1, nombre: 'PRESIDENTE' },
     { id: 2, nombre: 'VOLUNTARIO' },
@@ -30,13 +29,8 @@ export const UserUpdateForm = () => {
     fetchUser()
   }, [id])
 
-  /**
-   * EVENTOS
-   **/
   const handleChangeUser = (e) => { 
     const { name, value } = e.target
-
-    // Si el campo que cambia es "rol"
     if (name === "rol") {
       setUser((prev) => ({
         ...prev,
@@ -46,12 +40,10 @@ export const UserUpdateForm = () => {
         }
       }))
     } else {
-      setUser((prev) => ({
-        ...prev,
-        [name]: value
-      }))
+      setUser((prev) => ({ ...prev, [name]: value }))
     }
   }
+
   const handleSubmitUser = async (e) => { 
     e.preventDefault() 
     try { 
@@ -64,7 +56,6 @@ export const UserUpdateForm = () => {
     } 
   }
 
-  //Estas vistas condicionales se podrian mejorar
   if (loading) return <p>Cargando...</p>
   if (!user) return <p>Usuario no encontrado</p>
 
@@ -113,5 +104,4 @@ export const UserUpdateForm = () => {
       </button>
     </form>
   )
-
 }

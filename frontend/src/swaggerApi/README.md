@@ -101,6 +101,12 @@ Please follow the [installation](#installation) instruction and execute the foll
 ```javascript
 var ApiDocumentada = require('api_documentada');
 
+var defaultClient = ApiDocumentada.ApiClient.instance;
+// Configure API key authorization: Bearer Auth
+var Bearer Auth = defaultClient.authentications['Bearer Auth'];
+Bearer Auth.apiKey = "YOUR API KEY"
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//Bearer Auth.apiKeyPrefix['Authorization'] = "Token"
 
 var api = new ApiDocumentada.UserApi()
 var id = 56; // {Number} 
@@ -123,18 +129,29 @@ Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
 *ApiDocumentada.UserApi* | [**getUser**](docs/UserApi.md#getUser) | **GET** /user/{id} | Obtener usuario
 *ApiDocumentada.UserApi* | [**getUserList**](docs/UserApi.md#getUserList) | **GET** /user/ | Obtener todos los usuarios
-*ApiDocumentada.UserApi* | [**postUserList**](docs/UserApi.md#postUserList) | **POST** /user/ | Crear un nuevo usuario
+*ApiDocumentada.UserApi* | [**postUserLogin**](docs/UserApi.md#postUserLogin) | **POST** /user/login | Login de usuario y devolución de JWT
+*ApiDocumentada.UserApi* | [**postUserRegister**](docs/UserApi.md#postUserRegister) | **POST** /user/register | Registrar un nuevo usuario
 *ApiDocumentada.UserApi* | [**putUser**](docs/UserApi.md#putUser) | **PUT** /user/{id} | Actualizar un usuario
 
 
 ## Documentation for Models
 
+ - [ApiDocumentada.Error](docs/Error.md)
+ - [ApiDocumentada.Login](docs/Login.md)
  - [ApiDocumentada.Rol](docs/Rol.md)
+ - [ApiDocumentada.Token](docs/Token.md)
  - [ApiDocumentada.Usuario](docs/Usuario.md)
  - [ApiDocumentada.UsuarioList](docs/UsuarioList.md)
 
 
 ## Documentation for Authorization
 
-Endpoints do not require authorization.
+
+Authentication schemes defined for the API:
+### Bearer Auth
+
+
+- **Type**: API key
+- **API key parameter name**: Authorization
+- **Location**: HTTP header
 

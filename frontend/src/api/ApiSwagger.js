@@ -1,10 +1,18 @@
-import CustomApiClient  from './CustomApiClient.js' 
-import UserApi  from '../swaggerApi/src/api/UserApi' 
-/** * Aca importar todos los Tags nuevos cuando se creen los demas enpoints **/ 
+import CustomApiClient from "./CustomApiClient.js";
+import UserApi from "../swaggerApi/src/api/UserApi.js";
 
-const apiClient = new CustomApiClient(import.meta.env.VITE_APP_API_URL); 
+// Instanciamos cliente Swagger
+const apiClient = new CustomApiClient(import.meta.env.VITE_APP_API_URL);
+
+// Función para actualizar token desde contexto o componente
+export const setAuthToken = (token) => {
+  apiClient.setToken(token);
+};
+
+// Instancias de APIs generadas por Swagger
+export const userApi = new UserApi(apiClient);
 
 /**
- * Instancias de cada API generada por Swagger 
+ * Aquí se pueden agregar más APIs a medida que se crean endpoints
+ * por ejemplo: export const productApi = new ProductApi(apiClient);
  */
-export const userApi = new UserApi(apiClient);

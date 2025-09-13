@@ -1,49 +1,32 @@
-import { userApi } from '../api/ApiSwagger'
+import { userApi } from "../api/ApiSwagger.js"
 
 const UserService = {
-  
   obtenerListadoUsuarios: async () => {
     try {
-      const data = await userApi.getUserList(); // solo await, sin callback
-      return data; // ya contiene data.usuarios
-    } catch (error) {
-      console.error('Error al obtener usuarios:', error);
-      throw error;
-    }
-  },
-
-  crearUsuario: async (newUser) => {
-    try {
-      return await userApi.postUserList({
-        ...newUser,
-        rol: { ...newUser.rol, descripcion: newUser.rol.descripcion?.toUpperCase() }
-      })
-    } catch (error) {
-      console.error('Error al crear usuario:', error)
-      throw error
+      return await userApi.getUserList(); // token ya lo maneja CustomApiClient
+    } catch (err) {
+      console.error("Error al obtener usuarios:", err)
+      throw err
     }
   },
 
   modificarUsuario: async (usuarioId, user) => {
     try {
-      return await userApi.putUser(usuarioId, {
-        ...user,
-        rol: { ...user.rol, descripcion: user.rol.descripcion?.toUpperCase() }
-      });
-    } catch (error) {
-      console.error('Error al modificar usuario:', error);
-      throw error;
+      return await userApi.putUser(usuarioId, user)
+    } catch (err) {
+      console.error("Error al modificar usuario:", err)
+      throw err;
     }
   },
 
   obtenerUsuario: async (usuarioId) => {
     try {
-      return await userApi.getUser(usuarioId)
-    } catch (error) {
-      console.error('Error al obtener el usuario:', error)
-      throw error
+      return await userApi.getUser(usuarioId);
+    } catch (err) {
+      console.error("Error al obtener usuario:", err)
+      throw err;
     }
   },
-};
+}
 
 export default UserService
