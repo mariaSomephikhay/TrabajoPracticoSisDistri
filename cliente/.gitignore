@@ -58,7 +58,6 @@ instance/
 *.sqlite3
 
 # Environments
-.env
 .venv/
 env/
 venv/

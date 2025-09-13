@@ -34,8 +34,13 @@ class ManagerServiceStub(object):
         Args:
             channel: A grpc.Channel.
         """
-        self.getUser = channel.unary_unary(
-                '/managerservice.ManagerService/getUser',
+        self.getUserByUsername = channel.unary_unary(
+                '/managerservice.ManagerService/getUserByUsername',
+                request_serializer=donaciones__eventos__pb2.UserUsername.SerializeToString,
+                response_deserializer=donaciones__eventos__pb2.Usuario.FromString,
+                _registered_method=True)
+        self.getUserById = channel.unary_unary(
+                '/managerservice.ManagerService/getUserById',
                 request_serializer=donaciones__eventos__pb2.UserId.SerializeToString,
                 response_deserializer=donaciones__eventos__pb2.Usuario.FromString,
                 _registered_method=True)
@@ -54,7 +59,13 @@ class ManagerServiceStub(object):
 class ManagerServiceServicer(object):
     """Missing associated documentation comment in .proto file."""
 
-    def getUser(self, request, context):
+    def getUserByUsername(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def getUserById(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -75,8 +86,13 @@ class ManagerServiceServicer(object):
 
 def add_ManagerServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'getUser': grpc.unary_unary_rpc_method_handler(
-                    servicer.getUser,
+            'getUserByUsername': grpc.unary_unary_rpc_method_handler(
+                    servicer.getUserByUsername,
+                    request_deserializer=donaciones__eventos__pb2.UserUsername.FromString,
+                    response_serializer=donaciones__eventos__pb2.Usuario.SerializeToString,
+            ),
+            'getUserById': grpc.unary_unary_rpc_method_handler(
+                    servicer.getUserById,
                     request_deserializer=donaciones__eventos__pb2.UserId.FromString,
                     response_serializer=donaciones__eventos__pb2.Usuario.SerializeToString,
             ),
@@ -102,7 +118,7 @@ class ManagerService(object):
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod
-    def getUser(request,
+    def getUserByUsername(request,
             target,
             options=(),
             channel_credentials=None,
@@ -115,7 +131,34 @@ class ManagerService(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/managerservice.ManagerService/getUser',
+            '/managerservice.ManagerService/getUserByUsername',
+            donaciones__eventos__pb2.UserUsername.SerializeToString,
+            donaciones__eventos__pb2.Usuario.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def getUserById(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/managerservice.ManagerService/getUserById',
             donaciones__eventos__pb2.UserId.SerializeToString,
             donaciones__eventos__pb2.Usuario.FromString,
             options,

@@ -16,10 +16,16 @@ class ManagerServiceImpl(object):
     ##################################################################
     #Genero los metodos/servicios definidos en el archivo proto
     ##################################################################
-    def getUser(self, id):
+    def getUserById(self, id):
         pUsuario = ParseDict(id, service_pb2.UserId(), ignore_unknown_fields=True) # Convierte el modelo json a un mensaje protobuf solo con los campos presentes
-        response = self.stub.getUser(pUsuario)
+        response = self.stub.getUserById(pUsuario)
         return MessageToJson(response)
+    
+    def getUserByUsername(self, username):
+        pUsuario = ParseDict(username, service_pb2.UserUsername(), ignore_unknown_fields=True) # Convierte el modelo json a un mensaje protobuf solo con los campos presentes
+        response = self.stub.getUserByUsername(pUsuario)
+        return MessageToJson(response)
+    
     def getAllUser(self): 
         param = service_pb2.Empty() #inicializao param con el valor del mensaje empty
         response = self.stub.getAllUsers(param) #llamo al servicio getAllUsers y le paso Empty (param)como esta declarado en el prot 
