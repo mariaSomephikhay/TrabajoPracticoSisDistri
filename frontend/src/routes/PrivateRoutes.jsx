@@ -15,7 +15,7 @@ export const PrivateRoute = ({ children, allowedRoles }) => {
     return <Navigate to="/login" replace />;
   }
 
-  if (allowedRoles && !allowedRoles.includes(user?.rol)) {
+  if (allowedRoles && !allowedRoles.includes(user?.rol.descripcion)) {
     // Usuario autenticado pero rol no permitido → home
     return <Navigate to="/" replace />
   }
