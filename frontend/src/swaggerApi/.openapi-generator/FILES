@@ -2,7 +2,10 @@
 .gitignore
 .travis.yml
 README.md
+docs/Error.md
+docs/Login.md
 docs/Rol.md
+docs/Token.md
 docs/UserApi.md
 docs/Usuario.md
 docs/UsuarioList.md
@@ -12,10 +15,16 @@ package.json
 src/ApiClient.js
 src/api/UserApi.js
 src/index.js
+src/model/Error.js
+src/model/Login.js
 src/model/Rol.js
+src/model/Token.js
 src/model/Usuario.js
 src/model/UsuarioList.js
 test/api/UserApi.spec.js
+test/model/Error.spec.js
+test/model/Login.spec.js
 test/model/Rol.spec.js
+test/model/Token.spec.js
 test/model/Usuario.spec.js
 test/model/UsuarioList.spec.js

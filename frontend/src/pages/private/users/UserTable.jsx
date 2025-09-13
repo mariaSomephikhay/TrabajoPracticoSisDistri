@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
-import UserService from '../../services/UserService'
+import UserService from '../../../services/UserService.js'
 
 export const UserTable = () => {
   const navigate = useNavigate()
@@ -15,26 +15,22 @@ export const UserTable = () => {
         setUsers(data.usuarios)
       } catch (err) {
         console.error(err)
-        setError(err)
-      }
-      finally {
+        setError(err.message)
+      } finally {
         setLoading(false)
       }
-    };
-
-    fetchUsers();
-  }, []);
-
+    }
+    fetchUsers()
+  }, [])
 
   const handleEditUser = (id) => {
-    navigate(`/users/edit/${id}`) // redirige con el id del usuario
+    navigate(`/users/edit/${id}`)
   }
 
-  //Estas vistas condicionales se podrian mejorar
   if (loading) return <p className="text-center mt-5">Cargando...</p>
-  if (error) return <p className="text-center mt-5"> {error} </p>
+  if (error) return <p className="text-center mt-5">{error}</p>
   if (!users || users.length === 0) return <p className="text-center mt-5">No hay usuarios disponibles</p>
-    
+
   return (
     <div className="col-8 align-self-center mt-5">
       <table className="table" align="center">
@@ -59,7 +55,6 @@ export const UserTable = () => {
                   onClick={() => handleEditUser(user.id)}>
                   Modificar
                 </button>
-                {/** Aca se podria agregar el boton para deshabilitar un usuario */}
               </td>
               <td>{user.rol?.descripcion ?? '-'}</td>
               <td>{user.username}</td>

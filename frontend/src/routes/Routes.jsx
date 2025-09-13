@@ -1,12 +1,14 @@
 // OperatorRoutes.jsx
 import React from 'react'
 import { Routes, Route } from "react-router-dom"
+import { PrivateRoute } from './PrivateRoutes.jsx'
 import { Header } from "../components/Header.jsx"
 import { Footer } from "../components/Footer.jsx"
 import { Nav } from "../components/ui/Nav.jsx"
-import { Home } from "../pages/Home.jsx"
-import { UserTable } from "../pages/users/UserTable.jsx"
-import { UserUpdateForm } from "../pages/users/UserUpdateForm.jsx"
+import { Login } from "../pages/Login.jsx"
+import { Home } from "../pages/private/Home.jsx"
+import { UserTable } from "../pages/private/users/UserTable.jsx"
+import { UserUpdateForm } from "../pages/private/users/UserUpdateForm.jsx"
 
 export const OperatorRoutes = () => {
     return (
@@ -16,9 +18,20 @@ export const OperatorRoutes = () => {
 
             <main className="container pt-4">
                 <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/users" element={<UserTable />} />
-                    <Route path="/users/edit/:id" element={<UserUpdateForm />} />
+                <Route path="/login" element={<Login />} />
+
+                {/* Ruta privada para todos los usuarios autenticados */}
+                <Route path="/" element={<PrivateRoute><Home /></PrivateRoute>} />
+
+                {/* Rutas privadas solo para PRESIDENTE */}
+                <Route 
+                    path="/users" 
+                    element={<PrivateRoute allowedRoles={["PRESIDENTE"]}><UserTable /></PrivateRoute>} 
+                />
+                <Route 
+                    path="/users/edit/:id" 
+                    element={<PrivateRoute allowedRoles={["PRESIDENTE"]}><UserUpdateForm /></PrivateRoute>} 
+                />
                 </Routes>
             </main>
 
