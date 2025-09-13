@@ -10,6 +10,7 @@ import com.grupoK.Tp1SistemasDistribuidos.serviceImp.UsuarioService;
 import com.grupoK.Tp1SistemasDistribuidos.wrappers.UsuarioWrapper;
 import com.grupoK.grpc.Empty;
 import com.grupoK.grpc.ManagerServiceGrpc;
+import com.grupoK.grpc.UserId;
 import com.grupoK.grpc.UsuarioList;
 
 import io.grpc.stub.StreamObserver;
@@ -19,8 +20,17 @@ public class ManagerServiceImpl extends ManagerServiceGrpc.ManagerServiceImplBas
 
 	@Autowired
 	private UsuarioService usuarioService;
+
 	@Autowired
 	private UsuarioWrapper usuarioWrapper;
+	
+	@Override
+	public void getUser(UserId request, StreamObserver<com.grupoK.grpc.Usuario> responseObserver) {
+        // request -> DB -> map response -> return
+		Usuario user = usuarioService.findById(request.getId());
+        responseObserver.onNext(user != null ? usuarioWrapper.toGrpcUsuario(user) : null);
+        responseObserver.onCompleted();
+	}
 	
     @Override
     public void getAllUsers(Empty request, StreamObserver<UsuarioList> responseObserver) {

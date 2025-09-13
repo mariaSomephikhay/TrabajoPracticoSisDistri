@@ -39,21 +39,21 @@ class SecurityConfig():
                 token = auth.split(" ")[1] if auth.startswith("Bearer ") else None
 
                 if not token:
-                    return jsonify({"error": "Token is missing"}), 401
+                    return {"error": "Token is missing"}, 401
 
                 try:
                     payload = jwt.decode(token, SecurityConfig.secret, algorithms=[SecurityConfig.jwtAlgorithm])
-                    request.userAuth = payload # Guardo el body del token decodificado en la request
+                    request.userAuth = payload  # Guardo el body del token decodificado en la request
                 except jwt.ExpiredSignatureError:
-                    return jsonify({"error": "Token has expired"}), 401
+                    return {"error": "Token has expired"}, 401
                 except jwt.InvalidTokenError:
-                    return jsonify({"error": "Invalid token"}), 401
+                    return {"error": "Invalid token"}, 401
 
                 # Validar roles solo si se pasan como argumento
-                if roles:
-                    if payload.get("rol", {}).get("descripcion") not in roles:
-                        return jsonify({"error": "Access forbidden: insufficient role"}), 403
+                if roles and payload.get("rol", {}).get("descripcion") not in roles:
+                    return {"error": "Access forbidden: insufficient role"}, 403
 
                 return f(*args, **kwargs)
             return decorated
         return decorator
+

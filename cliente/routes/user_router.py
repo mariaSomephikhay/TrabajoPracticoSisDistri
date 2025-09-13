@@ -37,7 +37,9 @@ tokenDto = api.model("Token", {
     "token": fields.String(required=True),
     "expires_in": fields.Integer(required=True) # Segundos hasta expirar
 })
-
+errorDto = api.model("Error", {
+    "error": fields.String(required=True)
+})
 
 #######################################################
 # Definición de endpoints para el swagger
@@ -45,17 +47,18 @@ tokenDto = api.model("Token", {
 @api.route("/login")
 class UserLogin(Resource):
     @api.expect(loginDto)
-    @api.marshal_with(tokenDto, mask=False)
+    @api.response(201, "Success", model=tokenDto)
+    @api.response(401, "Invalid credentials", model=errorDto)
+    @api.response(500, "Internal server error", model=errorDto)
     def post(self):
         """Login de usuario y devolución de JWT"""
         try:
-
             payload = request.get_json()
             username = payload["username"]
             password = payload["password"]
 
-            # Implementar servicio para obtener usuario por username
-            user = cliente.getUserByUsername(username)
+            user = json.loads(cliente.getUserByUsername({'username': username}))
+            
             if (not user) or (not verifyPassword(password, user["password"])):
                 return {"error": "Credenciales inválidas"}, 401
 
@@ -63,12 +66,15 @@ class UserLogin(Resource):
 
             return {"token": token, "expires_in": SecurityConfig.expMinutes * 60}, 201
         except Exception as e:
+            print(e)
             return {"error": str(e)}, 500
              
 @api.route("/register")
 class UserRegister(Resource):
     @api.expect(userDto)
-    @api.marshal_with(userDto, mask=False)
+    @api.response(201, "Success", model=userDto)
+    @api.response(400, "Request body must be JSON", model=errorDto)
+    @api.response(500, "Internal server error", model=errorDto)
     def post(self):
         """Registrar un nuevo usuario"""
         try:
@@ -87,7 +93,9 @@ class UserRegister(Resource):
 class UserList(Resource):
     @api.doc(security='Bearer Auth') # Esto hace que Swagger agregue el header para el token
     @SecurityConfig.authRequired("PRESIDENTE")
-    @api.marshal_with(userListDto, mask=False) #Response
+    @api.response(200, "Success", model=userListDto)
+    @api.response(403, "Access forbidden", model=errorDto)
+    @api.response(500, "Internal server error", model=errorDto)
     def get(self):
         """Obtener todos los usuarios"""
         try:
@@ -101,12 +109,14 @@ class UserList(Resource):
 class User(Resource):
     @api.doc(security='Bearer Auth') # Esto hace que Swagger agregue el header para el token
     @SecurityConfig.authRequired("PRESIDENTE")
-    @api.marshal_with(userDto, mask=False)  # Response
+    @api.response(200, "Success", model=userDto)
+    @api.response(403, "Access forbidden", model=errorDto)
+    @api.response(500, "Internal server error", model=errorDto)
     def get(self, id):
         """Obtener usuario"""
         try:
             payload = {"id": id}  # solo necesitas el id
-            result = cliente.getUser(payload)
+            result = cliente.getUserById(payload)
             return json.loads(result), 200
         except Exception as e:
             return {"error": str(e)}, 500
@@ -114,7 +124,10 @@ class User(Resource):
     @api.doc(security='Bearer Auth') # Esto hace que Swagger agregue el header para el token
     @SecurityConfig.authRequired("PRESIDENTE")
     @api.expect(userDto) #Request
-    @api.marshal_with(userDto, mask=False) #Response
+    @api.response(200, "Success", model=userDto)
+    @api.response(400, "Request body must be JSON", model=errorDto)
+    @api.response(403, "Access forbidden", model=errorDto)
+    @api.response(500, "Internal server error", model=errorDto)
     def put(self, id):
         """Actualizar un usuario"""
         try:
@@ -126,5 +139,4 @@ class User(Resource):
             result = cliente.insertOrUpdateUser(payload)
             return json.loads(result), 200
         except Exception as e:
-            print(e)  # <--- imprime el body
             return {"error": str(e)}, 500
