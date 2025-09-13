@@ -8,5 +8,6 @@ public interface IUsuarioService {
 	
 	List<Usuario> findAll();
 	Usuario findById(Integer id);
+	Usuario findByUsername(String username);
 	Usuario saveOrUpdate(Usuario usuario);
 }
