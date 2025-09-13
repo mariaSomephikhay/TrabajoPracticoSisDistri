@@ -25,7 +25,7 @@ public class DataInitializer {
                 usuarioRepo.save(new Usuario(
                         null,			   // id
                         "user1",           // username
-                        "12345",		   // password
+                        "$2b$12$4pzYx189NUVwtpsK5uTuUOJR60MhqKZVYjss.2pZPuipv2/P/TwmW", // password(user1)
                         "user@mail.com",   // email
                         "Manuel",          // nombre
                         "Lopez",           // apellido
@@ -39,7 +39,7 @@ public class DataInitializer {
                 usuarioRepo.save(new Usuario(
                         null,
                         "user2",
-                        "abcd",
+                        "$2b$12$q0cJWPMPkXziA2KuCig01.b88wmiRQxaBwAAQQWAwzUgU6R3VpSYe", //password (user2)
                         "user2@mail.com",
                         "Lucia",
                         "Garcia",

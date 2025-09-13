@@ -57,7 +57,6 @@ public class UsuarioService implements IUsuarioService {
 	}
 
 
-
 	@Override
 	public Usuario findById(Integer idUser) {
 		Optional<Usuario> user = usuarioRepository.findById(idUser);
@@ -66,4 +65,15 @@ public class UsuarioService implements IUsuarioService {
 		else
 			return user.get();
 	}
+
+	
+	@Override
+	public Usuario findByUsername(String username) {
+		Optional<Usuario> user = usuarioRepository.findByUsername(username);
+		if(user.isEmpty()) 
+			return null;	
+		else
+			return user.get();
+	}
+	
 }
