@@ -5,9 +5,14 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.grpc.server.service.GrpcService;
 
+import com.grupoK.Tp1SistemasDistribuidos.entities.Donacion;
 import com.grupoK.Tp1SistemasDistribuidos.entities.Usuario;
+import com.grupoK.Tp1SistemasDistribuidos.serviceImp.DonacionService;
 import com.grupoK.Tp1SistemasDistribuidos.serviceImp.UsuarioService;
+import com.grupoK.Tp1SistemasDistribuidos.wrappers.DonacionWrapper;
 import com.grupoK.Tp1SistemasDistribuidos.wrappers.UsuarioWrapper;
+import com.grupoK.grpc.DonacionId;
+import com.grupoK.grpc.DonacionList;
 import com.grupoK.grpc.Empty;
 import com.grupoK.grpc.ManagerServiceGrpc;
 import com.grupoK.grpc.UserId;
@@ -23,6 +28,10 @@ public class ManagerServiceImpl extends ManagerServiceGrpc.ManagerServiceImplBas
 	private UsuarioService usuarioService;
 	@Autowired
 	private UsuarioWrapper usuarioWrapper;
+	@Autowired
+	private DonacionService donacionService;
+	@Autowired
+	private DonacionWrapper donacionWrapper;
 	
 	@Override
 	public void getUserById(UserId request, StreamObserver<com.grupoK.grpc.Usuario> responseObserver) {
@@ -68,4 +77,66 @@ public class ManagerServiceImpl extends ManagerServiceGrpc.ManagerServiceImplBas
 		responseObserver.onNext(usuarioWrapper.toGrpcUsuario(userDelete));
 		responseObserver.onCompleted();
     }
+	
+	@Override
+	public void insertOrUpdateDonacion(com.grupoK.grpc.Donacion request, StreamObserver<com.grupoK.grpc.Donacion> responseObserver) {
+        // request -> DB -> map response -> return
+		try {
+		Donacion newDonacion = donacionService.saveOrUpdate(donacionWrapper.toEntityDonacion(request));
+        responseObserver.onNext(donacionWrapper.toGrpcDonacion(newDonacion));
+        responseObserver.onCompleted();
+		}
+		catch (Exception e) {
+			responseObserver.onError(io.grpc.Status.INVALID_ARGUMENT
+		                .withDescription(e.getMessage())
+		                .asRuntimeException()
+		        );
+		}
+	}
+	
+	@Override
+	public void getDonacionById(DonacionId request, StreamObserver<com.grupoK.grpc.Donacion> responseObserver) {
+        // request -> DB -> map response -> return
+		try {
+	    Donacion donacion = donacionService.findById(request.getId());
+        responseObserver.onNext(donacion != null ? donacionWrapper.toGrpcDonacion(donacion) : null);
+        responseObserver.onCompleted();
+		}
+		catch (Exception e) {
+			responseObserver.onError(io.grpc.Status.NOT_FOUND
+		                .withDescription(e.getMessage())
+		                .asRuntimeException()
+		        );
+		}
+	}
+	
+    @Override
+    public void getAllDonaciones(Empty request, StreamObserver<DonacionList> responseObserver) {
+
+        // request -> DB -> map response -> return
+        List<Donacion> donaciones = donacionService.findAll();
+
+        DonacionList response = DonacionList.newBuilder()
+                .addAllDonacion(donaciones.stream()
+                		.map(donacionWrapper::toGrpcDonacion).toList())
+                .build();
+        responseObserver.onNext(response);
+        responseObserver.onCompleted();
+    }
+    
+	@Override
+    public void deleteDonacion(DonacionId request, StreamObserver<com.grupoK.grpc.Donacion> responseObserver) {
+		try {
+		Donacion donacionDelete = donacionService.delete(request.getId());
+		responseObserver.onNext(donacionWrapper.toGrpcDonacion(donacionDelete));
+		responseObserver.onCompleted();
+		}
+		catch (Exception e) {
+			responseObserver.onError(io.grpc.Status.NOT_FOUND
+		                .withDescription(e.getMessage())
+		                .asRuntimeException()
+		        );
+		}
+    }
+	
 }
