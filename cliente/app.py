@@ -3,6 +3,7 @@ from flask_cors import CORS
 from flask_restx import Api
 from config.client_config import configClient
 from routes.user_router import api as userNS
+from routes.donacion_router import api as donacionNS
 
 # Crear la app con una configuración
 def create_app(config_name='development'):
@@ -30,6 +31,7 @@ def create_app(config_name='development'):
     )
     # Rutas
     api.add_namespace(userNS, path="/user")
+    api.add_namespace(donacionNS, path="/donacion")
 
     # Ruta para obtener el swagger en formato .json
     @app.route("/docs/json")
