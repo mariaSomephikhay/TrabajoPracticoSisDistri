@@ -71,3 +71,4 @@ class SecurityConfig():
             raise Exception("Token expirado")
         except jwt.InvalidTokenError:
             raise Exception("Token inválido")
+            
