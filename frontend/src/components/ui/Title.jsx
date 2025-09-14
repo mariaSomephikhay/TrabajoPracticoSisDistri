@@ -1,7 +1,6 @@
-import React from 'react'
+import React from "react"
 
-export const Title = () => {
-  return (
-    <h2>Sistemas Distribuidos</h2>
-  )
+export const Title = ({ level = "h2", text, className = "" }) => {
+  const HeadingTag = level
+  return <HeadingTag className={className}>{text}</HeadingTag>
 }

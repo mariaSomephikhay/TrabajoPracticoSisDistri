@@ -44,7 +44,7 @@ export const UserUpdateForm = () => {
     }
   }
 
-  const handleSubmitUser = async (e) => { 
+  const handleUpdateUser = async (e) => { 
     e.preventDefault() 
     try { 
       await UserService.modificarUsuario(id, user) 
@@ -60,7 +60,7 @@ export const UserUpdateForm = () => {
   if (!user) return <p>Usuario no encontrado</p>
 
   return (
-    <form className="col-6 mx-auto mt-5" onSubmit={handleSubmitUser}>
+    <form className="col-6 mx-auto mt-5" onSubmit={handleUpdateUser}>
       <div className="mb-3">
         <label>Username</label>
         <input className="form-control" type="text" name="username" value={user.username ?? ''} onChange={handleChangeUser}/>

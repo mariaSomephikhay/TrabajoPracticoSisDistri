@@ -7,7 +7,11 @@ export const Header = () => {
     <header>
       <div className="container-fluid bg-white">
         <div className="container d-flex justify-content-between align-items-center py-3">
-          <PageTitle />
+        <PageTitle 
+          level="h2" 
+          text="Sistemas Distribuidos" 
+          className="fw-bold text-primary"
+        />
         <a
           className="nav-link"
           href="https://github.com/mariaSomephikhay/TrabajoPracticoSisDistri"
