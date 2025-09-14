@@ -2,6 +2,7 @@ from flask import request
 from flask_restx import Namespace, Resource, fields
 import json
 from utils.password_utils import hashPassword, verifyPassword, generateRandomPassword
+from utils.mails_utils import enviarPasswordPorEmail, MailSendError
 from config.security_config import SecurityConfig
 from grpc_manager_service import ManagerServiceImpl
 
@@ -85,6 +86,14 @@ class UserRegister(Resource):
 
             # Generar contraseña aleatoria
             randomPassword = generateRandomPassword()
+
+            # Envio la contraseña al usuario por su mail ingresado
+            try:
+                enviarPasswordPorEmail(payload["email"], payload["username"], randomPassword)
+            except MailSendError as e:
+                # Retorna el código de error definido en MailSendError
+                return {"error": str(e)}, e.code or 500
+
             # Guardo la contraseña encriptada
             payload["password"] = hashPassword(randomPassword)
             
