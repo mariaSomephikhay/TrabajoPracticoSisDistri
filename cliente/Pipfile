@@ -7,7 +7,6 @@ name = "pypi"
 flask = "*"
 flask-cors = "*"
 grpcio = "*"
-grpcio-tools = "*"
 protobuf = "*"
 googleapis-common-protos = "*"
 flask-restx = "*"
@@ -15,6 +14,7 @@ pyjwt = "*"
 pytz = "*"
 python-decouple = "*"
 bcrypt = "*"
+grpcio-tools = "*"
 
 [dev-packages]
 

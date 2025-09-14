@@ -35,3 +35,8 @@ class ManagerServiceImpl(object):
         pUsuario = ParseDict(usuario, service_pb2.Usuario(), ignore_unknown_fields=True) # Convierte el modelo json a un mensaje protobuf solo con los campos presentes
         response = self.stub.insertOrUpdateUser(pUsuario)
         return MessageToJson(response)
+    
+    def deleteUser(self, id):
+        pUsuario = ParseDict(id, service_pb2.UserId(), ignore_unknown_fields=True) # Convierte el modelo json a un mensaje protobuf solo con los campos presentes
+        response = self.stub.deleteUser(pUsuario)
+        return MessageToJson(response)

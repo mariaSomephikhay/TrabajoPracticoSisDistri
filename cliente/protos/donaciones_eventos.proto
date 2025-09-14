@@ -39,5 +39,6 @@ service ManagerService{
   rpc getUserById (UserId) returns (Usuario) {};
   rpc getAllUsers (Empty) returns (UsuarioList) {};
   rpc insertOrUpdateUser (Usuario) returns (Usuario) {};
+  rpc deleteUser (UserId) returns (Usuario) {};
   //AGREGAR ACA TODOS LOS SERVICIOS
 }

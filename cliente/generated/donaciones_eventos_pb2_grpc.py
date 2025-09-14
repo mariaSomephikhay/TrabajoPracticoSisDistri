@@ -54,6 +54,11 @@ class ManagerServiceStub(object):
                 request_serializer=donaciones__eventos__pb2.Usuario.SerializeToString,
                 response_deserializer=donaciones__eventos__pb2.Usuario.FromString,
                 _registered_method=True)
+        self.deleteUser = channel.unary_unary(
+                '/managerservice.ManagerService/deleteUser',
+                request_serializer=donaciones__eventos__pb2.UserId.SerializeToString,
+                response_deserializer=donaciones__eventos__pb2.Usuario.FromString,
+                _registered_method=True)
 
 
 class ManagerServiceServicer(object):
@@ -83,6 +88,12 @@ class ManagerServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def deleteUser(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_ManagerServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -104,6 +115,11 @@ def add_ManagerServiceServicer_to_server(servicer, server):
             'insertOrUpdateUser': grpc.unary_unary_rpc_method_handler(
                     servicer.insertOrUpdateUser,
                     request_deserializer=donaciones__eventos__pb2.Usuario.FromString,
+                    response_serializer=donaciones__eventos__pb2.Usuario.SerializeToString,
+            ),
+            'deleteUser': grpc.unary_unary_rpc_method_handler(
+                    servicer.deleteUser,
+                    request_deserializer=donaciones__eventos__pb2.UserId.FromString,
                     response_serializer=donaciones__eventos__pb2.Usuario.SerializeToString,
             ),
     }
@@ -214,6 +230,33 @@ class ManagerService(object):
             target,
             '/managerservice.ManagerService/insertOrUpdateUser',
             donaciones__eventos__pb2.Usuario.SerializeToString,
+            donaciones__eventos__pb2.Usuario.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def deleteUser(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/managerservice.ManagerService/deleteUser',
+            donaciones__eventos__pb2.UserId.SerializeToString,
             donaciones__eventos__pb2.Usuario.FromString,
             options,
             channel_credentials,

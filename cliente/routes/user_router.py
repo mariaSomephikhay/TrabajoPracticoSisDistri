@@ -140,3 +140,19 @@ class User(Resource):
             return json.loads(result), 200
         except Exception as e:
             return {"error": str(e)}, 500
+        
+@api.route("/delete/<int:id>")
+class User(Resource):
+    @api.doc(security='Bearer Auth') # Esto hace que Swagger agregue el header para el token
+    @SecurityConfig.authRequired("PRESIDENTE")
+    @api.response(200, "Success", model=userDto)
+    @api.response(403, "Access forbidden", model=errorDto)
+    @api.response(500, "Internal server error", model=errorDto)
+    def get(self, id):
+        """Eliminar usuario"""
+        try:
+            payload = {"id": id}  # solo necesitas el id
+            result = cliente.deleteUser(payload)
+            return json.loads(result), 200
+        except Exception as e:
+            return {"error": str(e)}, 500
