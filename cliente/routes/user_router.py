@@ -1,7 +1,7 @@
 from flask import request
 from flask_restx import Namespace, Resource, fields
 import json
-from utils.password_utils import hashPassword, verifyPassword
+from utils.password_utils import hashPassword, verifyPassword, generateRandomPassword
 from config.security_config import SecurityConfig
 from grpc_manager_service import ManagerServiceImpl
 
@@ -18,7 +18,7 @@ rolDto = api.model("Rol", {
 userDto = api.model("Usuario", {
     "id": fields.Integer(required=False),
     "username": fields.String(required=True),
-    "password": fields.String(required=True),
+    "password": fields.String(required=False),
     "email": fields.String(required=True),
     "nombre": fields.String(required=True),
     "apellido": fields.String(required=True),
@@ -82,7 +82,11 @@ class UserRegister(Resource):
                 return {"error": "Request body must be JSON"}, 400
 
             payload = request.get_json()
-            payload["password"] = hashPassword(payload["password"])
+
+            # Generar contraseña aleatoria
+            randomPassword = generateRandomPassword()
+            # Guardo la contraseña encriptada
+            payload["password"] = hashPassword(randomPassword)
             
             result = cliente.insertOrUpdateUser(payload)
             return json.loads(result), 201
@@ -148,7 +152,7 @@ class User(Resource):
     @api.response(200, "Success", model=userDto)
     @api.response(403, "Access forbidden", model=errorDto)
     @api.response(500, "Internal server error", model=errorDto)
-    def get(self, id):
+    def delete(self, id):
         """Eliminar usuario"""
         try:
             payload = {"id": id}  # solo necesitas el id
