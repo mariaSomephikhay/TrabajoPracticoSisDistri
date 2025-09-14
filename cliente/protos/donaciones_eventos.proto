@@ -34,6 +34,10 @@ message UsuarioList {
     repeated Usuario usuarios = 1;
 }
 
+message DonacionId {
+    int32 id = 1;
+}
+
 message Donacion {
     int32 id = 1;
     Categoria categoria = 2;
@@ -41,6 +45,10 @@ message Donacion {
     int32 cantidad = 4;
     bool eliminado = 5;
     Usuario usuario = 6;
+}
+
+message DonacionList {
+    repeated Donacion donacion = 1;
 }
 	
 message Categoria {
@@ -55,5 +63,8 @@ service ManagerService{
   rpc insertOrUpdateUser (Usuario) returns (Usuario) {};
   rpc deleteUser (UserId) returns (Usuario) {};
   rpc insertOrUpdateDonacion (Donacion) returns (Donacion) {};
+  rpc getDonacionById (DonacionId) returns (Donacion) {};
+  rpc getAllDonaciones (Empty) returns (DonacionList) {};  
+  rpc deleteDonacion (DonacionId) returns (Donacion) {};
   //AGREGAR ACA TODOS LOS SERVICIOS
 }
