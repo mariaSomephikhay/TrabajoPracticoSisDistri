@@ -4,9 +4,14 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.grupoK.Tp1SistemasDistribuidos.entities.Categoria;
+import com.grupoK.Tp1SistemasDistribuidos.entities.Donacion;
 import com.grupoK.Tp1SistemasDistribuidos.entities.Rol;
 import com.grupoK.Tp1SistemasDistribuidos.entities.Usuario;
+import com.grupoK.Tp1SistemasDistribuidos.enums.TipoCategoria;
 import com.grupoK.Tp1SistemasDistribuidos.enums.TipoRoles;
+import com.grupoK.Tp1SistemasDistribuidos.repositories.ICategoriaRepository;
+import com.grupoK.Tp1SistemasDistribuidos.repositories.IDonacionRepository;
 import com.grupoK.Tp1SistemasDistribuidos.repositories.IRolRepository;
 import com.grupoK.Tp1SistemasDistribuidos.repositories.IUsuarioRepository;
 
@@ -49,6 +54,33 @@ public class DataInitializer {
                         null,
                         voluntario
                 ));
+            }
+        };
+    }
+    
+    @Bean
+    CommandLineRunner initDataDonacion(ICategoriaRepository cateRepo, IDonacionRepository donacionRepo, IUsuarioRepository usuarioRepo) {
+        return args -> {
+            if (cateRepo.count() == 0) {
+                Categoria alimento = cateRepo.save(new Categoria(null, TipoCategoria.ALIMENTO));
+                cateRepo.save(new Categoria(null, TipoCategoria.JUGUETE));
+                cateRepo.save(new Categoria(null, TipoCategoria.ROPA));
+                cateRepo.save(new Categoria(null, TipoCategoria.UTIL_ESCOLAR));
+                Usuario usuario = (usuarioRepo.findByUsername("user1")).get();
+                
+                donacionRepo.save(new Donacion(
+                        null,	// id
+                        alimento, // categoria
+                        "Pure de tomates", // descripcion
+                        3, // cantidad
+                        false,   // eliminado
+                        null,          // fechaAlta (se genera sola)
+                        usuario,
+                        null,
+                        usuario
+                ));
+
+              
             }
         };
     }
