@@ -9,9 +9,16 @@ export const Nav = () => {
   return (
     <nav className="navbar navbar-expand-md navbar-dark bg-primary">
       <div className="container-fluid">
-        <NavLink className="navbar-brand" to="/">
-          <img src="/img/home.png" height="30" alt="Home Icon" />
-        </NavLink>
+        {isAuthenticated ? (
+          <NavLink className="navbar-brand" to="/">
+            <img src="/img/home.png" height="30" alt="Home Icon" />
+          </NavLink>
+        ) : (
+          <NavLink className="navbar-brand" to="/login">
+            <img src="/img/home.png" height="30" alt="Home Icon" />
+          </NavLink>        
+          )}
+
 
         <div className="collapse navbar-collapse" id="navbarCollapse">
           <ul className="navbar-nav me-auto mb-2 mb-md-0">

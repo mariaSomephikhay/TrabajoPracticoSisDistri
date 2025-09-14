@@ -3,14 +3,14 @@ import { jwtDecode } from "jwt-decode"
 import { useNavigate } from "react-router-dom"
 import { userApi, setAuthToken as setApiAuthToken } from "../api/ApiSwagger.js"
 
-export const AuthContext = createContext();
+export const AuthContext = createContext()
 
 export const AuthProvider = ({ children }) => {
   const navigate = useNavigate()
 
   const [authToken, setAuthTokenState] = useState(() =>
     localStorage.getItem("authToken") || null
-  );
+  )
   const [user, setUser] = useState(null)
 
   // Actualiza token en localStorage y en ApiClient
@@ -36,7 +36,7 @@ export const AuthProvider = ({ children }) => {
       setUser(null)
       setApiAuthToken(null)
     }
-  }, [authToken]);
+  }, [authToken])
 
   const login = async (username, password) => {
     try {
@@ -45,17 +45,17 @@ export const AuthProvider = ({ children }) => {
       const token = tokenResponse.token
 
       setAuthTokenState(token);
-      navigate("/"); // Redirige a home
+      navigate("/") // Redirige a home
     } catch (err) {
       console.error("Error en login:", err)
       throw err
     }
-  };
+  }
 
   const logout = () => {
     setAuthTokenState(null)
     navigate("/login")
-  };
+  }
 
   return (
     <AuthContext.Provider
@@ -69,5 +69,5 @@ export const AuthProvider = ({ children }) => {
     >
       {children}
     </AuthContext.Provider>
-  );
-};
+  )
+}

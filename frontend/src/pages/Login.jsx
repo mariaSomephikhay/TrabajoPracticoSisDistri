@@ -1,9 +1,10 @@
 import React, { useState, useContext } from "react"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, NavLink } from "react-router-dom"
 import { AuthContext } from "../context/AuthContext.jsx"
+import { Title } from "../components/ui/Title.jsx"
 
 export const Login = () => {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   const { login } = useContext(AuthContext)
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
@@ -11,10 +12,10 @@ export const Login = () => {
 
   const handleLoginUser = async (e) => {
     e.preventDefault()
-    setError(null); // Reset error al intentar loguearse
+    setError(null) // Reset error al intentar loguearse
     try {
       await login(username, password)
-      navigate("/"); // Redirige al home
+      navigate("/") // Redirige al home
     } catch (err) {
       setError("Usuario o contraseña incorrectos")
     }
@@ -22,8 +23,9 @@ export const Login = () => {
 
   return (
     <div className="d-flex justify-content-center align-items-center min-vh-100 bg-light">
-      <div className="card shadow-lg p-4" style={{ minWidth: "350px" }}>
-        <h2 className="text-center mb-4">Iniciar Sesión</h2>
+      <div className="card shadow-lg p-4" style={{ minWidth: "350px", borderRadius: "1rem" }}>
+      <Title level="h2" text="Registrarse en el sistema" className="mb-4 text-center" />
+        
         <form onSubmit={handleLoginUser}>
           <div className="mb-3">
             <input
@@ -50,6 +52,14 @@ export const Login = () => {
             Ingresar
           </button>
         </form>
+
+        {/* Mensaje debajo */}
+        <p className="text-center mt-3 mb-0">
+          ¿No tienes una cuenta?{" "}
+          <NavLink className="fw-bold text-decoration-none" to="/register">
+            Regístrate
+          </NavLink>
+        </p>
       </div>
     </div>
   )
