@@ -75,5 +75,16 @@ public class UsuarioService implements IUsuarioService {
 		else
 			return user.get();
 	}
+
+
+
+	@Override
+	public Usuario delete(Integer id) {
+		Usuario user = this.findById(id);
+		user.setActivo(false);
+		usuarioRepository.save(user);
+		return user;
+	}
+
 	
 }
