@@ -62,5 +62,10 @@ public class ManagerServiceImpl extends ManagerServiceGrpc.ManagerServiceImplBas
         responseObserver.onCompleted();
 	}
 
-    
+	@Override
+    public void deleteUser(UserId request, StreamObserver<com.grupoK.grpc.Usuario> responseObserver) {
+		Usuario userDelete = usuarioService.delete(request.getId());
+		responseObserver.onNext(usuarioWrapper.toGrpcUsuario(userDelete));
+		responseObserver.onCompleted();
+    }
 }

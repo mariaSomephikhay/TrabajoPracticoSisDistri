@@ -10,4 +10,5 @@ public interface IUsuarioService {
 	Usuario findById(Integer id);
 	Usuario findByUsername(String username);
 	Usuario saveOrUpdate(Usuario usuario);
+	Usuario delete(Integer id);
 }
