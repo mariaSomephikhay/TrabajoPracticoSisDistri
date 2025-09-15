@@ -55,8 +55,7 @@ public class EventoService implements IEventoService{
 
 	@Override
 	public Evento detele(Evento evento) throws Exception {
-		
-		if(evento.getFecha().isBefore(LocalDateTime.now())) {
+		if(evento.getFecha().isAfter(LocalDateTime.now())) {
 			eventoRepository.delete(evento);
 		}else {
 			throw new Exception ("La fecha del evento es igual al dia de hoy o anterior");
