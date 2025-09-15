@@ -5,6 +5,7 @@ option  java_multiple_files=true;
 option java_package="com.grupoK.grpc";
 option  java_outer_classname="ManagerServiceProto";
 
+import "google/protobuf/timestamp.proto";
 
 //PARA CUANDO ES NULO
 message Empty{}
@@ -65,6 +66,20 @@ message Categoria {
     string descripcion = 2;
 }
 
+//------------EVENTO-----------//
+
+message Evento {
+    int32 id = 1;
+    string nombre = 2;
+    string descripcion = 3;
+    google.protobuf.Timestamp fecha = 4;
+    Usuario usuario = 6;
+}
+
+message EventoId {
+    int32 id = 1;
+}
+
 service ManagerService{
   rpc getUserByUsername (UserUsername) returns (Usuario) {};
   rpc getUserById (UserId) returns (Usuario) {};
@@ -75,6 +90,10 @@ service ManagerService{
   rpc getDonacionById (DonacionId) returns (Donacion) {};
   rpc getAllDonaciones (Empty) returns (DonacionList) {};  
   rpc deleteDonacion (DonacionIdUsu) returns (Donacion) {};
+  
+  //------------EVENTO-----------//
+  rpc insertOrUpdateEvento (Evento) returns (Evento) {};
+  rpc deleteEventos(EventoId) returns (Evento) {}; //se agrega "s" porque el gen da error con el nombre "deleteEvento"
   //AGREGAR ACA TODOS LOS SERVICIOS
   
 }

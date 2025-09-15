@@ -6,13 +6,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.grpc.server.service.GrpcService;
 
 import com.grupoK.Tp1SistemasDistribuidos.entities.Donacion;
+import com.grupoK.Tp1SistemasDistribuidos.entities.Evento;
 import com.grupoK.Tp1SistemasDistribuidos.entities.Usuario;
 import com.grupoK.Tp1SistemasDistribuidos.exceptions.UserEmailAlreadyExistsException;
 import com.grupoK.Tp1SistemasDistribuidos.exceptions.UserNotFoundException;
 import com.grupoK.Tp1SistemasDistribuidos.exceptions.UserUsernameAlreadyExistsException;
 import com.grupoK.Tp1SistemasDistribuidos.serviceImp.DonacionService;
+import com.grupoK.Tp1SistemasDistribuidos.serviceImp.EventoService;
 import com.grupoK.Tp1SistemasDistribuidos.serviceImp.UsuarioService;
 import com.grupoK.Tp1SistemasDistribuidos.wrappers.DonacionWrapper;
+import com.grupoK.Tp1SistemasDistribuidos.wrappers.EventoWrapper;
 import com.grupoK.Tp1SistemasDistribuidos.wrappers.UsuarioWrapper;
 import com.grupoK.grpc.DonacionId;
 import com.grupoK.grpc.DonacionIdUsu;
@@ -32,10 +35,16 @@ public class ManagerServiceImpl extends ManagerServiceGrpc.ManagerServiceImplBas
 	private UsuarioService usuarioService;
 	@Autowired
 	private UsuarioWrapper usuarioWrapper;
+	
 	@Autowired
 	private DonacionService donacionService;
 	@Autowired
 	private DonacionWrapper donacionWrapper;
+	
+	@Autowired
+	private EventoService eventoService;
+	@Autowired
+	private EventoWrapper eventoWrapper;
 	
 	@Override
 	public void getUserById(UserId request, StreamObserver<com.grupoK.grpc.Usuario> responseObserver) {
@@ -198,5 +207,35 @@ public class ManagerServiceImpl extends ManagerServiceGrpc.ManagerServiceImplBas
 		        );
 		}
     }
+	
+	//------------EVENTO-----------//
+		@Override
+		public void insertOrUpdateEvento(com.grupoK.grpc.Evento request, StreamObserver<com.grupoK.grpc.Evento> responseObserver) {
+			// request -> DB -> map response -> return
+			Evento newEvento;
+			try {
+				newEvento = eventoService.saveOrUpdate(eventoWrapper.toEntityEvento(request));
+				responseObserver.onNext(eventoWrapper.toGrpcEvento(newEvento));
+			    responseObserver.onCompleted();
+			} catch (Exception e) {
+				responseObserver.onError(io.grpc.Status.INVALID_ARGUMENT
+			              				.withDescription(e.getMessage())
+			              				.asRuntimeException());
+			}
+		}
+		
+		@Override
+		public void deleteEventos(com.grupoK.grpc.EventoId request,io.grpc.stub.StreamObserver<com.grupoK.grpc.Evento> responseObserver) {
+			try {
+				Evento evento = eventoService.findById(request.getId());
+				eventoService.detele(evento);
+				responseObserver.onNext(eventoWrapper.toGrpcEvento(evento));
+			    responseObserver.onCompleted();
+			} catch (Exception e) {
+				responseObserver.onError(io.grpc.Status.FAILED_PRECONDITION
+			              				.withDescription(e.getMessage())
+			              				.asRuntimeException());
+			}
+		}
 	
 }
