@@ -27,6 +27,7 @@ public class UsuarioWrapper {
     }
     
     public Usuario toEntityUsuario(com.grupoK.grpc.Usuario userModel) {
+    	System.out.println("rol" + userModel.getRol());
     	return new Usuario(
     			userModel.getId(), 
     			userModel.getUsername(), 

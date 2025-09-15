@@ -51,7 +51,7 @@ public class Donacion {
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="id_usuario_alta",nullable=false)
-	private Usuario idUsuarioAlta;
+	private Usuario usuarioAlta;
 	
 	@UpdateTimestamp
 	@Column(name="fecha_modificacion", nullable=true)
@@ -60,7 +60,7 @@ public class Donacion {
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="id_usuario_modificacion",nullable=false)
-	private Usuario idUsuarioModificacion;
+	private Usuario usuarioModificacion;
 	
 
 }
