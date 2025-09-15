@@ -1,5 +1,6 @@
 package com.grupoK.Tp1SistemasDistribuidos.entities;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -22,49 +23,44 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor
-
 @Entity
-@Table(name = "usuario")
-public class Usuario {
+@Table(name = "donacion")
+public class Donacion {
 	@NonNull
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@Column(name="username", unique = true, nullable=false, length=15)
-	private String username;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="id_categoria",nullable=false)
+	private Categoria categoria;
 	
-	@Column(name="password", nullable=false, length=60)
-	private String password;
+	@Column(name="descripcion", nullable=false, length=25)
+	private String descripcion;
 	
-	@Column(name="email", unique = true, nullable=false, length=25)
-	private String email;
+	@Column(name="cantidad", nullable=false)
+	private int cantidad;
 	
-	@Column(name="nombre", nullable=false, length=25)
-	private String nombre;
-	
-	@Column(name="apellido", nullable=false, length=25)
-	private String apellido;
-	
-	@Column(name="telefono", nullable=true, length=10)
-	private String telefono;
-	
-	@Column(name="activo", nullable=false)
-	private Boolean activo;
+	@Column(name="eliminado", nullable=false)
+	private Boolean eliminado;
 	
 	@CreationTimestamp
 	@Column(name="fecha_alta", nullable=true)
 	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm")
 	private LocalDateTime fechaAlta;
 	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="id_usuario_alta",nullable=false)
+	private Usuario usuarioAlta;
+	
 	@UpdateTimestamp
 	@Column(name="fecha_modificacion", nullable=true)
 	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm")
 	private LocalDateTime fechaModificacion;
 	
-	
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="id_rol",nullable=false)
-	private Rol rol;
+	@JoinColumn(name="id_usuario_modificacion",nullable=false)
+	private Usuario usuarioModificacion;
 	
+
 }

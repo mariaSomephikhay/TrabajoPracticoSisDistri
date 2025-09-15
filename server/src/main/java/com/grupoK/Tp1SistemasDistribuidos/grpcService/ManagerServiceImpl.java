@@ -5,9 +5,21 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.grpc.server.service.GrpcService;
 
+import com.grupoK.Tp1SistemasDistribuidos.entities.Donacion;
+import com.grupoK.Tp1SistemasDistribuidos.entities.Evento;
 import com.grupoK.Tp1SistemasDistribuidos.entities.Usuario;
+import com.grupoK.Tp1SistemasDistribuidos.exceptions.UserEmailAlreadyExistsException;
+import com.grupoK.Tp1SistemasDistribuidos.exceptions.UserNotFoundException;
+import com.grupoK.Tp1SistemasDistribuidos.exceptions.UserUsernameAlreadyExistsException;
+import com.grupoK.Tp1SistemasDistribuidos.serviceImp.DonacionService;
+import com.grupoK.Tp1SistemasDistribuidos.serviceImp.EventoService;
 import com.grupoK.Tp1SistemasDistribuidos.serviceImp.UsuarioService;
+import com.grupoK.Tp1SistemasDistribuidos.wrappers.DonacionWrapper;
+import com.grupoK.Tp1SistemasDistribuidos.wrappers.EventoWrapper;
 import com.grupoK.Tp1SistemasDistribuidos.wrappers.UsuarioWrapper;
+import com.grupoK.grpc.DonacionId;
+import com.grupoK.grpc.DonacionIdUsu;
+import com.grupoK.grpc.DonacionList;
 import com.grupoK.grpc.Empty;
 import com.grupoK.grpc.ManagerServiceGrpc;
 import com.grupoK.grpc.UserId;
@@ -24,48 +36,206 @@ public class ManagerServiceImpl extends ManagerServiceGrpc.ManagerServiceImplBas
 	@Autowired
 	private UsuarioWrapper usuarioWrapper;
 	
+	@Autowired
+	private DonacionService donacionService;
+	@Autowired
+	private DonacionWrapper donacionWrapper;
+	
+	@Autowired
+	private EventoService eventoService;
+	@Autowired
+	private EventoWrapper eventoWrapper;
+	
 	@Override
 	public void getUserById(UserId request, StreamObserver<com.grupoK.grpc.Usuario> responseObserver) {
         // request -> DB -> map response -> return
-		Usuario user = usuarioService.findById(request.getId());
-        responseObserver.onNext(user != null ? usuarioWrapper.toGrpcUsuario(user) : null);
-        responseObserver.onCompleted();
+		try {
+			Usuario user = usuarioService.findById(request.getId());
+	        responseObserver.onNext(usuarioWrapper.toGrpcUsuario(user));
+	        responseObserver.onCompleted();
+		} catch (UserNotFoundException e) {
+	        responseObserver.onError(io.grpc.Status.NOT_FOUND
+	                .withDescription(e.getMessage())
+	                .asRuntimeException());
+		} catch (Exception e) {
+	        responseObserver.onError(io.grpc.Status.INTERNAL
+	                .withDescription("Internal server error: " + e.getMessage())
+	                .asRuntimeException());
+		}
 	}
 	
 	@Override
 	public void getUserByUsername(UserUsername request, StreamObserver<com.grupoK.grpc.Usuario> responseObserver) {
         // request -> DB -> map response -> return
-		Usuario user = usuarioService.findByUsername(request.getUsername());
-        responseObserver.onNext(user != null ? usuarioWrapper.toGrpcUsuario(user) : null);
-        responseObserver.onCompleted();
+		try {
+			Usuario user = usuarioService.findByUsername(request.getUsername());
+	        responseObserver.onNext(usuarioWrapper.toGrpcUsuario(user));
+	        responseObserver.onCompleted();
+		} catch (UserNotFoundException e) {
+	        responseObserver.onError(io.grpc.Status.NOT_FOUND
+	                .withDescription(e.getMessage())
+	                .asRuntimeException());
+		} catch (Exception e) {
+	        responseObserver.onError(io.grpc.Status.INTERNAL
+	                .withDescription("Internal server error: " + e.getMessage())
+	                .asRuntimeException());
+		}
+
 	}
 	
     @Override
     public void getAllUsers(Empty request, StreamObserver<UsuarioList> responseObserver) {
-
         // request -> DB -> map response -> return
-        List<Usuario> users = usuarioService.findAll();
+    	try {
+            List<Usuario> users = usuarioService.findAll();
+            
+            UsuarioList response = UsuarioList.newBuilder()
+                    .addAllUsuarios(users.stream()
+                    		.map(usuarioWrapper::toGrpcUsuario).toList())
+                    .build();
+            responseObserver.onNext(response);
+            responseObserver.onCompleted();
+		} catch (Exception e) {
+	        responseObserver.onError(io.grpc.Status.INTERNAL
+	                .withDescription("Internal server error: " + e.getMessage())
+	                .asRuntimeException());
+		}
 
-        UsuarioList response = UsuarioList.newBuilder()
-                .addAllUsuarios(users.stream()
-                		.map(usuarioWrapper::toGrpcUsuario).toList())
-                .build();
-        responseObserver.onNext(response);
-        responseObserver.onCompleted();
     }
 	
 	@Override
 	public void insertOrUpdateUser(com.grupoK.grpc.Usuario request, StreamObserver<com.grupoK.grpc.Usuario> responseObserver) {
         // request -> DB -> map response -> return
-		Usuario newUser = usuarioService.saveOrUpdate(usuarioWrapper.toEntityUsuario(request));
-        responseObserver.onNext(usuarioWrapper.toGrpcUsuario(newUser));
-        responseObserver.onCompleted();
+	    try {
+	        Usuario newUser = usuarioService.saveOrUpdate(usuarioWrapper.toEntityUsuario(request));
+	        responseObserver.onNext(usuarioWrapper.toGrpcUsuario(newUser));
+	        responseObserver.onCompleted();
+	    } catch (UserUsernameAlreadyExistsException | UserEmailAlreadyExistsException e) {
+	        responseObserver.onError(io.grpc.Status.ALREADY_EXISTS
+	                .withDescription(e.getMessage())
+	                .asRuntimeException());
+	    } catch (UserNotFoundException e) {
+	        responseObserver.onError(io.grpc.Status.NOT_FOUND
+	                .withDescription(e.getMessage())
+	                .asRuntimeException());
+	    } catch (Exception e) {
+	        // Error general
+	        responseObserver.onError(io.grpc.Status.INTERNAL
+	                .withDescription("Internal server error: " + e.getMessage())
+	                .asRuntimeException());
+	    }
 	}
 
 	@Override
     public void deleteUser(UserId request, StreamObserver<com.grupoK.grpc.Usuario> responseObserver) {
-		Usuario userDelete = usuarioService.delete(request.getId());
-		responseObserver.onNext(usuarioWrapper.toGrpcUsuario(userDelete));
-		responseObserver.onCompleted();
+		try {
+			Usuario userDelete = usuarioService.delete(request.getId());
+			responseObserver.onNext(usuarioWrapper.toGrpcUsuario(userDelete));
+			responseObserver.onCompleted();
+		} catch (UserNotFoundException e) {
+	        responseObserver.onError(io.grpc.Status.NOT_FOUND
+	                .withDescription(e.getMessage())
+	                .asRuntimeException());
+		} catch (Exception e) {
+	        responseObserver.onError(io.grpc.Status.INTERNAL
+	                .withDescription("Internal server error: " + e.getMessage())
+	                .asRuntimeException());
+		}
+
     }
+	
+	/**************************************************************************************************/
+	
+	@Override
+	public void insertOrUpdateDonacion(com.grupoK.grpc.Donacion request, StreamObserver<com.grupoK.grpc.Donacion> responseObserver) {
+        // request -> DB -> map response -> return
+		try {
+		Donacion newDonacion = donacionService.saveOrUpdate(donacionWrapper.toEntityDonacion(request));
+        responseObserver.onNext(donacionWrapper.toGrpcDonacion(newDonacion));
+        responseObserver.onCompleted();
+		}
+		catch (Exception e) {
+			responseObserver.onError(io.grpc.Status.INVALID_ARGUMENT
+		                .withDescription(e.getMessage())
+		                .asRuntimeException()
+		        );
+		}
+	}
+	
+	@Override
+	public void getDonacionById(DonacionId request, StreamObserver<com.grupoK.grpc.Donacion> responseObserver) {
+        // request -> DB -> map response -> return
+		try {
+	    Donacion donacion = donacionService.findById(request.getId());
+        responseObserver.onNext(donacion != null ? donacionWrapper.toGrpcDonacion(donacion) : null);
+        responseObserver.onCompleted();
+		}
+		catch (Exception e) {
+			responseObserver.onError(io.grpc.Status.NOT_FOUND
+		                .withDescription(e.getMessage())
+		                .asRuntimeException()
+		        );
+		}
+	}
+	
+    @Override
+    public void getAllDonaciones(Empty request, StreamObserver<DonacionList> responseObserver) {
+
+        // request -> DB -> map response -> return
+        List<Donacion> donaciones = donacionService.findAll();
+
+        DonacionList response = DonacionList.newBuilder()
+                .addAllDonacion(donaciones.stream()
+                		.map(donacionWrapper::toGrpcDonacion).toList())
+                .build();
+        responseObserver.onNext(response);
+        responseObserver.onCompleted();
+    }
+    
+	@Override
+    public void deleteDonacion(DonacionIdUsu request, StreamObserver<com.grupoK.grpc.Donacion> responseObserver) {
+		try {
+			System.out.println("usu"+request.getUsuario());
+		Donacion donacionDelete = donacionService.delete(request.getId(), usuarioWrapper.toEntityUsuario(request.getUsuario()));
+		responseObserver.onNext(donacionWrapper.toGrpcDonacion(donacionDelete));
+		responseObserver.onCompleted();
+		}
+		catch (Exception e) {
+			responseObserver.onError(io.grpc.Status.NOT_FOUND
+		                .withDescription(e.getMessage())
+		                .asRuntimeException()
+		        );
+		}
+    }
+	
+	//------------EVENTO-----------//
+		@Override
+		public void insertOrUpdateEvento(com.grupoK.grpc.Evento request, StreamObserver<com.grupoK.grpc.Evento> responseObserver) {
+			// request -> DB -> map response -> return
+			Evento newEvento;
+			try {
+				newEvento = eventoService.saveOrUpdate(eventoWrapper.toEntityEvento(request));
+				responseObserver.onNext(eventoWrapper.toGrpcEvento(newEvento));
+			    responseObserver.onCompleted();
+			} catch (Exception e) {
+				responseObserver.onError(io.grpc.Status.INVALID_ARGUMENT
+			              				.withDescription(e.getMessage())
+			              				.asRuntimeException());
+			}
+		}
+		
+		@Override
+		public void deleteEventos(com.grupoK.grpc.EventoId request,io.grpc.stub.StreamObserver<com.grupoK.grpc.Evento> responseObserver) {
+			try {
+				Evento evento = eventoService.findById(request.getId());
+				eventoService.detele(evento);
+				responseObserver.onNext(eventoWrapper.toGrpcEvento(evento));
+			    responseObserver.onCompleted();
+			} catch (Exception e) {
+				responseObserver.onError(io.grpc.Status.FAILED_PRECONDITION
+			              				.withDescription(e.getMessage())
+			              				.asRuntimeException());
+			}
+		}
+	
 }
