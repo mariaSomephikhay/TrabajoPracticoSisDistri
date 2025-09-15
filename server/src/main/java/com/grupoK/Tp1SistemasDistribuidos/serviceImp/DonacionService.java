@@ -23,13 +23,14 @@ public class DonacionService implements IDonacionService{
 		if (donacion.getCantidad()<0) throw new Exception("La cantidad no puede ser negativa");
 		if(donacion.getId() == 0 || donacion.getId() == null) {
 			donacion.setId(null); //Proto lo devuelve con un 0
-			donacion.setIdUsuarioAlta(donacion.getIdUsuarioModificacion());
+			donacion.setUsuarioAlta(donacion.getUsuarioModificacion());
         	return donacionRepository.save(donacion);
         }
         else {
-        	Donacion donacionActual = (donacionRepository.findById(donacion.getId())).get();
-        	map(donacionActual, donacion);
-        	return donacionRepository.save(donacionActual);
+        	Optional<Donacion> donacionActual = (donacionRepository.findById(donacion.getId()));
+        	if (donacionActual.isEmpty()) throw new Exception("Donacion no encontrada");
+        	map(donacionActual.get(), donacion);
+        	return donacionRepository.save(donacionActual.get());
         }
 	}
 	
@@ -38,8 +39,8 @@ public class DonacionService implements IDonacionService{
 			preUpdated.setDescripcion(updated.getDescripcion());
 		if(updated.getCantidad()>0)
 			preUpdated.setCantidad(updated.getCantidad());
-		if(updated.getIdUsuarioModificacion()!=null)
-			preUpdated.setIdUsuarioModificacion(updated.getIdUsuarioModificacion());
+		if(updated.getUsuarioModificacion()!=null)
+			preUpdated.setUsuarioModificacion(updated.getUsuarioModificacion());
 	}
 
 	@Override
@@ -55,10 +56,11 @@ public class DonacionService implements IDonacionService{
 	}
 
 	@Override
-	public Donacion delete(Integer id) throws Exception {
+	public Donacion delete(Integer id, Usuario usuario) throws Exception {
 		try {
 		Donacion donacion = this.findById(id);
 		donacion.setEliminado(true);
+		donacion.setUsuarioModificacion(usuario);
 		donacionRepository.save(donacion);
 		return donacion;
 		}catch (Exception e) {
