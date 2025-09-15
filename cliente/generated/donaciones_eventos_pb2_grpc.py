@@ -79,6 +79,16 @@ class ManagerServiceStub(object):
                 request_serializer=donaciones__eventos__pb2.DonacionIdUsu.SerializeToString,
                 response_deserializer=donaciones__eventos__pb2.Donacion.FromString,
                 _registered_method=True)
+        self.insertOrUpdateEvento = channel.unary_unary(
+                '/managerservice.ManagerService/insertOrUpdateEvento',
+                request_serializer=donaciones__eventos__pb2.Evento.SerializeToString,
+                response_deserializer=donaciones__eventos__pb2.Evento.FromString,
+                _registered_method=True)
+        self.deleteEventos = channel.unary_unary(
+                '/managerservice.ManagerService/deleteEventos',
+                request_serializer=donaciones__eventos__pb2.EventoId.SerializeToString,
+                response_deserializer=donaciones__eventos__pb2.Evento.FromString,
+                _registered_method=True)
 
 
 class ManagerServiceServicer(object):
@@ -138,6 +148,19 @@ class ManagerServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def insertOrUpdateEvento(self, request, context):
+        """------------EVENTO-----------//
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def deleteEventos(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_ManagerServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -185,6 +208,16 @@ def add_ManagerServiceServicer_to_server(servicer, server):
                     servicer.deleteDonacion,
                     request_deserializer=donaciones__eventos__pb2.DonacionIdUsu.FromString,
                     response_serializer=donaciones__eventos__pb2.Donacion.SerializeToString,
+            ),
+            'insertOrUpdateEvento': grpc.unary_unary_rpc_method_handler(
+                    servicer.insertOrUpdateEvento,
+                    request_deserializer=donaciones__eventos__pb2.Evento.FromString,
+                    response_serializer=donaciones__eventos__pb2.Evento.SerializeToString,
+            ),
+            'deleteEventos': grpc.unary_unary_rpc_method_handler(
+                    servicer.deleteEventos,
+                    request_deserializer=donaciones__eventos__pb2.EventoId.FromString,
+                    response_serializer=donaciones__eventos__pb2.Evento.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -430,6 +463,60 @@ class ManagerService(object):
             '/managerservice.ManagerService/deleteDonacion',
             donaciones__eventos__pb2.DonacionIdUsu.SerializeToString,
             donaciones__eventos__pb2.Donacion.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def insertOrUpdateEvento(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/managerservice.ManagerService/insertOrUpdateEvento',
+            donaciones__eventos__pb2.Evento.SerializeToString,
+            donaciones__eventos__pb2.Evento.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def deleteEventos(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/managerservice.ManagerService/deleteEventos',
+            donaciones__eventos__pb2.EventoId.SerializeToString,
+            donaciones__eventos__pb2.Evento.FromString,
             options,
             channel_credentials,
             insecure,
