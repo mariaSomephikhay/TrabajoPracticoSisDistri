@@ -15,6 +15,7 @@ python-decouple = "*"
 bcrypt = "*"
 grpcio-tools = "*"
 pyjwt = "*"
+email-validator = "*"
 
 [dev-packages]
 

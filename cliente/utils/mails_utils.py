@@ -1,5 +1,6 @@
 from decouple import config
 import smtplib
+from email_validator import validate_email, EmailNotValidError
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
@@ -7,7 +8,17 @@ class MailSendError(Exception):
     """Excepción personalizada para errores de envío de correo"""
     def __init__(self, message, code=None):
         super().__init__(message)
-        self.code = code  # opcional, para distinguir tipo de error
+        self.code = code
+
+def validarEmail(email: str) -> str:
+    """
+    Valida que el email tenga un formato correcto.
+    """
+    try:
+        validate_email(email)
+        return email
+    except EmailNotValidError as e:
+        raise MailSendError(f"Correo inválido: {e}", code=400)
 
 def enviarPasswordPorEmail(email_destino, usuario_nombre, password):
     """
