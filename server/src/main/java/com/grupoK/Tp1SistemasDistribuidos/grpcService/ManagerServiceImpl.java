@@ -12,6 +12,7 @@ import com.grupoK.Tp1SistemasDistribuidos.serviceImp.UsuarioService;
 import com.grupoK.Tp1SistemasDistribuidos.wrappers.DonacionWrapper;
 import com.grupoK.Tp1SistemasDistribuidos.wrappers.UsuarioWrapper;
 import com.grupoK.grpc.DonacionId;
+import com.grupoK.grpc.DonacionIdUsu;
 import com.grupoK.grpc.DonacionList;
 import com.grupoK.grpc.Empty;
 import com.grupoK.grpc.ManagerServiceGrpc;
@@ -125,9 +126,10 @@ public class ManagerServiceImpl extends ManagerServiceGrpc.ManagerServiceImplBas
     }
     
 	@Override
-    public void deleteDonacion(DonacionId request, StreamObserver<com.grupoK.grpc.Donacion> responseObserver) {
+    public void deleteDonacion(DonacionIdUsu request, StreamObserver<com.grupoK.grpc.Donacion> responseObserver) {
 		try {
-		Donacion donacionDelete = donacionService.delete(request.getId());
+			System.out.println("usu"+request.getUsuario());
+		Donacion donacionDelete = donacionService.delete(request.getId(), usuarioWrapper.toEntityUsuario(request.getUsuario()));
 		responseObserver.onNext(donacionWrapper.toGrpcDonacion(donacionDelete));
 		responseObserver.onCompleted();
 		}
