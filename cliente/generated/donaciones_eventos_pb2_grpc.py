@@ -76,7 +76,7 @@ class ManagerServiceStub(object):
                 _registered_method=True)
         self.deleteDonacion = channel.unary_unary(
                 '/managerservice.ManagerService/deleteDonacion',
-                request_serializer=donaciones__eventos__pb2.DonacionId.SerializeToString,
+                request_serializer=donaciones__eventos__pb2.DonacionIdUsu.SerializeToString,
                 response_deserializer=donaciones__eventos__pb2.Donacion.FromString,
                 _registered_method=True)
 
@@ -183,7 +183,7 @@ def add_ManagerServiceServicer_to_server(servicer, server):
             ),
             'deleteDonacion': grpc.unary_unary_rpc_method_handler(
                     servicer.deleteDonacion,
-                    request_deserializer=donaciones__eventos__pb2.DonacionId.FromString,
+                    request_deserializer=donaciones__eventos__pb2.DonacionIdUsu.FromString,
                     response_serializer=donaciones__eventos__pb2.Donacion.SerializeToString,
             ),
     }
@@ -428,7 +428,7 @@ class ManagerService(object):
             request,
             target,
             '/managerservice.ManagerService/deleteDonacion',
-            donaciones__eventos__pb2.DonacionId.SerializeToString,
+            donaciones__eventos__pb2.DonacionIdUsu.SerializeToString,
             donaciones__eventos__pb2.Donacion.FromString,
             options,
             channel_credentials,
