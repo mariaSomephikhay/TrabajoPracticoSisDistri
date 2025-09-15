@@ -38,8 +38,8 @@ class DonacionInsert(Resource):
     @api.doc(security='Bearer Auth') # Esto hace que Swagger agregue el header para el token
     @SecurityConfig.authRequired("PRESIDENTE", "VOCAL")
     @api.response(201, "Created", model=donacionDto)
-    @api.response(400, "Unauthorized", model=errorDto)
-    @api.response(401, "Bad Request", model=errorDto)
+    @api.response(401, "Unauthorized", model=errorDto)
+    @api.response(400, "Bad Request", model=errorDto)
     @api.response(500, "Internal server error", model=errorDto)
     def post(self):
         """Insertar una nueva donacion"""
@@ -66,7 +66,7 @@ class Donacion(Resource):
     @api.doc(security='Bearer Auth') # Esto hace que Swagger agregue el header para el token
     @SecurityConfig.authRequired("PRESIDENTE", "VOCAL")
     @api.response(200, "Success", model=donacionDto)
-    @api.response(400, "Unauthorized", model=errorDto)
+    @api.response(401, "Unauthorized", model=errorDto)
     @api.response(404, "Not Found", model=errorDto)
     @api.response(500, "Internal server error", model=errorDto)
     def get(self, id):
@@ -85,8 +85,8 @@ class Donacion(Resource):
     @SecurityConfig.authRequired("PRESIDENTE", "VOCAL")
     @api.expect(donacionDto) #Request
     @api.response(200, "Success", model=donacionDto)
-    @api.response(400, "Unauthorized", model=errorDto)
-    @api.response(401, "Bad Request", model=errorDto)
+    @api.response(401, "Unauthorized", model=errorDto)
+    @api.response(400, "Bad Request", model=errorDto)
     @api.response(500, "Internal server error", model=errorDto)
     def put(self, id):
         """Actualizar un donacion"""
@@ -104,6 +104,52 @@ class Donacion(Resource):
         except Exception as e:
             if e.code() == grpc.StatusCode.UNAUTHENTICATED:
                 return  {"error": str(e.details())}, 401
+            elif e.code() == grpc.StatusCode.INVALID_ARGUMENT:
+                return  {"error": str(e.details())}, 400
             else:
-                print(e)
                 return {"error": str(e.details())}, 500
+
+@api.route("/delete/<int:id>")
+class User(Resource):
+    @api.doc(security='Bearer Auth') # Esto hace que Swagger agregue el header para el token
+    @SecurityConfig.authRequired("PRESIDENTE", "VOCAL")
+    @api.response(200, "Success", model=donacionDto)
+    @api.response(401, "Unauthorized", model=errorDto)
+    @api.response(404, "Not Found", model=errorDto)
+    @api.response(500, "Internal server error", model=errorDto)
+    def delete(self, id):
+        """Eliminar donacion"""
+        try:
+            payload = {"id": id}  # solo necesitas el id
+            username = SecurityConfig.getUser()
+            usuario = json.loads(cliente.getUserByUsername(username))
+            payload["usuario"] = usuario
+            print(payload)
+            result = cliente.deleteDonacion(payload)
+            return json.loads(result), 200
+        except Exception as e:
+            if e.code() == grpc.StatusCode.UNAUTHENTICATED:
+                return  {"error": str(e.details())}, 401
+            elif e.code() == grpc.StatusCode.NOT_FOUND:
+                return  {"error": str(e.details())}, 404
+            else:
+                return {"error": str(e.details())}, 500
+
+
+@api.route("/")
+class DonacionList(Resource):
+    @api.doc(security='Bearer Auth') # Esto hace que Swagger agregue el header para el token
+    @SecurityConfig.authRequired("PRESIDENTE", "VOCAL")
+    @api.response(200, "Success", model=donacionListDto)
+    @api.response(401, "Unauthorized", model=errorDto)
+    @api.response(500, "Internal server error", model=errorDto)
+    def get(self):
+        """Obtener todos las donaciones"""
+        try:
+            result = cliente.getAllDonaciones()
+            return json.loads(result), 200
+        except Exception as e:
+            if e.code() == grpc.StatusCode.UNAUTHENTICATED:
+                return  {"error": str(e.details())}, 401
+            else:
+                return {"error": str(e)}, 500

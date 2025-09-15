@@ -2,7 +2,7 @@ from flask import request
 from flask_restx import Namespace, Resource, fields
 import json
 from utils.password_utils import hashPassword, verifyPassword, generateRandomPassword
-from utils.mails_utils import enviarPasswordPorEmail, MailSendError
+from utils.mails_utils import enviarPasswordPorEmail, validarEmail, MailSendError
 from config.security_config import SecurityConfig
 from grpc_manager_service import ManagerServiceImpl
 
@@ -67,7 +67,6 @@ class UserLogin(Resource):
 
             return {"token": token, "expires_in": SecurityConfig.expMinutes * 60}, 201
         except Exception as e:
-            print(e)
             return {"error": str(e)}, 500
              
 @api.route("/register")
@@ -75,6 +74,7 @@ class UserRegister(Resource):
     @api.expect(userDto)
     @api.response(201, "Success", model=userDto)
     @api.response(400, "Request body must be JSON", model=errorDto)
+    @api.response(409, "Conflict", model=errorDto)
     @api.response(500, "Internal server error", model=errorDto)
     def post(self):
         """Registrar un nuevo usuario"""
@@ -84,23 +84,29 @@ class UserRegister(Resource):
 
             payload = request.get_json()
 
+            #Valido el email obtenido de la request
+            validarEmail(payload["email"])
+
             # Generar contraseña aleatoria
             randomPassword = generateRandomPassword()
-
-            # Envio la contraseña al usuario por su mail ingresado
-            try:
-                enviarPasswordPorEmail(payload["email"], payload["username"], randomPassword)
-            except MailSendError as e:
-                # Retorna el código de error definido en MailSendError
-                return {"error": str(e)}, e.code or 500
-
             # Guardo la contraseña encriptada
             payload["password"] = hashPassword(randomPassword)
-            
+            # Guardo el usuario con el servicio grpc
             result = cliente.insertOrUpdateUser(payload)
+
+            # Envio la contraseña al usuario registrado mediante su mail
+            enviarPasswordPorEmail(payload["email"], payload["username"], randomPassword)
+            
             return json.loads(result), 201
+        except MailSendError as e:
+            return {"error": str(e)}, e.code or 500
         except Exception as e:
-            return {"error": str(e)}, 500
+            error_msg = getattr(e, "details", lambda: str(e))()
+            # Error de gRPC que devuelve el servicio
+            if "ALREADY_EXISTS" in str(e):
+                return {"error": error_msg}, 409
+            else:
+                return {"error": error_msg}, 500
 
 @api.route("/")
 class UserList(Resource):
@@ -124,6 +130,7 @@ class User(Resource):
     @SecurityConfig.authRequired("PRESIDENTE")
     @api.response(200, "Success", model=userDto)
     @api.response(403, "Access forbidden", model=errorDto)
+    @api.response(404, "Resource not found", model=errorDto)
     @api.response(500, "Internal server error", model=errorDto)
     def get(self, id):
         """Obtener usuario"""
@@ -132,7 +139,12 @@ class User(Resource):
             result = cliente.getUserById(payload)
             return json.loads(result), 200
         except Exception as e:
-            return {"error": str(e)}, 500
+            # Capturo solo el mensaje de gRPC si existe, o str(e) si no
+            error_msg = getattr(e, "details", lambda: str(e))()
+            # Error de gRPC que devuelve el servicio
+            if "NOT_FOUND" in str(e):
+                return {"error": error_msg}, 404
+            return {"error": error_msg}, 500
         
     @api.doc(security='Bearer Auth') # Esto hace que Swagger agregue el header para el token
     @SecurityConfig.authRequired("PRESIDENTE")
@@ -140,6 +152,8 @@ class User(Resource):
     @api.response(200, "Success", model=userDto)
     @api.response(400, "Request body must be JSON", model=errorDto)
     @api.response(403, "Access forbidden", model=errorDto)
+    @api.response(404, "Resource not found", model=errorDto)
+    @api.response(409, "Conflict", model=errorDto)
     @api.response(500, "Internal server error", model=errorDto)
     def put(self, id):
         """Actualizar un usuario"""
@@ -152,7 +166,14 @@ class User(Resource):
             result = cliente.insertOrUpdateUser(payload)
             return json.loads(result), 200
         except Exception as e:
-            return {"error": str(e)}, 500
+            error_msg = getattr(e, "details", lambda: str(e))()
+            # Error de gRPC que devuelve el servicio
+            if "NOT_FOUND" in str(e):
+                return {"error": error_msg}, 404
+            elif "ALREADY_EXISTS" in str(e):
+                return {"error": error_msg}, 409
+            else:
+                return {"error": error_msg}, 500
         
 @api.route("/delete/<int:id>")
 class User(Resource):
@@ -160,6 +181,7 @@ class User(Resource):
     @SecurityConfig.authRequired("PRESIDENTE")
     @api.response(200, "Success", model=userDto)
     @api.response(403, "Access forbidden", model=errorDto)
+    @api.response(404, "Resource not found", model=errorDto)
     @api.response(500, "Internal server error", model=errorDto)
     def delete(self, id):
         """Eliminar usuario"""
@@ -168,4 +190,8 @@ class User(Resource):
             result = cliente.deleteUser(payload)
             return json.loads(result), 200
         except Exception as e:
-            return {"error": str(e)}, 500
+            error_msg = getattr(e, "details", lambda: str(e))()
+            # Error de gRPC que devuelve el servicio
+            if "NOT_FOUND" in str(e):
+                return {"error": error_msg}, 404
+            return {"error": error_msg}, 500
