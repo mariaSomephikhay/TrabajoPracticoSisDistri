@@ -22,37 +22,42 @@ _runtime_version.ValidateProtobufRuntimeVersion(
 _sym_db = _symbol_database.Default()
 
 
+from google.protobuf import timestamp_pb2 as google_dot_protobuf_dot_timestamp__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x18\x64onaciones_eventos.proto\x12\x0emanagerservice\"\x07\n\x05\x45mpty\" \n\x0cUserUsername\x12\x10\n\x08username\x18\x01 \x01(\t\"\x14\n\x06UserId\x12\n\n\x02id\x18\x01 \x01(\x05\"\xae\x01\n\x07Usuario\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x10\n\x08username\x18\x02 \x01(\t\x12\x10\n\x08password\x18\x03 \x01(\t\x12\r\n\x05\x65mail\x18\x04 \x01(\t\x12\x0e\n\x06nombre\x18\x05 \x01(\t\x12\x10\n\x08\x61pellido\x18\x06 \x01(\t\x12\x10\n\x08telefono\x18\x07 \x01(\t\x12\x0e\n\x06\x61\x63tivo\x18\x08 \x01(\x08\x12 \n\x03rol\x18\t \x01(\x0b\x32\x13.managerservice.Rol\"&\n\x03Rol\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x13\n\x0b\x64\x65scripcion\x18\x02 \x01(\t\"8\n\x0bUsuarioList\x12)\n\x08usuarios\x18\x01 \x03(\x0b\x32\x17.managerservice.Usuario\"\x18\n\nDonacionId\x12\n\n\x02id\x18\x01 \x01(\x05\"E\n\rDonacionIdUsu\x12\n\n\x02id\x18\x01 \x01(\x05\x12(\n\x07usuario\x18\x02 \x01(\x0b\x32\x17.managerservice.Usuario\"\xa8\x01\n\x08\x44onacion\x12\n\n\x02id\x18\x01 \x01(\x05\x12,\n\tcategoria\x18\x02 \x01(\x0b\x32\x19.managerservice.Categoria\x12\x13\n\x0b\x64\x65scripcion\x18\x03 \x01(\t\x12\x10\n\x08\x63\x61ntidad\x18\x04 \x01(\x05\x12\x11\n\teliminado\x18\x05 \x01(\x08\x12(\n\x07usuario\x18\x06 \x01(\x0b\x32\x17.managerservice.Usuario\":\n\x0c\x44onacionList\x12*\n\x08\x64onacion\x18\x01 \x03(\x0b\x32\x18.managerservice.Donacion\",\n\tCategoria\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x13\n\x0b\x64\x65scripcion\x18\x02 \x01(\t2\xa3\x05\n\x0eManagerService\x12L\n\x11getUserByUsername\x12\x1c.managerservice.UserUsername\x1a\x17.managerservice.Usuario\"\x00\x12@\n\x0bgetUserById\x12\x16.managerservice.UserId\x1a\x17.managerservice.Usuario\"\x00\x12\x43\n\x0bgetAllUsers\x12\x15.managerservice.Empty\x1a\x1b.managerservice.UsuarioList\"\x00\x12H\n\x12insertOrUpdateUser\x12\x17.managerservice.Usuario\x1a\x17.managerservice.Usuario\"\x00\x12?\n\ndeleteUser\x12\x16.managerservice.UserId\x1a\x17.managerservice.Usuario\"\x00\x12N\n\x16insertOrUpdateDonacion\x12\x18.managerservice.Donacion\x1a\x18.managerservice.Donacion\"\x00\x12I\n\x0fgetDonacionById\x12\x1a.managerservice.DonacionId\x1a\x18.managerservice.Donacion\"\x00\x12I\n\x10getAllDonaciones\x12\x15.managerservice.Empty\x1a\x1c.managerservice.DonacionList\"\x00\x12K\n\x0e\x64\x65leteDonacion\x12\x1d.managerservice.DonacionIdUsu\x1a\x18.managerservice.Donacion\"\x00\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x18\x64onaciones_eventos.proto\x12\x0emanagerservice\x1a\x1fgoogle/protobuf/timestamp.proto\"\x07\n\x05\x45mpty\" \n\x0cUserUsername\x12\x10\n\x08username\x18\x01 \x01(\t\"\x14\n\x06UserId\x12\n\n\x02id\x18\x01 \x01(\x05\"\xae\x01\n\x07Usuario\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x10\n\x08username\x18\x02 \x01(\t\x12\x10\n\x08password\x18\x03 \x01(\t\x12\r\n\x05\x65mail\x18\x04 \x01(\t\x12\x0e\n\x06nombre\x18\x05 \x01(\t\x12\x10\n\x08\x61pellido\x18\x06 \x01(\t\x12\x10\n\x08telefono\x18\x07 \x01(\t\x12\x0e\n\x06\x61\x63tivo\x18\x08 \x01(\x08\x12 \n\x03rol\x18\t \x01(\x0b\x32\x13.managerservice.Rol\"&\n\x03Rol\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x13\n\x0b\x64\x65scripcion\x18\x02 \x01(\t\"8\n\x0bUsuarioList\x12)\n\x08usuarios\x18\x01 \x03(\x0b\x32\x17.managerservice.Usuario\"\x18\n\nDonacionId\x12\n\n\x02id\x18\x01 \x01(\x05\"E\n\rDonacionIdUsu\x12\n\n\x02id\x18\x01 \x01(\x05\x12(\n\x07usuario\x18\x02 \x01(\x0b\x32\x17.managerservice.Usuario\"\xa8\x01\n\x08\x44onacion\x12\n\n\x02id\x18\x01 \x01(\x05\x12,\n\tcategoria\x18\x02 \x01(\x0b\x32\x19.managerservice.Categoria\x12\x13\n\x0b\x64\x65scripcion\x18\x03 \x01(\t\x12\x10\n\x08\x63\x61ntidad\x18\x04 \x01(\x05\x12\x11\n\teliminado\x18\x05 \x01(\x08\x12(\n\x07usuario\x18\x06 \x01(\x0b\x32\x17.managerservice.Usuario\":\n\x0c\x44onacionList\x12*\n\x08\x64onacion\x18\x01 \x03(\x0b\x32\x18.managerservice.Donacion\",\n\tCategoria\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x13\n\x0b\x64\x65scripcion\x18\x02 \x01(\t\"\x8e\x01\n\x06\x45vento\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x0e\n\x06nombre\x18\x02 \x01(\t\x12\x13\n\x0b\x64\x65scripcion\x18\x03 \x01(\t\x12)\n\x05\x66\x65\x63ha\x18\x04 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12(\n\x07usuario\x18\x06 \x01(\x0b\x32\x17.managerservice.Usuario\"\x16\n\x08\x45ventoId\x12\n\n\x02id\x18\x01 \x01(\x05\x32\xb2\x06\n\x0eManagerService\x12L\n\x11getUserByUsername\x12\x1c.managerservice.UserUsername\x1a\x17.managerservice.Usuario\"\x00\x12@\n\x0bgetUserById\x12\x16.managerservice.UserId\x1a\x17.managerservice.Usuario\"\x00\x12\x43\n\x0bgetAllUsers\x12\x15.managerservice.Empty\x1a\x1b.managerservice.UsuarioList\"\x00\x12H\n\x12insertOrUpdateUser\x12\x17.managerservice.Usuario\x1a\x17.managerservice.Usuario\"\x00\x12?\n\ndeleteUser\x12\x16.managerservice.UserId\x1a\x17.managerservice.Usuario\"\x00\x12N\n\x16insertOrUpdateDonacion\x12\x18.managerservice.Donacion\x1a\x18.managerservice.Donacion\"\x00\x12I\n\x0fgetDonacionById\x12\x1a.managerservice.DonacionId\x1a\x18.managerservice.Donacion\"\x00\x12I\n\x10getAllDonaciones\x12\x15.managerservice.Empty\x1a\x1c.managerservice.DonacionList\"\x00\x12K\n\x0e\x64\x65leteDonacion\x12\x1d.managerservice.DonacionIdUsu\x1a\x18.managerservice.Donacion\"\x00\x12H\n\x14insertOrUpdateEvento\x12\x16.managerservice.Evento\x1a\x16.managerservice.Evento\"\x00\x12\x43\n\rdeleteEventos\x12\x18.managerservice.EventoId\x1a\x16.managerservice.Evento\"\x00\x62\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'donaciones_eventos_pb2', _globals)
 if not _descriptor._USE_C_DESCRIPTORS:
   DESCRIPTOR._loaded_options = None
-  _globals['_EMPTY']._serialized_start=44
-  _globals['_EMPTY']._serialized_end=51
-  _globals['_USERUSERNAME']._serialized_start=53
-  _globals['_USERUSERNAME']._serialized_end=85
-  _globals['_USERID']._serialized_start=87
-  _globals['_USERID']._serialized_end=107
-  _globals['_USUARIO']._serialized_start=110
-  _globals['_USUARIO']._serialized_end=284
-  _globals['_ROL']._serialized_start=286
-  _globals['_ROL']._serialized_end=324
-  _globals['_USUARIOLIST']._serialized_start=326
-  _globals['_USUARIOLIST']._serialized_end=382
-  _globals['_DONACIONID']._serialized_start=384
-  _globals['_DONACIONID']._serialized_end=408
-  _globals['_DONACIONIDUSU']._serialized_start=410
-  _globals['_DONACIONIDUSU']._serialized_end=479
-  _globals['_DONACION']._serialized_start=482
-  _globals['_DONACION']._serialized_end=650
-  _globals['_DONACIONLIST']._serialized_start=652
-  _globals['_DONACIONLIST']._serialized_end=710
-  _globals['_CATEGORIA']._serialized_start=712
-  _globals['_CATEGORIA']._serialized_end=756
-  _globals['_MANAGERSERVICE']._serialized_start=759
-  _globals['_MANAGERSERVICE']._serialized_end=1434
+  _globals['_EMPTY']._serialized_start=77
+  _globals['_EMPTY']._serialized_end=84
+  _globals['_USERUSERNAME']._serialized_start=86
+  _globals['_USERUSERNAME']._serialized_end=118
+  _globals['_USERID']._serialized_start=120
+  _globals['_USERID']._serialized_end=140
+  _globals['_USUARIO']._serialized_start=143
+  _globals['_USUARIO']._serialized_end=317
+  _globals['_ROL']._serialized_start=319
+  _globals['_ROL']._serialized_end=357
+  _globals['_USUARIOLIST']._serialized_start=359
+  _globals['_USUARIOLIST']._serialized_end=415
+  _globals['_DONACIONID']._serialized_start=417
+  _globals['_DONACIONID']._serialized_end=441
+  _globals['_DONACIONIDUSU']._serialized_start=443
+  _globals['_DONACIONIDUSU']._serialized_end=512
+  _globals['_DONACION']._serialized_start=515
+  _globals['_DONACION']._serialized_end=683
+  _globals['_DONACIONLIST']._serialized_start=685
+  _globals['_DONACIONLIST']._serialized_end=743
+  _globals['_CATEGORIA']._serialized_start=745
+  _globals['_CATEGORIA']._serialized_end=789
+  _globals['_EVENTO']._serialized_start=792
+  _globals['_EVENTO']._serialized_end=934
+  _globals['_EVENTOID']._serialized_start=936
+  _globals['_EVENTOID']._serialized_end=958
+  _globals['_MANAGERSERVICE']._serialized_start=961
+  _globals['_MANAGERSERVICE']._serialized_end=1779
 # @@protoc_insertion_point(module_scope)
