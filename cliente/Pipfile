@@ -7,14 +7,15 @@ name = "pypi"
 flask = "*"
 flask-cors = "*"
 grpcio = "*"
-grpcio-tools = "*"
 protobuf = "*"
 googleapis-common-protos = "*"
 flask-restx = "*"
-pyjwt = "*"
 pytz = "*"
 python-decouple = "*"
 bcrypt = "*"
+grpcio-tools = "*"
+pyjwt = "*"
+email-validator = "*"
 
 [dev-packages]
 

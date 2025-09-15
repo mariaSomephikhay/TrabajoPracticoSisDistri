@@ -35,3 +35,28 @@ class ManagerServiceImpl(object):
         pUsuario = ParseDict(usuario, service_pb2.Usuario(), ignore_unknown_fields=True) # Convierte el modelo json a un mensaje protobuf solo con los campos presentes
         response = self.stub.insertOrUpdateUser(pUsuario)
         return MessageToJson(response)
+    
+    def deleteUser(self, id):
+        pUsuario = ParseDict(id, service_pb2.UserId(), ignore_unknown_fields=True) # Convierte el modelo json a un mensaje protobuf solo con los campos presentes
+        response = self.stub.deleteUser(pUsuario)
+        return MessageToJson(response)
+
+    def insertOrUpdateDonacion(self, donacion):
+        pDonacion= ParseDict(donacion, service_pb2.Donacion(), ignore_unknown_fields=True) # Convierte el modelo json a un mensaje protobuf solo con los campos presentes
+        response = self.stub.insertOrUpdateDonacion(pDonacion)
+        return MessageToJson(response)
+
+    def getDonacionById(self, id):
+        pDonacion = ParseDict(id, service_pb2.DonacionId(), ignore_unknown_fields=True) # Convierte el modelo json a un mensaje protobuf solo con los campos presentes
+        response = self.stub.getDonacionById(pDonacion)
+        return MessageToJson(response)    
+
+    def deleteDonacion(self, idUsu):
+        pDonacion = ParseDict(idUsu, service_pb2.DonacionIdUsu(), ignore_unknown_fields=True) # Convierte el modelo json a un mensaje protobuf solo con los campos presentes
+        response = self.stub.deleteDonacion(pDonacion)
+        return MessageToJson(response)    
+
+    def getAllDonaciones(self): 
+        param = service_pb2.Empty() #inicializao param con el valor del mensaje empty
+        response = self.stub.getAllDonaciones(param) #llamo al servicio getAllUsers y le paso Empty (param)como esta declarado en el prot 
+        return MessageToJson(response)        

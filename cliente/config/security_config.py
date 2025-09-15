@@ -57,3 +57,18 @@ class SecurityConfig():
             return decorated
         return decorator
 
+    @staticmethod
+    def getUser():
+        try:
+            auth = request.headers.get("Authorization", "")
+            token = auth.split(" ")[1] if auth.startswith("Bearer ") else None
+            if not token:
+                return {"error": "Token is missing"}, 401
+            payload = jwt.decode(token, SecurityConfig.secret, algorithms=[SecurityConfig.jwtAlgorithm])
+            username = payload.get("username")
+            return {"username": username}
+        except jwt.ExpiredSignatureError:
+            raise Exception("Token expirado")
+        except jwt.InvalidTokenError:
+            raise Exception("Token inválido")
+            
