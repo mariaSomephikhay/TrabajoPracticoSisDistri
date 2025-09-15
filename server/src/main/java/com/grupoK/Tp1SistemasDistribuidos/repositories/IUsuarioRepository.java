@@ -12,4 +12,5 @@ import com.grupoK.Tp1SistemasDistribuidos.entities.Usuario;
 @Repository
 public interface IUsuarioRepository extends JpaRepository<Usuario, Serializable>{
 	Optional<Usuario> findByUsername(@Param("username") String username);
+	Optional<Usuario> findByEmail(@Param("email") String email);
 }
