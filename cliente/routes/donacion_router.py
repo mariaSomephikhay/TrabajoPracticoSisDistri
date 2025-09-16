@@ -34,9 +34,10 @@ errorDto = api.model("Error", {
 #######################################################
 @api.route("/new")
 class DonacionInsert(Resource):
-    @api.expect(donacionDto)
     @api.doc(security='Bearer Auth') # Esto hace que Swagger agregue el header para el token
     @SecurityConfig.authRequired("PRESIDENTE", "VOCAL")
+    @api.doc(id="createDonation") # Esto define el operationId
+    @api.expect(donacionDto)
     @api.response(201, "Created", model=donacionDto)
     @api.response(401, "Unauthorized", model=errorDto)
     @api.response(400, "Bad Request", model=errorDto)
@@ -65,6 +66,7 @@ class DonacionInsert(Resource):
 class Donacion(Resource):
     @api.doc(security='Bearer Auth') # Esto hace que Swagger agregue el header para el token
     @SecurityConfig.authRequired("PRESIDENTE", "VOCAL")
+    @api.doc(id="getDonationById") # Esto define el operationId
     @api.response(200, "Success", model=donacionDto)
     @api.response(401, "Unauthorized", model=errorDto)
     @api.response(404, "Not Found", model=errorDto)
@@ -83,6 +85,7 @@ class Donacion(Resource):
         
     @api.doc(security='Bearer Auth') # Esto hace que Swagger agregue el header para el token
     @SecurityConfig.authRequired("PRESIDENTE", "VOCAL")
+    @api.doc(id="updateDonationById") # Esto define el operationId
     @api.expect(donacionDto) #Request
     @api.response(200, "Success", model=donacionDto)
     @api.response(401, "Unauthorized", model=errorDto)
@@ -113,6 +116,7 @@ class Donacion(Resource):
 class User(Resource):
     @api.doc(security='Bearer Auth') # Esto hace que Swagger agregue el header para el token
     @SecurityConfig.authRequired("PRESIDENTE", "VOCAL")
+    @api.doc(id="deleteDonationById") # Esto define el operationId
     @api.response(200, "Success", model=donacionDto)
     @api.response(401, "Unauthorized", model=errorDto)
     @api.response(404, "Not Found", model=errorDto)
@@ -140,6 +144,7 @@ class User(Resource):
 class DonacionList(Resource):
     @api.doc(security='Bearer Auth') # Esto hace que Swagger agregue el header para el token
     @SecurityConfig.authRequired("PRESIDENTE", "VOCAL")
+    @api.doc(id="listDonations") # Esto define el operationId
     @api.response(200, "Success", model=donacionListDto)
     @api.response(401, "Unauthorized", model=errorDto)
     @api.response(500, "Internal server error", model=errorDto)
