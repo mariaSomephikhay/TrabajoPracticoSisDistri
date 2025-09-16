@@ -13,12 +13,16 @@
 
 
 import ApiClient from './ApiClient';
+import Donacion from './model/Donacion';
+import DonacionList from './model/DonacionList';
 import Error from './model/Error';
 import Login from './model/Login';
 import Rol from './model/Rol';
 import Token from './model/Token';
 import Usuario from './model/Usuario';
 import UsuarioList from './model/UsuarioList';
+import DonacionesApi from './api/DonacionesApi';
+import EventosApi from './api/EventosApi';
 import UserApi from './api/UserApi';
 
 
@@ -61,6 +65,18 @@ export {
     ApiClient,
 
     /**
+     * The Donacion model constructor.
+     * @property {module:model/Donacion}
+     */
+    Donacion,
+
+    /**
+     * The DonacionList model constructor.
+     * @property {module:model/DonacionList}
+     */
+    DonacionList,
+
+    /**
      * The Error model constructor.
      * @property {module:model/Error}
      */
@@ -95,6 +111,18 @@ export {
      * @property {module:model/UsuarioList}
      */
     UsuarioList,
+
+    /**
+    * The DonacionesApi service constructor.
+    * @property {module:api/DonacionesApi}
+    */
+    DonacionesApi,
+
+    /**
+    * The EventosApi service constructor.
+    * @property {module:api/EventosApi}
+    */
+    EventosApi,
 
     /**
     * The UserApi service constructor.

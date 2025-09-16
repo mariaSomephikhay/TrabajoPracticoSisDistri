@@ -37,8 +37,49 @@ export default class DonacionesApi {
 
 
     /**
-     * Callback function to receive the result of the deleteUser operation.
-     * @callback module:api/DonacionesApi~deleteUserCallback
+     * Callback function to receive the result of the createDonation operation.
+     * @callback module:api/DonacionesApi~createDonationCallback
+     * @param {String} error Error message, if any.
+     * @param {module:model/Donacion} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Insertar una nueva donacion
+     * @param {module:model/Donacion} payload 
+     * @param {module:api/DonacionesApi~createDonationCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link module:model/Donacion}
+     */
+    createDonation(payload, callback) {
+      let postBody = payload;
+      // verify the required parameter 'payload' is set
+      if (payload === undefined || payload === null) {
+        throw new Error("Missing the required parameter 'payload' when calling createDonation");
+      }
+
+      let pathParams = {
+      };
+      let queryParams = {
+      };
+      let headerParams = {
+      };
+      let formParams = {
+      };
+
+      let authNames = ['Bearer Auth'];
+      let contentTypes = ['application/json'];
+      let accepts = ['application/json'];
+      let returnType = Donacion;
+      return this.apiClient.callApi(
+        '/donacion/new', 'POST',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, null, callback
+      );
+    }
+
+    /**
+     * Callback function to receive the result of the deleteDonationById operation.
+     * @callback module:api/DonacionesApi~deleteDonationByIdCallback
      * @param {String} error Error message, if any.
      * @param {module:model/Donacion} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -47,14 +88,14 @@ export default class DonacionesApi {
     /**
      * Eliminar donacion
      * @param {Number} id 
-     * @param {module:api/DonacionesApi~deleteUserCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/DonacionesApi~deleteDonationByIdCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/Donacion}
      */
-    deleteUser(id, callback) {
+    deleteDonationById(id, callback) {
       let postBody = null;
       // verify the required parameter 'id' is set
       if (id === undefined || id === null) {
-        throw new Error("Missing the required parameter 'id' when calling deleteUser");
+        throw new Error("Missing the required parameter 'id' when calling deleteDonationById");
       }
 
       let pathParams = {
@@ -79,8 +120,8 @@ export default class DonacionesApi {
     }
 
     /**
-     * Callback function to receive the result of the getDonacion operation.
-     * @callback module:api/DonacionesApi~getDonacionCallback
+     * Callback function to receive the result of the getDonationById operation.
+     * @callback module:api/DonacionesApi~getDonationByIdCallback
      * @param {String} error Error message, if any.
      * @param {module:model/Donacion} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -89,14 +130,14 @@ export default class DonacionesApi {
     /**
      * Obtener Donacion
      * @param {Number} id 
-     * @param {module:api/DonacionesApi~getDonacionCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/DonacionesApi~getDonationByIdCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/Donacion}
      */
-    getDonacion(id, callback) {
+    getDonationById(id, callback) {
       let postBody = null;
       // verify the required parameter 'id' is set
       if (id === undefined || id === null) {
-        throw new Error("Missing the required parameter 'id' when calling getDonacion");
+        throw new Error("Missing the required parameter 'id' when calling getDonationById");
       }
 
       let pathParams = {
@@ -121,8 +162,8 @@ export default class DonacionesApi {
     }
 
     /**
-     * Callback function to receive the result of the getDonacionList operation.
-     * @callback module:api/DonacionesApi~getDonacionListCallback
+     * Callback function to receive the result of the listDonations operation.
+     * @callback module:api/DonacionesApi~listDonationsCallback
      * @param {String} error Error message, if any.
      * @param {module:model/DonacionList} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -130,10 +171,10 @@ export default class DonacionesApi {
 
     /**
      * Obtener todos las donaciones
-     * @param {module:api/DonacionesApi~getDonacionListCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/DonacionesApi~listDonationsCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/DonacionList}
      */
-    getDonacionList(callback) {
+    listDonations(callback) {
       let postBody = null;
 
       let pathParams = {
@@ -157,49 +198,8 @@ export default class DonacionesApi {
     }
 
     /**
-     * Callback function to receive the result of the postDonacionInsert operation.
-     * @callback module:api/DonacionesApi~postDonacionInsertCallback
-     * @param {String} error Error message, if any.
-     * @param {module:model/Donacion} data The data returned by the service call.
-     * @param {String} response The complete HTTP response.
-     */
-
-    /**
-     * Insertar una nueva donacion
-     * @param {module:model/Donacion} payload 
-     * @param {module:api/DonacionesApi~postDonacionInsertCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link module:model/Donacion}
-     */
-    postDonacionInsert(payload, callback) {
-      let postBody = payload;
-      // verify the required parameter 'payload' is set
-      if (payload === undefined || payload === null) {
-        throw new Error("Missing the required parameter 'payload' when calling postDonacionInsert");
-      }
-
-      let pathParams = {
-      };
-      let queryParams = {
-      };
-      let headerParams = {
-      };
-      let formParams = {
-      };
-
-      let authNames = ['Bearer Auth'];
-      let contentTypes = ['application/json'];
-      let accepts = ['application/json'];
-      let returnType = Donacion;
-      return this.apiClient.callApi(
-        '/donacion/new', 'POST',
-        pathParams, queryParams, headerParams, formParams, postBody,
-        authNames, contentTypes, accepts, returnType, null, callback
-      );
-    }
-
-    /**
-     * Callback function to receive the result of the putDonacion operation.
-     * @callback module:api/DonacionesApi~putDonacionCallback
+     * Callback function to receive the result of the updateDonationById operation.
+     * @callback module:api/DonacionesApi~updateDonationByIdCallback
      * @param {String} error Error message, if any.
      * @param {module:model/Donacion} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -209,18 +209,18 @@ export default class DonacionesApi {
      * Actualizar un donacion
      * @param {Number} id 
      * @param {module:model/Donacion} payload 
-     * @param {module:api/DonacionesApi~putDonacionCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/DonacionesApi~updateDonationByIdCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/Donacion}
      */
-    putDonacion(id, payload, callback) {
+    updateDonationById(id, payload, callback) {
       let postBody = payload;
       // verify the required parameter 'id' is set
       if (id === undefined || id === null) {
-        throw new Error("Missing the required parameter 'id' when calling putDonacion");
+        throw new Error("Missing the required parameter 'id' when calling updateDonationById");
       }
       // verify the required parameter 'payload' is set
       if (payload === undefined || payload === null) {
-        throw new Error("Missing the required parameter 'payload' when calling putDonacion");
+        throw new Error("Missing the required parameter 'payload' when calling updateDonationById");
       }
 
       let pathParams = {

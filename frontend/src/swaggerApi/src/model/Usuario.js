@@ -27,13 +27,12 @@ class Usuario {
      * @param apellido {String} 
      * @param email {String} 
      * @param nombre {String} 
-     * @param password {String} 
      * @param rol {module:model/Rol} 
      * @param username {String} 
      */
-    constructor(activo, apellido, email, nombre, password, rol, username) { 
+    constructor(activo, apellido, email, nombre, rol, username) { 
         
-        Usuario.initialize(this, activo, apellido, email, nombre, password, rol, username);
+        Usuario.initialize(this, activo, apellido, email, nombre, rol, username);
     }
 
     /**
@@ -41,12 +40,11 @@ class Usuario {
      * This method is used by the constructors of any subclasses, in order to implement multiple inheritance (mix-ins).
      * Only for internal use.
      */
-    static initialize(obj, activo, apellido, email, nombre, password, rol, username) { 
+    static initialize(obj, activo, apellido, email, nombre, rol, username) { 
         obj['activo'] = activo;
         obj['apellido'] = apellido;
         obj['email'] = email;
         obj['nombre'] = nombre;
-        obj['password'] = password;
         obj['rol'] = rol;
         obj['username'] = username;
     }
@@ -140,7 +138,7 @@ class Usuario {
 
 }
 
-Usuario.RequiredProperties = ["activo", "apellido", "email", "nombre", "password", "rol", "username"];
+Usuario.RequiredProperties = ["activo", "apellido", "email", "nombre", "rol", "username"];
 
 /**
  * @member {Boolean} activo

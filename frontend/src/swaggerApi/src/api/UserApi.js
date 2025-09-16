@@ -39,8 +39,50 @@ export default class UserApi {
 
 
     /**
-     * Callback function to receive the result of the getUser operation.
-     * @callback module:api/UserApi~getUserCallback
+     * Callback function to receive the result of the deleteUserById operation.
+     * @callback module:api/UserApi~deleteUserByIdCallback
+     * @param {String} error Error message, if any.
+     * @param {module:model/Usuario} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Eliminar usuario
+     * @param {Number} id 
+     * @param {module:api/UserApi~deleteUserByIdCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link module:model/Usuario}
+     */
+    deleteUserById(id, callback) {
+      let postBody = null;
+      // verify the required parameter 'id' is set
+      if (id === undefined || id === null) {
+        throw new Error("Missing the required parameter 'id' when calling deleteUserById");
+      }
+
+      let pathParams = {
+        'id': id
+      };
+      let queryParams = {
+      };
+      let headerParams = {
+      };
+      let formParams = {
+      };
+
+      let authNames = ['Bearer Auth'];
+      let contentTypes = [];
+      let accepts = ['application/json'];
+      let returnType = Usuario;
+      return this.apiClient.callApi(
+        '/user/{id}', 'DELETE',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, null, callback
+      );
+    }
+
+    /**
+     * Callback function to receive the result of the getUserById operation.
+     * @callback module:api/UserApi~getUserByIdCallback
      * @param {String} error Error message, if any.
      * @param {module:model/Usuario} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -49,14 +91,14 @@ export default class UserApi {
     /**
      * Obtener usuario
      * @param {Number} id 
-     * @param {module:api/UserApi~getUserCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/UserApi~getUserByIdCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/Usuario}
      */
-    getUser(id, callback) {
+    getUserById(id, callback) {
       let postBody = null;
       // verify the required parameter 'id' is set
       if (id === undefined || id === null) {
-        throw new Error("Missing the required parameter 'id' when calling getUser");
+        throw new Error("Missing the required parameter 'id' when calling getUserById");
       }
 
       let pathParams = {
@@ -81,8 +123,8 @@ export default class UserApi {
     }
 
     /**
-     * Callback function to receive the result of the getUserList operation.
-     * @callback module:api/UserApi~getUserListCallback
+     * Callback function to receive the result of the listUsers operation.
+     * @callback module:api/UserApi~listUsersCallback
      * @param {String} error Error message, if any.
      * @param {module:model/UsuarioList} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -90,10 +132,10 @@ export default class UserApi {
 
     /**
      * Obtener todos los usuarios
-     * @param {module:api/UserApi~getUserListCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/UserApi~listUsersCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/UsuarioList}
      */
-    getUserList(callback) {
+    listUsers(callback) {
       let postBody = null;
 
       let pathParams = {
@@ -117,8 +159,8 @@ export default class UserApi {
     }
 
     /**
-     * Callback function to receive the result of the postUserLogin operation.
-     * @callback module:api/UserApi~postUserLoginCallback
+     * Callback function to receive the result of the loginUser operation.
+     * @callback module:api/UserApi~loginUserCallback
      * @param {String} error Error message, if any.
      * @param {module:model/Token} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -127,14 +169,14 @@ export default class UserApi {
     /**
      * Login de usuario y devolución de JWT
      * @param {module:model/Login} payload 
-     * @param {module:api/UserApi~postUserLoginCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/UserApi~loginUserCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/Token}
      */
-    postUserLogin(payload, callback) {
+    loginUser(payload, callback) {
       let postBody = payload;
       // verify the required parameter 'payload' is set
       if (payload === undefined || payload === null) {
-        throw new Error("Missing the required parameter 'payload' when calling postUserLogin");
+        throw new Error("Missing the required parameter 'payload' when calling loginUser");
       }
 
       let pathParams = {
@@ -158,8 +200,8 @@ export default class UserApi {
     }
 
     /**
-     * Callback function to receive the result of the postUserRegister operation.
-     * @callback module:api/UserApi~postUserRegisterCallback
+     * Callback function to receive the result of the registerUser operation.
+     * @callback module:api/UserApi~registerUserCallback
      * @param {String} error Error message, if any.
      * @param {module:model/Usuario} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -168,14 +210,14 @@ export default class UserApi {
     /**
      * Registrar un nuevo usuario
      * @param {module:model/Usuario} payload 
-     * @param {module:api/UserApi~postUserRegisterCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/UserApi~registerUserCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/Usuario}
      */
-    postUserRegister(payload, callback) {
+    registerUser(payload, callback) {
       let postBody = payload;
       // verify the required parameter 'payload' is set
       if (payload === undefined || payload === null) {
-        throw new Error("Missing the required parameter 'payload' when calling postUserRegister");
+        throw new Error("Missing the required parameter 'payload' when calling registerUser");
       }
 
       let pathParams = {
@@ -199,8 +241,8 @@ export default class UserApi {
     }
 
     /**
-     * Callback function to receive the result of the putUser operation.
-     * @callback module:api/UserApi~putUserCallback
+     * Callback function to receive the result of the updateUserById operation.
+     * @callback module:api/UserApi~updateUserByIdCallback
      * @param {String} error Error message, if any.
      * @param {module:model/Usuario} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -210,18 +252,18 @@ export default class UserApi {
      * Actualizar un usuario
      * @param {Number} id 
      * @param {module:model/Usuario} payload 
-     * @param {module:api/UserApi~putUserCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/UserApi~updateUserByIdCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/Usuario}
      */
-    putUser(id, payload, callback) {
+    updateUserById(id, payload, callback) {
       let postBody = payload;
       // verify the required parameter 'id' is set
       if (id === undefined || id === null) {
-        throw new Error("Missing the required parameter 'id' when calling putUser");
+        throw new Error("Missing the required parameter 'id' when calling updateUserById");
       }
       // verify the required parameter 'payload' is set
       if (payload === undefined || payload === null) {
-        throw new Error("Missing the required parameter 'payload' when calling putUser");
+        throw new Error("Missing the required parameter 'payload' when calling updateUserById");
       }
 
       let pathParams = {

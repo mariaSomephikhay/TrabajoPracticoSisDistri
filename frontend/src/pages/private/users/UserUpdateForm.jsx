@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams, useNavigate, NavLink } from 'react-router-dom'
+import { Loading } from '../../../components/ui/Loading.jsx'
 import UserService from '../../../services/UserService.js'
 
 export const UserUpdateForm = () => {
@@ -56,7 +57,7 @@ export const UserUpdateForm = () => {
     } 
   }
 
-  if (loading) return <p>Cargando...</p>
+  if (loading) return <Loading />
   if (!user) return <p>Usuario no encontrado</p>
 
   return (
@@ -102,6 +103,13 @@ export const UserUpdateForm = () => {
       <button type="submit" className="btn btn-primary">
         Guardar cambios
       </button>
+      
+      <p className="text-center mt-3 mb-0">
+        <NavLink className="fw-bold text-decoration-none" to="/users">
+          Cancelar
+        </NavLink>
+      </p>
+      
     </form>
   )
 }
