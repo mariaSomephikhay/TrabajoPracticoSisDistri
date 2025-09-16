@@ -1,7 +1,7 @@
 from flask import request
 from flask_restx import Namespace, Resource, fields
 from google.protobuf.timestamp_pb2 import Timestamp
-from dateutil import parser
+#from dateutil import parser
 import json
 from config.security_config import SecurityConfig
 from grpc_manager_service import ManagerServiceImpl
@@ -28,9 +28,10 @@ errorDto = api.model("Error", {
 #######################################################
 @api.route("/new")
 class EventoInsert(Resource):
-    @api.expect(eventoDto)
     @api.doc(security='Bearer Auth') # Esto hace que Swagger agregue el header para el token
     @SecurityConfig.authRequired("PRESIDENTE", "COORDINADOR")
+    @api.doc(id="createEvent") # Esto define el operationId
+    @api.expect(eventoDto)
     @api.response(201, "Created", model=eventoDto)
     @api.response(400, "Unauthorized", model=errorDto)
     @api.response(401, "Bad Request", model=errorDto)
@@ -60,11 +61,12 @@ class EventoInsert(Resource):
 class User(Resource):
     @api.doc(security='Bearer Auth') # Esto hace que Swagger agregue el header para el token
     @SecurityConfig.authRequired("PRESIDENTE","COORDINADOR")
+    @api.doc(id="deleteEventById") # Esto define el operationId
     @api.response(200, "Success", model=eventoDto)
     @api.response(403, "Access forbidden", model=errorDto)
     @api.response(500, "Internal server error", model=errorDto)
     def delete(self, id):
-        """Eliminar usuario"""
+        """Eliminar evento"""
         try:
             payload = {"id": id}  # solo necesitas el id
             result = cliente.deleteEvento(payload)

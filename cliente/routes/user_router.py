@@ -47,6 +47,7 @@ errorDto = api.model("Error", {
 #######################################################
 @api.route("/login")
 class UserLogin(Resource):
+    @api.doc(id="loginUser") # Esto define el operationId
     @api.expect(loginDto)
     @api.response(201, "Success", model=tokenDto)
     @api.response(401, "Invalid credentials", model=errorDto)
@@ -71,6 +72,7 @@ class UserLogin(Resource):
              
 @api.route("/register")
 class UserRegister(Resource):
+    @api.doc(id="registerUser") # Esto define el operationId
     @api.expect(userDto)
     @api.response(201, "Success", model=userDto)
     @api.response(400, "Request body must be JSON", model=errorDto)
@@ -112,6 +114,7 @@ class UserRegister(Resource):
 class UserList(Resource):
     @api.doc(security='Bearer Auth') # Esto hace que Swagger agregue el header para el token
     @SecurityConfig.authRequired("PRESIDENTE")
+    @api.doc(id="listUsers") # Esto define el operationId
     @api.response(200, "Success", model=userListDto)
     @api.response(403, "Access forbidden", model=errorDto)
     @api.response(500, "Internal server error", model=errorDto)
@@ -128,6 +131,7 @@ class UserList(Resource):
 class User(Resource):
     @api.doc(security='Bearer Auth') # Esto hace que Swagger agregue el header para el token
     @SecurityConfig.authRequired("PRESIDENTE")
+    @api.doc(id="getUserById") # Esto define el operationId
     @api.response(200, "Success", model=userDto)
     @api.response(403, "Access forbidden", model=errorDto)
     @api.response(404, "Resource not found", model=errorDto)
@@ -144,10 +148,12 @@ class User(Resource):
             # Error de gRPC que devuelve el servicio
             if "NOT_FOUND" in str(e):
                 return {"error": error_msg}, 404
-            return {"error": error_msg}, 500
+            else:
+                return {"error": error_msg}, 500
         
     @api.doc(security='Bearer Auth') # Esto hace que Swagger agregue el header para el token
     @SecurityConfig.authRequired("PRESIDENTE")
+    @api.doc(id="updateUserById") # Esto define el operationId
     @api.expect(userDto) #Request
     @api.response(200, "Success", model=userDto)
     @api.response(400, "Request body must be JSON", model=errorDto)
@@ -174,11 +180,10 @@ class User(Resource):
                 return {"error": error_msg}, 409
             else:
                 return {"error": error_msg}, 500
-        
-@api.route("/delete/<int:id>")
-class User(Resource):
+            
     @api.doc(security='Bearer Auth') # Esto hace que Swagger agregue el header para el token
     @SecurityConfig.authRequired("PRESIDENTE")
+    @api.doc(id="deleteUserById") # Esto define el operationId
     @api.response(200, "Success", model=userDto)
     @api.response(403, "Access forbidden", model=errorDto)
     @api.response(404, "Resource not found", model=errorDto)
@@ -194,4 +199,5 @@ class User(Resource):
             # Error de gRPC que devuelve el servicio
             if "NOT_FOUND" in str(e):
                 return {"error": error_msg}, 404
-            return {"error": error_msg}, 500
+            else:
+                return {"error": error_msg}, 500
