@@ -8,18 +8,20 @@ import { AuthContext } from "../context/AuthContext.jsx"
  * @param allowedRoles Array opcional con roles permitidos
  */
 export const PrivateRoute = ({ children, allowedRoles }) => {
-  const { isAuthenticated, user } = useContext(AuthContext)
+  const { isAuthenticated, userAuthenticated, isTokenExpired } = useContext(AuthContext);
 
-  if (!isAuthenticated) {
-    // No autenticado → login
-    return <Navigate to="/login" replace />;
+  if (isTokenExpired) {
+    // Token expirado → forzar ir a la página de sesión expirada
+    return <Navigate to="/session-expired" replace />
   }
 
-  if (allowedRoles && !allowedRoles.includes(user?.rol.descripcion)) {
-    // Usuario autenticado pero rol no permitido → home
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />
+  }
+
+  if (allowedRoles && !allowedRoles.includes(userAuthenticated?.rol.descripcion)) {
     return <Navigate to="/" replace />
   }
 
-  // Pasa todos los checks → renderiza hijos
   return children
-};
+}

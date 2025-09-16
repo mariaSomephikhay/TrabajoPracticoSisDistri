@@ -1,13 +1,20 @@
 import React, { useEffect, useState, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
+import editIcon from "../../../../public/icons/edit.svg" 
+import deleteIcon from "../../../../public/icons/delete.svg"
+import { Loading } from '../../../components/ui/Loading.jsx'
+import { Modal } from "../../../components/ui/Modal.jsx"
 import UserService from '../../../services/UserService.js'
 
 export const UserTable = () => {
   const navigate = useNavigate()
   const [users, setUsers] = useState([])
+  const [userSelected, setUserSelected] = useState(null)
   const [loading, setLoading] = useState(true)
+  const [showModal, setShowModal] = useState(false);
   const [error, setError] = useState(null)
-
+  const { userAuthenticated } = useContext(AuthContext)
+  
   useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -27,7 +34,22 @@ export const UserTable = () => {
     navigate(`/users/edit/${id}`)
   }
 
-  if (loading) return <p className="text-center mt-5">Cargando...</p>
+  const handleDeleteUserOnClick = (user) => { 
+    setUserSelected(user) 
+    setShowModal(true) 
+  }
+  const handleConfirmDeleteUser = async() => { 
+    try { 
+      await UserService.eliminarUsuario(id) 
+    } catch (err) { 
+      console.error(err) 
+      alert('Error al actualizar el usuario') 
+    } finally { 
+      setShowModal(false) 
+    } 
+  }
+
+  if (loading) return <Loading />
   if (error) return <p className="text-center mt-5">{error}</p>
   if (!users || users.length === 0) return <p className="text-center mt-5">No hay usuarios disponibles</p>
 
@@ -50,11 +72,14 @@ export const UserTable = () => {
           {users.map((user, index) => (
             <tr key={user.id || index}>
               <td>
-                <button 
-                  className="btn btn-primary btn-sm me-1"
-                  onClick={() => handleEditUser(user.id)}>
-                  Modificar
-                </button>
+                <button className="btn btn-white btn-sm me-1" onClick={() => handleEditUser(user.id)}> 
+                  <img src={editIcon} alt="Editar" width={20} height={20} /> 
+                </button> 
+                {user.activo && user.username !== userAuthenticated.username ? (
+                  <button className="btn btn-white btn-sm me-1" onClick={() => handleDeleteUserOnClick(user)}> 
+                    <img src={deleteIcon} alt="Eliminar" width={20} height={20} /> 
+                  </button>
+                ): (<></>)}
               </td>
               <td>{user.rol?.descripcion ?? '-'}</td>
               <td>{user.username}</td>
@@ -67,6 +92,14 @@ export const UserTable = () => {
           ))}
         </tbody>
       </table>
+      {/* Popup para eliminar al usuario */} 
+      <Modal 
+        show={showModal} 
+        title="Deshabilitar usuario" 
+        message={`¿Estás seguro que deseas deshabilitar al usuario "${userSelected?.username}" ?`} 
+        onConfirm={handleConfirmDeleteUser} 
+        onCancel={() => setShowModal(false)} 
+      />
     </div>
   )
 }

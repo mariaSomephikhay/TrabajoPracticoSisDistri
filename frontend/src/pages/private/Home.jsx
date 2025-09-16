@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { AuthContext } from '../../context/AuthContext.jsx'
 
 export const Home = () => {
-  const { user, isAuthenticated } = useContext(AuthContext)
+  const { userAuthenticated, isAuthenticated } = useContext(AuthContext)
 
   return (
     <div className="container p-4">
@@ -10,9 +10,9 @@ export const Home = () => {
         <div className="col-md-4 mx-auto">
           <div className="card text-center">
             <div className="card-body">
-              <h3>Bienvenido{user?.fullname ? `, ${user.fullname}` : ''}</h3>
-              {user?.rol?.descripcion && (
-                <small className="text-muted">Rol: {user.rol.descripcion}</small>
+              <h3>Bienvenido{userAuthenticated?.fullname ? `, ${userAuthenticated.fullname}` : ''}</h3>
+              {userAuthenticated?.rol?.descripcion && (
+                <small className="text-muted">Rol: {userAuthenticated.rol.descripcion}</small>
               )}
               {isAuthenticated && <p className="text-success">Sesión activa</p>}
             </div>

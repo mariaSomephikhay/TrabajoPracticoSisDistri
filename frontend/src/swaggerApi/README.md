@@ -108,8 +108,8 @@ Bearer Auth.apiKey = "YOUR API KEY"
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //Bearer Auth.apiKeyPrefix['Authorization'] = "Token"
 
-var api = new ApiDocumentada.UserApi()
-var id = 56; // {Number} 
+var api = new ApiDocumentada.DonacionesApi()
+var payload = new ApiDocumentada.Donacion(); // {Donacion} 
 var callback = function(error, data, response) {
   if (error) {
     console.error(error);
@@ -117,7 +117,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-api.getUser(id, callback);
+api.createDonation(payload, callback);
 
 ```
 
@@ -127,15 +127,25 @@ All URIs are relative to *http://localhost*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*ApiDocumentada.UserApi* | [**getUser**](docs/UserApi.md#getUser) | **GET** /user/{id} | Obtener usuario
-*ApiDocumentada.UserApi* | [**getUserList**](docs/UserApi.md#getUserList) | **GET** /user/ | Obtener todos los usuarios
-*ApiDocumentada.UserApi* | [**postUserLogin**](docs/UserApi.md#postUserLogin) | **POST** /user/login | Login de usuario y devolución de JWT
-*ApiDocumentada.UserApi* | [**postUserRegister**](docs/UserApi.md#postUserRegister) | **POST** /user/register | Registrar un nuevo usuario
-*ApiDocumentada.UserApi* | [**putUser**](docs/UserApi.md#putUser) | **PUT** /user/{id} | Actualizar un usuario
+*ApiDocumentada.DonacionesApi* | [**createDonation**](docs/DonacionesApi.md#createDonation) | **POST** /donacion/new | Insertar una nueva donacion
+*ApiDocumentada.DonacionesApi* | [**deleteDonationById**](docs/DonacionesApi.md#deleteDonationById) | **DELETE** /donacion/delete/{id} | Eliminar donacion
+*ApiDocumentada.DonacionesApi* | [**getDonationById**](docs/DonacionesApi.md#getDonationById) | **GET** /donacion/{id} | Obtener Donacion
+*ApiDocumentada.DonacionesApi* | [**listDonations**](docs/DonacionesApi.md#listDonations) | **GET** /donacion/ | Obtener todos las donaciones
+*ApiDocumentada.DonacionesApi* | [**updateDonationById**](docs/DonacionesApi.md#updateDonationById) | **PUT** /donacion/{id} | Actualizar un donacion
+*ApiDocumentada.EventosApi* | [**createEvent**](docs/EventosApi.md#createEvent) | **POST** /evento/new | Insertar nuevo evento
+*ApiDocumentada.EventosApi* | [**deleteEventById**](docs/EventosApi.md#deleteEventById) | **DELETE** /evento/delete/{id} | Eliminar evento
+*ApiDocumentada.UserApi* | [**deleteUserById**](docs/UserApi.md#deleteUserById) | **DELETE** /user/{id} | Eliminar usuario
+*ApiDocumentada.UserApi* | [**getUserById**](docs/UserApi.md#getUserById) | **GET** /user/{id} | Obtener usuario
+*ApiDocumentada.UserApi* | [**listUsers**](docs/UserApi.md#listUsers) | **GET** /user/ | Obtener todos los usuarios
+*ApiDocumentada.UserApi* | [**loginUser**](docs/UserApi.md#loginUser) | **POST** /user/login | Login de usuario y devolución de JWT
+*ApiDocumentada.UserApi* | [**registerUser**](docs/UserApi.md#registerUser) | **POST** /user/register | Registrar un nuevo usuario
+*ApiDocumentada.UserApi* | [**updateUserById**](docs/UserApi.md#updateUserById) | **PUT** /user/{id} | Actualizar un usuario
 
 
 ## Documentation for Models
 
+ - [ApiDocumentada.Donacion](docs/Donacion.md)
+ - [ApiDocumentada.DonacionList](docs/DonacionList.md)
  - [ApiDocumentada.Error](docs/Error.md)
  - [ApiDocumentada.Login](docs/Login.md)
  - [ApiDocumentada.Rol](docs/Rol.md)

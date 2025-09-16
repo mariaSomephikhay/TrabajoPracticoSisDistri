@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom"
 import { AuthContext } from "../../context/AuthContext.jsx"
 
 export const Nav = () => {
-  const { authToken, user, logout } = useContext(AuthContext)
+  const { authToken, userAuthenticated, logout } = useContext(AuthContext)
   const isAuthenticated = !!authToken
 
   return (
@@ -22,7 +22,7 @@ export const Nav = () => {
 
         <div className="collapse navbar-collapse" id="navbarCollapse">
           <ul className="navbar-nav me-auto mb-2 mb-md-0">
-            {isAuthenticated && user?.rol.descripcion === "PRESIDENTE" && (
+            {isAuthenticated && userAuthenticated?.rol.descripcion === "PRESIDENTE" && (
               <>
                 <li className="nav-item">
                   <NavLink className="nav-link text-white" to="/users">
