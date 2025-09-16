@@ -5,6 +5,7 @@ import deleteIcon from "../../../../public/icons/delete.svg"
 import { Loading } from '../../../components/ui/Loading.jsx'
 import { Modal } from "../../../components/ui/Modal.jsx"
 import UserService from '../../../services/UserService.js'
+import { AuthContext } from "../../../context/AuthContext.jsx" 
 
 export const UserTable = () => {
   const navigate = useNavigate()
@@ -39,11 +40,16 @@ export const UserTable = () => {
     setShowModal(true) 
   }
   const handleConfirmDeleteUser = async() => { 
-    try { 
-      await UserService.eliminarUsuario(id) 
+    try {
+      await UserService.eliminarUsuario(userSelected.id)
+      setUserSelected(null) // Se limpia la selección
+
+      // Actualización optimista: cambio activo a false inmediatamente
+      setUsers(prevUsers => prevUsers.map(u => u.id === userSelected.id ? { ...u, activo: false } : u))
     } catch (err) { 
       console.error(err) 
-      alert('Error al actualizar el usuario') 
+      alert('Error al actualizar el usuario')
+      setUsers(prevUsers) // Se revierte el cambio si falla
     } finally { 
       setShowModal(false) 
     } 
