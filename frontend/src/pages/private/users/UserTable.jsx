@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import editIcon from "../../../../public/icons/edit.svg" 
 import deleteIcon from "../../../../public/icons/delete.svg"
 import { Loading } from '../../../components/ui/Loading.jsx'
+import { Table } from '../../../components/ui/Table.jsx'
 import { Modal } from "../../../components/ui/Modal.jsx"
 import UserService from '../../../services/UserService.js'
 import { AuthContext } from "../../../context/AuthContext.jsx" 
@@ -57,54 +58,37 @@ export const UserTable = () => {
 
   if (loading) return <Loading />
   if (error) return <p className="text-center mt-5">{error}</p>
-  if (!users || users.length === 0) return <p className="text-center mt-5">No hay usuarios disponibles</p>
 
   return (
     <div className="col-8 align-self-center mt-5">
-      <table className="table" align="center">
-        <thead>
-          <tr>
-            <th scope="col">Acciones</th>
-            <th scope="col">Rol</th>
-            <th scope="col">Username</th>
-            <th scope="col">Email</th>
-            <th scope="col">Nombre</th>
-            <th scope="col">Apellido</th>
-            <th scope="col">Teléfono</th>
-            <th scope="col">Estado</th>
-          </tr>
-        </thead>
-        <tbody>
-          {users.map((user, index) => (
-            <tr key={user.id || index}>
-              <td>
-                <button className="btn btn-white btn-sm me-1" onClick={() => handleEditUser(user.id)}> 
-                  <img src={editIcon} alt="Editar" width={20} height={20} /> 
-                </button> 
-                {user.activo && user.username !== userAuthenticated.username ? (
-                  <button className="btn btn-white btn-sm me-1" onClick={() => handleDeleteUserOnClick(user)}> 
-                    <img src={deleteIcon} alt="Eliminar" width={20} height={20} /> 
-                  </button>
-                ): (<></>)}
-              </td>
-              <td>{user.rol?.descripcion ?? '-'}</td>
-              <td>{user.username}</td>
-              <td>{user.email}</td>
-              <td>{user.nombre}</td>
-              <td>{user.apellido}</td>
-              <td>{user.telefono || '-'}</td>
-              <td>{user.activo ? 'Activo' : 'Inactivo'}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+
+      <Table
+        columns={[
+          { key: "rol.descripcion", header: "Rol", render: (_, row) => row.rol?.descripcion ?? "-" },
+          { key: "username", header: "Username" },
+          { key: "email", header: "Email" },
+          { key: "nombre", header: "Nombre" },
+          { key: "apellido", header: "Apellido" },
+          { key: "telefono", header: "Teléfono", render: (val) => val || "-" },
+          { key: "activo", header: "Estado", render: (val) => val ? "Activo" : "Inactivo" }
+        ]}
+        data={users}
+        actions={[
+          { label: "Editar", icon: editIcon, onClick: (u) => handleEditUser(u.id) },
+          { label: "Eliminar", icon: deleteIcon, onClick: (u) => handleDeleteUserOnClick(u), 
+              hidden: (u) => !u.activo || u.username === userAuthenticated.username //El usuario logueado y los usuarios inactivos no tiene sentido que se le renderice el boton de eliminar
+          },
+        ]}
+        emptyMessage="No hay usuarios disponibles"
+      />
+
       {/* Popup para eliminar al usuario */} 
-      <Modal 
-        show={showModal} 
-        title="Deshabilitar usuario" 
-        message={`¿Estás seguro que deseas deshabilitar al usuario "${userSelected?.username}" ?`} 
-        onConfirm={handleConfirmDeleteUser} 
-        onCancel={() => setShowModal(false)} 
+      <Modal
+        show={showModal}
+        title="Deshabilitar usuario"
+        message={`¿Estás seguro que deseas deshabilitar al usuario "${userSelected?.username}" ?`}
+        onConfirm={handleConfirmDeleteUser}
+        onCancel={() => setShowModal(false)}
       />
     </div>
   )
