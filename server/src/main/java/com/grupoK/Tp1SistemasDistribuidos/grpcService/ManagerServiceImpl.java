@@ -21,6 +21,8 @@ import com.grupoK.grpc.DonacionId;
 import com.grupoK.grpc.DonacionIdUsu;
 import com.grupoK.grpc.DonacionList;
 import com.grupoK.grpc.Empty;
+import com.grupoK.grpc.EventoId;
+import com.grupoK.grpc.EventoList;
 import com.grupoK.grpc.ManagerServiceGrpc;
 import com.grupoK.grpc.UserId;
 import com.grupoK.grpc.UserUsername;
@@ -237,5 +239,34 @@ public class ManagerServiceImpl extends ManagerServiceGrpc.ManagerServiceImplBas
 			              				.asRuntimeException());
 			}
 		}
+		
+		@Override
+		public void getEventoById(EventoId request, StreamObserver<com.grupoK.grpc.Evento> responseObserver) {
+			try {
+				Evento evento = eventoService.findById(request.getId());
+				responseObserver.onNext(eventoWrapper.toGrpcEvento(evento));
+				responseObserver.onCompleted();
+			}
+			catch (Exception e) {
+				responseObserver.onError(io.grpc.Status.NOT_FOUND
+			                .withDescription(e.getMessage())
+			                .asRuntimeException()
+			        );
+			}
+		}
+		
+		@Override
+	    public void getAllEventos(Empty request, StreamObserver<EventoList> responseObserver) {
+
+	        // request -> DB -> map response -> return
+	        List<Evento> lstEventos = eventoService.findAll();
+
+	        EventoList response = EventoList.newBuilder()
+	                .addAllEvento(lstEventos.stream()
+	                		.map(eventoWrapper::toGrpcEvento).toList())
+	                .build();
+	        responseObserver.onNext(response);
+	        responseObserver.onCompleted();
+	    }
 	
 }
