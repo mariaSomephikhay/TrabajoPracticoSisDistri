@@ -22,6 +22,9 @@ eventoDto = api.model("Donacion", {
 errorDto = api.model("Error", {
     "error": fields.String(required=True)
 })
+eventoListDto = api.model("EventoList", {
+    "eventos": fields.List(fields.Nested(eventoDto))
+})
 
 #######################################################
 # Definición de endpoints para el swagger
@@ -58,7 +61,7 @@ class EventoInsert(Resource):
                 return {"error": str(e.details())}, 500
 
 @api.route("/delete/<int:id>")
-class User(Resource):
+class Evento(Resource):
     @api.doc(security='Bearer Auth') # Esto hace que Swagger agregue el header para el token
     @SecurityConfig.authRequired("PRESIDENTE","COORDINADOR")
     @api.doc(id="deleteEventById") # Esto define el operationId
@@ -73,3 +76,43 @@ class User(Resource):
             return json.loads(result), 200
         except Exception as e:
             return {"error": str(e)}, 500
+        
+@api.route("/<int:id>")
+class GetEvento(Resource):
+    @api.doc(security='Bearer Auth') # Esto hace que Swagger agregue el header para el token
+    @SecurityConfig.authRequired("PRESIDENTE", "VOCAL")
+    @api.doc(id="getEventoById") # Esto define el operationId
+    @api.response(200, "Success", model=eventoDto)
+    @api.response(401, "Unauthorized", model=errorDto)
+    @api.response(404, "Not Found", model=errorDto)
+    @api.response(500, "Internal server error", model=errorDto)
+    def get(self, id):
+        """Obtener Donacion"""
+        try:
+            payload = {"id": id}  # solo necesitas el id
+            result = cliente.getEventoById(payload)
+            return json.loads(result), 200
+        except Exception as e:
+            if e.code() == grpc.StatusCode.NOT_FOUND:
+                return  {"error": str(e.details())}, 404
+            else:
+                return {"error": str(e.details())}, 500
+            
+@api.route("/")
+class EventoList(Resource):
+    @api.doc(security='Bearer Auth') # Esto hace que Swagger agregue el header para el token
+    @SecurityConfig.authRequired("PRESIDENTE", "VOCAL")
+    @api.doc(id="listEventos") # Esto define el operationId
+    @api.response(200, "Success", model=eventoListDto)
+    @api.response(401, "Unauthorized", model=errorDto)
+    @api.response(500, "Internal server error", model=errorDto)
+    def get(self):
+        """Obtener todos los eventos"""
+        try:
+            result = cliente.getAllEventos()
+            return json.loads(result), 200
+        except Exception as e:
+            if e.code() == grpc.StatusCode.UNAUTHENTICATED:
+                return  {"error": str(e.details())}, 401
+            else:
+                return {"error": str(e)}, 500

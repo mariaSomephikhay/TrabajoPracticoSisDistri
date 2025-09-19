@@ -89,6 +89,16 @@ class ManagerServiceStub(object):
                 request_serializer=donaciones__eventos__pb2.EventoId.SerializeToString,
                 response_deserializer=donaciones__eventos__pb2.Evento.FromString,
                 _registered_method=True)
+        self.getEventoById = channel.unary_unary(
+                '/managerservice.ManagerService/getEventoById',
+                request_serializer=donaciones__eventos__pb2.EventoId.SerializeToString,
+                response_deserializer=donaciones__eventos__pb2.Evento.FromString,
+                _registered_method=True)
+        self.getAllEventos = channel.unary_unary(
+                '/managerservice.ManagerService/getAllEventos',
+                request_serializer=donaciones__eventos__pb2.Empty.SerializeToString,
+                response_deserializer=donaciones__eventos__pb2.EventoList.FromString,
+                _registered_method=True)
 
 
 class ManagerServiceServicer(object):
@@ -161,6 +171,18 @@ class ManagerServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def getEventoById(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def getAllEventos(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_ManagerServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -218,6 +240,16 @@ def add_ManagerServiceServicer_to_server(servicer, server):
                     servicer.deleteEventos,
                     request_deserializer=donaciones__eventos__pb2.EventoId.FromString,
                     response_serializer=donaciones__eventos__pb2.Evento.SerializeToString,
+            ),
+            'getEventoById': grpc.unary_unary_rpc_method_handler(
+                    servicer.getEventoById,
+                    request_deserializer=donaciones__eventos__pb2.EventoId.FromString,
+                    response_serializer=donaciones__eventos__pb2.Evento.SerializeToString,
+            ),
+            'getAllEventos': grpc.unary_unary_rpc_method_handler(
+                    servicer.getAllEventos,
+                    request_deserializer=donaciones__eventos__pb2.Empty.FromString,
+                    response_serializer=donaciones__eventos__pb2.EventoList.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -517,6 +549,60 @@ class ManagerService(object):
             '/managerservice.ManagerService/deleteEventos',
             donaciones__eventos__pb2.EventoId.SerializeToString,
             donaciones__eventos__pb2.Evento.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def getEventoById(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/managerservice.ManagerService/getEventoById',
+            donaciones__eventos__pb2.EventoId.SerializeToString,
+            donaciones__eventos__pb2.Evento.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def getAllEventos(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/managerservice.ManagerService/getAllEventos',
+            donaciones__eventos__pb2.Empty.SerializeToString,
+            donaciones__eventos__pb2.EventoList.FromString,
             options,
             channel_credentials,
             insecure,
