@@ -70,3 +70,13 @@ class ManagerServiceImpl(object):
         pEvento= ParseDict(id, service_pb2.Evento(), ignore_unknown_fields=True) # Convierte el modelo json a un mensaje protobuf solo con los campos presentes
         response = self.stub.deleteEventos(pEvento)
         return MessageToJson(response)
+    
+    def getEventoById(self, id):
+        pEvento = ParseDict(id, service_pb2.EventoId(), ignore_unknown_fields=True) # Convierte el modelo json a un mensaje protobuf solo con los campos presentes
+        response = self.stub.getEventoById(pEvento)
+        return MessageToJson(response)    
+    
+    def getAllEventos(self): 
+        param = service_pb2.Empty() #inicializao param con el valor del mensaje empty
+        response = self.stub.getAllEventos(param) #llamo al servicio getAllUsers y le paso Empty (param)como esta declarado en el prot 
+        return MessageToJson(response)   
