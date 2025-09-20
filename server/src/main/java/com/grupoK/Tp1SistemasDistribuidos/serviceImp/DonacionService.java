@@ -37,10 +37,15 @@ public class DonacionService implements IDonacionService{
 	private void map(Donacion preUpdated, Donacion updated) {
 		if(!StringUtils.isEmpty(updated.getDescripcion()))
 			preUpdated.setDescripcion(updated.getDescripcion());
-		if(updated.getCantidad()>0)
+		if(updated.getCantidad()>=0)
 			preUpdated.setCantidad(updated.getCantidad());
 		if(updated.getUsuarioModificacion()!=null)
 			preUpdated.setUsuarioModificacion(updated.getUsuarioModificacion());
+		if(updated.getCantidad()==0) {
+			preUpdated.setEliminado(true);
+		}else {
+			preUpdated.setEliminado(false);
+		}
 	}
 
 	@Override
