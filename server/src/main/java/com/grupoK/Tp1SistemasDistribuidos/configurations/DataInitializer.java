@@ -4,9 +4,14 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.grupoK.Tp1SistemasDistribuidos.entities.Categoria;
+import com.grupoK.Tp1SistemasDistribuidos.entities.Donacion;
 import com.grupoK.Tp1SistemasDistribuidos.entities.Rol;
 import com.grupoK.Tp1SistemasDistribuidos.entities.Usuario;
+import com.grupoK.Tp1SistemasDistribuidos.enums.TipoCategoria;
 import com.grupoK.Tp1SistemasDistribuidos.enums.TipoRoles;
+import com.grupoK.Tp1SistemasDistribuidos.repositories.ICategoriaRepository;
+import com.grupoK.Tp1SistemasDistribuidos.repositories.IDonacionRepository;
 import com.grupoK.Tp1SistemasDistribuidos.repositories.IRolRepository;
 import com.grupoK.Tp1SistemasDistribuidos.repositories.IUsuarioRepository;
 
@@ -25,12 +30,13 @@ public class DataInitializer {
                 usuarioRepo.save(new Usuario(
                         null,			   // id
                         "user1",           // username
-                        "12345",		   // password
+                        "$2b$12$4pzYx189NUVwtpsK5uTuUOJR60MhqKZVYjss.2pZPuipv2/P/TwmW", // password(user1)
                         "user@mail.com",   // email
                         "Manuel",          // nombre
                         "Lopez",           // apellido
                         "1122334455",      // telefono
                         true,              // activo
+                        null,			   // lst de evento
                         null,              // fechaAlta (se genera sola)
                         null,              // fechaModificacion (se genera sola)
                         presidente         // rol
@@ -39,7 +45,7 @@ public class DataInitializer {
                 usuarioRepo.save(new Usuario(
                         null,
                         "user2",
-                        "abcd",
+                        "$2b$12$q0cJWPMPkXziA2KuCig01.b88wmiRQxaBwAAQQWAwzUgU6R3VpSYe", //password (user2)
                         "user2@mail.com",
                         "Lucia",
                         "Garcia",
@@ -47,8 +53,36 @@ public class DataInitializer {
                         true,
                         null,
                         null,
+                        null,
                         voluntario
                 ));
+            }
+        };
+    }
+    
+    @Bean
+    CommandLineRunner initDataDonacion(ICategoriaRepository cateRepo, IDonacionRepository donacionRepo, IUsuarioRepository usuarioRepo) {
+        return args -> {
+            if (cateRepo.count() == 0) {
+                Categoria alimento = cateRepo.save(new Categoria(null, TipoCategoria.ALIMENTO));
+                cateRepo.save(new Categoria(null, TipoCategoria.JUGUETE));
+                cateRepo.save(new Categoria(null, TipoCategoria.ROPA));
+                cateRepo.save(new Categoria(null, TipoCategoria.UTIL_ESCOLAR));
+                Usuario usuario = (usuarioRepo.findByUsername("user1")).get();
+                
+                donacionRepo.save(new Donacion(
+                        null,	// id
+                        alimento, // categoria
+                        "Pure de tomates", // descripcion
+                        3, // cantidad
+                        false,   // eliminado
+                        null,          // fechaAlta (se genera sola)
+                        usuario,
+                        null,
+                        usuario
+                ));
+
+              
             }
         };
     }

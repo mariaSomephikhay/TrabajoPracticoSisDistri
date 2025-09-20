@@ -1,6 +1,8 @@
 package com.grupoK.Tp1SistemasDistribuidos.entities;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -14,6 +16,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -31,13 +34,13 @@ public class Usuario {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@Column(name="username", nullable=false, length=15)
+	@Column(name="username", unique = true, nullable=false, length=15)
 	private String username;
 	
-	@Column(name="password", nullable=false, length=10)
+	@Column(name="password", nullable=false, length=60)
 	private String password;
 	
-	@Column(name="email", nullable=false, length=25)
+	@Column(name="email", unique = true, nullable=false, length=25)
 	private String email;
 	
 	@Column(name="nombre", nullable=false, length=25)
@@ -51,6 +54,9 @@ public class Usuario {
 	
 	@Column(name="activo", nullable=false)
 	private Boolean activo;
+	
+	@ManyToMany(mappedBy = "usuarios")
+    private List<Evento> eventos = new ArrayList<>();
 	
 	@CreationTimestamp
 	@Column(name="fecha_alta", nullable=true)
