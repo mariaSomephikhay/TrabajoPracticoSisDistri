@@ -1,5 +1,6 @@
 package com.grupoK.Tp1SistemasDistribuidos.grpcService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -13,6 +14,7 @@ import com.grupoK.Tp1SistemasDistribuidos.exceptions.UserEmailAlreadyExistsExcep
 import com.grupoK.Tp1SistemasDistribuidos.exceptions.UserNotFoundException;
 import com.grupoK.Tp1SistemasDistribuidos.exceptions.UserUsernameAlreadyExistsException;
 import com.grupoK.Tp1SistemasDistribuidos.serviceImp.DonacionService;
+import com.grupoK.Tp1SistemasDistribuidos.serviceImp.EventoDonacionService;
 import com.grupoK.Tp1SistemasDistribuidos.serviceImp.EventoService;
 import com.grupoK.Tp1SistemasDistribuidos.serviceImp.UsuarioService;
 import com.grupoK.Tp1SistemasDistribuidos.wrappers.DonacionWrapper;
@@ -24,6 +26,7 @@ import com.grupoK.grpc.DonacionList;
 import com.grupoK.grpc.Empty;
 import com.grupoK.grpc.EventoId;
 import com.grupoK.grpc.EventoList;
+import com.grupoK.grpc.EventoWithListDonacionesDetails;
 import com.grupoK.grpc.EventoWithListUsersDetails;
 import com.grupoK.grpc.ManagerServiceGrpc;
 import com.grupoK.grpc.UserId;
@@ -49,6 +52,9 @@ public class ManagerServiceImpl extends ManagerServiceGrpc.ManagerServiceImplBas
 	private EventoService eventoService;
 	@Autowired
 	private EventoWrapper eventoWrapper;
+	
+	@Autowired
+	private EventoDonacionService eventoDonacionService;
 	
 	@Override
 	public void getUserById(UserId request, StreamObserver<com.grupoK.grpc.Usuario> responseObserver) {
@@ -279,7 +285,7 @@ public class ManagerServiceImpl extends ManagerServiceGrpc.ManagerServiceImplBas
 		    	List<UserId> listaUsuarios = request.getUsersIdsList();
 		    	
 		    	List<Integer> lstUsers = listaUsuarios.stream()
-		    	        .map(UserId::getId) // Suponiendo que UserId tiene un campo `int32 id = 1`
+		    	        .map(UserId::getId) 
 		    	        .collect(Collectors.toList());
 		    	
 		    	List<Usuario> lstUsuarioEntidad = eventoService.saveUsersToEvento(evento, lstUsers);
@@ -297,6 +303,38 @@ public class ManagerServiceImpl extends ManagerServiceGrpc.ManagerServiceImplBas
 		    	responseObserver.onNext(responseBuilder.build());
 		    	responseObserver.onCompleted();
 		    } catch (Exception e) {
+		        responseObserver.onError(io.grpc.Status.INTERNAL
+		                .withDescription("Internal server error: " + e.getMessage())
+		                .asRuntimeException());
+		    }
+		}
+		
+		@Override
+		public void insertDonacionesToEvento(com.grupoK.grpc.EventoWithListDonaciones request, StreamObserver<com.grupoK.grpc.EventoWithListDonacionesDetails> responseObserver) {
+			try {
+				
+				//MAPEO DE DATOS
+				Evento evento = eventoService.findById(request.getIdEvento());
+				
+				Donacion donacion = donacionService.findById(request.getDonacionId());
+				
+				Usuario entityUsuario = usuarioWrapper.toEntityUsuario(request.getUsuario());
+				
+				//LLAMADO AL SERVICE
+				eventoDonacionService.insertEventoDonacion(evento, donacion, request.getCantidad(), entityUsuario);
+
+				//ARMADO DEL RESPONSE
+				EventoWithListDonacionesDetails.Builder responseBuilder = EventoWithListDonacionesDetails.newBuilder();
+				
+				responseBuilder.setId(eventoWrapper.toGrpcEvento(evento));
+				
+				responseBuilder.setDonacion(donacionWrapper.toGrpcDonacion(donacion));
+				
+				responseBuilder.setCantidad(request.getCantidad());
+			
+				responseObserver.onNext(responseBuilder.build());
+		    	responseObserver.onCompleted();
+			} catch (Exception e) {
 		        responseObserver.onError(io.grpc.Status.INTERNAL
 		                .withDescription("Internal server error: " + e.getMessage())
 		                .asRuntimeException());
