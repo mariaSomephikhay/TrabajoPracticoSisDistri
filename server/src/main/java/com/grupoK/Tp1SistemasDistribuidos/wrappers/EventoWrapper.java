@@ -29,7 +29,7 @@ public class EventoWrapper {
     			eventoModel.getNombre(),
     			eventoModel.getDescripcion(),
     			utilidades.toLocalDateTime(eventoModel.getFecha()),
-    			null,
+    			null,null,
     			usuarioWrapper.toEntityUsuario(eventoModel.getUsuario()));
     }
 }
