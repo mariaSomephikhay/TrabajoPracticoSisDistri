@@ -25,6 +25,9 @@ errorDto = api.model("Error", {
 eventoListDto = api.model("EventoList", {
     "eventos": fields.List(fields.Nested(eventoDto))
 })
+usersListDto = api.model('UsersListDto', {
+    'usersIds': fields.List(fields.Integer, required=True, description='Lista de IDs de usuarios')
+})
 
 #######################################################
 # Definición de endpoints para el swagger
@@ -116,3 +119,37 @@ class EventoList(Resource):
                 return  {"error": str(e.details())}, 401
             else:
                 return {"error": str(e)}, 500
+            
+@api.route("/<int:id>/users")
+class AddUsersToEvento(Resource):
+    @api.doc(security='Bearer Auth')
+    @SecurityConfig.authRequired("PRESIDENTE", "VOCAL")
+    @api.doc(id="insertUsersToEvento")
+    @api.response(200, "Success")
+    @api.response(400, "Bad Request", model=errorDto)
+    @api.response(401, "Unauthorized", model=errorDto)
+    @api.response(404, "Not Found", model=errorDto)
+    @api.response(500, "Internal server error", model=errorDto)
+    @api.expect(usersListDto)
+    def post(self, id):
+        """Agregar usuarios a un evento"""
+        try:
+            
+            data = api.payload  
+            payload = {
+                "id": id,
+                "usersIds": [{"id": user_id} for user_id in data.get("usersIds", [])]
+            }
+
+            result = cliente.insertUsersToEvento(payload)
+            return json.loads(result), 200
+
+        except grpc.RpcError as e:
+            if e.code() == grpc.StatusCode.NOT_FOUND:
+                return {"error": str(e.details())}, 404
+            elif e.code() == grpc.StatusCode.INVALID_ARGUMENT:
+                return {"error": str(e.details())}, 400
+            elif e.code() == grpc.StatusCode.UNAUTHENTICATED:
+                return {"error": str(e.details())}, 401
+            else:
+                return {"error": str(e.details())}, 500
