@@ -85,3 +85,8 @@ class ManagerServiceImpl(object):
         pEvento = ParseDict(evento_dict, service_pb2.EventoWithListUsers(), ignore_unknown_fields=True)
         response = self.stub.insertUsersToEvento(pEvento)
         return MessageToJson(response)
+    
+    def insertDonacionesToEvento(self, evento_dict):
+        pEvento = ParseDict(evento_dict, service_pb2.EventoWithListDonaciones(), ignore_unknown_fields=True)
+        response = self.stub.insertDonacionesToEvento(pEvento)
+        return MessageToJson(response)

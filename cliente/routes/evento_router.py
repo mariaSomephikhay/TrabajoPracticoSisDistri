@@ -28,6 +28,11 @@ eventoListDto = api.model("EventoList", {
 usersListDto = api.model('UsersListDto', {
     'usersIds': fields.List(fields.Integer, required=True, description='Lista de IDs de usuarios')
 })
+donacionesListDto = api.model('donacionesListDto', {
+    'donacionId': fields.List(fields.Integer, required=True, description='Lista de IDs de las donaciones'),
+    "cantDonaciones": fields.Integer(required=True)
+})
+
 
 #######################################################
 # Definición de endpoints para el swagger
@@ -142,6 +147,47 @@ class AddUsersToEvento(Resource):
             }
 
             result = cliente.insertUsersToEvento(payload)
+            return json.loads(result), 200
+
+        except grpc.RpcError as e:
+            if e.code() == grpc.StatusCode.NOT_FOUND:
+                return {"error": str(e.details())}, 404
+            elif e.code() == grpc.StatusCode.INVALID_ARGUMENT:
+                return {"error": str(e.details())}, 400
+            elif e.code() == grpc.StatusCode.UNAUTHENTICATED:
+                return {"error": str(e.details())}, 401
+            else:
+                return {"error": str(e.details())}, 500
+            
+@api.route("/<int:id>/donaciones")
+class AddDonacionesToEvento(Resource):
+    @api.doc(security='Bearer Auth')
+    @SecurityConfig.authRequired("PRESIDENTE", "VOCAL")
+    @api.doc(id="insertDonacionesToEvento")
+    @api.response(200, "Success")
+    @api.response(400, "Bad Request", model=errorDto)
+    @api.response(401, "Unauthorized", model=errorDto)
+    @api.response(404, "Not Found", model=errorDto)
+    @api.response(500, "Internal server error", model=errorDto)
+    @api.expect(donacionesListDto)
+    def post(self, id):
+        """Agregar donaciones al evento"""
+        try:
+            data = api.payload  
+
+            payload = request.get_json()
+
+            username = SecurityConfig.getUser()
+            usuario = json.loads(cliente.getUserByUsername(username))
+
+            payload = {
+                "idEvento": id,
+                "donacionId": data.get("donacionId"),
+                "cantidad": data.get("cantDonaciones"),
+                "usuario": usuario
+            }
+            
+            result = cliente.insertDonacionesToEvento(payload)
             return json.loads(result), 200
 
         except grpc.RpcError as e:
