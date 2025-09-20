@@ -80,3 +80,8 @@ class ManagerServiceImpl(object):
         param = service_pb2.Empty() #inicializao param con el valor del mensaje empty
         response = self.stub.getAllEventos(param) #llamo al servicio getAllUsers y le paso Empty (param)como esta declarado en el prot 
         return MessageToJson(response)   
+    
+    def insertUsersToEvento(self, evento_dict):
+        pEvento = ParseDict(evento_dict, service_pb2.EventoWithListUsers(), ignore_unknown_fields=True)
+        response = self.stub.insertUsersToEvento(pEvento)
+        return MessageToJson(response)

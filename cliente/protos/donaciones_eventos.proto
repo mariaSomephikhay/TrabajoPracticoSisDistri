@@ -82,6 +82,16 @@ message EventoList {
     repeated Evento evento = 1;
 }
 
+message EventoWithListUsers {
+	int32 id = 1;
+    repeated UserId usersIds = 2;
+}
+
+message EventoWithListUsersDetails {
+	Evento id = 1;
+    repeated Usuario users = 2;
+}
+
 service ManagerService{
   rpc getUserByUsername (UserUsername) returns (Usuario) {};
   rpc getUserById (UserId) returns (Usuario) {};
@@ -98,5 +108,6 @@ service ManagerService{
   rpc deleteEventos(EventoId) returns (Evento) {}; //se agrega "s" porque el gen da error con el nombre "deleteEvento"
   rpc getEventoById (EventoId) returns (Evento) {};
   rpc getAllEventos (Empty) returns (EventoList) {};  
+  rpc insertUsersToEvento (EventoWithListUsers) returns (EventoWithListUsersDetails) {};
   //AGREGAR ACA TODOS LOS SERVICIOS
 }
