@@ -10,6 +10,7 @@ import { Login } from "../pages/Login.jsx"
 import { Register } from '../pages/Register.jsx'
 import { Home } from "../pages/private/Home.jsx"
 import { UserTable } from "../pages/private/users/UserTable.jsx"
+import { DonationTable } from "../pages/private/donation/DonationInventory.jsx"
 import { UserUpdateForm } from "../pages/private/users/UserUpdateForm.jsx"
 
 export const OperatorRoutes = () => { 
@@ -29,7 +30,10 @@ export const OperatorRoutes = () => {
                 {/* Rutas privadas solo para PRESIDENTE */} 
                 <Route path="/users" element={<PrivateRoute allowedRoles={["PRESIDENTE"]}> <UserTable /></PrivateRoute>} /> 
                 <Route path="/users/edit/:id" element={<PrivateRoute allowedRoles={["PRESIDENTE"]}><UserUpdateForm /></PrivateRoute>} /> 
-                    
+
+                {/* Rutas privadas solo para PRESIDENTE y VOCAL*/}  
+                <Route path="/donation-inventory" element={<PrivateRoute allowedRoles={["PRESIDENTE", "VOCAL"]}> <DonationTable /></PrivateRoute>} /> 
+
                 {/* Ruta catch-all para 404 */} 
                 <Route path="*" element={<NotFound />} />
 
