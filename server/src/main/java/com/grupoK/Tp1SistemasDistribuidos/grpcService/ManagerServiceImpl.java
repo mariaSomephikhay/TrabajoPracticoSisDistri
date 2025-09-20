@@ -1,6 +1,7 @@
 package com.grupoK.Tp1SistemasDistribuidos.grpcService;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.grpc.server.service.GrpcService;
@@ -23,6 +24,7 @@ import com.grupoK.grpc.DonacionList;
 import com.grupoK.grpc.Empty;
 import com.grupoK.grpc.EventoId;
 import com.grupoK.grpc.EventoList;
+import com.grupoK.grpc.EventoWithListUsersDetails;
 import com.grupoK.grpc.ManagerServiceGrpc;
 import com.grupoK.grpc.UserId;
 import com.grupoK.grpc.UserUsername;
@@ -268,5 +270,37 @@ public class ManagerServiceImpl extends ManagerServiceGrpc.ManagerServiceImplBas
 	        responseObserver.onNext(response);
 	        responseObserver.onCompleted();
 	    }
+		
+		@Override
+		public void insertUsersToEvento(com.grupoK.grpc.EventoWithListUsers request, StreamObserver<com.grupoK.grpc.EventoWithListUsersDetails> responseObserver) {
+	        // request -> DB -> map response -> return
+			try {
+				Evento evento = eventoService.findById(request.getId());
+		    	List<UserId> listaUsuarios = request.getUsersIdsList();
+		    	
+		    	List<Integer> lstUsers = listaUsuarios.stream()
+		    	        .map(UserId::getId) // Suponiendo que UserId tiene un campo `int32 id = 1`
+		    	        .collect(Collectors.toList());
+		    	
+		    	List<Usuario> lstUsuarioEntidad = eventoService.saveUsersToEvento(evento, lstUsers);
+		    	
+		    	EventoWithListUsersDetails.Builder responseBuilder = EventoWithListUsersDetails.newBuilder();
+
+		    	responseBuilder.setId(eventoWrapper.toGrpcEvento(evento));
+
+		    	responseBuilder.addAllUsers(
+		    	    lstUsuarioEntidad.stream()
+		    	        .map(usuarioWrapper::toGrpcUsuario)
+		    	        .toList()
+		    	);
+
+		    	responseObserver.onNext(responseBuilder.build());
+		    	responseObserver.onCompleted();
+		    } catch (Exception e) {
+		        responseObserver.onError(io.grpc.Status.INTERNAL
+		                .withDescription("Internal server error: " + e.getMessage())
+		                .asRuntimeException());
+		    }
+		}
 	
 }

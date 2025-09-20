@@ -38,7 +38,8 @@ public class UsuarioWrapper {
     			StringUtils.isEmpty(userModel.getTelefono()) ? null : userModel.getTelefono(), 
     			userModel.getActivo(), 
     			null, 
-    			null, 
+    			null,
+    			null,
     			rolWrapper.toEntityRol(userModel.getRol()));
     }
     

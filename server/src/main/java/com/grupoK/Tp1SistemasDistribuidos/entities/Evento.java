@@ -1,6 +1,9 @@
 package com.grupoK.Tp1SistemasDistribuidos.entities;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 import io.micrometer.common.lang.NonNull;
@@ -11,6 +14,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -36,6 +41,14 @@ public class Evento {
 	
 	@Column(name="fecha", nullable=false)
 	private LocalDateTime fecha;
+	
+	@ManyToMany
+    @JoinTable(
+        name = "evento_usuario",
+        joinColumns = @JoinColumn(name = "evento_id"),
+        inverseJoinColumns = @JoinColumn(name = "usuario_id")
+    )
+    private List<Usuario> usuarios = new ArrayList<>();
 	
 	@CreationTimestamp
 	@Column(name="fecha_alta", nullable=true)

@@ -1,5 +1,6 @@
 package com.grupoK.Tp1SistemasDistribuidos.serviceImp;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,6 +14,8 @@ import com.grupoK.Tp1SistemasDistribuidos.exceptions.UserNotFoundException;
 import com.grupoK.Tp1SistemasDistribuidos.exceptions.UserUsernameAlreadyExistsException;
 import com.grupoK.Tp1SistemasDistribuidos.repositories.IUsuarioRepository;
 import com.grupoK.Tp1SistemasDistribuidos.service.IUsuarioService;
+
+import ch.qos.logback.classic.Logger;
 
 @Service
 public class UsuarioService implements IUsuarioService {
@@ -112,6 +115,21 @@ public class UsuarioService implements IUsuarioService {
 		user.setActivo(false);
 		usuarioRepository.save(user);
 		return user;	
+	}
+
+
+	@Override
+	public List<Usuario> getUsersById(List<Integer> lstId) {
+		List<Usuario> lstUsers = new ArrayList<Usuario>();
+		try {
+			for (Integer id : lstId) {
+				lstUsers.add(this.findById(id));
+	        }
+		}catch(Exception e) {
+			System.out.println("No existe usuario"); //Implementar logger info
+		}
+		
+		return lstUsers;
 	}
 
 

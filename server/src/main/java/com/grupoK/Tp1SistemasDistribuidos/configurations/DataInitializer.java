@@ -36,6 +36,7 @@ public class DataInitializer {
                         "Lopez",           // apellido
                         "1122334455",      // telefono
                         true,              // activo
+                        null,			   // lst de evento
                         null,              // fechaAlta (se genera sola)
                         null,              // fechaModificacion (se genera sola)
                         presidente         // rol
@@ -50,6 +51,7 @@ public class DataInitializer {
                         "Garcia",
                         "1198765432",
                         true,
+                        null,
                         null,
                         null,
                         voluntario

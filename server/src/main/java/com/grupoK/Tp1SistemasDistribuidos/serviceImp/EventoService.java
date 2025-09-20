@@ -2,6 +2,7 @@ package com.grupoK.Tp1SistemasDistribuidos.serviceImp;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import com.grupoK.Tp1SistemasDistribuidos.entities.Usuario;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,12 +10,16 @@ import org.springframework.stereotype.Service;
 import com.grupoK.Tp1SistemasDistribuidos.entities.Evento;
 import com.grupoK.Tp1SistemasDistribuidos.repositories.IEventoRepository;
 import com.grupoK.Tp1SistemasDistribuidos.service.IEventoService;
+import com.grupoK.Tp1SistemasDistribuidos.service.IUsuarioService;
 
 @Service
 public class EventoService implements IEventoService{
 
 	@Autowired
 	private IEventoRepository eventoRepository;
+	
+	@Autowired
+	private IUsuarioService usuarioService;
 	
 	@Override
 	public Evento findByNombre(String nombre) throws Exception {
@@ -68,5 +73,15 @@ public class EventoService implements IEventoService{
 	public List<Evento> findAll() {
 		return eventoRepository.findAll();
 	}
+
+	@Override
+	public List<Usuario> saveUsersToEvento(Evento evento, List<Integer> lstUsersId) {
+		List<Usuario> lstUsers = usuarioService.getUsersById(lstUsersId);
+		evento.setUsuarios(lstUsers);
+		eventoRepository.save(evento);
+		return lstUsers;
+	}
+
+	
 
 }
