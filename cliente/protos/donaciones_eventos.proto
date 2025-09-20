@@ -92,6 +92,19 @@ message EventoWithListUsersDetails {
     repeated Usuario users = 2;
 }
 
+message EventoWithListDonaciones {
+	int32 idEvento = 1;
+    int32 donacionId = 2;
+    int32 cantidad = 3;
+    Usuario usuario = 4;
+}
+
+message EventoWithListDonacionesDetails {
+	Evento id = 1;
+    Donacion donacion = 2;
+    int32 cantidad = 3;
+}
+
 service ManagerService{
   rpc getUserByUsername (UserUsername) returns (Usuario) {};
   rpc getUserById (UserId) returns (Usuario) {};
@@ -109,5 +122,7 @@ service ManagerService{
   rpc getEventoById (EventoId) returns (Evento) {};
   rpc getAllEventos (Empty) returns (EventoList) {};  
   rpc insertUsersToEvento (EventoWithListUsers) returns (EventoWithListUsersDetails) {};
+  rpc insertDonacionesToEvento (EventoWithListDonaciones) returns (EventoWithListDonacionesDetails) {};
+
   //AGREGAR ACA TODOS LOS SERVICIOS
 }
