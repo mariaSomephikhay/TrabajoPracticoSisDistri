@@ -81,7 +81,7 @@ message EventoId {
 }
 
 message EventoList {
-    repeated Evento evento = 1;
+    repeated Evento eventos = 1;
 }
 
 message EventoWithListUsers {
