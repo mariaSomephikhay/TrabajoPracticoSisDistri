@@ -88,7 +88,7 @@ class Evento(Resource):
 @api.route("/<int:id>")
 class GetEvento(Resource):
     @api.doc(security='Bearer Auth') # Esto hace que Swagger agregue el header para el token
-    @SecurityConfig.authRequired("PRESIDENTE", "VOCAL")
+    @SecurityConfig.authRequired("PRESIDENTE", "COORDINADOR")
     @api.doc(id="getEventoById") # Esto define el operationId
     @api.response(200, "Success", model=eventoDto)
     @api.response(401, "Unauthorized", model=errorDto)
@@ -107,7 +107,7 @@ class GetEvento(Resource):
                 return {"error": str(e.details())}, 500
     
     @api.doc(security='Bearer Auth') # Esto hace que Swagger agregue el header para el token
-    @SecurityConfig.authRequired("PRESIDENTE", "VOCAL")
+    @SecurityConfig.authRequired("PRESIDENTE", "COORDINADOR")
     @api.doc(id="updateEventoById") # Esto define el operationId
     @api.expect(eventoDto) #Request
     @api.response(200, "Success", model=eventoDto)
@@ -138,7 +138,7 @@ class GetEvento(Resource):
 @api.route("/")
 class EventoList(Resource):
     @api.doc(security='Bearer Auth') # Esto hace que Swagger agregue el header para el token
-    @SecurityConfig.authRequired("PRESIDENTE", "VOCAL")
+    @SecurityConfig.authRequired("PRESIDENTE", "VOLUNTARIO", "COORDINADOR")
     @api.doc(id="listEventos") # Esto define el operationId
     @api.response(200, "Success", model=eventoListDto)
     @api.response(401, "Unauthorized", model=errorDto)
@@ -157,7 +157,7 @@ class EventoList(Resource):
 @api.route("/<int:id>/users")
 class AddUsersToEvento(Resource):
     @api.doc(security='Bearer Auth')
-    @SecurityConfig.authRequired("PRESIDENTE", "VOCAL")
+    @SecurityConfig.authRequired("PRESIDENTE", "COORDINADOR")
     @api.doc(id="insertUsersToEvento")
     @api.response(200, "Success")
     @api.response(400, "Bad Request", model=errorDto)
@@ -191,7 +191,7 @@ class AddUsersToEvento(Resource):
 @api.route("/<int:id>/donaciones")
 class AddDonacionesToEvento(Resource):
     @api.doc(security='Bearer Auth')
-    @SecurityConfig.authRequired("PRESIDENTE", "VOCAL")
+    @SecurityConfig.authRequired("PRESIDENTE", "COORDINADOR")
     @api.doc(id="insertDonacionesToEvento")
     @api.response(200, "Success")
     @api.response(400, "Bad Request", model=errorDto)
