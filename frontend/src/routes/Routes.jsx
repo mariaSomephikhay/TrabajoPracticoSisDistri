@@ -12,14 +12,18 @@ import { Home } from "../pages/private/Home.jsx"
 import { UserTable } from "../pages/private/users/UserTable.jsx"
 import { DonationTable } from "../pages/private/donation/DonationInventory.jsx"
 import { UserUpdateForm } from "../pages/private/users/UserUpdateForm.jsx"
+import { UserNewForm } from '../pages/private/users/UserNewForm.jsx'
 import { DonationUpdateForm } from "../pages/private/donation/DonationUpdateForm.jsx"
 import { DonationNewForm } from "../pages/private/donation/DonationNewForm.jsx"
 import { EventList } from '../pages/private/event/EventList.jsx';
 import { EventUpdateForm } from '../pages/private/event/EventUpdateForm.jsx';
 import { EventNew } from '../pages/private/event/EventNew.jsx';
+import { useNotification } from "../context/NotificationContext.jsx"
 
 
-export const OperatorRoutes = () => { 
+export const OperatorRoutes = () => {
+    const { notification, clearNotification } = useNotification()
+
     return ( 
     <> 
         <Header /> 
@@ -28,13 +32,14 @@ export const OperatorRoutes = () => {
         <main className="container pt-4"> 
             <Routes> 
                 <Route path="/login" element={<Login />} /> 
-                <Route path='/register' element={<Register/ >} /> 
+                {/** <Route path='/register' element={<Register/ >} /> **/}
                 
                 {/* Ruta privada para todos los usuarios autenticados */} 
                 <Route path="/" element={<PrivateRoute><Home /></PrivateRoute>} /> 
                 
                 {/* Rutas privadas solo para PRESIDENTE */} 
                 <Route path="/users" element={<PrivateRoute allowedRoles={["PRESIDENTE"]}> <UserTable /></PrivateRoute>} /> 
+                <Route path="/users/new" element={<PrivateRoute allowedRoles={["PRESIDENTE"]}> <UserNewForm /></PrivateRoute>} /> 
                 <Route path="/users/edit/:id" element={<PrivateRoute allowedRoles={["PRESIDENTE"]}><UserUpdateForm /></PrivateRoute>} /> 
 
                 {/* Rutas privadas solo para PRESIDENTE y VOCAL*/}  

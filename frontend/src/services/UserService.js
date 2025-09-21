@@ -4,7 +4,7 @@ const UserService = {
 
   registrarUsuario: async (newUser) => {
     try {
-      return await userApi.registerUser(newUser)
+      return await userApi.createUser(newUser)
     } catch (err) {
       console.error("Error al registrar usuario:", err)
       throw err;

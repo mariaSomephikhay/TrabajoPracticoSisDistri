@@ -22,12 +22,12 @@ class DonacionesListDto {
     /**
      * Constructs a new <code>DonacionesListDto</code>.
      * @alias module:model/DonacionesListDto
-     * @param donacionId {Array.<Number>} Lista de IDs de las donaciones
      * @param cantDonaciones {Number} 
+     * @param donacionId {Array.<Number>} Lista de IDs de las donaciones
      */
-    constructor(donacionId, cantDonaciones) { 
+    constructor(cantDonaciones, donacionId) { 
         
-        DonacionesListDto.initialize(this, donacionId, cantDonaciones);
+        DonacionesListDto.initialize(this, cantDonaciones, donacionId);
     }
 
     /**
@@ -35,9 +35,9 @@ class DonacionesListDto {
      * This method is used by the constructors of any subclasses, in order to implement multiple inheritance (mix-ins).
      * Only for internal use.
      */
-    static initialize(obj, donacionId, cantDonaciones) { 
-        obj['donacionId'] = donacionId;
+    static initialize(obj, cantDonaciones, donacionId) { 
         obj['cantDonaciones'] = cantDonaciones;
+        obj['donacionId'] = donacionId;
     }
 
     /**
@@ -51,11 +51,11 @@ class DonacionesListDto {
         if (data) {
             obj = obj || new DonacionesListDto();
 
-            if (data.hasOwnProperty('donacionId')) {
-                obj['donacionId'] = ApiClient.convertToType(data['donacionId'], ['Number']);
-            }
             if (data.hasOwnProperty('cantDonaciones')) {
                 obj['cantDonaciones'] = ApiClient.convertToType(data['cantDonaciones'], 'Number');
+            }
+            if (data.hasOwnProperty('donacionId')) {
+                obj['donacionId'] = ApiClient.convertToType(data['donacionId'], ['Number']);
             }
         }
         return obj;
@@ -84,18 +84,18 @@ class DonacionesListDto {
 
 }
 
-DonacionesListDto.RequiredProperties = ["donacionId", "cantDonaciones"];
+DonacionesListDto.RequiredProperties = ["cantDonaciones", "donacionId"];
+
+/**
+ * @member {Number} cantDonaciones
+ */
+DonacionesListDto.prototype['cantDonaciones'] = undefined;
 
 /**
  * Lista de IDs de las donaciones
  * @member {Array.<Number>} donacionId
  */
 DonacionesListDto.prototype['donacionId'] = undefined;
-
-/**
- * @member {Number} cantDonaciones
- */
-DonacionesListDto.prototype['cantDonaciones'] = undefined;
 
 
 

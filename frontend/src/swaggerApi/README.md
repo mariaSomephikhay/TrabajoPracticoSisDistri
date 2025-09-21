@@ -139,11 +139,11 @@ Class | Method | HTTP request | Description
 *ApiDocumentada.EventosApi* | [**insertUsersToEvento**](docs/EventosApi.md#insertUsersToEvento) | **POST** /evento/{id}/users | Agregar usuarios a un evento
 *ApiDocumentada.EventosApi* | [**listEventos**](docs/EventosApi.md#listEventos) | **GET** /evento/ | Obtener todos los eventos
 *ApiDocumentada.EventosApi* | [**updateEventoById**](docs/EventosApi.md#updateEventoById) | **PUT** /evento/{id} | Actualizar un donacion
+*ApiDocumentada.UserApi* | [**createUser**](docs/UserApi.md#createUser) | **POST** /user/new | Dar de alta un nuevo usuario
 *ApiDocumentada.UserApi* | [**deleteUserById**](docs/UserApi.md#deleteUserById) | **DELETE** /user/{id} | Eliminar usuario
 *ApiDocumentada.UserApi* | [**getUserById**](docs/UserApi.md#getUserById) | **GET** /user/{id} | Obtener usuario
-*ApiDocumentada.UserApi* | [**listUsers**](docs/UserApi.md#listUsers) | **GET** /user/ | Obtener todos los usuarios
+*ApiDocumentada.UserApi* | [**listUsers**](docs/UserApi.md#listUsers) | **GET** /user | Obtener todos los usuarios
 *ApiDocumentada.UserApi* | [**loginUser**](docs/UserApi.md#loginUser) | **POST** /user/login | Login de usuario y devolución de JWT
-*ApiDocumentada.UserApi* | [**registerUser**](docs/UserApi.md#registerUser) | **POST** /user/register | Registrar un nuevo usuario
 *ApiDocumentada.UserApi* | [**updateUserById**](docs/UserApi.md#updateUserById) | **PUT** /user/{id} | Actualizar un usuario
 
 
