@@ -270,7 +270,7 @@ public class ManagerServiceImpl extends ManagerServiceGrpc.ManagerServiceImplBas
 	        List<Evento> lstEventos = eventoService.findAll();
 
 	        EventoList response = EventoList.newBuilder()
-	                .addAllEvento(lstEventos.stream()
+	                .addAllEventos(lstEventos.stream()
 	                		.map(eventoWrapper::toGrpcEvento).toList())
 	                .build();
 	        responseObserver.onNext(response);
