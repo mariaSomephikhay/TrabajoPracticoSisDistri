@@ -18,6 +18,7 @@ public class EventoWrapper {
 	public com.grupoK.grpc.Evento toGrpcEvento(Evento eventoModel) {
         return com.grupoK.grpc.Evento.newBuilder()
                 .setId(eventoModel.getId())
+                .setNombre(eventoModel.getNombre())
                 .setDescripcion(eventoModel.getDescripcion())
                 .setFecha(utilidades.fromLocalDateTime(eventoModel.getFecha()))
                 .setUsuario(usuarioWrapper.toGrpcUsuario(eventoModel.getIdUsuarioAlta()))
