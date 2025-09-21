@@ -70,16 +70,19 @@ class UserLogin(Resource):
         except Exception as e:
             return {"error": str(e)}, 500
              
-@api.route("/register")
-class UserRegister(Resource):
-    @api.doc(id="registerUser") # Esto define el operationId
+@api.route("/new")
+class User(Resource):
+    @api.doc(security='Bearer Auth')
+    @SecurityConfig.authRequired("PRESIDENTE")
+    @api.doc(id="createUser")
     @api.expect(userDto)
     @api.response(201, "Success", model=userDto)
     @api.response(400, "Request body must be JSON", model=errorDto)
+    @api.response(403, "Access forbidden", model=errorDto)
     @api.response(409, "Conflict", model=errorDto)
     @api.response(500, "Internal server error", model=errorDto)
     def post(self):
-        """Registrar un nuevo usuario"""
+        """Dar de alta un nuevo usuario"""
         try:
             if not request.is_json:
                 return {"error": "Request body must be JSON"}, 400
@@ -109,8 +112,8 @@ class UserRegister(Resource):
                 return {"error": error_msg}, 409
             else:
                 return {"error": error_msg}, 500
-
-@api.route("/")
+            
+@api.route("")
 class UserList(Resource):
     @api.doc(security='Bearer Auth') # Esto hace que Swagger agregue el header para el token
     @SecurityConfig.authRequired("PRESIDENTE")
