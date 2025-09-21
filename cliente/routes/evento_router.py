@@ -105,6 +105,35 @@ class GetEvento(Resource):
                 return  {"error": str(e.details())}, 404
             else:
                 return {"error": str(e.details())}, 500
+    
+    @api.doc(security='Bearer Auth') # Esto hace que Swagger agregue el header para el token
+    @SecurityConfig.authRequired("PRESIDENTE", "VOCAL")
+    @api.doc(id="updateEventoById") # Esto define el operationId
+    @api.expect(eventoDto) #Request
+    @api.response(200, "Success", model=eventoDto)
+    @api.response(401, "Unauthorized", model=errorDto)
+    @api.response(400, "Bad Request", model=errorDto)
+    @api.response(500, "Internal server error", model=errorDto)
+    def put(self, id):
+        """Actualizar un donacion"""
+        try:
+            #print("REQUEST JSON:", request.get_json())  # <--- imprime el body
+            if not request.is_json:
+                return {"error": "Request body must be JSON"}, 401
+            payload = request.get_json()
+            payload["id"] = id
+            username = SecurityConfig.getUser()
+            usuario = json.loads(cliente.getUserByUsername(username))
+            payload["usuario"] = usuario
+            result = cliente.insertOrUpdateEvento(payload)
+            return json.loads(result), 200
+        except Exception as e:
+            if e.code() == grpc.StatusCode.UNAUTHENTICATED:
+                return  {"error": str(e.details())}, 401
+            elif e.code() == grpc.StatusCode.INVALID_ARGUMENT:
+                return  {"error": str(e.details())}, 400
+            else:
+                return {"error": str(e.details())}, 500
             
 @api.route("/")
 class EventoList(Resource):
