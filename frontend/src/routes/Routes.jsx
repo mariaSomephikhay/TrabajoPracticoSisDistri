@@ -14,6 +14,10 @@ import { DonationTable } from "../pages/private/donation/DonationInventory.jsx"
 import { UserUpdateForm } from "../pages/private/users/UserUpdateForm.jsx"
 import { DonationUpdateForm } from "../pages/private/donation/DonationUpdateForm.jsx"
 import { DonationNewForm } from "../pages/private/donation/DonationNewForm.jsx"
+import { EventList } from '../pages/private/event/EventList.jsx';
+import { EventUpdateForm } from '../pages/private/event/EventUpdateForm.jsx';
+import { EventNew } from '../pages/private/event/EventNew.jsx';
+
 
 export const OperatorRoutes = () => { 
     return ( 
@@ -37,6 +41,11 @@ export const OperatorRoutes = () => {
                 <Route path="/donation-inventory" element={<PrivateRoute allowedRoles={["PRESIDENTE", "VOCAL"]}> <DonationTable /></PrivateRoute>} /> 
                 <Route path="/donation/edit/:id" element={<PrivateRoute allowedRoles={["PRESIDENTE", "VOCAL"]}><DonationUpdateForm /></PrivateRoute>} /> 
                 <Route path="/donation/new" element={<PrivateRoute allowedRoles={["PRESIDENTE", "VOCAL"]}><DonationNewForm /></PrivateRoute>} /> 
+
+                {/* RUTAS DEL EVENTO */}
+                <Route path="/events" element={<PrivateRoute allowedRoles={["PRESIDENTE","COORDINADOR","VOLUNTARIO"]}> <EventList /></PrivateRoute>} />
+                <Route path="/events/edit/:id" element={<PrivateRoute allowedRoles={["PRESIDENTE","COORDINADOR","VOLUNTARIO"]}><EventUpdateForm /></PrivateRoute>} /> 
+                <Route path="/events/new/" element={<PrivateRoute allowedRoles={["PRESIDENTE","COORDINADOR"]}><EventNew /></PrivateRoute>} /> 
 
                 {/* Ruta catch-all para 404 */} 
                 <Route path="*" element={<NotFound />} />
