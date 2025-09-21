@@ -105,7 +105,10 @@ class User(Resource):
             return json.loads(result), 201
         except MailSendError as e:
             return {"error": str(e)}, e.code or 500
+            print("error enviando mail: ")
+            print(e)
         except Exception as e:
+            print(e)
             error_msg = getattr(e, "details", lambda: str(e))()
             # Error de gRPC que devuelve el servicio
             if "ALREADY_EXISTS" in str(e):
