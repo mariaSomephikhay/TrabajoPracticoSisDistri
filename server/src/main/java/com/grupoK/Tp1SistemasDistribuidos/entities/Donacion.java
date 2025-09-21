@@ -35,7 +35,7 @@ public class Donacion {
 	@JoinColumn(name="id_categoria",nullable=false)
 	private Categoria categoria;
 	
-	@Column(name="descripcion", nullable=false, length=25)
+	@Column(name="descripcion", nullable=false, length=50)
 	private String descripcion;
 	
 	@Column(name="cantidad", nullable=false)

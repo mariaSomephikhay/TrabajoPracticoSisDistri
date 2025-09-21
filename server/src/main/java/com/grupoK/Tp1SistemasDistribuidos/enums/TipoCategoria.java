@@ -2,7 +2,7 @@ package com.grupoK.Tp1SistemasDistribuidos.enums;
 
 public enum TipoCategoria {
     ALIMENTO("ALIMENTO"),
-    JUGUETE("JUEGUETE"),
+    JUGUETE("JUGUETE"),
     ROPA("ROPA"),
     UTIL_ESCOLAR("UTIL_ESCOLAR");
 

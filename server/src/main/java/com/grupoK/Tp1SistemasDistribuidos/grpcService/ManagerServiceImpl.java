@@ -195,7 +195,7 @@ public class ManagerServiceImpl extends ManagerServiceGrpc.ManagerServiceImplBas
         List<Donacion> donaciones = donacionService.findAll();
 
         DonacionList response = DonacionList.newBuilder()
-                .addAllDonacion(donaciones.stream()
+                .addAllDonaciones(donaciones.stream()
                 		.map(donacionWrapper::toGrpcDonacion).toList())
                 .build();
         responseObserver.onNext(response);
@@ -340,5 +340,5 @@ public class ManagerServiceImpl extends ManagerServiceGrpc.ManagerServiceImplBas
 		                .asRuntimeException());
 		    }
 		}
-	
+
 }
