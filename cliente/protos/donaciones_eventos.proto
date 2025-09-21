@@ -56,7 +56,7 @@ message Donacion {
 }
 
 message DonacionList {
-    repeated Donacion donacion = 1;
+    repeated Donacion donaciones = 1;
 }
 	
 message Categoria {

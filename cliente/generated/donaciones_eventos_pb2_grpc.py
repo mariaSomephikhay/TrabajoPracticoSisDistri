@@ -671,6 +671,7 @@ class ManagerService(object):
             timeout,
             metadata,
             _registered_method=True)
+
     @staticmethod
     def insertDonacionesToEvento(request,
             target,

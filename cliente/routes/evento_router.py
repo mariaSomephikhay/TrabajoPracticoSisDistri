@@ -13,7 +13,7 @@ cliente = ManagerServiceImpl()
 #######################################################
 # Definición de modelos para el swagger
 #######################################################
-eventoDto = api.model("Donacion", {
+eventoDto = api.model("Evento", {
     "id": fields.Integer(required=False),
     "nombre": fields.String(required=True),
     "descripcion": fields.String(required=True),

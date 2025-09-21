@@ -43,6 +43,7 @@ class DonacionInsert(Resource):
     @api.response(400, "Bad Request", model=errorDto)
     @api.response(500, "Internal server error", model=errorDto)
     def post(self):
+        print(request.get_json())
         """Insertar una nueva donacion"""
         try:
             if not request.is_json:
