@@ -39,5 +39,3 @@ src/model/Token.js
 src/model/UsersListDto.js
 src/model/Usuario.js
 src/model/UsuarioList.js
-test/model/Categoria.spec.js
-test/model/Evento.spec.js

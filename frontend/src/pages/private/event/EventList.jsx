@@ -15,8 +15,6 @@ export const EventList = () => {
   const [showModal, setShowModal] = useState(false);
   const [eventSelected, setEventSelected] = useState(null)
   const navigate = useNavigate()
-  const [showCreateModal, setShowCreateModal] = useState(false);
-  const [newEventData, setNewEventData] = useState({nombre: '', descripcion: '', fecha: '',});
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -56,35 +54,25 @@ export const EventList = () => {
   }
   };
 
-  const handleCreateEvent = async () => {
-  try {
-    const createdEvent = await EventService.registrarEvento(newEventData);
-    setEvents(prev => [...prev, createdEvent]); 
-    setShowCreateModal(false);
-    setNewEventData({ nombre: '', descripcion: '', fecha: '' }); 
-  } catch (error) {
-    alert('Error al crear el evento');
-    console.error(error);
-  }
-  };
-
   if (loading) return <div>Cargando eventos...</div>;
   if (error) return <div>Error: {error}</div>;
 
   return (
     <div className="col-8 align-self-center mt-5">
+      {userAuthenticated.rol.descripcion !== 'VOLUNTARIO' && (
+        <button
+          onClick={() => navigate('/events/new')}
+          style={{
+            marginBottom: "20px",
+            padding: "10px 20px",
+            fontSize: "16px",
+            cursor: "pointer",
+          }}
+        >
+          Crear Evento
+        </button>
+      )}
 
-      <button
-        onClick={() => navigate('/events/new')}
-        style={{
-          marginBottom: "20px",
-          padding: "10px 20px",
-          fontSize: "16px",
-          cursor: "pointer",
-        }}
-      >
-        Crear Evento Nuevo
-      </button>
 
       <h1>Lista de Eventos</h1>
       <Table
@@ -94,10 +82,14 @@ export const EventList = () => {
           { key: "fecha", header: "Fecha Evento", render: (value) => value.toLocaleString(),},
         ]}
         data={events}
-        actions={[
-          { label: "Editar", icon: editIcon, onClick: (u) => handleEditEvent(u.id) },
-          { label: "Eliminar", icon: deleteIcon, onClick: (u) => handleDeleteEventOnClick(u) },
-        ]}
+        actions={
+        userAuthenticated?.rol.descripcion?.toUpperCase() !== 'VOLUNTARIO'
+          ? [
+              { label: "Editar", icon: editIcon, onClick: (u) => handleEditEvent(u.id) },
+              { label: "Eliminar", icon: deleteIcon, onClick: (u) => handleDeleteEventOnClick(u) },
+            ]
+          : [] // Si es voluntario, no hay acciones
+        }
         emptyMessage="No hay eventos disponibles"
       />
 

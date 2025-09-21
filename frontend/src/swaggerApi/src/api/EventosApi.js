@@ -291,7 +291,6 @@ export default class EventosApi {
       );
     }
 
-
     /**
      * Callback function to receive the result of the updateEventoById operation.
      * @callback module:api/EventosApi~updateEventoByIdCallback
@@ -338,5 +337,6 @@ export default class EventosApi {
         authNames, contentTypes, accepts, returnType, null, callback
       );
     }
+
 
 }
