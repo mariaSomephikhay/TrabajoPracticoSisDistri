@@ -29,11 +29,6 @@ export const Nav = () => {
                     Gestión de Usuarios
                   </NavLink>
                 </li>
-                <li className="nav-item">
-                  <NavLink className="nav-link text-white" to="#">
-                    Eventos solidarios
-                  </NavLink>
-                </li>
               </>
             )}
             {isAuthenticated && (userAuthenticated?.rol.descripcion === "PRESIDENTE" || userAuthenticated?.rol.descripcion === "VOCAL") &&(
@@ -41,6 +36,15 @@ export const Nav = () => {
                 <li className="nav-item">
                   <NavLink className="nav-link text-white" to="/donation-inventory">
                     Inventario de donaciones
+                  </NavLink>
+                </li>
+              </>
+            )}
+            {isAuthenticated && (userAuthenticated?.rol.descripcion === "PRESIDENTE" || userAuthenticated?.rol.descripcion === "COORDINADOR" || userAuthenticated?.rol.descripcion === "VOLUNTARIO") &&(
+              <>
+                <li className="nav-item">
+                  <NavLink className="nav-link text-white" to="/events">
+                    Eventos solidarios
                   </NavLink>
                 </li>
               </>
