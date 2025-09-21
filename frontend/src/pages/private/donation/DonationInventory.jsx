@@ -19,7 +19,7 @@ export const DonationTable = () => {
     const fetchDonation = async () => {
       try {
         const data = await DonationService.obtenerListadoDonaciones()
-        console.log(data)
+        
         setDonation(data.donaciones)
       } catch (err) {
         console.error(err)
@@ -42,10 +42,10 @@ export const DonationTable = () => {
   const handleConfirmDeleteDonation = async() => { 
     try {
       await DonationService.eliminarDonacion(donationSelected.id)
-      donationSelected(null) // Se limpia la selección
+      setDonationSelected(null) // Se limpia la selección
 
-      // Actualización optimista: cambio activo a false inmediatamente
-      setDonation(prevDonation => prevDonation.map(u => u.id === donationSelected.id ? { ...u, activo: false } : u))
+      // Actualización optimista: cambio eliminado a true inmediatamente
+      setDonation(prevDonation => prevDonation.map(d => d.id === donationSelected.id ? { ...d, eliminado: true } : d))
     } catch (err) { 
       console.error(err) 
       alert('Error al actualizar la donacion')
@@ -56,23 +56,30 @@ export const DonationTable = () => {
   }
 
   if (loading) return <Loading />
-  if (error) return <p className="text-center mt-5">{error}</p>
 
   return (
     <div className="col-8 align-self-center mt-5">
+
+      <div className="d-grid">
+        <button className="btn btn-primary btn-lg" onClick={() => navigate("/donation/new")}>
+          + Agregar Donación
+        </button>
+      </div>
 
       <Table
         columns={[
           { key: "categoria.descripcion", header: "Categoria", render: (_, row) => row.categoria?.descripcion ?? "-" },
           { key: "descripcion", header: "Descripcion" },
           { key: "cantidad", header: "Cantidad" },
-          { key: "eliminado", header: "Eliminado", render: (val) => val ? "Existente" : "Eliminado" }
+          { key: "eliminado", header: "Eliminado", render: (val) => val ? "Eliminado" : "Existente" }
         ]}
         data={donation}
         actions={[
-          { label: "Editar", icon: editIcon, onClick: (d) => handleEditDonation(d.id) },
+          { label: "Editar", icon: editIcon, onClick: (d) => handleEditDonation(d.id),
+              hidden: (d) => d.eliminado  //La donacion eliminada no tiene sentido que se le renderice el boton de editar
+          },
           { label: "Eliminar", icon: deleteIcon, onClick: (d) => handleDeleteDonationOnClick(d), 
-              hidden: (d) => !d.eliminado  //La donacion eliminada no tiene sentido que se le renderice el boton de eliminar
+              hidden: (d) => d.eliminado  //La donacion eliminada no tiene sentido que se le renderice el boton de eliminar
           },
         ]}
         emptyMessage="No hay donaciones disponibles"

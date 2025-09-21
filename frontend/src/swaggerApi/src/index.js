@@ -13,12 +13,17 @@
 
 
 import ApiClient from './ApiClient';
+import Categoria from './model/Categoria';
 import Donacion from './model/Donacion';
 import DonacionList from './model/DonacionList';
+import DonacionesListDto from './model/DonacionesListDto';
 import Error from './model/Error';
+import Evento from './model/Evento';
+import EventoList from './model/EventoList';
 import Login from './model/Login';
 import Rol from './model/Rol';
 import Token from './model/Token';
+import UsersListDto from './model/UsersListDto';
 import Usuario from './model/Usuario';
 import UsuarioList from './model/UsuarioList';
 import DonacionesApi from './api/DonacionesApi';
@@ -65,6 +70,12 @@ export {
     ApiClient,
 
     /**
+     * The Categoria model constructor.
+     * @property {module:model/Categoria}
+     */
+    Categoria,
+
+    /**
      * The Donacion model constructor.
      * @property {module:model/Donacion}
      */
@@ -77,10 +88,28 @@ export {
     DonacionList,
 
     /**
+     * The DonacionesListDto model constructor.
+     * @property {module:model/DonacionesListDto}
+     */
+    DonacionesListDto,
+
+    /**
      * The Error model constructor.
      * @property {module:model/Error}
      */
     Error,
+
+    /**
+     * The Evento model constructor.
+     * @property {module:model/Evento}
+     */
+    Evento,
+
+    /**
+     * The EventoList model constructor.
+     * @property {module:model/EventoList}
+     */
+    EventoList,
 
     /**
      * The Login model constructor.
@@ -99,6 +128,12 @@ export {
      * @property {module:model/Token}
      */
     Token,
+
+    /**
+     * The UsersListDto model constructor.
+     * @property {module:model/UsersListDto}
+     */
+    UsersListDto,
 
     /**
      * The Usuario model constructor.

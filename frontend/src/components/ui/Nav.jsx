@@ -39,7 +39,7 @@ export const Nav = () => {
             {isAuthenticated && (userAuthenticated?.rol.descripcion === "PRESIDENTE" || userAuthenticated?.rol.descripcion === "VOCAL") &&(
               <>
                 <li className="nav-item">
-                  <NavLink className="nav-link text-white" to="donation-inventory">
+                  <NavLink className="nav-link text-white" to="/donation-inventory">
                     Inventario de donaciones
                   </NavLink>
                 </li>

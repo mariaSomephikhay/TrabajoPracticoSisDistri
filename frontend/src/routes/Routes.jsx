@@ -12,6 +12,8 @@ import { Home } from "../pages/private/Home.jsx"
 import { UserTable } from "../pages/private/users/UserTable.jsx"
 import { DonationTable } from "../pages/private/donation/DonationInventory.jsx"
 import { UserUpdateForm } from "../pages/private/users/UserUpdateForm.jsx"
+import { DonationUpdateForm } from "../pages/private/donation/DonationUpdateForm.jsx"
+import { DonationNewForm } from "../pages/private/donation/DonationNewForm.jsx"
 
 export const OperatorRoutes = () => { 
     return ( 
@@ -33,6 +35,8 @@ export const OperatorRoutes = () => {
 
                 {/* Rutas privadas solo para PRESIDENTE y VOCAL*/}  
                 <Route path="/donation-inventory" element={<PrivateRoute allowedRoles={["PRESIDENTE", "VOCAL"]}> <DonationTable /></PrivateRoute>} /> 
+                <Route path="/donation/edit/:id" element={<PrivateRoute allowedRoles={["PRESIDENTE", "VOCAL"]}><DonationUpdateForm /></PrivateRoute>} /> 
+                <Route path="/donation/new" element={<PrivateRoute allowedRoles={["PRESIDENTE", "VOCAL"]}><DonationNewForm /></PrivateRoute>} /> 
 
                 {/* Ruta catch-all para 404 */} 
                 <Route path="*" element={<NotFound />} />
