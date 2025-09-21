@@ -12,6 +12,7 @@
  */
 
 import ApiClient from '../ApiClient';
+import Categoria from './Categoria';
 
 /**
  * The Donacion model module.
@@ -22,13 +23,13 @@ class Donacion {
     /**
      * Constructs a new <code>Donacion</code>.
      * @alias module:model/Donacion
+     * @param categoria {module:model/Categoria} 
      * @param descripcion {String} 
-     * @param fecha {Date} 
-     * @param nombre {String} 
+     * @param cantidad {Number} 
      */
-    constructor(descripcion, fecha, nombre) { 
+    constructor(categoria, descripcion, cantidad) { 
         
-        Donacion.initialize(this, descripcion, fecha, nombre);
+        Donacion.initialize(this, categoria, descripcion, cantidad);
     }
 
     /**
@@ -36,10 +37,10 @@ class Donacion {
      * This method is used by the constructors of any subclasses, in order to implement multiple inheritance (mix-ins).
      * Only for internal use.
      */
-    static initialize(obj, descripcion, fecha, nombre) { 
+    static initialize(obj, categoria, descripcion, cantidad) { 
+        obj['categoria'] = categoria;
         obj['descripcion'] = descripcion;
-        obj['fecha'] = fecha;
-        obj['nombre'] = nombre;
+        obj['cantidad'] = cantidad;
     }
 
     /**
@@ -53,17 +54,20 @@ class Donacion {
         if (data) {
             obj = obj || new Donacion();
 
-            if (data.hasOwnProperty('descripcion')) {
-                obj['descripcion'] = ApiClient.convertToType(data['descripcion'], 'String');
-            }
-            if (data.hasOwnProperty('fecha')) {
-                obj['fecha'] = ApiClient.convertToType(data['fecha'], 'Date');
-            }
             if (data.hasOwnProperty('id')) {
                 obj['id'] = ApiClient.convertToType(data['id'], 'Number');
             }
-            if (data.hasOwnProperty('nombre')) {
-                obj['nombre'] = ApiClient.convertToType(data['nombre'], 'String');
+            if (data.hasOwnProperty('categoria')) {
+                obj['categoria'] = Categoria.constructFromObject(data['categoria']);
+            }
+            if (data.hasOwnProperty('descripcion')) {
+                obj['descripcion'] = ApiClient.convertToType(data['descripcion'], 'String');
+            }
+            if (data.hasOwnProperty('cantidad')) {
+                obj['cantidad'] = ApiClient.convertToType(data['cantidad'], 'Number');
+            }
+            if (data.hasOwnProperty('eliminado')) {
+                obj['eliminado'] = ApiClient.convertToType(data['eliminado'], 'Boolean');
             }
         }
         return obj;
@@ -81,13 +85,13 @@ class Donacion {
                 throw new Error("The required field `" + property + "` is not found in the JSON data: " + JSON.stringify(data));
             }
         }
+        // validate the optional field `categoria`
+        if (data['categoria']) { // data not null
+          Categoria.validateJSON(data['categoria']);
+        }
         // ensure the json data is a string
         if (data['descripcion'] && !(typeof data['descripcion'] === 'string' || data['descripcion'] instanceof String)) {
             throw new Error("Expected the field `descripcion` to be a primitive type in the JSON string but got " + data['descripcion']);
-        }
-        // ensure the json data is a string
-        if (data['nombre'] && !(typeof data['nombre'] === 'string' || data['nombre'] instanceof String)) {
-            throw new Error("Expected the field `nombre` to be a primitive type in the JSON string but got " + data['nombre']);
         }
 
         return true;
@@ -96,17 +100,7 @@ class Donacion {
 
 }
 
-Donacion.RequiredProperties = ["descripcion", "fecha", "nombre"];
-
-/**
- * @member {String} descripcion
- */
-Donacion.prototype['descripcion'] = undefined;
-
-/**
- * @member {Date} fecha
- */
-Donacion.prototype['fecha'] = undefined;
+Donacion.RequiredProperties = ["categoria", "descripcion", "cantidad"];
 
 /**
  * @member {Number} id
@@ -114,9 +108,24 @@ Donacion.prototype['fecha'] = undefined;
 Donacion.prototype['id'] = undefined;
 
 /**
- * @member {String} nombre
+ * @member {module:model/Categoria} categoria
  */
-Donacion.prototype['nombre'] = undefined;
+Donacion.prototype['categoria'] = undefined;
+
+/**
+ * @member {String} descripcion
+ */
+Donacion.prototype['descripcion'] = undefined;
+
+/**
+ * @member {Number} cantidad
+ */
+Donacion.prototype['cantidad'] = undefined;
+
+/**
+ * @member {Boolean} eliminado
+ */
+Donacion.prototype['eliminado'] = undefined;
 
 
 

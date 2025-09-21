@@ -21,6 +21,7 @@ export const UserTable = () => {
     const fetchUsers = async () => {
       try {
         const data = await UserService.obtenerListadoUsuarios()
+        
         setUsers(data.usuarios)
       } catch (err) {
         console.error(err)

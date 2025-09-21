@@ -14,20 +14,21 @@
 import ApiClient from '../ApiClient';
 
 /**
- * The Rol model module.
- * @module model/Rol
+ * The Evento model module.
+ * @module model/Evento
  * @version 1.0
  */
-class Rol {
+class Evento {
     /**
-     * Constructs a new <code>Rol</code>.
-     * @alias module:model/Rol
-     * @param id {Number} 
+     * Constructs a new <code>Evento</code>.
+     * @alias module:model/Evento
+     * @param nombre {String} 
      * @param descripcion {String} 
+     * @param fecha {Date} 
      */
-    constructor(id, descripcion) { 
+    constructor(nombre, descripcion, fecha) { 
         
-        Rol.initialize(this, id, descripcion);
+        Evento.initialize(this, nombre, descripcion, fecha);
     }
 
     /**
@@ -35,43 +36,54 @@ class Rol {
      * This method is used by the constructors of any subclasses, in order to implement multiple inheritance (mix-ins).
      * Only for internal use.
      */
-    static initialize(obj, id, descripcion) { 
-        obj['id'] = id;
+    static initialize(obj, nombre, descripcion, fecha) { 
+        obj['nombre'] = nombre;
         obj['descripcion'] = descripcion;
+        obj['fecha'] = fecha;
     }
 
     /**
-     * Constructs a <code>Rol</code> from a plain JavaScript object, optionally creating a new instance.
+     * Constructs a <code>Evento</code> from a plain JavaScript object, optionally creating a new instance.
      * Copies all relevant properties from <code>data</code> to <code>obj</code> if supplied or a new instance if not.
      * @param {Object} data The plain JavaScript object bearing properties of interest.
-     * @param {module:model/Rol} obj Optional instance to populate.
-     * @return {module:model/Rol} The populated <code>Rol</code> instance.
+     * @param {module:model/Evento} obj Optional instance to populate.
+     * @return {module:model/Evento} The populated <code>Evento</code> instance.
      */
     static constructFromObject(data, obj) {
         if (data) {
-            obj = obj || new Rol();
+            obj = obj || new Evento();
 
             if (data.hasOwnProperty('id')) {
                 obj['id'] = ApiClient.convertToType(data['id'], 'Number');
             }
+            if (data.hasOwnProperty('nombre')) {
+                obj['nombre'] = ApiClient.convertToType(data['nombre'], 'String');
+            }
             if (data.hasOwnProperty('descripcion')) {
                 obj['descripcion'] = ApiClient.convertToType(data['descripcion'], 'String');
+            }
+            if (data.hasOwnProperty('fecha')) {
+                obj['fecha'] = ApiClient.convertToType(data['fecha'], 'Date');
             }
         }
         return obj;
     }
 
     /**
-     * Validates the JSON data with respect to <code>Rol</code>.
+     * Validates the JSON data with respect to <code>Evento</code>.
      * @param {Object} data The plain JavaScript object bearing properties of interest.
-     * @return {boolean} to indicate whether the JSON data is valid with respect to <code>Rol</code>.
+     * @return {boolean} to indicate whether the JSON data is valid with respect to <code>Evento</code>.
      */
     static validateJSON(data) {
         // check to make sure all required properties are present in the JSON string
-        for (const property of Rol.RequiredProperties) {
+        for (const property of Evento.RequiredProperties) {
             if (!data.hasOwnProperty(property)) {
                 throw new Error("The required field `" + property + "` is not found in the JSON data: " + JSON.stringify(data));
             }
+        }
+        // ensure the json data is a string
+        if (data['nombre'] && !(typeof data['nombre'] === 'string' || data['nombre'] instanceof String)) {
+            throw new Error("Expected the field `nombre` to be a primitive type in the JSON string but got " + data['nombre']);
         }
         // ensure the json data is a string
         if (data['descripcion'] && !(typeof data['descripcion'] === 'string' || data['descripcion'] instanceof String)) {
@@ -84,22 +96,32 @@ class Rol {
 
 }
 
-Rol.RequiredProperties = ["id", "descripcion"];
+Evento.RequiredProperties = ["nombre", "descripcion", "fecha"];
 
 /**
  * @member {Number} id
  */
-Rol.prototype['id'] = undefined;
+Evento.prototype['id'] = undefined;
+
+/**
+ * @member {String} nombre
+ */
+Evento.prototype['nombre'] = undefined;
 
 /**
  * @member {String} descripcion
  */
-Rol.prototype['descripcion'] = undefined;
+Evento.prototype['descripcion'] = undefined;
+
+/**
+ * @member {Date} fecha
+ */
+Evento.prototype['fecha'] = undefined;
 
 
 
 
 
 
-export default Rol;
+export default Evento;
 

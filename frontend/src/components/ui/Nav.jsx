@@ -31,12 +31,16 @@ export const Nav = () => {
                 </li>
                 <li className="nav-item">
                   <NavLink className="nav-link text-white" to="#">
-                    Inventario de donaciones
+                    Eventos solidarios
                   </NavLink>
                 </li>
+              </>
+            )}
+            {isAuthenticated && (userAuthenticated?.rol.descripcion === "PRESIDENTE" || userAuthenticated?.rol.descripcion === "VOCAL") &&(
+              <>
                 <li className="nav-item">
-                  <NavLink className="nav-link text-white" to="#">
-                    Eventos solidarios
+                  <NavLink className="nav-link text-white" to="/donation-inventory">
+                    Inventario de donaciones
                   </NavLink>
                 </li>
               </>

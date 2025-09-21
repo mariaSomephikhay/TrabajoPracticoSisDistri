@@ -14,20 +14,20 @@
 import ApiClient from '../ApiClient';
 
 /**
- * The Rol model module.
- * @module model/Rol
+ * The Categoria model module.
+ * @module model/Categoria
  * @version 1.0
  */
-class Rol {
+class Categoria {
     /**
-     * Constructs a new <code>Rol</code>.
-     * @alias module:model/Rol
+     * Constructs a new <code>Categoria</code>.
+     * @alias module:model/Categoria
      * @param id {Number} 
      * @param descripcion {String} 
      */
     constructor(id, descripcion) { 
         
-        Rol.initialize(this, id, descripcion);
+        Categoria.initialize(this, id, descripcion);
     }
 
     /**
@@ -41,15 +41,15 @@ class Rol {
     }
 
     /**
-     * Constructs a <code>Rol</code> from a plain JavaScript object, optionally creating a new instance.
+     * Constructs a <code>Categoria</code> from a plain JavaScript object, optionally creating a new instance.
      * Copies all relevant properties from <code>data</code> to <code>obj</code> if supplied or a new instance if not.
      * @param {Object} data The plain JavaScript object bearing properties of interest.
-     * @param {module:model/Rol} obj Optional instance to populate.
-     * @return {module:model/Rol} The populated <code>Rol</code> instance.
+     * @param {module:model/Categoria} obj Optional instance to populate.
+     * @return {module:model/Categoria} The populated <code>Categoria</code> instance.
      */
     static constructFromObject(data, obj) {
         if (data) {
-            obj = obj || new Rol();
+            obj = obj || new Categoria();
 
             if (data.hasOwnProperty('id')) {
                 obj['id'] = ApiClient.convertToType(data['id'], 'Number');
@@ -62,13 +62,13 @@ class Rol {
     }
 
     /**
-     * Validates the JSON data with respect to <code>Rol</code>.
+     * Validates the JSON data with respect to <code>Categoria</code>.
      * @param {Object} data The plain JavaScript object bearing properties of interest.
-     * @return {boolean} to indicate whether the JSON data is valid with respect to <code>Rol</code>.
+     * @return {boolean} to indicate whether the JSON data is valid with respect to <code>Categoria</code>.
      */
     static validateJSON(data) {
         // check to make sure all required properties are present in the JSON string
-        for (const property of Rol.RequiredProperties) {
+        for (const property of Categoria.RequiredProperties) {
             if (!data.hasOwnProperty(property)) {
                 throw new Error("The required field `" + property + "` is not found in the JSON data: " + JSON.stringify(data));
             }
@@ -84,22 +84,22 @@ class Rol {
 
 }
 
-Rol.RequiredProperties = ["id", "descripcion"];
+Categoria.RequiredProperties = ["id", "descripcion"];
 
 /**
  * @member {Number} id
  */
-Rol.prototype['id'] = undefined;
+Categoria.prototype['id'] = undefined;
 
 /**
  * @member {String} descripcion
  */
-Rol.prototype['descripcion'] = undefined;
+Categoria.prototype['descripcion'] = undefined;
 
 
 
 
 
 
-export default Rol;
+export default Categoria;
 

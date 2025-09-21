@@ -134,6 +134,10 @@ Class | Method | HTTP request | Description
 *ApiDocumentada.DonacionesApi* | [**updateDonationById**](docs/DonacionesApi.md#updateDonationById) | **PUT** /donacion/{id} | Actualizar un donacion
 *ApiDocumentada.EventosApi* | [**createEvent**](docs/EventosApi.md#createEvent) | **POST** /evento/new | Insertar nuevo evento
 *ApiDocumentada.EventosApi* | [**deleteEventById**](docs/EventosApi.md#deleteEventById) | **DELETE** /evento/delete/{id} | Eliminar evento
+*ApiDocumentada.EventosApi* | [**getEventoById**](docs/EventosApi.md#getEventoById) | **GET** /evento/{id} | Obtener Donacion
+*ApiDocumentada.EventosApi* | [**insertDonacionesToEvento**](docs/EventosApi.md#insertDonacionesToEvento) | **POST** /evento/{id}/donaciones | Agregar donaciones al evento
+*ApiDocumentada.EventosApi* | [**insertUsersToEvento**](docs/EventosApi.md#insertUsersToEvento) | **POST** /evento/{id}/users | Agregar usuarios a un evento
+*ApiDocumentada.EventosApi* | [**listEventos**](docs/EventosApi.md#listEventos) | **GET** /evento/ | Obtener todos los eventos
 *ApiDocumentada.UserApi* | [**deleteUserById**](docs/UserApi.md#deleteUserById) | **DELETE** /user/{id} | Eliminar usuario
 *ApiDocumentada.UserApi* | [**getUserById**](docs/UserApi.md#getUserById) | **GET** /user/{id} | Obtener usuario
 *ApiDocumentada.UserApi* | [**listUsers**](docs/UserApi.md#listUsers) | **GET** /user/ | Obtener todos los usuarios
@@ -144,12 +148,17 @@ Class | Method | HTTP request | Description
 
 ## Documentation for Models
 
+ - [ApiDocumentada.Categoria](docs/Categoria.md)
  - [ApiDocumentada.Donacion](docs/Donacion.md)
  - [ApiDocumentada.DonacionList](docs/DonacionList.md)
+ - [ApiDocumentada.DonacionesListDto](docs/DonacionesListDto.md)
  - [ApiDocumentada.Error](docs/Error.md)
+ - [ApiDocumentada.Evento](docs/Evento.md)
+ - [ApiDocumentada.EventoList](docs/EventoList.md)
  - [ApiDocumentada.Login](docs/Login.md)
  - [ApiDocumentada.Rol](docs/Rol.md)
  - [ApiDocumentada.Token](docs/Token.md)
+ - [ApiDocumentada.UsersListDto](docs/UsersListDto.md)
  - [ApiDocumentada.Usuario](docs/Usuario.md)
  - [ApiDocumentada.UsuarioList](docs/UsuarioList.md)
 
