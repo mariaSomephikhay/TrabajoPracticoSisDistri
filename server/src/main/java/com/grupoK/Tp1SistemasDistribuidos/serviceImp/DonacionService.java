@@ -41,11 +41,11 @@ public class DonacionService implements IDonacionService{
 			preUpdated.setCantidad(updated.getCantidad());
 		if(updated.getUsuarioModificacion()!=null)
 			preUpdated.setUsuarioModificacion(updated.getUsuarioModificacion());
-		if(updated.getCantidad()==0) {
+		/*if(updated.getCantidad()==0) {
 			preUpdated.setEliminado(true);
 		}else {
 			preUpdated.setEliminado(false);
-		}
+		}*/
 	}
 
 	@Override
