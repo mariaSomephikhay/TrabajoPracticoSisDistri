@@ -66,4 +66,10 @@ public class EventoDonacionService implements IEventoDonacionService{
 		
 		return  newEventoDonacion;
 	}
+
+	@Override
+	public List<EventoDonacion> getEventoWithDonacionByIdEvento(Integer idEvento) {
+		Optional<List<EventoDonacion>> lst = repository.findByEvento_Id(idEvento);
+		return lst.get();
+	}
 }

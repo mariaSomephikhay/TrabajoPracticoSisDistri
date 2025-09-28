@@ -13,4 +13,5 @@ public interface IEventoService {
 	Evento detele(Evento evento) throws Exception;
 	List<Evento> findAll();
 	List<Usuario> saveUsersToEvento(Evento evento, List<Integer> lstUsers);
+	List<Usuario> getUsersByIdEvento(Integer id);
 }

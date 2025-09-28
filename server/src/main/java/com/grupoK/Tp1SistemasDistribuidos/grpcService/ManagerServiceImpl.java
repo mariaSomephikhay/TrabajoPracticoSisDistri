@@ -9,6 +9,7 @@ import org.springframework.grpc.server.service.GrpcService;
 
 import com.grupoK.Tp1SistemasDistribuidos.entities.Donacion;
 import com.grupoK.Tp1SistemasDistribuidos.entities.Evento;
+import com.grupoK.Tp1SistemasDistribuidos.entities.EventoDonacion;
 import com.grupoK.Tp1SistemasDistribuidos.entities.Usuario;
 import com.grupoK.Tp1SistemasDistribuidos.exceptions.UserEmailAlreadyExistsException;
 import com.grupoK.Tp1SistemasDistribuidos.exceptions.UserNotFoundException;
@@ -23,9 +24,11 @@ import com.grupoK.Tp1SistemasDistribuidos.wrappers.UsuarioWrapper;
 import com.grupoK.grpc.DonacionId;
 import com.grupoK.grpc.DonacionIdUsu;
 import com.grupoK.grpc.DonacionList;
+import com.grupoK.grpc.DonacionesAsociadas;
 import com.grupoK.grpc.Empty;
 import com.grupoK.grpc.EventoId;
 import com.grupoK.grpc.EventoList;
+import com.grupoK.grpc.EventoWithAllListDonacionesDetails;
 import com.grupoK.grpc.EventoWithListDonacionesDetails;
 import com.grupoK.grpc.EventoWithListUsersDetails;
 import com.grupoK.grpc.ManagerServiceGrpc;
@@ -340,5 +343,68 @@ public class ManagerServiceImpl extends ManagerServiceGrpc.ManagerServiceImplBas
 		                .asRuntimeException());
 		    }
 		}
+
+		@Override
+		public void getEventoWithUsersById(EventoId request,
+				StreamObserver<EventoWithListUsersDetails> responseObserver) {
+			
+			try {
+				List<Usuario> lstUsuarios = eventoService.getUsersByIdEvento(request.getId());
+				
+				//ARMADO DEL RESPONSE
+				Evento evento = eventoService.findById(request.getId());
+				
+				EventoWithListUsersDetails response = EventoWithListUsersDetails.newBuilder()
+						.setId(eventoWrapper.toGrpcEvento(evento))
+	                    .addAllUsers(lstUsuarios.stream()
+	                    		.map(usuarioWrapper::toGrpcUsuario).toList())
+	                    .build();
+	            responseObserver.onNext(response);
+	            responseObserver.onCompleted();
+				
+			}catch (Exception e) {
+				responseObserver.onError(io.grpc.Status.INTERNAL
+		                .withDescription("Internal server error: " + e.getMessage())
+		                .asRuntimeException());
+			}
+		}
+
+		@Override
+		public void getEventoWithDonacionesById(EventoId request,
+				StreamObserver<EventoWithAllListDonacionesDetails> responseObserver) {
+			
+			try {
+				List<EventoDonacion> lst = eventoDonacionService.getEventoWithDonacionByIdEvento(request.getId());
+				
+				//ARMADO DEL RESPONSE
+				Evento evento = eventoService.findById(request.getId());
+
+				List<DonacionesAsociadas> donacionesAsociada = new ArrayList<>();
+								
+				for(EventoDonacion eD : lst) {
+					DonacionesAsociadas donacionAsociada = DonacionesAsociadas.newBuilder()
+						    .setDonacion(donacionWrapper.toGrpcDonacion(eD.getDonacion()))
+						    .setCantidad(eD.getCantRepartida())
+						    .build();
+					donacionesAsociada.add(donacionAsociada);
+				}
+				
+				EventoWithAllListDonacionesDetails response = EventoWithAllListDonacionesDetails.newBuilder()
+					    .setId(eventoWrapper.toGrpcEvento(evento))
+					    .addAllDonacion(donacionesAsociada)
+					    .build();
+				
+				responseObserver.onNext(response);
+		        responseObserver.onCompleted();
+				
+			}catch (Exception e) {
+				responseObserver.onError(io.grpc.Status.INTERNAL
+		                .withDescription("Internal server error: " + e.getMessage())
+		                .asRuntimeException());
+			}
+		}
+
+		
+		
 
 }

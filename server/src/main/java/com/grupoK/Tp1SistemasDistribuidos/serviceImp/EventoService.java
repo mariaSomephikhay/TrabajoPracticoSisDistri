@@ -82,6 +82,11 @@ public class EventoService implements IEventoService{
 		return lstUsers;
 	}
 
+	@Override
+	public List<Usuario> getUsersByIdEvento(Integer id) {
+		return eventoRepository.findUsuariosByEventoId(id);
+	}
+
 	
 
 }
