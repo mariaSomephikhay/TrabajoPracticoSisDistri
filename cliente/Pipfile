@@ -4,9 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-flask = "*"
 flask-cors = "*"
-grpcio = "*"
 protobuf = "*"
 googleapis-common-protos = "*"
 flask-restx = "*"
@@ -16,6 +14,8 @@ bcrypt = "*"
 grpcio-tools = "*"
 pyjwt = "*"
 email-validator = "*"
+flask = "*"
+grpcio = "==1.75.1"
 
 [dev-packages]
 

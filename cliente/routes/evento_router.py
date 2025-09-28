@@ -19,6 +19,11 @@ eventoDto = api.model("Evento", {
     "descripcion": fields.String(required=True),
     "fecha": fields.DateTime(required=True)
 })
+donacionDto = api.model("Donacion", {
+    "id": fields.Integer(required=False),
+    "descripcion": fields.String(required=False),
+    "cantidad": fields.Integer(required=True)
+})
 errorDto = api.model("Error", {
     "error": fields.String(required=True)
 })
@@ -28,9 +33,9 @@ eventoListDto = api.model("EventoList", {
 usersListDto = api.model('UsersListDto', {
     'usersIds': fields.List(fields.Integer, required=True, description='Lista de IDs de usuarios')
 })
-donacionesListDto = api.model('donacionesListDto', {
-    'donacionId': fields.List(fields.Integer, required=True, description='Lista de IDs de las donaciones'),
-    "cantDonaciones": fields.Integer(required=True)
+
+lstDonaciones = api.model('lstDonaciones', {
+    'donaciones' : fields.List(fields.Nested(donacionDto), required=True, description='Lista de las donaciones'),
 })
 
 
@@ -154,7 +159,7 @@ class EventoList(Resource):
             else:
                 return {"error": str(e)}, 500
             
-@api.route("/<int:id>/users")
+@api.route("/<int:id>/users/add")
 class AddUsersToEvento(Resource):
     @api.doc(security='Bearer Auth')
     @SecurityConfig.authRequired("PRESIDENTE", "COORDINADOR")
@@ -188,7 +193,7 @@ class AddUsersToEvento(Resource):
             else:
                 return {"error": str(e.details())}, 500
             
-@api.route("/<int:id>/donaciones")
+@api.route("/<int:id>/donaciones/add")
 class AddDonacionesToEvento(Resource):
     @api.doc(security='Bearer Auth')
     @SecurityConfig.authRequired("PRESIDENTE", "COORDINADOR")
@@ -198,7 +203,7 @@ class AddDonacionesToEvento(Resource):
     @api.response(401, "Unauthorized", model=errorDto)
     @api.response(404, "Not Found", model=errorDto)
     @api.response(500, "Internal server error", model=errorDto)
-    @api.expect(donacionesListDto)
+    @api.expect(donacionDto)
     def post(self, id):
         """Agregar donaciones al evento"""
         try:
@@ -211,12 +216,67 @@ class AddDonacionesToEvento(Resource):
 
             payload = {
                 "idEvento": id,
-                "donacionId": data.get("donacionId"),
-                "cantidad": data.get("cantDonaciones"),
+                "donacionId": data.get("id"),
+                "cantidad": data.get("cantidad"),
                 "usuario": usuario
             }
             
             result = cliente.insertDonacionesToEvento(payload)
+            return json.loads(result), 200
+
+        except grpc.RpcError as e:
+            if e.code() == grpc.StatusCode.NOT_FOUND:
+                return {"error": str(e.details())}, 404
+            elif e.code() == grpc.StatusCode.INVALID_ARGUMENT:
+                return {"error": str(e.details())}, 400
+            elif e.code() == grpc.StatusCode.UNAUTHENTICATED:
+                return {"error": str(e.details())}, 401
+            else:
+                return {"error": str(e.details())}, 500
+
+@api.route("/<int:id>/donaciones")
+class getEventoWithDonacionesById(Resource):
+    @api.doc(security='Bearer Auth')
+    @SecurityConfig.authRequired("PRESIDENTE", "COORDINADOR")
+    @api.doc(id="getEventoWithDonacionesById")
+    @api.response(200, "Success")
+    @api.response(400, "Bad Request", model=errorDto)
+    @api.response(401, "Unauthorized", model=errorDto)
+    @api.response(404, "Not Found", model=errorDto)
+    @api.response(500, "Internal server error", model=errorDto)
+    def get(self, id):
+        """Obtener donaciones del evento"""
+        try:
+            payload = {"id": id}
+            result = cliente.getEventoWithDonacionesById(payload)
+            return json.loads(result), 200
+
+        except grpc.RpcError as e:
+            if e.code() == grpc.StatusCode.NOT_FOUND:
+                return {"error": str(e.details())}, 404
+            elif e.code() == grpc.StatusCode.INVALID_ARGUMENT:
+                return {"error": str(e.details())}, 400
+            elif e.code() == grpc.StatusCode.UNAUTHENTICATED:
+                return {"error": str(e.details())}, 401
+            else:
+                return {"error": str(e.details())}, 500
+
+@api.route("/<int:id>/usuarios")
+class getEventoWithUsersById(Resource):
+    @api.doc(security='Bearer Auth')
+    @SecurityConfig.authRequired("PRESIDENTE", "COORDINADOR")
+    @api.doc(id="getEventoWithUsersById")
+    @api.response(200, "Success")
+    @api.response(400, "Bad Request", model=errorDto)
+    @api.response(401, "Unauthorized", model=errorDto)
+    @api.response(404, "Not Found", model=errorDto)
+    @api.response(500, "Internal server error", model=errorDto)
+    def get(self, id):
+        """Obtener usuarios del evento"""
+        try:
+            payload = {"id": id}
+            result = cliente.getEventoWithUsersById(payload)
+            print(result)
             return json.loads(result), 200
 
         except grpc.RpcError as e:
