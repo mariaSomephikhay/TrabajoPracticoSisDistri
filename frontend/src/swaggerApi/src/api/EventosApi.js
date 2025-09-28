@@ -13,7 +13,7 @@
 
 
 import ApiClient from "../ApiClient";
-import DonacionesListDto from '../model/DonacionesListDto';
+import Donacion from '../model/Donacion';
 import Error from '../model/Error';
 import Evento from '../model/Evento';
 import EventoList from '../model/EventoList';
@@ -164,6 +164,88 @@ export default class EventosApi {
     }
 
     /**
+     * Callback function to receive the result of the getEventoWithDonacionesById operation.
+     * @callback module:api/EventosApi~getEventoWithDonacionesByIdCallback
+     * @param {String} error Error message, if any.
+     * @param data This operation does not return a value.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Obtener donaciones del evento
+     * @param {Number} id 
+     * @param {module:api/EventosApi~getEventoWithDonacionesByIdCallback} callback The callback function, accepting three arguments: error, data, response
+     */
+    getEventoWithDonacionesById(id, callback) {
+      let postBody = null;
+      // verify the required parameter 'id' is set
+      if (id === undefined || id === null) {
+        throw new Error("Missing the required parameter 'id' when calling getEventoWithDonacionesById");
+      }
+
+      let pathParams = {
+        'id': id
+      };
+      let queryParams = {
+      };
+      let headerParams = {
+      };
+      let formParams = {
+      };
+
+      let authNames = ['Bearer Auth'];
+      let contentTypes = [];
+      let accepts = ['application/json'];
+      let returnType = null;
+      return this.apiClient.callApi(
+        '/evento/{id}/donaciones', 'GET',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, null, callback
+      );
+    }
+
+    /**
+     * Callback function to receive the result of the getEventoWithUsersById operation.
+     * @callback module:api/EventosApi~getEventoWithUsersByIdCallback
+     * @param {String} error Error message, if any.
+     * @param data This operation does not return a value.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Obtener usuarios del evento
+     * @param {Number} id 
+     * @param {module:api/EventosApi~getEventoWithUsersByIdCallback} callback The callback function, accepting three arguments: error, data, response
+     */
+    getEventoWithUsersById(id, callback) {
+      let postBody = null;
+      // verify the required parameter 'id' is set
+      if (id === undefined || id === null) {
+        throw new Error("Missing the required parameter 'id' when calling getEventoWithUsersById");
+      }
+
+      let pathParams = {
+        'id': id
+      };
+      let queryParams = {
+      };
+      let headerParams = {
+      };
+      let formParams = {
+      };
+
+      let authNames = ['Bearer Auth'];
+      let contentTypes = [];
+      let accepts = ['application/json'];
+      let returnType = null;
+      return this.apiClient.callApi(
+        '/evento/{id}/usuarios', 'GET',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, null, callback
+      );
+    }
+
+    /**
      * Callback function to receive the result of the insertDonacionesToEvento operation.
      * @callback module:api/EventosApi~insertDonacionesToEventoCallback
      * @param {String} error Error message, if any.
@@ -174,7 +256,7 @@ export default class EventosApi {
     /**
      * Agregar donaciones al evento
      * @param {Number} id 
-     * @param {module:model/DonacionesListDto} payload 
+     * @param {module:model/Donacion} payload 
      * @param {module:api/EventosApi~insertDonacionesToEventoCallback} callback The callback function, accepting three arguments: error, data, response
      */
     insertDonacionesToEvento(id, payload, callback) {
@@ -203,7 +285,7 @@ export default class EventosApi {
       let accepts = ['application/json'];
       let returnType = null;
       return this.apiClient.callApi(
-        '/evento/{id}/donaciones', 'POST',
+        '/evento/{id}/donaciones/add', 'POST',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, null, callback
       );
@@ -249,7 +331,7 @@ export default class EventosApi {
       let accepts = ['application/json'];
       let returnType = null;
       return this.apiClient.callApi(
-        '/evento/{id}/users', 'POST',
+        '/evento/{id}/users/add', 'POST',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, null, callback
       );

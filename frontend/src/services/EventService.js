@@ -46,6 +46,15 @@ const EventService = {
           throw err;
         }
       },
+
+    obtenerListadoUsuariosAsociadosAEvento: async (idEvento) => {
+        try {
+          return await eventosApi.getEventoWithUsersById(idEvento)
+        } catch (err) {
+          console.error("Error al buscar informacion del evento:", err)
+          throw err;
+        }
+      },
 };
 
 export default EventService;
