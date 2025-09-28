@@ -64,6 +64,11 @@ message Categoria {
     string descripcion = 2;
 }
 
+message DonacionesAsociadas {
+    Donacion donacion = 1;
+    int32 cantidad = 2;
+}
+
 //------------EVENTO-----------//
 
 message Evento {
@@ -105,6 +110,11 @@ message EventoWithListDonacionesDetails {
     int32 cantidad = 3;
 }
 
+message EventoWithAllListDonacionesDetails {
+	Evento id = 1;
+    repeated DonacionesAsociadas donacion = 2;
+}
+
 service ManagerService{
   rpc getUserByUsername (UserUsername) returns (Usuario) {};
   rpc getUserById (UserId) returns (Usuario) {};
@@ -123,6 +133,8 @@ service ManagerService{
   rpc getAllEventos (Empty) returns (EventoList) {};  
   rpc insertUsersToEvento (EventoWithListUsers) returns (EventoWithListUsersDetails) {};
   rpc insertDonacionesToEvento (EventoWithListDonaciones) returns (EventoWithListDonacionesDetails) {};
-
+  rpc getEventoWithUsersById (EventoId) returns (EventoWithListUsersDetails) {};
+  rpc getEventoWithDonacionesById (EventoId) returns (EventoWithAllListDonacionesDetails) {};
+  
   //AGREGAR ACA TODOS LOS SERVICIOS
 }
