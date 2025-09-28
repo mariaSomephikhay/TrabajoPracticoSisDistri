@@ -2,11 +2,9 @@
 .gitignore
 .travis.yml
 README.md
-docs/Categoria.md
 docs/Donacion.md
 docs/DonacionList.md
 docs/DonacionesApi.md
-docs/DonacionesListDto.md
 docs/Error.md
 docs/Evento.md
 docs/EventoList.md
@@ -26,10 +24,8 @@ src/api/DonacionesApi.js
 src/api/EventosApi.js
 src/api/UserApi.js
 src/index.js
-src/model/Categoria.js
 src/model/Donacion.js
 src/model/DonacionList.js
-src/model/DonacionesListDto.js
 src/model/Error.js
 src/model/Evento.js
 src/model/EventoList.js

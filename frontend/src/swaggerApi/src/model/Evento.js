@@ -22,13 +22,13 @@ class Evento {
     /**
      * Constructs a new <code>Evento</code>.
      * @alias module:model/Evento
+     * @param nombre {String} 
      * @param descripcion {String} 
      * @param fecha {Date} 
-     * @param nombre {String} 
      */
-    constructor(descripcion, fecha, nombre) { 
+    constructor(nombre, descripcion, fecha) { 
         
-        Evento.initialize(this, descripcion, fecha, nombre);
+        Evento.initialize(this, nombre, descripcion, fecha);
     }
 
     /**
@@ -36,10 +36,10 @@ class Evento {
      * This method is used by the constructors of any subclasses, in order to implement multiple inheritance (mix-ins).
      * Only for internal use.
      */
-    static initialize(obj, descripcion, fecha, nombre) { 
+    static initialize(obj, nombre, descripcion, fecha) { 
+        obj['nombre'] = nombre;
         obj['descripcion'] = descripcion;
         obj['fecha'] = fecha;
-        obj['nombre'] = nombre;
     }
 
     /**
@@ -53,17 +53,17 @@ class Evento {
         if (data) {
             obj = obj || new Evento();
 
-            if (data.hasOwnProperty('descripcion')) {
-                obj['descripcion'] = ApiClient.convertToType(data['descripcion'], 'String');
-            }
-            if (data.hasOwnProperty('fecha')) {
-                obj['fecha'] = ApiClient.convertToType(data['fecha'], 'Date');
-            }
             if (data.hasOwnProperty('id')) {
                 obj['id'] = ApiClient.convertToType(data['id'], 'Number');
             }
             if (data.hasOwnProperty('nombre')) {
                 obj['nombre'] = ApiClient.convertToType(data['nombre'], 'String');
+            }
+            if (data.hasOwnProperty('descripcion')) {
+                obj['descripcion'] = ApiClient.convertToType(data['descripcion'], 'String');
+            }
+            if (data.hasOwnProperty('fecha')) {
+                obj['fecha'] = ApiClient.convertToType(data['fecha'], 'Date');
             }
         }
         return obj;
@@ -82,12 +82,12 @@ class Evento {
             }
         }
         // ensure the json data is a string
-        if (data['descripcion'] && !(typeof data['descripcion'] === 'string' || data['descripcion'] instanceof String)) {
-            throw new Error("Expected the field `descripcion` to be a primitive type in the JSON string but got " + data['descripcion']);
-        }
-        // ensure the json data is a string
         if (data['nombre'] && !(typeof data['nombre'] === 'string' || data['nombre'] instanceof String)) {
             throw new Error("Expected the field `nombre` to be a primitive type in the JSON string but got " + data['nombre']);
+        }
+        // ensure the json data is a string
+        if (data['descripcion'] && !(typeof data['descripcion'] === 'string' || data['descripcion'] instanceof String)) {
+            throw new Error("Expected the field `descripcion` to be a primitive type in the JSON string but got " + data['descripcion']);
         }
 
         return true;
@@ -96,17 +96,7 @@ class Evento {
 
 }
 
-Evento.RequiredProperties = ["descripcion", "fecha", "nombre"];
-
-/**
- * @member {String} descripcion
- */
-Evento.prototype['descripcion'] = undefined;
-
-/**
- * @member {Date} fecha
- */
-Evento.prototype['fecha'] = undefined;
+Evento.RequiredProperties = ["nombre", "descripcion", "fecha"];
 
 /**
  * @member {Number} id
@@ -117,6 +107,16 @@ Evento.prototype['id'] = undefined;
  * @member {String} nombre
  */
 Evento.prototype['nombre'] = undefined;
+
+/**
+ * @member {String} descripcion
+ */
+Evento.prototype['descripcion'] = undefined;
+
+/**
+ * @member {Date} fecha
+ */
+Evento.prototype['fecha'] = undefined;
 
 
 

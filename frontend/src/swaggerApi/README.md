@@ -135,8 +135,10 @@ Class | Method | HTTP request | Description
 *ApiDocumentada.EventosApi* | [**createEvent**](docs/EventosApi.md#createEvent) | **POST** /evento/new | Insertar nuevo evento
 *ApiDocumentada.EventosApi* | [**deleteEventById**](docs/EventosApi.md#deleteEventById) | **DELETE** /evento/delete/{id} | Eliminar evento
 *ApiDocumentada.EventosApi* | [**getEventoById**](docs/EventosApi.md#getEventoById) | **GET** /evento/{id} | Obtener Donacion
-*ApiDocumentada.EventosApi* | [**insertDonacionesToEvento**](docs/EventosApi.md#insertDonacionesToEvento) | **POST** /evento/{id}/donaciones | Agregar donaciones al evento
-*ApiDocumentada.EventosApi* | [**insertUsersToEvento**](docs/EventosApi.md#insertUsersToEvento) | **POST** /evento/{id}/users | Agregar usuarios a un evento
+*ApiDocumentada.EventosApi* | [**getEventoWithDonacionesById**](docs/EventosApi.md#getEventoWithDonacionesById) | **GET** /evento/{id}/donaciones | Obtener donaciones del evento
+*ApiDocumentada.EventosApi* | [**getEventoWithUsersById**](docs/EventosApi.md#getEventoWithUsersById) | **GET** /evento/{id}/usuarios | Obtener usuarios del evento
+*ApiDocumentada.EventosApi* | [**insertDonacionesToEvento**](docs/EventosApi.md#insertDonacionesToEvento) | **POST** /evento/{id}/donaciones/add | Agregar donaciones al evento
+*ApiDocumentada.EventosApi* | [**insertUsersToEvento**](docs/EventosApi.md#insertUsersToEvento) | **POST** /evento/{id}/users/add | Agregar usuarios a un evento
 *ApiDocumentada.EventosApi* | [**listEventos**](docs/EventosApi.md#listEventos) | **GET** /evento/ | Obtener todos los eventos
 *ApiDocumentada.EventosApi* | [**updateEventoById**](docs/EventosApi.md#updateEventoById) | **PUT** /evento/{id} | Actualizar un donacion
 *ApiDocumentada.UserApi* | [**createUser**](docs/UserApi.md#createUser) | **POST** /user/new | Dar de alta un nuevo usuario
@@ -149,10 +151,8 @@ Class | Method | HTTP request | Description
 
 ## Documentation for Models
 
- - [ApiDocumentada.Categoria](docs/Categoria.md)
  - [ApiDocumentada.Donacion](docs/Donacion.md)
  - [ApiDocumentada.DonacionList](docs/DonacionList.md)
- - [ApiDocumentada.DonacionesListDto](docs/DonacionesListDto.md)
  - [ApiDocumentada.Error](docs/Error.md)
  - [ApiDocumentada.Evento](docs/Evento.md)
  - [ApiDocumentada.EventoList](docs/EventoList.md)

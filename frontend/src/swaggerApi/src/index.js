@@ -13,10 +13,8 @@
 
 
 import ApiClient from './ApiClient';
-import Categoria from './model/Categoria';
 import Donacion from './model/Donacion';
 import DonacionList from './model/DonacionList';
-import DonacionesListDto from './model/DonacionesListDto';
 import Error from './model/Error';
 import Evento from './model/Evento';
 import EventoList from './model/EventoList';
@@ -70,12 +68,6 @@ export {
     ApiClient,
 
     /**
-     * The Categoria model constructor.
-     * @property {module:model/Categoria}
-     */
-    Categoria,
-
-    /**
      * The Donacion model constructor.
      * @property {module:model/Donacion}
      */
@@ -86,12 +78,6 @@ export {
      * @property {module:model/DonacionList}
      */
     DonacionList,
-
-    /**
-     * The DonacionesListDto model constructor.
-     * @property {module:model/DonacionesListDto}
-     */
-    DonacionesListDto,
 
     /**
      * The Error model constructor.
