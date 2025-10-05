@@ -19,6 +19,7 @@ Pasos para levantar los proyectos de Sistemas Distribuidos:
 | Servidor Java gRPC                         | `mvn clean install`                                                                                                                   | Compila y genera stubs gRPC                                                                                      |
 | Correr Front                               | npm run dev                                                                                                                           | Ejecuta Front End                                                                                                |
 | Correr Cliente                             | python app.py                                                                                                                         | Ejecuta Cliente                                                                                                  |
+| Correr kafka                               | docker-compose up -d                                                                                                                  | Vista de Kafka http://127.0.0.1:29092                                                                            |
 
 ---
 
@@ -30,6 +31,7 @@ Pasos para levantar los proyectos de Sistemas Distribuidos:
   - `pipenv install` → Python
   - `npm install` → React
   - `mvn clean install` → Java
+- Para uso del consumer/producer ejecutar el docker-compose.yml de kafka (docker-compose up -d)
 
 ## ✅ Uso de puertos:
 
