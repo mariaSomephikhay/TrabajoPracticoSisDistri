@@ -32,7 +32,6 @@ export const EventUpdateForm = () => {
     EventService.obtenerListadoUsuariosAsociadosAEvento(id)
     .then((data) => {
       console.log(typeof data, data);
-      console.log("id2 :", id);
       const usuariosAsociados = data.users || []; // accede a la propiedad correcta
 
       // Guardamos solo los IDs como strings
