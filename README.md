@@ -34,3 +34,10 @@ Pasos para levantar los proyectos de Sistemas Distribuidos:
 ## ✅ Uso de puertos:
 
 - Front End: 5173
+- Cliente gRPC - API Gateway: 8080
+- Server gRPC: 9090
+- Server Producer Kafka: 9099
+- Server Consumer Kafka: 9098
+- Kafka:
+  - localhost: 29092
+  - docker: 9092
