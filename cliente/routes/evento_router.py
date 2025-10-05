@@ -9,7 +9,22 @@ import grpc
 
 api = Namespace("eventos", description="Operaciones de eventos")
 cliente = ManagerServiceImpl()
-
+###prueb
+rolDto = api.model("Evento.Rol", {
+    "id": fields.Integer(required=True),
+    "descripcion": fields.String(required=True)
+})
+userDto = api.model("Evento.Usuario", {
+    "id": fields.Integer(required=False),
+    "username": fields.String(required=True),
+    "password": fields.String(required=False),
+    "email": fields.String(required=True),
+    "nombre": fields.String(required=True),
+    "apellido": fields.String(required=True),
+    "telefono": fields.String(required=False),
+    "activo": fields.Boolean(required=True),
+    "rol": fields.Nested(rolDto, required=True)
+})
 #######################################################
 # Definición de modelos para el swagger
 #######################################################
@@ -17,9 +32,10 @@ eventoDto = api.model("Evento", {
     "id": fields.Integer(required=False),
     "nombre": fields.String(required=True),
     "descripcion": fields.String(required=True),
-    "fecha": fields.DateTime(required=True)
+    "fecha": fields.DateTime(required=True),
+    #"users": fields.List(fields.Nested(userDto, required=False))
 })
-donacionDto = api.model("Donacion", {
+donacionDto = api.model("Evento.Donacion", {
     "id": fields.Integer(required=False),
     "descripcion": fields.String(required=False),
     "cantidad": fields.Integer(required=True)
@@ -30,13 +46,18 @@ errorDto = api.model("Error", {
 eventoListDto = api.model("EventoList", {
     "eventos": fields.List(fields.Nested(eventoDto))
 })
-usersListDto = api.model('UsersListDto', {
+usersListDto = api.model('Evento.UsersListDto', {
     'usersIds': fields.List(fields.Integer, required=True, description='Lista de IDs de usuarios')
 })
 
 lstDonaciones = api.model('lstDonaciones', {
     'donaciones' : fields.List(fields.Nested(donacionDto), required=True, description='Lista de las donaciones'),
 })
+eventoUsersDto = api.model("EventoUsersDto", {
+    "id": fields.Integer(required=False),
+    "users": fields.List(fields.Nested(userDto, required=False))
+})
+
 
 
 #######################################################
@@ -130,6 +151,7 @@ class GetEvento(Resource):
             username = SecurityConfig.getUser()
             usuario = json.loads(cliente.getUserByUsername(username))
             payload["usuario"] = usuario
+            print(payload)
             result = cliente.insertOrUpdateEvento(payload)
             return json.loads(result), 200
         except Exception as e:
@@ -179,7 +201,7 @@ class AddUsersToEvento(Resource):
                 "id": id,
                 "usersIds": [{"id": user_id} for user_id in data.get("usersIds", [])]
             }
-
+            print(payload)
             result = cliente.insertUsersToEvento(payload)
             return json.loads(result), 200
 
@@ -266,7 +288,7 @@ class getEventoWithUsersById(Resource):
     @api.doc(security='Bearer Auth')
     @SecurityConfig.authRequired("PRESIDENTE", "COORDINADOR")
     @api.doc(id="getEventoWithUsersById")
-    @api.response(200, "Success")
+    @api.response(200, "Success", model=eventoUsersDto)
     @api.response(400, "Bad Request", model=errorDto)
     @api.response(401, "Unauthorized", model=errorDto)
     @api.response(404, "Not Found", model=errorDto)
