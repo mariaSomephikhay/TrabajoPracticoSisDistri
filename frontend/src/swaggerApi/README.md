@@ -151,15 +151,19 @@ Class | Method | HTTP request | Description
 
 ## Documentation for Models
 
+ - [ApiDocumentada.Categoria](docs/Categoria.md)
  - [ApiDocumentada.Donacion](docs/Donacion.md)
  - [ApiDocumentada.DonacionList](docs/DonacionList.md)
  - [ApiDocumentada.Error](docs/Error.md)
  - [ApiDocumentada.Evento](docs/Evento.md)
+ - [ApiDocumentada.EventoDonacion](docs/EventoDonacion.md)
  - [ApiDocumentada.EventoList](docs/EventoList.md)
+ - [ApiDocumentada.EventoRol](docs/EventoRol.md)
+ - [ApiDocumentada.EventoUsersListDto](docs/EventoUsersListDto.md)
+ - [ApiDocumentada.EventoUsuario](docs/EventoUsuario.md)
  - [ApiDocumentada.Login](docs/Login.md)
  - [ApiDocumentada.Rol](docs/Rol.md)
  - [ApiDocumentada.Token](docs/Token.md)
- - [ApiDocumentada.UsersListDto](docs/UsersListDto.md)
  - [ApiDocumentada.Usuario](docs/Usuario.md)
  - [ApiDocumentada.UsuarioList](docs/UsuarioList.md)
 

@@ -8,5 +8,6 @@ Name | Type | Description | Notes
 **nombre** | **String** |  | 
 **descripcion** | **String** |  | 
 **fecha** | **Date** |  | 
+**users** | [**[EventoUsuario]**](EventoUsuario.md) |  | [optional] 
 
 

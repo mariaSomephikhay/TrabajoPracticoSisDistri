@@ -214,7 +214,7 @@ null (empty response body)
 
 ## getEventoWithUsersById
 
-> getEventoWithUsersById(id)
+> Evento getEventoWithUsersById(id)
 
 Obtener usuarios del evento
 
@@ -235,7 +235,7 @@ apiInstance.getEventoWithUsersById(id, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully.');
+    console.log('API called successfully. Returned data: ' + data);
   }
 });
 ```
@@ -249,7 +249,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+[**Evento**](Evento.md)
 
 ### Authorization
 
@@ -280,7 +280,7 @@ Bearer Auth.apiKey = 'YOUR API KEY';
 
 let apiInstance = new ApiDocumentada.EventosApi();
 let id = 56; // Number | 
-let payload = new ApiDocumentada.Donacion(); // Donacion | 
+let payload = new ApiDocumentada.EventoDonacion(); // EventoDonacion | 
 apiInstance.insertDonacionesToEvento(id, payload, (error, data, response) => {
   if (error) {
     console.error(error);
@@ -296,7 +296,7 @@ apiInstance.insertDonacionesToEvento(id, payload, (error, data, response) => {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **Number**|  | 
- **payload** | [**Donacion**](Donacion.md)|  | 
+ **payload** | [**EventoDonacion**](EventoDonacion.md)|  | 
 
 ### Return type
 
@@ -331,7 +331,7 @@ Bearer Auth.apiKey = 'YOUR API KEY';
 
 let apiInstance = new ApiDocumentada.EventosApi();
 let id = 56; // Number | 
-let payload = new ApiDocumentada.UsersListDto(); // UsersListDto | 
+let payload = new ApiDocumentada.EventoUsersListDto(); // EventoUsersListDto | 
 apiInstance.insertUsersToEvento(id, payload, (error, data, response) => {
   if (error) {
     console.error(error);
@@ -347,7 +347,7 @@ apiInstance.insertUsersToEvento(id, payload, (error, data, response) => {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **Number**|  | 
- **payload** | [**UsersListDto**](UsersListDto.md)|  | 
+ **payload** | [**EventoUsersListDto**](EventoUsersListDto.md)|  | 
 
 ### Return type
 
