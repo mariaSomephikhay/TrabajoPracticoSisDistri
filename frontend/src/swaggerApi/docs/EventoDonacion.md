@@ -1,13 +1,11 @@
-# ApiDocumentada.Donacion
+# ApiDocumentada.EventoDonacion
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **Number** |  | [optional] 
-**categoria** | [**Categoria**](Categoria.md) |  | 
-**descripcion** | **String** |  | 
+**descripcion** | **String** |  | [optional] 
 **cantidad** | **Number** |  | 
-**eliminado** | **Boolean** |  | [optional] 
 
 

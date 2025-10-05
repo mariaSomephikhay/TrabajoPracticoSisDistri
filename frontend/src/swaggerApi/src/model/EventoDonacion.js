@@ -12,24 +12,21 @@
  */
 
 import ApiClient from '../ApiClient';
-import Categoria from './Categoria';
 
 /**
- * The Donacion model module.
- * @module model/Donacion
+ * The EventoDonacion model module.
+ * @module model/EventoDonacion
  * @version 1.0
  */
-class Donacion {
+class EventoDonacion {
     /**
-     * Constructs a new <code>Donacion</code>.
-     * @alias module:model/Donacion
-     * @param categoria {module:model/Categoria} 
-     * @param descripcion {String} 
+     * Constructs a new <code>EventoDonacion</code>.
+     * @alias module:model/EventoDonacion
      * @param cantidad {Number} 
      */
-    constructor(categoria, descripcion, cantidad) { 
+    constructor(cantidad) { 
         
-        Donacion.initialize(this, categoria, descripcion, cantidad);
+        EventoDonacion.initialize(this, cantidad);
     }
 
     /**
@@ -37,28 +34,23 @@ class Donacion {
      * This method is used by the constructors of any subclasses, in order to implement multiple inheritance (mix-ins).
      * Only for internal use.
      */
-    static initialize(obj, categoria, descripcion, cantidad) { 
-        obj['categoria'] = categoria;
-        obj['descripcion'] = descripcion;
+    static initialize(obj, cantidad) { 
         obj['cantidad'] = cantidad;
     }
 
     /**
-     * Constructs a <code>Donacion</code> from a plain JavaScript object, optionally creating a new instance.
+     * Constructs a <code>EventoDonacion</code> from a plain JavaScript object, optionally creating a new instance.
      * Copies all relevant properties from <code>data</code> to <code>obj</code> if supplied or a new instance if not.
      * @param {Object} data The plain JavaScript object bearing properties of interest.
-     * @param {module:model/Donacion} obj Optional instance to populate.
-     * @return {module:model/Donacion} The populated <code>Donacion</code> instance.
+     * @param {module:model/EventoDonacion} obj Optional instance to populate.
+     * @return {module:model/EventoDonacion} The populated <code>EventoDonacion</code> instance.
      */
     static constructFromObject(data, obj) {
         if (data) {
-            obj = obj || new Donacion();
+            obj = obj || new EventoDonacion();
 
             if (data.hasOwnProperty('id')) {
                 obj['id'] = ApiClient.convertToType(data['id'], 'Number');
-            }
-            if (data.hasOwnProperty('categoria')) {
-                obj['categoria'] = Categoria.constructFromObject(data['categoria']);
             }
             if (data.hasOwnProperty('descripcion')) {
                 obj['descripcion'] = ApiClient.convertToType(data['descripcion'], 'String');
@@ -66,28 +58,21 @@ class Donacion {
             if (data.hasOwnProperty('cantidad')) {
                 obj['cantidad'] = ApiClient.convertToType(data['cantidad'], 'Number');
             }
-            if (data.hasOwnProperty('eliminado')) {
-                obj['eliminado'] = ApiClient.convertToType(data['eliminado'], 'Boolean');
-            }
         }
         return obj;
     }
 
     /**
-     * Validates the JSON data with respect to <code>Donacion</code>.
+     * Validates the JSON data with respect to <code>EventoDonacion</code>.
      * @param {Object} data The plain JavaScript object bearing properties of interest.
-     * @return {boolean} to indicate whether the JSON data is valid with respect to <code>Donacion</code>.
+     * @return {boolean} to indicate whether the JSON data is valid with respect to <code>EventoDonacion</code>.
      */
     static validateJSON(data) {
         // check to make sure all required properties are present in the JSON string
-        for (const property of Donacion.RequiredProperties) {
+        for (const property of EventoDonacion.RequiredProperties) {
             if (!data.hasOwnProperty(property)) {
                 throw new Error("The required field `" + property + "` is not found in the JSON data: " + JSON.stringify(data));
             }
-        }
-        // validate the optional field `categoria`
-        if (data['categoria']) { // data not null
-          Categoria.validateJSON(data['categoria']);
         }
         // ensure the json data is a string
         if (data['descripcion'] && !(typeof data['descripcion'] === 'string' || data['descripcion'] instanceof String)) {
@@ -100,37 +85,27 @@ class Donacion {
 
 }
 
-Donacion.RequiredProperties = ["categoria", "descripcion", "cantidad"];
+EventoDonacion.RequiredProperties = ["cantidad"];
 
 /**
  * @member {Number} id
  */
-Donacion.prototype['id'] = undefined;
-
-/**
- * @member {module:model/Categoria} categoria
- */
-Donacion.prototype['categoria'] = undefined;
+EventoDonacion.prototype['id'] = undefined;
 
 /**
  * @member {String} descripcion
  */
-Donacion.prototype['descripcion'] = undefined;
+EventoDonacion.prototype['descripcion'] = undefined;
 
 /**
  * @member {Number} cantidad
  */
-Donacion.prototype['cantidad'] = undefined;
-
-/**
- * @member {Boolean} eliminado
- */
-Donacion.prototype['eliminado'] = undefined;
+EventoDonacion.prototype['cantidad'] = undefined;
 
 
 
 
 
 
-export default Donacion;
+export default EventoDonacion;
 

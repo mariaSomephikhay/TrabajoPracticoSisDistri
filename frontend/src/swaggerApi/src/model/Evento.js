@@ -12,6 +12,7 @@
  */
 
 import ApiClient from '../ApiClient';
+import EventoUsuario from './EventoUsuario';
 
 /**
  * The Evento model module.
@@ -65,6 +66,9 @@ class Evento {
             if (data.hasOwnProperty('fecha')) {
                 obj['fecha'] = ApiClient.convertToType(data['fecha'], 'Date');
             }
+            if (data.hasOwnProperty('users')) {
+                obj['users'] = ApiClient.convertToType(data['users'], [EventoUsuario]);
+            }
         }
         return obj;
     }
@@ -88,6 +92,16 @@ class Evento {
         // ensure the json data is a string
         if (data['descripcion'] && !(typeof data['descripcion'] === 'string' || data['descripcion'] instanceof String)) {
             throw new Error("Expected the field `descripcion` to be a primitive type in the JSON string but got " + data['descripcion']);
+        }
+        if (data['users']) { // data not null
+            // ensure the json data is an array
+            if (!Array.isArray(data['users'])) {
+                throw new Error("Expected the field `users` to be an array in the JSON data but got " + data['users']);
+            }
+            // validate the optional field `users` (array)
+            for (const item of data['users']) {
+                EventoUsuario.validateJSON(item);
+            };
         }
 
         return true;
@@ -117,6 +131,11 @@ Evento.prototype['descripcion'] = undefined;
  * @member {Date} fecha
  */
 Evento.prototype['fecha'] = undefined;
+
+/**
+ * @member {Array.<module:model/EventoUsuario>} users
+ */
+Evento.prototype['users'] = undefined;
 
 
 
