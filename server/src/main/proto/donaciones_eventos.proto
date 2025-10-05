@@ -95,7 +95,7 @@ message EventoWithListUsers {
 }
 
 message EventoWithListUsersDetails {
-	Evento id = 1;
+	Evento evento = 1;
     repeated Usuario users = 2;
 }
 
