@@ -1,17 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import { useParams, useNavigate, NavLink } from 'react-router-dom';
 import { Loading } from '../../../components/ui/Loading.jsx';
 import EventService from '../../../services/EventService.js';
 import UserService from '../../../services/UserService.js';
+import { AuthContext } from "../../../context/AuthContext.jsx";
 
 export const EventUpdateForm = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [event, setEvent] = useState(null);
-  const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [selectedUsers, setSelectedUsers] = useState([]);
-  
+  const [associatedUsers, setAssociatedUsers] = useState([]);
+  const { userAuthenticated } = useContext(AuthContext);
+  const [selectedUserIds, setSelectedUserIds] = useState([]);
+  const [currentUser, setCurrentUser] = useState(null);
 
   // Cargar evento
   useEffect(() => {
@@ -27,149 +29,214 @@ export const EventUpdateForm = () => {
       });
   }, [id]);
 
+  //cargar usuario actual
   useEffect(() => {
-    console.log("id :", id);
-    EventService.obtenerListadoUsuariosAsociadosAEvento(id)
-    .then((data) => {
-      console.log(typeof data, data);
-      const usuariosAsociados = data.users || []; // accede a la propiedad correcta
-
-      // Guardamos solo los IDs como strings
-      setSelectedUsers(usuariosAsociados.map((user) => user.id.toString()));
-    })
-    .catch((error) => {
-      console.error("Error al obtener usuarios asociados:", error);
-    });
-  }, [id]);
-
-
-  useEffect(() => {
-    UserService.obtenerListadoUsuarios()
-      .then((data) => {
-        setUsers(data.usuarios);
+    UserService.obtenerUsuarioPorUsername(userAuthenticated.username)
+      .then((data) =>{
+        setCurrentUser(data)
       })
       .catch((error) => {
-        console.error("Error al obtener usuarios:", error);
+        console.error(error);
+        setLoading(false);
       });
-  }, []);
+  }, [userAuthenticated.username]);
 
+  // Cargar usuarios asociados
+  useEffect(() => {
+    EventService.obtenerListadoUsuariosAsociadosAEvento(id)
+      .then((data) => {
+        const usuariosAsociados = data.users || [];
+        setAssociatedUsers(usuariosAsociados);
+        const asociados = data.users?.map((u) => u.id.toString()) || [];
+        setSelectedUserIds(asociados);
+      })
+      .catch((error) => {
+        console.error("Error al obtener usuarios asociados:", error);
+      });
+  }, [id]);
 
-  const handleChangeEvento = (e) => { 
+  const handleChangeEvento = (e) => {
     const { name, value } = e.target;
-    setEvent(prev => ({ ...prev, [name]: value }));
+    setEvent((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleAddUser = (userId) => {
-    setSelectedUsers((prev) => [...prev, userId.toString()]);
-  };
-
-  const handleRemoveUser = (userId) => {
-    setSelectedUsers((prev) => prev.filter((id) => id !== userId.toString()));
-  };
-
-  const handleChangeUsuarios = (e) => {
-    const selectedOptions = Array.from(e.target.selectedOptions, option => option.value);
-    setEvent(prev => ({ ...prev, usuarios: selectedOptions }));
-  };
-
-  const handleUpdateEvento = async (e) => { 
+  const handleUpdateEvento = async (e) => {
     e.preventDefault();
-    try { 
+    try {
       const fechaISO = new Date(event.fecha).toISOString();
-      const dataToSend = {...event, fecha: fechaISO};
+      const dataToSend = { ...event, fecha: fechaISO };
       await EventService.modificarEvento(id, dataToSend);
       alert('Evento actualizado correctamente');
       navigate('/events');
-    } catch (err) { 
+    } catch (err) {
       console.error(err);
       alert('Error al actualizar el evento');
-    } 
+    }
+  };
+
+  const eventoYaPaso = () => {
+  if (!event?.fecha) return false;
+  const hoy = new Date();
+  const fechaEvento = new Date(event.fecha);
+  return fechaEvento < hoy;
+  };
+
+  const handleGestionUsuarios = () => {
+  navigate(`/events/${id}/users`);
   };
 
   const formatDateTimeLocal = (date) => {
     if (!date) return '';
     const d = new Date(date);
     const pad = (n) => n.toString().padStart(2, '0');
-    const yyyy = d.getFullYear();
-    const mm = pad(d.getMonth() + 1);
-    const dd = pad(d.getDate());
-    const hh = pad(d.getHours());
-    const min = pad(d.getMinutes());
-    return `${yyyy}-${mm}-${dd}T${hh}:${min}`;
+    return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
   };
 
-  if (loading) return <Loading />
-  if (!event) return <p>Evento no encontrado</p>
+  const handleSave = async () => {
+  if (!currentUser) return; // proteger si no cargó aún
+  try {
+    let updatedIds;
+    setSelectedUserIds((prev) => {
+      if (prev.includes(currentUser.username)) {
+        updatedIds = prev.filter((u) => u !== currentUser.username);
+        return updatedIds;
+      } else {
+        updatedIds = [...prev, currentUser.username];
+        return updatedIds;
+      }
+    });
 
+    setAssociatedUsers((prev) => {
+      if (prev.some((u) => u.username === currentUser.username)) {
+        return prev.filter((u) => u.username !== currentUser.username);
+      } else {
+        return [...prev, currentUser];
+      }
+    });
+
+    await EventService.actualizarUsuariosDelEvento(id, updatedIds);
+    alert('Se actualizó tu participación en el evento');
+    navigate(`/events/edit/${id}`);
+  } catch (err) {
+    console.error(err);
+    alert('Error al actualizar tu participación');
+  }
+};
+
+  const puedeModificar = () => {
+  const fechaPasada = new Date(event.fecha) < new Date();
+  const esVoluntario = userAuthenticated.rol.descripcion == 'VOLUNTARIO';
+  return !fechaPasada && !esVoluntario;
+  };
+
+
+  if (loading) return <Loading />;
+  if (!event) return <p>Evento no encontrado</p>;
   return (
+    <>
+    {!puedeModificar() ? (
+    eventoYaPaso() ? (
+      <div className="d-flex justify-content-center mt-3">
+        <div className="alert alert-warning text-center" style={{ maxWidth: '500px' }}>
+          Este evento ya ocurrió. No se pueden realizar modificaciones.
+        </div>
+      </div>
+    ) : (
+      <div className="d-flex justify-content-center mt-3">
+        <div className="alert alert-info text-center" style={{ maxWidth: '500px' }}>
+          Como voluntario, solo podés visualizar la información del evento.
+        </div>
+      </div>
+    )
+    ) : null}
+
     <form className="col-6 mx-auto mt-5" onSubmit={handleUpdateEvento}>
       <div className="mb-3">
         <label>Nombre</label>
-        <input className="form-control" type="text" name="nombre" value={event.nombre ?? ''} onChange={handleChangeEvento}/>
+        <input
+          className="form-control"
+          type="text"
+          name="nombre"
+          value={event.nombre ?? ''}
+          onChange={handleChangeEvento}
+          disabled={eventoYaPaso() || !puedeModificar()}
+        />
       </div>
       <div className="mb-3">
         <label>Descripción</label>
-        <input className="form-control" type="text" name="descripcion" value={event.descripcion ?? ''} onChange={handleChangeEvento}/>
+        <input
+          className="form-control"
+          type="text"
+          name="descripcion"
+          value={event.descripcion ?? ''}
+          onChange={handleChangeEvento}
+          disabled={eventoYaPaso() || !puedeModificar()}
+        />
       </div>
       <div className="mb-3">
         <label>Fecha del evento</label>
-        <input className="form-control" type="datetime-local" name="fecha" value={formatDateTimeLocal(event.fecha)} onChange={handleChangeEvento}/>
-      </div>
-      
-      {/* Usuarios disponibles */}
-      <div className="mb-3">
-        <label>Usuarios disponibles</label>
-        <ul className="list-group">
-          {users
-            .filter((user) => !selectedUsers.includes(user.id.toString()))
-            .map((user) => (
-              <li
-                key={user.id}
-                className="list-group-item d-flex justify-content-between align-items-center"
-              >
-                {user.nombre} {user.apellido}
-                <button
-                  type="button"
-                  className="btn btn-sm btn-success"
-                  onClick={() => handleAddUser(user.id)}
-                >
-                  Agregar
-                </button>
-              </li>
-            ))}
-        </ul>
+        <input
+          className="form-control"
+          type="datetime-local"
+          name="fecha"
+          value={formatDateTimeLocal(event.fecha)}
+          onChange={handleChangeEvento}
+          disabled={eventoYaPaso() || !puedeModificar()}
+        />
       </div>
 
       {/* Usuarios asociados */}
       <div className="mb-3">
         <label>Usuarios asociados al evento</label>
         <ul className="list-group">
-          {users
-            .filter((user) => selectedUsers.includes(user.id.toString()))
-            .map((user) => (
-              <li
-                key={user.id}
-                className="list-group-item d-flex justify-content-between align-items-center"
-              >
-                {user.nombre} {user.apellido}
-                <button
-                  type="button"
-                  className="btn btn-sm btn-danger"
-                  onClick={() => handleRemoveUser(user.id)}
+          {associatedUsers.length > 0 ? (
+            associatedUsers.map((user) => {
+              const isCurrentUser = user.username === userAuthenticated.username;
+              return (
+                <li
+                  key={user.username} // usar username como key si no hay id
+                  className={`list-group-item ${isCurrentUser ? 'list-group-item-warning' : ''}`}
                 >
-                  Quitar
-                </button>
-              </li>
-            ))}
+                  {user.nombre} {user.apellido} {isCurrentUser && '(Usuario actual)'}
+                </li>
+              );
+            })
+          ) : (
+            <li className="list-group-item text-muted">No hay usuarios asociados.</li>
+          )}
         </ul>
       </div>
 
-      <button type="submit" className="btn btn-primary">Guardar cambios</button>
-      <p className="text-center mt-3 mb-0">
-        <NavLink className="fw-bold text-decoration-none" to="/users">
+      <div className="d-flex justify-content-center mt-3 gap-2">
+        {puedeModificar() && !eventoYaPaso() && (
+          <>
+            <button type="submit" className="btn btn-primary">
+              Guardar cambios
+            </button>
+
+            <button type="button" className="btn btn-primary" onClick={handleGestionUsuarios}>
+              Gestionar usuarios
+            </button>
+          </>
+        )}
+
+        {userAuthenticated.rol.descripcion === 'VOLUNTARIO' && !eventoYaPaso() && (
+          <button
+            type="button"
+            className={`btn ${associatedUsers.some(u => u.username === userAuthenticated.username) ? 'btn-danger' : 'btn-success'}`}
+            onClick={handleSave}
+          >
+            {associatedUsers.some(u => u.username === userAuthenticated.username)
+              ? 'Salir del evento'
+              : 'Unirse al evento'}
+          </button>
+        )}
+
+        <NavLink className="btn btn-primary" to="/events">
           Cancelar
         </NavLink>
-      </p>
+      </div>
     </form>
-  );
+    </>
+ );
 };

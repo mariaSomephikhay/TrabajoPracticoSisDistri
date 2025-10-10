@@ -19,6 +19,7 @@ import { EventList } from '../pages/private/event/EventList.jsx';
 import { EventUpdateForm } from '../pages/private/event/EventUpdateForm.jsx';
 import { EventNew } from '../pages/private/event/EventNew.jsx';
 import { useNotification } from "../context/NotificationContext.jsx"
+import { EventUsersManager } from '../pages/private/event/EventUsersManager.jsx';
 
 
 export const OperatorRoutes = () => {
@@ -51,6 +52,8 @@ export const OperatorRoutes = () => {
                 <Route path="/events" element={<PrivateRoute allowedRoles={["PRESIDENTE","COORDINADOR","VOLUNTARIO"]}> <EventList /></PrivateRoute>} />
                 <Route path="/events/edit/:id" element={<PrivateRoute allowedRoles={["PRESIDENTE","COORDINADOR","VOLUNTARIO"]}><EventUpdateForm /></PrivateRoute>} /> 
                 <Route path="/events/new/" element={<PrivateRoute allowedRoles={["PRESIDENTE","COORDINADOR"]}><EventNew /></PrivateRoute>} /> 
+                <Route path="/events/:id/users" element={<PrivateRoute allowedRoles={["PRESIDENTE","COORDINADOR","VOLUNTARIO"]}><EventUsersManager /></PrivateRoute>} />
+
 
                 {/* Ruta catch-all para 404 */} 
                 <Route path="*" element={<NotFound />} />

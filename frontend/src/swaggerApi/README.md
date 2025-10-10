@@ -144,6 +144,7 @@ Class | Method | HTTP request | Description
 *ApiDocumentada.UserApi* | [**createUser**](docs/UserApi.md#createUser) | **POST** /user/new | Dar de alta un nuevo usuario
 *ApiDocumentada.UserApi* | [**deleteUserById**](docs/UserApi.md#deleteUserById) | **DELETE** /user/{id} | Eliminar usuario
 *ApiDocumentada.UserApi* | [**getUserById**](docs/UserApi.md#getUserById) | **GET** /user/{id} | Obtener usuario
+*ApiDocumentada.UserApi* | [**getUserByUsername**](docs/UserApi.md#getUserByUsername) | **GET** /user/username/{username} | Obtener usuario
 *ApiDocumentada.UserApi* | [**listUsers**](docs/UserApi.md#listUsers) | **GET** /user | Obtener todos los usuarios
 *ApiDocumentada.UserApi* | [**loginUser**](docs/UserApi.md#loginUser) | **POST** /user/login | Login de usuario y devolución de JWT
 *ApiDocumentada.UserApi* | [**updateUserById**](docs/UserApi.md#updateUserById) | **PUT** /user/{id} | Actualizar un usuario
@@ -159,6 +160,7 @@ Class | Method | HTTP request | Description
  - [ApiDocumentada.EventoDonacion](docs/EventoDonacion.md)
  - [ApiDocumentada.EventoList](docs/EventoList.md)
  - [ApiDocumentada.EventoRol](docs/EventoRol.md)
+ - [ApiDocumentada.EventoUsersDto](docs/EventoUsersDto.md)
  - [ApiDocumentada.EventoUsersListDto](docs/EventoUsersListDto.md)
  - [ApiDocumentada.EventoUsuario](docs/EventoUsuario.md)
  - [ApiDocumentada.Login](docs/Login.md)

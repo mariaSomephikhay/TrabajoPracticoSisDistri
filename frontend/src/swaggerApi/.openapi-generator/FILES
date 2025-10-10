@@ -11,6 +11,7 @@ docs/Evento.md
 docs/EventoDonacion.md
 docs/EventoList.md
 docs/EventoRol.md
+docs/EventoUsersDto.md
 docs/EventoUsersListDto.md
 docs/EventoUsuario.md
 docs/EventosApi.md
@@ -36,6 +37,7 @@ src/model/Evento.js
 src/model/EventoDonacion.js
 src/model/EventoList.js
 src/model/EventoRol.js
+src/model/EventoUsersDto.js
 src/model/EventoUsersListDto.js
 src/model/EventoUsuario.js
 src/model/Login.js
@@ -43,5 +45,3 @@ src/model/Rol.js
 src/model/Token.js
 src/model/Usuario.js
 src/model/UsuarioList.js
-test/model/EventoRol.spec.js
-test/model/EventoUsuario.spec.js
