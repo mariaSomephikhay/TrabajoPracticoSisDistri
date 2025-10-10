@@ -214,7 +214,7 @@ null (empty response body)
 
 ## getEventoWithUsersById
 
-> Evento getEventoWithUsersById(id)
+> EventoUsersDto getEventoWithUsersById(id)
 
 Obtener usuarios del evento
 
@@ -249,7 +249,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**Evento**](Evento.md)
+[**EventoUsersDto**](EventoUsersDto.md)
 
 ### Authorization
 
@@ -314,7 +314,7 @@ null (empty response body)
 
 ## insertUsersToEvento
 
-> insertUsersToEvento(id, payload)
+> EventoUsersDto insertUsersToEvento(id, payload)
 
 Agregar usuarios a un evento
 
@@ -336,7 +336,7 @@ apiInstance.insertUsersToEvento(id, payload, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully.');
+    console.log('API called successfully. Returned data: ' + data);
   }
 });
 ```
@@ -351,7 +351,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+[**EventoUsersDto**](EventoUsersDto.md)
 
 ### Authorization
 

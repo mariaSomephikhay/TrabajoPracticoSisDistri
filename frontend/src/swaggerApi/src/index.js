@@ -21,6 +21,7 @@ import Evento from './model/Evento';
 import EventoDonacion from './model/EventoDonacion';
 import EventoList from './model/EventoList';
 import EventoRol from './model/EventoRol';
+import EventoUsersDto from './model/EventoUsersDto';
 import EventoUsersListDto from './model/EventoUsersListDto';
 import EventoUsuario from './model/EventoUsuario';
 import Login from './model/Login';
@@ -118,6 +119,12 @@ export {
      * @property {module:model/EventoRol}
      */
     EventoRol,
+
+    /**
+     * The EventoUsersDto model constructor.
+     * @property {module:model/EventoUsersDto}
+     */
+    EventoUsersDto,
 
     /**
      * The EventoUsersListDto model constructor.

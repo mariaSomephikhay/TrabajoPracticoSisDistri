@@ -114,7 +114,7 @@ class Evento(Resource):
 @api.route("/<int:id>")
 class GetEvento(Resource):
     @api.doc(security='Bearer Auth') # Esto hace que Swagger agregue el header para el token
-    @SecurityConfig.authRequired("PRESIDENTE", "COORDINADOR")
+    @SecurityConfig.authRequired("PRESIDENTE", "COORDINADOR", "VOLUNTARIO")
     @api.doc(id="getEventoById") # Esto define el operationId
     @api.response(200, "Success", model=eventoDto)
     @api.response(401, "Unauthorized", model=errorDto)
@@ -184,9 +184,9 @@ class EventoList(Resource):
 @api.route("/<int:id>/users/add")
 class AddUsersToEvento(Resource):
     @api.doc(security='Bearer Auth')
-    @SecurityConfig.authRequired("PRESIDENTE", "COORDINADOR")
+    @SecurityConfig.authRequired("PRESIDENTE", "COORDINADOR", "VOLUNTARIO")
     @api.doc(id="insertUsersToEvento")
-    @api.response(200, "Success")
+    @api.response(200, "Success", model=eventoUsersDto)
     @api.response(400, "Bad Request", model=errorDto)
     @api.response(401, "Unauthorized", model=errorDto)
     @api.response(404, "Not Found", model=errorDto)
@@ -218,7 +218,7 @@ class AddUsersToEvento(Resource):
 @api.route("/<int:id>/donaciones/add")
 class AddDonacionesToEvento(Resource):
     @api.doc(security='Bearer Auth')
-    @SecurityConfig.authRequired("PRESIDENTE", "COORDINADOR")
+    @SecurityConfig.authRequired("PRESIDENTE", "COORDINADOR", "VOLUNTARIO")
     @api.doc(id="insertDonacionesToEvento")
     @api.response(200, "Success")
     @api.response(400, "Bad Request", model=errorDto)
@@ -259,7 +259,7 @@ class AddDonacionesToEvento(Resource):
 @api.route("/<int:id>/donaciones")
 class getEventoWithDonacionesById(Resource):
     @api.doc(security='Bearer Auth')
-    @SecurityConfig.authRequired("PRESIDENTE", "COORDINADOR")
+    @SecurityConfig.authRequired("PRESIDENTE", "COORDINADOR", "VOLUNTARIO")
     @api.doc(id="getEventoWithDonacionesById")
     @api.response(200, "Success")
     @api.response(400, "Bad Request", model=errorDto)
@@ -286,7 +286,7 @@ class getEventoWithDonacionesById(Resource):
 @api.route("/<int:id>/usuarios")
 class getEventoWithUsersById(Resource):
     @api.doc(security='Bearer Auth')
-    @SecurityConfig.authRequired("PRESIDENTE", "COORDINADOR")
+    @SecurityConfig.authRequired("PRESIDENTE", "COORDINADOR", "VOLUNTARIO")
     @api.doc(id="getEventoWithUsersById")
     @api.response(200, "Success", model=eventoUsersDto)
     @api.response(400, "Bad Request", model=errorDto)
