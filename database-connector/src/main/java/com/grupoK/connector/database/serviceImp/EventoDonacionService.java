@@ -49,6 +49,7 @@ public class EventoDonacionService implements IEventoDonacionService {
 		}
 		
 		donacion.setCantidad(totalDonacionRestante);
+
 		donacionService.saveOrUpdate(donacion);
 		
 		return true;
