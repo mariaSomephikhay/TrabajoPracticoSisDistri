@@ -18,8 +18,11 @@ import Donacion from './model/Donacion';
 import DonacionList from './model/DonacionList';
 import Error from './model/Error';
 import Evento from './model/Evento';
+import EventoCategoria from './model/EventoCategoria';
 import EventoDonacion from './model/EventoDonacion';
+import EventoDonacionObjeto from './model/EventoDonacionObjeto';
 import EventoList from './model/EventoList';
+import EventoListaDonacion from './model/EventoListaDonacion';
 import EventoRol from './model/EventoRol';
 import EventoUsersDto from './model/EventoUsersDto';
 import EventoUsersListDto from './model/EventoUsersListDto';
@@ -103,16 +106,34 @@ export {
     Evento,
 
     /**
+     * The EventoCategoria model constructor.
+     * @property {module:model/EventoCategoria}
+     */
+    EventoCategoria,
+
+    /**
      * The EventoDonacion model constructor.
      * @property {module:model/EventoDonacion}
      */
     EventoDonacion,
 
     /**
+     * The EventoDonacionObjeto model constructor.
+     * @property {module:model/EventoDonacionObjeto}
+     */
+    EventoDonacionObjeto,
+
+    /**
      * The EventoList model constructor.
      * @property {module:model/EventoList}
      */
     EventoList,
+
+    /**
+     * The EventoListaDonacion model constructor.
+     * @property {module:model/EventoListaDonacion}
+     */
+    EventoListaDonacion,
 
     /**
      * The EventoRol model constructor.

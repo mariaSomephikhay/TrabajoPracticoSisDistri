@@ -17,6 +17,7 @@ import Error from '../model/Error';
 import Evento from '../model/Evento';
 import EventoDonacion from '../model/EventoDonacion';
 import EventoList from '../model/EventoList';
+import EventoListaDonacion from '../model/EventoListaDonacion';
 import EventoUsersDto from '../model/EventoUsersDto';
 import EventoUsersListDto from '../model/EventoUsersListDto';
 
@@ -131,7 +132,7 @@ export default class EventosApi {
      */
 
     /**
-     * Obtener Donacion
+     * Obtener Evento
      * @param {Number} id 
      * @param {module:api/EventosApi~getEventoByIdCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/Evento}
@@ -168,7 +169,7 @@ export default class EventosApi {
      * Callback function to receive the result of the getEventoWithDonacionesById operation.
      * @callback module:api/EventosApi~getEventoWithDonacionesByIdCallback
      * @param {String} error Error message, if any.
-     * @param data This operation does not return a value.
+     * @param {module:model/EventoListaDonacion} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
      */
 
@@ -176,6 +177,7 @@ export default class EventosApi {
      * Obtener donaciones del evento
      * @param {Number} id 
      * @param {module:api/EventosApi~getEventoWithDonacionesByIdCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link module:model/EventoListaDonacion}
      */
     getEventoWithDonacionesById(id, callback) {
       let postBody = null;
@@ -197,7 +199,7 @@ export default class EventosApi {
       let authNames = ['Bearer Auth'];
       let contentTypes = [];
       let accepts = ['application/json'];
-      let returnType = null;
+      let returnType = EventoListaDonacion;
       return this.apiClient.callApi(
         '/evento/{id}/donaciones', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,
@@ -287,7 +289,7 @@ export default class EventosApi {
       let accepts = ['application/json'];
       let returnType = null;
       return this.apiClient.callApi(
-        '/evento/{id}/donaciones/add', 'POST',
+        '/evento/{id}/donaciones/add', 'PUT',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, null, callback
       );
@@ -334,7 +336,7 @@ export default class EventosApi {
       let accepts = ['application/json'];
       let returnType = EventoUsersDto;
       return this.apiClient.callApi(
-        '/evento/{id}/users/add', 'POST',
+        '/evento/{id}/users/add', 'PUT',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, null, callback
       );

@@ -8,8 +8,11 @@ docs/DonacionList.md
 docs/DonacionesApi.md
 docs/Error.md
 docs/Evento.md
+docs/EventoCategoria.md
 docs/EventoDonacion.md
+docs/EventoDonacionObjeto.md
 docs/EventoList.md
+docs/EventoListaDonacion.md
 docs/EventoRol.md
 docs/EventoUsersDto.md
 docs/EventoUsersListDto.md
@@ -34,8 +37,11 @@ src/model/Donacion.js
 src/model/DonacionList.js
 src/model/Error.js
 src/model/Evento.js
+src/model/EventoCategoria.js
 src/model/EventoDonacion.js
+src/model/EventoDonacionObjeto.js
 src/model/EventoList.js
+src/model/EventoListaDonacion.js
 src/model/EventoRol.js
 src/model/EventoUsersDto.js
 src/model/EventoUsersListDto.js

@@ -4,8 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **Number** |  | [optional] 
-**descripcion** | **String** |  | [optional] 
+**donacion** | [**EventoDonacionObjeto**](EventoDonacionObjeto.md) |  | 
 **cantidad** | **Number** |  | 
 
 

@@ -6,11 +6,11 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**createEvent**](EventosApi.md#createEvent) | **POST** /evento/new | Insertar nuevo evento
 [**deleteEventById**](EventosApi.md#deleteEventById) | **DELETE** /evento/delete/{id} | Eliminar evento
-[**getEventoById**](EventosApi.md#getEventoById) | **GET** /evento/{id} | Obtener Donacion
+[**getEventoById**](EventosApi.md#getEventoById) | **GET** /evento/{id} | Obtener Evento
 [**getEventoWithDonacionesById**](EventosApi.md#getEventoWithDonacionesById) | **GET** /evento/{id}/donaciones | Obtener donaciones del evento
 [**getEventoWithUsersById**](EventosApi.md#getEventoWithUsersById) | **GET** /evento/{id}/usuarios | Obtener usuarios del evento
-[**insertDonacionesToEvento**](EventosApi.md#insertDonacionesToEvento) | **POST** /evento/{id}/donaciones/add | Agregar donaciones al evento
-[**insertUsersToEvento**](EventosApi.md#insertUsersToEvento) | **POST** /evento/{id}/users/add | Agregar usuarios a un evento
+[**insertDonacionesToEvento**](EventosApi.md#insertDonacionesToEvento) | **PUT** /evento/{id}/donaciones/add | Agregar donaciones al evento
+[**insertUsersToEvento**](EventosApi.md#insertUsersToEvento) | **PUT** /evento/{id}/users/add | Agregar usuarios a un evento
 [**listEventos**](EventosApi.md#listEventos) | **GET** /evento/ | Obtener todos los eventos
 [**updateEventoById**](EventosApi.md#updateEventoById) | **PUT** /evento/{id} | Actualizar un donacion
 
@@ -118,7 +118,7 @@ Name | Type | Description  | Notes
 
 > Evento getEventoById(id)
 
-Obtener Donacion
+Obtener Evento
 
 ### Example
 
@@ -165,7 +165,7 @@ Name | Type | Description  | Notes
 
 ## getEventoWithDonacionesById
 
-> getEventoWithDonacionesById(id)
+> EventoListaDonacion getEventoWithDonacionesById(id)
 
 Obtener donaciones del evento
 
@@ -186,7 +186,7 @@ apiInstance.getEventoWithDonacionesById(id, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully.');
+    console.log('API called successfully. Returned data: ' + data);
   }
 });
 ```
@@ -200,7 +200,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+[**EventoListaDonacion**](EventoListaDonacion.md)
 
 ### Authorization
 
