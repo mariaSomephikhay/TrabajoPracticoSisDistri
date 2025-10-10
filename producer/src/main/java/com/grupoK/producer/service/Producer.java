@@ -10,9 +10,8 @@ public class Producer {
 	@Autowired
 	KafkaTemplate<String, String> kafkaTemplate;
 	
-	public void sendMsgToTopic(String message) {
-		System.out.println("msj" + message);
-		kafkaTemplate.send("prueba", message);
+	public void sendMsgToTopic(String topic, String message) {
+		kafkaTemplate.send(topic, message);
 	}
 	
 }
