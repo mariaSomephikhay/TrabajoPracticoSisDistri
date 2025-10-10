@@ -1,0 +1,144 @@
+syntax = "proto3";
+
+package managerservice;
+option  java_multiple_files=true;
+option java_package="com.grupoK.grpc.proto";
+option  java_outer_classname="ManagerServiceProto";
+
+import "google/protobuf/timestamp.proto";
+
+//PARA CUANDO ES NULO
+message Empty{}
+
+message UserUsername {
+    string username = 1;
+}
+
+message UserId {
+    int32 id = 1;
+}
+
+message Usuario {
+    int32 id = 1;
+    string username = 2;
+    string password = 3;
+    string email = 4;
+    string nombre = 5;
+    string apellido = 6;
+    string telefono = 7;
+    bool activo = 8;
+    Rol rol = 9;
+}
+
+message Rol {
+    int32 id = 1;
+    string descripcion = 2;
+}
+
+message UsuarioList {
+    repeated Usuario usuarios = 1;
+}
+
+message DonacionId {
+    int32 id = 1;
+}
+
+message DonacionIdUsu {
+    int32 id = 1;
+    Usuario usuario = 2;
+}
+
+message Donacion {
+    int32 id = 1;
+    Categoria categoria = 2;
+    string descripcion = 3;
+    int32 cantidad = 4;
+    bool eliminado = 5;
+    Usuario usuario = 6;
+}
+
+message DonacionList {
+    repeated Donacion donaciones = 1;
+}
+	
+message Categoria {
+    int32 id = 1;
+    string descripcion = 2;
+}
+
+message DonacionesAsociadas {
+    Donacion donacion = 1;
+    int32 cantidad = 2;
+}
+
+//------------EVENTO-----------//
+
+message Evento {
+    int32 id = 1;
+    string nombre = 2;
+    string descripcion = 3;
+    google.protobuf.Timestamp fecha = 4;
+    Usuario usuario = 6;
+}
+
+message EventoId {
+    int32 id = 1;
+}
+
+message EventoList {
+    repeated Evento eventos = 1;
+}
+
+message EventoWithListUsers {
+	int32 id = 1;
+    repeated UserId usersIds = 2;
+}
+
+message EventoWithListUsersDetails {
+	Evento id = 1;
+    repeated Usuario users = 2;
+}
+
+message EventoWithListDonaciones {
+	int32 idEvento = 1;
+    int32 donacionId = 2;
+    int32 cantidad = 3;
+    Usuario usuario = 4;
+}
+
+message EventoWithListDonacionesDetails {
+	Evento id = 1;
+    Donacion donacion = 2;
+    int32 cantidad = 3;
+}
+
+message EventoWithAllListDonacionesDetails {
+	Evento id = 1;
+    repeated DonacionesAsociadas donacion = 2;
+}
+
+service ManagerService{
+  rpc getUserByUsername (UserUsername) returns (Usuario) {};
+  rpc getUserById (UserId) returns (Usuario) {};
+  rpc getAllUsers (Empty) returns (UsuarioList) {};
+  rpc insertOrUpdateUser (Usuario) returns (Usuario) {};
+  rpc deleteUser (UserId) returns (Usuario) {};
+  rpc insertOrUpdateDonacion (Donacion) returns (Donacion) {};
+  rpc getDonacionById (DonacionId) returns (Donacion) {};
+  rpc getAllDonaciones (Empty) returns (DonacionList) {};  
+  rpc deleteDonacion (DonacionIdUsu) returns (Donacion) {};
+  
+  //------------EVENTO-----------//
+  rpc insertOrUpdateEvento (Evento) returns (Evento) {};
+  rpc deleteEventos(EventoId) returns (Evento) {}; //se agrega "s" porque el gen da error con el nombre "deleteEvento"
+  rpc getEventoById (EventoId) returns (Evento) {};
+  rpc getAllEventos (Empty) returns (EventoList) {};  
+  rpc insertUsersToEvento (EventoWithListUsers) returns (EventoWithListUsersDetails) {};
+  rpc insertDonacionesToEvento (EventoWithListDonaciones) returns (EventoWithListDonacionesDetails) {};
+  rpc getEventoWithUsersById (EventoId) returns (EventoWithListUsersDetails) {};
+  rpc getEventoWithDonacionesById (EventoId) returns (EventoWithAllListDonacionesDetails) {};
+  
+  
+  //AGREGAR ACA TODOS LOS SERVICIOS
+  
+}
