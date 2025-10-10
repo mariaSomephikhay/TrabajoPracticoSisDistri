@@ -359,7 +359,7 @@ public class ManagerServiceImpl extends ManagerServiceGrpc.ManagerServiceImplBas
 	                    .addAllUsers(lstUsuarios.stream()
 	                    		.map(usuarioWrapper::toGrpcUsuario).toList())
 	                    .build();
-				System.out.println(response);
+				//System.out.println(response);
 	            responseObserver.onNext(response);
 	            responseObserver.onCompleted();
 				
