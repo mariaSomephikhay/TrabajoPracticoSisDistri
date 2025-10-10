@@ -164,6 +164,48 @@ export default class UserApi {
     }
 
     /**
+     * Callback function to receive the result of the getUserByUsername operation.
+     * @callback module:api/UserApi~getUserByUsernameCallback
+     * @param {String} error Error message, if any.
+     * @param {module:model/Usuario} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Obtener usuario
+     * @param {String} username 
+     * @param {module:api/UserApi~getUserByUsernameCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link module:model/Usuario}
+     */
+    getUserByUsername(username, callback) {
+      let postBody = null;
+      // verify the required parameter 'username' is set
+      if (username === undefined || username === null) {
+        throw new Error("Missing the required parameter 'username' when calling getUserByUsername");
+      }
+
+      let pathParams = {
+        'username': username
+      };
+      let queryParams = {
+      };
+      let headerParams = {
+      };
+      let formParams = {
+      };
+
+      let authNames = ['Bearer Auth'];
+      let contentTypes = [];
+      let accepts = ['application/json'];
+      let returnType = Usuario;
+      return this.apiClient.callApi(
+        '/user/username/{username}', 'GET',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, null, callback
+      );
+    }
+
+    /**
      * Callback function to receive the result of the listUsers operation.
      * @callback module:api/UserApi~listUsersCallback
      * @param {String} error Error message, if any.

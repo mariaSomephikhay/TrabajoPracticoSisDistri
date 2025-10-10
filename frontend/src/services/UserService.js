@@ -38,6 +38,15 @@ const UserService = {
     }
   },
 
+  obtenerUsuarioPorUsername: async (username) => {
+    try {
+      return await userApi.getUserByUsername(username)
+    } catch (err) {
+      console.error("Error al obtener usuario:", err)
+      throw err
+    }
+  },
+
   eliminarUsuario: async (usuarioId) => {
     try {
       return await userApi.deleteUserById(usuarioId)

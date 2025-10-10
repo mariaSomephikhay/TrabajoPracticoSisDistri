@@ -17,6 +17,7 @@ import Error from '../model/Error';
 import Evento from '../model/Evento';
 import EventoDonacion from '../model/EventoDonacion';
 import EventoList from '../model/EventoList';
+import EventoUsersDto from '../model/EventoUsersDto';
 import EventoUsersListDto from '../model/EventoUsersListDto';
 
 /**
@@ -208,7 +209,7 @@ export default class EventosApi {
      * Callback function to receive the result of the getEventoWithUsersById operation.
      * @callback module:api/EventosApi~getEventoWithUsersByIdCallback
      * @param {String} error Error message, if any.
-     * @param {module:model/Evento} data The data returned by the service call.
+     * @param {module:model/EventoUsersDto} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
      */
 
@@ -216,7 +217,7 @@ export default class EventosApi {
      * Obtener usuarios del evento
      * @param {Number} id 
      * @param {module:api/EventosApi~getEventoWithUsersByIdCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link module:model/Evento}
+     * data is of type: {@link module:model/EventoUsersDto}
      */
     getEventoWithUsersById(id, callback) {
       let postBody = null;
@@ -238,7 +239,7 @@ export default class EventosApi {
       let authNames = ['Bearer Auth'];
       let contentTypes = [];
       let accepts = ['application/json'];
-      let returnType = Evento;
+      let returnType = EventoUsersDto;
       return this.apiClient.callApi(
         '/evento/{id}/usuarios', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,
@@ -296,7 +297,7 @@ export default class EventosApi {
      * Callback function to receive the result of the insertUsersToEvento operation.
      * @callback module:api/EventosApi~insertUsersToEventoCallback
      * @param {String} error Error message, if any.
-     * @param data This operation does not return a value.
+     * @param {module:model/EventoUsersDto} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
      */
 
@@ -305,6 +306,7 @@ export default class EventosApi {
      * @param {Number} id 
      * @param {module:model/EventoUsersListDto} payload 
      * @param {module:api/EventosApi~insertUsersToEventoCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link module:model/EventoUsersDto}
      */
     insertUsersToEvento(id, payload, callback) {
       let postBody = payload;
@@ -330,7 +332,7 @@ export default class EventosApi {
       let authNames = ['Bearer Auth'];
       let contentTypes = ['application/json'];
       let accepts = ['application/json'];
-      let returnType = null;
+      let returnType = EventoUsersDto;
       return this.apiClient.callApi(
         '/evento/{id}/users/add', 'POST',
         pathParams, queryParams, headerParams, formParams, postBody,
