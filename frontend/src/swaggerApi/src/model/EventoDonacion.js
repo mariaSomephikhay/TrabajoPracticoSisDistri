@@ -12,6 +12,7 @@
  */
 
 import ApiClient from '../ApiClient';
+import EventoDonacionObjeto from './EventoDonacionObjeto';
 
 /**
  * The EventoDonacion model module.
@@ -22,11 +23,12 @@ class EventoDonacion {
     /**
      * Constructs a new <code>EventoDonacion</code>.
      * @alias module:model/EventoDonacion
+     * @param donacion {module:model/EventoDonacionObjeto} 
      * @param cantidad {Number} 
      */
-    constructor(cantidad) { 
+    constructor(donacion, cantidad) { 
         
-        EventoDonacion.initialize(this, cantidad);
+        EventoDonacion.initialize(this, donacion, cantidad);
     }
 
     /**
@@ -34,7 +36,8 @@ class EventoDonacion {
      * This method is used by the constructors of any subclasses, in order to implement multiple inheritance (mix-ins).
      * Only for internal use.
      */
-    static initialize(obj, cantidad) { 
+    static initialize(obj, donacion, cantidad) { 
+        obj['donacion'] = donacion;
         obj['cantidad'] = cantidad;
     }
 
@@ -49,11 +52,8 @@ class EventoDonacion {
         if (data) {
             obj = obj || new EventoDonacion();
 
-            if (data.hasOwnProperty('id')) {
-                obj['id'] = ApiClient.convertToType(data['id'], 'Number');
-            }
-            if (data.hasOwnProperty('descripcion')) {
-                obj['descripcion'] = ApiClient.convertToType(data['descripcion'], 'String');
+            if (data.hasOwnProperty('donacion')) {
+                obj['donacion'] = EventoDonacionObjeto.constructFromObject(data['donacion']);
             }
             if (data.hasOwnProperty('cantidad')) {
                 obj['cantidad'] = ApiClient.convertToType(data['cantidad'], 'Number');
@@ -74,9 +74,9 @@ class EventoDonacion {
                 throw new Error("The required field `" + property + "` is not found in the JSON data: " + JSON.stringify(data));
             }
         }
-        // ensure the json data is a string
-        if (data['descripcion'] && !(typeof data['descripcion'] === 'string' || data['descripcion'] instanceof String)) {
-            throw new Error("Expected the field `descripcion` to be a primitive type in the JSON string but got " + data['descripcion']);
+        // validate the optional field `donacion`
+        if (data['donacion']) { // data not null
+          EventoDonacionObjeto.validateJSON(data['donacion']);
         }
 
         return true;
@@ -85,17 +85,12 @@ class EventoDonacion {
 
 }
 
-EventoDonacion.RequiredProperties = ["cantidad"];
+EventoDonacion.RequiredProperties = ["donacion", "cantidad"];
 
 /**
- * @member {Number} id
+ * @member {module:model/EventoDonacionObjeto} donacion
  */
-EventoDonacion.prototype['id'] = undefined;
-
-/**
- * @member {String} descripcion
- */
-EventoDonacion.prototype['descripcion'] = undefined;
+EventoDonacion.prototype['donacion'] = undefined;
 
 /**
  * @member {Number} cantidad

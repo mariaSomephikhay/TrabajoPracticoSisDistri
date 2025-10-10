@@ -11,6 +11,7 @@ export const EventUpdateForm = () => {
   const [event, setEvent] = useState(null);
   const [loading, setLoading] = useState(true);
   const [associatedUsers, setAssociatedUsers] = useState([]);
+  const [associatedDonaciones, setAssociatedDonaciones] = useState([]);
   const { userAuthenticated } = useContext(AuthContext);
   const [selectedUserIds, setSelectedUserIds] = useState([]);
   const [currentUser, setCurrentUser] = useState(null);
@@ -55,6 +56,19 @@ export const EventUpdateForm = () => {
       });
   }, [id]);
 
+  // Cargar donaciones asociadas
+  useEffect(() => {
+    EventService.obtenerListadoDonacionesAsociadosAEvento(id)
+      .then((data) => {
+        const donacionesAsociadas = data.listaDonacion || [];
+        setAssociatedDonaciones(donacionesAsociadas);
+        console.log("Donaciones:", donacionesAsociadas);
+      })
+      .catch((error) => {
+        console.error("Error al obtener donaciones asociadas:", error);
+      });
+  }, [id]);
+
   const handleChangeEvento = (e) => {
     const { name, value } = e.target;
     setEvent((prev) => ({ ...prev, [name]: value }));
@@ -83,6 +97,10 @@ export const EventUpdateForm = () => {
 
   const handleGestionUsuarios = () => {
   navigate(`/events/${id}/users`);
+  };
+
+  const handleGestionDonaciones= () => {
+  navigate(`/events/${id}/donaciones`);
   };
 
   const formatDateTimeLocal = (date) => {
@@ -150,7 +168,9 @@ export const EventUpdateForm = () => {
     )
     ) : null}
 
+    <div style={{ maxHeight: '80vh', overflowY: 'auto' }}>
     <form className="col-6 mx-auto mt-5" onSubmit={handleUpdateEvento}>
+
       <div className="mb-3">
         <label>Nombre</label>
         <input
@@ -207,6 +227,36 @@ export const EventUpdateForm = () => {
         </ul>
       </div>
 
+      {/* Donaciones asociadas */}
+      <div className="mb-3 mt-4">
+        <label className="form-label fw-bold">Donaciones asociadas al evento</label>
+
+        {associatedDonaciones.length > 0 ? (
+          <div className="table-responsive">
+            <table className="table table-bordered table-striped mt-2">
+              <thead className="table-primary text-center">
+                <tr>
+                  <th style={{ width: '30%' }}>Categoría</th>
+                  <th style={{ width: '50%' }}>Descripción</th>
+                  <th style={{ width: '20%' }}>Cantidad donada</th>
+                </tr>
+              </thead>
+              <tbody>
+                {associatedDonaciones.map((item, index) => (
+                  <tr key={index}>
+                    <td>{item.donacion.categoria.descripcion}</td>
+                    <td>{item.donacion.descripcion}</td>
+                    <td className="text-center">{item.cantidad}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ) : (
+          <p className="text-muted">No hay donaciones asociadas.</p>
+        )}
+      </div>
+
       <div className="d-flex justify-content-center mt-3 gap-2">
         {puedeModificar() && !eventoYaPaso() && (
           <>
@@ -217,10 +267,14 @@ export const EventUpdateForm = () => {
             <button type="button" className="btn btn-primary" onClick={handleGestionUsuarios}>
               Gestionar usuarios
             </button>
+
+            <button type="button" className="btn btn-primary" onClick={handleGestionDonaciones}>
+              Gestionar donaciones
+            </button>
           </>
         )}
 
-        {userAuthenticated.rol.descripcion === 'VOLUNTARIO' && !eventoYaPaso() && (
+        {!eventoYaPaso() && (
           <button
             type="button"
             className={`btn ${associatedUsers.some(u => u.username === userAuthenticated.username) ? 'btn-danger' : 'btn-success'}`}
@@ -236,7 +290,9 @@ export const EventUpdateForm = () => {
           Cancelar
         </NavLink>
       </div>
-    </form>
+      <div style={{ height: '120px' }}></div>
+      </form>
+      </div>
     </>
  );
 };
