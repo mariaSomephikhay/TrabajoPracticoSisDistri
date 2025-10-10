@@ -20,9 +20,22 @@ eventoDto = api.model("Evento", {
     "descripcion": fields.String(required=True),
     "fecha": fields.DateTime(required=True)
 })
-donacionDto = api.model("Evento.Donacion", {
+categoriaDto = api.model("Evento.Categoria", {
+    "id": fields.Integer(required=True),
+    "descripcion": fields.String(required=True)
+})
+donacionObjDto = api.model("Evento.Donacion.Objeto", {
     "id": fields.Integer(required=False),
-    "descripcion": fields.String(required=False),
+    "categoria": fields.Nested(categoriaDto, required=True),
+    "descripcion": fields.String(required=True),
+    "cantidad": fields.Integer(required=True)
+})
+donacionDto = api.model("Evento.Donacion", {
+    "donacion": fields.Nested(donacionObjDto, required=True),
+    "cantidad": fields.Integer(required=True)
+})
+donacionDtoReq = api.model("Evento.Donacion.Req", {
+    "donacionId": fields.Integer(required=True),
     "cantidad": fields.Integer(required=True)
 })
 errorDto = api.model("Error", {
@@ -34,9 +47,9 @@ eventoListDto = api.model("EventoList", {
 usersListDto = api.model('Evento.UsersListDto', {
     'usersIds': fields.List(fields.Integer, required=True, description='Lista de IDs de usuarios')
 })
-
-lstDonaciones = api.model('lstDonaciones', {
-    'donaciones' : fields.List(fields.Nested(donacionDto), required=True, description='Lista de las donaciones'),
+lstDonaciones = api.model('Evento.Lista.Donacion', {
+    "idEvento": fields.Integer(required=False),
+    'listaDonacion' : fields.List(fields.Nested(donacionDto), required=True, description='Lista de las donaciones'),
 })
 rolDto = api.model("Evento.Rol", {
     "id": fields.Integer(required=True),
@@ -57,6 +70,7 @@ eventoUsersDto = api.model("EventoUsersDto", {
     "id": fields.Integer(required=False),
     "users": fields.List(fields.Nested(userDto, required=False))
 })
+
 
 
 
@@ -121,7 +135,7 @@ class GetEvento(Resource):
     @api.response(404, "Not Found", model=errorDto)
     @api.response(500, "Internal server error", model=errorDto)
     def get(self, id):
-        """Obtener Donacion"""
+        """Obtener Evento"""
         try:
             payload = {"id": id}  # solo necesitas el id
             result = cliente.getEventoById(payload)
@@ -192,7 +206,7 @@ class AddUsersToEvento(Resource):
     @api.response(404, "Not Found", model=errorDto)
     @api.response(500, "Internal server error", model=errorDto)
     @api.expect(usersListDto)
-    def post(self, id):
+    def put(self, id):
         """Agregar usuarios a un evento"""
         try:
             
@@ -225,8 +239,8 @@ class AddDonacionesToEvento(Resource):
     @api.response(401, "Unauthorized", model=errorDto)
     @api.response(404, "Not Found", model=errorDto)
     @api.response(500, "Internal server error", model=errorDto)
-    @api.expect(donacionDto)
-    def post(self, id):
+    @api.expect(donacionDtoReq)
+    def put(self, id):
         """Agregar donaciones al evento"""
         try:
             data = api.payload  
@@ -235,10 +249,11 @@ class AddDonacionesToEvento(Resource):
 
             username = SecurityConfig.getUser()
             usuario = json.loads(cliente.getUserByUsername(username))
+            
 
             payload = {
                 "idEvento": id,
-                "donacionId": data.get("id"),
+                "donacionId": data.get("donacionId"),
                 "cantidad": data.get("cantidad"),
                 "usuario": usuario
             }
@@ -261,7 +276,7 @@ class getEventoWithDonacionesById(Resource):
     @api.doc(security='Bearer Auth')
     @SecurityConfig.authRequired("PRESIDENTE", "COORDINADOR", "VOLUNTARIO")
     @api.doc(id="getEventoWithDonacionesById")
-    @api.response(200, "Success")
+    @api.response(200, "Success", model=lstDonaciones)
     @api.response(400, "Bad Request", model=errorDto)
     @api.response(401, "Unauthorized", model=errorDto)
     @api.response(404, "Not Found", model=errorDto)
