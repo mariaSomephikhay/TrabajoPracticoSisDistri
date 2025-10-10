@@ -16,6 +16,7 @@ pyjwt = "*"
 email-validator = "*"
 flask = "*"
 grpcio = "==1.75.1"
+requests = "*"
 
 [dev-packages]
 
