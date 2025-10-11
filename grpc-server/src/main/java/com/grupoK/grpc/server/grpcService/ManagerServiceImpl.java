@@ -392,7 +392,7 @@ public class ManagerServiceImpl extends ManagerServiceGrpc.ManagerServiceImplBas
 
 				EventoWithAllListDonacionesDetails response = EventoWithAllListDonacionesDetails.newBuilder()
 					    .setId(eventoWrapper.toGrpcEvento(evento))
-					    .addAllDonacion(donacionesAsociada)
+					    .addAllListaDonacion(donacionesAsociada)
 					    .build();
 
 				responseObserver.onNext(response);

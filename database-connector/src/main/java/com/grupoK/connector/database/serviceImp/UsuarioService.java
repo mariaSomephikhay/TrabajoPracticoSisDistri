@@ -2,10 +2,18 @@ package com.grupoK.connector.database.serviceImp;
 
 
 import com.grupoK.connector.database.configuration.annotations.GrpcServerAnnotation;
+<<<<<<< HEAD
+=======
+import com.grupoK.connector.database.entities.Organizacion;
+>>>>>>> cc4d66570e63a1564f79ced5fad1633b6043b1d0
 import com.grupoK.connector.database.entities.Usuario;
 import com.grupoK.connector.database.exceptions.UserEmailAlreadyExistsException;
 import com.grupoK.connector.database.exceptions.UserNotFoundException;
 import com.grupoK.connector.database.exceptions.UserUsernameAlreadyExistsException;
+<<<<<<< HEAD
+=======
+import com.grupoK.connector.database.repositories.IOrganizacionRepository;
+>>>>>>> cc4d66570e63a1564f79ced5fad1633b6043b1d0
 import com.grupoK.connector.database.repositories.IUsuarioRepository;
 import com.grupoK.connector.database.service.IUsuarioService;
 import org.apache.commons.lang3.StringUtils;
@@ -20,6 +28,8 @@ import java.util.Optional;
 @Service
 public class UsuarioService implements IUsuarioService {
 
+    @Autowired
+    private IOrganizacionRepository organizacionRepository;
 	@Autowired
 	private IUsuarioRepository usuarioRepository;
 	
@@ -39,6 +49,13 @@ public class UsuarioService implements IUsuarioService {
         	else {
             	usuario.setId(null); //Proto lo devuelve con un 0
             	usuario.setActivo(true); //Si no se pasa en la request proto lo devuelve en false
+                if(usuario.getOrganizacion() == null) {
+                    try {
+                        usuario.setOrganizacion(obtenerOrganizacionPropia(1));
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                }
             	return usuarioRepository.save(usuario);
         	}
         }
@@ -132,5 +149,12 @@ public class UsuarioService implements IUsuarioService {
 		return lstUsers;
 	}
 
+    private Organizacion obtenerOrganizacionPropia (Integer idOrganizacion) throws  Exception{
+        Optional<Organizacion> organizacionPropia = organizacionRepository.findById(idOrganizacion);
+        if(organizacionPropia.isEmpty())
+            throw new Exception("Organizacion propia no encontrada");
+
+        return  organizacionPropia.get();
+    }
 
 }
