@@ -4,6 +4,8 @@ from flask import request
 from flask_restx import Namespace, Resource, fields
 import json
 from config.security_config import SecurityConfig
+from datetime import datetime
+import random
 
 PRODUCER_URL  = config('PRODUCER_URL', cast=str)
 
@@ -31,7 +33,7 @@ OrganizacionDto =  api.model("Solicitud.OrganizacionDto", {
         "externa": fields.Boolean(required=False)
 })
 SolicitudDonacionDto = api.model("Solicitud", {
-    "id_solicitud_donacion": fields.Integer(required=True),
+    "id_solicitud_donacion": fields.String(required=True),
     "id_organizacion_solicitante": fields.Integer(required=True),
     "donacion": fields.List(fields.Nested(donacionDto))
 })
@@ -58,6 +60,11 @@ class Solicitud(Resource):
                 return {"error": "Bad Request"}, 400
             
             data = request.get_json()
+
+            # Generar ID único tipo GK-fechahora-random4digitos
+            fecha_hora = datetime.now().strftime("%Y%m%d%H%M%S")
+            random_digits = f"{random.randint(0, 9999):04}"
+            data["id_solicitud_donacion"] = f"GK-{fecha_hora}-{random_digits}"
 
             # Endpoint del producer en Java
             url = f"{PRODUCER_URL}/donation/request/new"
