@@ -19,7 +19,7 @@ Pasos para levantar los proyectos de Sistemas Distribuidos:
 | Servidor Java gRPC                         | `mvn clean install`                                                                                                                   | Compila y genera stubs gRPC                                                                                         |
 | Correr Front                               | npm run dev                                                                                                                           | Ejecuta Front End                                                                                                   |
 | Correr Cliente                             | python app.py                                                                                                                         | Ejecuta Cliente                                                                                                     |
-| Correr kafka                               | docker-compose up -d                                                                                                                  | Vista de Kafka http://127.0.0.1:29092                                                                               |
+| Correr kafka                               | docker-compose up -d                                                                                                                  | Vista de Kafka http://127.0.0.1:9091/                                                                               |
 
 ---
 
@@ -40,6 +40,9 @@ Pasos para levantar los proyectos de Sistemas Distribuidos:
 - Server gRPC: 9090
 - Server Producer Kafka: 9099
 - Server Consumer Kafka: 9098
-- Kafka:
+- Kafka Broker (conexion desde servidores):
   - localhost: 29092
   - docker: 9092
+- Kafka UI (vista):
+  - localhost: 9091
+  - docker: 8080
