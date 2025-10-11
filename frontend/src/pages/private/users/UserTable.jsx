@@ -2,11 +2,13 @@ import React, { useEffect, useState, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import editIcon from "../../../../public/icons/edit.svg" 
 import deleteIcon from "../../../../public/icons/delete.svg"
+import addIcon from "../../../../public/icons/add.png" 
 import { Loading } from '../../../components/ui/Loading.jsx'
 import { Table } from '../../../components/ui/Table.jsx'
 import { Modal } from "../../../components/ui/Modal.jsx"
 import UserService from '../../../services/UserService.js'
 import { AuthContext } from "../../../context/AuthContext.jsx" 
+import { useNotification } from "../../../context/NotificationContext.jsx"
 
 export const UserTable = () => {
   const navigate = useNavigate()
@@ -16,11 +18,13 @@ export const UserTable = () => {
   const [showModal, setShowModal] = useState(false);
   const [error, setError] = useState(null)
   const { userAuthenticated } = useContext(AuthContext)
+  const { notification, clearNotification } = useNotification()
   
   useEffect(() => {
     const fetchUsers = async () => {
       try {
         const data = await UserService.obtenerListadoUsuarios()
+        
         setUsers(data.usuarios)
       } catch (err) {
         console.error(err)
@@ -60,7 +64,25 @@ export const UserTable = () => {
   if (error) return <p className="text-center mt-5">{error}</p>
 
   return (
-    <div className="col-8 align-self-center mt-5">
+    <div className="container mt-4">
+      
+      {/* 🔹 Notificación local debajo del título */}
+      {notification && (
+        <div className={`alert alert-${notification.type} alert-dismissible fade show`} role="alert">
+          {notification.message}
+          <button type="button" className="btn-close" onClick={clearNotification}></button>
+        </div>
+      )}
+
+      {/* 🔹 Título + Botón */}
+      <div className="d-flex justify-content-between align-items-center mb-3">
+        <button 
+          className="btn btn-white btn-sm me-1"
+          onClick={() => navigate("/users/new")}
+        >
+          <img src={addIcon} alt='Agregar' width={29} height={29}/>
+        </button>
+      </div>
 
       <Table
         columns={[

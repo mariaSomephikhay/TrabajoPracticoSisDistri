@@ -10,7 +10,7 @@ export const UserUpdateForm = () => {
   const [loading, setLoading] = useState(true)
 
   const roles = [
-    { id: 1, nombre: 'PRESIDENTE' },
+    //{ id: 1, nombre: 'PRESIDENTE' },
     { id: 2, nombre: 'VOLUNTARIO' },
     { id: 3, nombre: 'COORDINADOR' },
     { id: 4, nombre: 'VOCAL' }
