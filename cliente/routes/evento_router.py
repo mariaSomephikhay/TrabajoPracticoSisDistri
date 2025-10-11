@@ -10,6 +10,8 @@ import grpc
 api = Namespace("eventos", description="Operaciones de eventos")
 cliente = ManagerServiceImpl()
 
+
+
 #######################################################
 # Definición de modelos para el swagger
 #######################################################
@@ -19,9 +21,22 @@ eventoDto = api.model("Evento", {
     "descripcion": fields.String(required=True),
     "fecha": fields.DateTime(required=True)
 })
-donacionDto = api.model("Donacion", {
+categoriaDto = api.model("Evento.Categoria", {
+    "id": fields.Integer(required=True),
+    "descripcion": fields.String(required=True)
+})
+donacionObjDto = api.model("Evento.Donacion.Objeto", {
     "id": fields.Integer(required=False),
-    "descripcion": fields.String(required=False),
+    "categoria": fields.Nested(categoriaDto, required=True),
+    "descripcion": fields.String(required=True),
+    "cantidad": fields.Integer(required=True)
+})
+donacionDto = api.model("Evento.Donacion", {
+    "donacion": fields.Nested(donacionObjDto, required=True),
+    "cantidad": fields.Integer(required=True)
+})
+donacionDtoReq = api.model("Evento.Donacion.Req", {
+    "donacionId": fields.Integer(required=True),
     "cantidad": fields.Integer(required=True)
 })
 errorDto = api.model("Error", {
@@ -30,13 +45,34 @@ errorDto = api.model("Error", {
 eventoListDto = api.model("EventoList", {
     "eventos": fields.List(fields.Nested(eventoDto))
 })
-usersListDto = api.model('UsersListDto', {
+usersListDto = api.model('Evento.UsersListDto', {
     'usersIds': fields.List(fields.Integer, required=True, description='Lista de IDs de usuarios')
 })
-
-lstDonaciones = api.model('lstDonaciones', {
-    'donaciones' : fields.List(fields.Nested(donacionDto), required=True, description='Lista de las donaciones'),
+lstDonaciones = api.model('Evento.Lista.Donacion', {
+    "idEvento": fields.Integer(required=False),
+    'listaDonacion' : fields.List(fields.Nested(donacionDto), required=True, description='Lista de las donaciones'),
 })
+rolDto = api.model("Evento.Rol", {
+    "id": fields.Integer(required=True),
+    "descripcion": fields.String(required=True)
+})
+userDto = api.model("Evento.Usuario", {
+    "id": fields.Integer(required=False),
+    "username": fields.String(required=True),
+    "password": fields.String(required=False),
+    "email": fields.String(required=True),
+    "nombre": fields.String(required=True),
+    "apellido": fields.String(required=True),
+    "telefono": fields.String(required=False),
+    "activo": fields.Boolean(required=True),
+    "rol": fields.Nested(rolDto, required=True)
+})
+eventoUsersDto = api.model("EventoUsersDto", {
+    "id": fields.Integer(required=False),
+    "users": fields.List(fields.Nested(userDto, required=False))
+})
+
+
 
 
 #######################################################
@@ -93,14 +129,14 @@ class Evento(Resource):
 @api.route("/<int:id>")
 class GetEvento(Resource):
     @api.doc(security='Bearer Auth') # Esto hace que Swagger agregue el header para el token
-    @SecurityConfig.authRequired("PRESIDENTE", "COORDINADOR")
+    @SecurityConfig.authRequired("PRESIDENTE", "COORDINADOR", "VOLUNTARIO")
     @api.doc(id="getEventoById") # Esto define el operationId
     @api.response(200, "Success", model=eventoDto)
     @api.response(401, "Unauthorized", model=errorDto)
     @api.response(404, "Not Found", model=errorDto)
     @api.response(500, "Internal server error", model=errorDto)
     def get(self, id):
-        """Obtener Donacion"""
+        """Obtener Evento"""
         try:
             payload = {"id": id}  # solo necesitas el id
             result = cliente.getEventoById(payload)
@@ -130,6 +166,7 @@ class GetEvento(Resource):
             username = SecurityConfig.getUser()
             usuario = json.loads(cliente.getUserByUsername(username))
             payload["usuario"] = usuario
+            #print(payload)
             result = cliente.insertOrUpdateEvento(payload)
             return json.loads(result), 200
         except Exception as e:
@@ -162,15 +199,15 @@ class EventoList(Resource):
 @api.route("/<int:id>/users/add")
 class AddUsersToEvento(Resource):
     @api.doc(security='Bearer Auth')
-    @SecurityConfig.authRequired("PRESIDENTE", "COORDINADOR")
+    @SecurityConfig.authRequired("PRESIDENTE", "COORDINADOR", "VOLUNTARIO")
     @api.doc(id="insertUsersToEvento")
-    @api.response(200, "Success")
+    @api.response(200, "Success", model=eventoUsersDto)
     @api.response(400, "Bad Request", model=errorDto)
     @api.response(401, "Unauthorized", model=errorDto)
     @api.response(404, "Not Found", model=errorDto)
     @api.response(500, "Internal server error", model=errorDto)
     @api.expect(usersListDto)
-    def post(self, id):
+    def put(self, id):
         """Agregar usuarios a un evento"""
         try:
             
@@ -179,7 +216,7 @@ class AddUsersToEvento(Resource):
                 "id": id,
                 "usersIds": [{"id": user_id} for user_id in data.get("usersIds", [])]
             }
-
+            #print(payload)
             result = cliente.insertUsersToEvento(payload)
             return json.loads(result), 200
 
@@ -196,15 +233,15 @@ class AddUsersToEvento(Resource):
 @api.route("/<int:id>/donaciones/add")
 class AddDonacionesToEvento(Resource):
     @api.doc(security='Bearer Auth')
-    @SecurityConfig.authRequired("PRESIDENTE", "COORDINADOR")
+    @SecurityConfig.authRequired("PRESIDENTE", "COORDINADOR", "VOLUNTARIO")
     @api.doc(id="insertDonacionesToEvento")
     @api.response(200, "Success")
     @api.response(400, "Bad Request", model=errorDto)
     @api.response(401, "Unauthorized", model=errorDto)
     @api.response(404, "Not Found", model=errorDto)
     @api.response(500, "Internal server error", model=errorDto)
-    @api.expect(donacionDto)
-    def post(self, id):
+    @api.expect(donacionDtoReq)
+    def put(self, id):
         """Agregar donaciones al evento"""
         try:
             data = api.payload  
@@ -213,10 +250,11 @@ class AddDonacionesToEvento(Resource):
 
             username = SecurityConfig.getUser()
             usuario = json.loads(cliente.getUserByUsername(username))
+            
 
             payload = {
                 "idEvento": id,
-                "donacionId": data.get("id"),
+                "donacionId": data.get("donacionId"),
                 "cantidad": data.get("cantidad"),
                 "usuario": usuario
             }
@@ -237,9 +275,9 @@ class AddDonacionesToEvento(Resource):
 @api.route("/<int:id>/donaciones")
 class getEventoWithDonacionesById(Resource):
     @api.doc(security='Bearer Auth')
-    @SecurityConfig.authRequired("PRESIDENTE", "COORDINADOR")
+    @SecurityConfig.authRequired("PRESIDENTE", "COORDINADOR", "VOLUNTARIO")
     @api.doc(id="getEventoWithDonacionesById")
-    @api.response(200, "Success")
+    @api.response(200, "Success", model=lstDonaciones)
     @api.response(400, "Bad Request", model=errorDto)
     @api.response(401, "Unauthorized", model=errorDto)
     @api.response(404, "Not Found", model=errorDto)
@@ -264,9 +302,9 @@ class getEventoWithDonacionesById(Resource):
 @api.route("/<int:id>/usuarios")
 class getEventoWithUsersById(Resource):
     @api.doc(security='Bearer Auth')
-    @SecurityConfig.authRequired("PRESIDENTE", "COORDINADOR")
+    @SecurityConfig.authRequired("PRESIDENTE", "COORDINADOR", "VOLUNTARIO")
     @api.doc(id="getEventoWithUsersById")
-    @api.response(200, "Success")
+    @api.response(200, "Success", model=eventoUsersDto)
     @api.response(400, "Bad Request", model=errorDto)
     @api.response(401, "Unauthorized", model=errorDto)
     @api.response(404, "Not Found", model=errorDto)
@@ -276,7 +314,7 @@ class getEventoWithUsersById(Resource):
         try:
             payload = {"id": id}
             result = cliente.getEventoWithUsersById(payload)
-            print(result)
+            #print(result)
             return json.loads(result), 200
 
         except grpc.RpcError as e:

@@ -54,7 +54,41 @@ const EventService = {
           console.error("Error al buscar informacion del evento:", err)
           throw err;
         }
-      },
+    },
+
+    obtenerListadoDonacionesAsociadosAEvento: async (idEvento) => {
+        try {
+          return await eventosApi.getEventoWithDonacionesById(idEvento)
+        } catch (err) {
+          console.error("Error al buscar informacion del evento:", err)
+          throw err;
+        }
+    },
+
+    agregarDonacionAlEvento: async (idEvento, donacionId, data) => {
+      try {
+        const body = {
+          donacionId,
+          cantidad: data.cantidad
+        };
+
+        return await eventosApi.insertDonacionesToEvento(idEvento,body);
+      } catch (err) {
+        console.error("Error al agregar donación al evento:", err);
+        throw err;
+      }
+    },
+
+    actualizarUsuariosDelEvento: async (idEvento, usersIds) => {
+        try {
+          const body = { usersIds };
+          return await eventosApi.insertUsersToEvento(idEvento, body);
+        } catch (err) {
+          console.error("Error al insertar usuarios al evento:", err);
+          throw err;
+        }
+    },
+
 };
 
 export default EventService;

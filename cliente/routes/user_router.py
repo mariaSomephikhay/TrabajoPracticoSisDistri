@@ -207,3 +207,27 @@ class User(Resource):
                 return {"error": error_msg}, 404
             else:
                 return {"error": error_msg}, 500
+
+@api.route("/username/<string:username>")
+class User(Resource):
+    @api.doc(security='Bearer Auth') # Esto hace que Swagger agregue el header para el token
+    @SecurityConfig.authRequired("PRESIDENTE","VOLUNTARIO")
+    @api.doc(id="getUserByUsername") # Esto define el operationId
+    @api.response(200, "Success", model=userDto)
+    @api.response(403, "Access forbidden", model=errorDto)
+    @api.response(404, "Resource not found", model=errorDto)
+    @api.response(500, "Internal server error", model=errorDto)
+    def get(self, username):
+        """Obtener usuario"""
+        try:
+            payload = {"username": username}  # solo necesitas el id
+            result = cliente.getUserByUsername(payload)
+            return json.loads(result), 200
+        except Exception as e:
+            # Capturo solo el mensaje de gRPC si existe, o str(e) si no
+            error_msg = getattr(e, "details", lambda: str(e))()
+            # Error de gRPC que devuelve el servicio
+            if "NOT_FOUND" in str(e):
+                return {"error": error_msg}, 404
+            else:
+                return {"error": error_msg}, 500

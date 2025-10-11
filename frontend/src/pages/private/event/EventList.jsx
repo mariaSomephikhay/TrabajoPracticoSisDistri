@@ -83,12 +83,11 @@ export const EventList = () => {
         ]}
         data={events}
         actions={
-        userAuthenticated?.rol.descripcion?.toUpperCase() !== 'VOLUNTARIO'
-          ? [
+            [
               { label: "Editar", icon: editIcon, onClick: (u) => handleEditEvent(u.id) },
               { label: "Eliminar", icon: deleteIcon, onClick: (u) => handleDeleteEventOnClick(u) },
             ]
-          : [] // Si es voluntario, no hay acciones
+          
         }
         emptyMessage="No hay eventos disponibles"
       />

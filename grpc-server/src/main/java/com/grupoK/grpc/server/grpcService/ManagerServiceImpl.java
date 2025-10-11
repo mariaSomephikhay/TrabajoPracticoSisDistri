@@ -296,7 +296,7 @@ public class ManagerServiceImpl extends ManagerServiceGrpc.ManagerServiceImplBas
 		    	
 		    	EventoWithListUsersDetails.Builder responseBuilder = EventoWithListUsersDetails.newBuilder();
 
-		    	responseBuilder.setId(eventoWrapper.toGrpcEvento(evento));
+		    	responseBuilder.setEvento(eventoWrapper.toGrpcEvento(evento));
 
 		    	responseBuilder.addAllUsers(
 		    	    lstUsuarioEntidad.stream()
@@ -356,10 +356,11 @@ public class ManagerServiceImpl extends ManagerServiceGrpc.ManagerServiceImplBas
 				Evento evento = eventoService.findById(request.getId());
 
 				EventoWithListUsersDetails response = EventoWithListUsersDetails.newBuilder()
-						.setId(eventoWrapper.toGrpcEvento(evento))
+						.setEvento(eventoWrapper.toGrpcEvento(evento))
 	                    .addAllUsers(lstUsuarios.stream()
 	                    		.map(usuarioWrapper::toGrpcUsuario).toList())
 	                    .build();
+				//System.out.println(response);
 	            responseObserver.onNext(response);
 	            responseObserver.onCompleted();
 
@@ -392,7 +393,7 @@ public class ManagerServiceImpl extends ManagerServiceGrpc.ManagerServiceImplBas
 
 				EventoWithAllListDonacionesDetails response = EventoWithAllListDonacionesDetails.newBuilder()
 					    .setId(eventoWrapper.toGrpcEvento(evento))
-					    .addAllDonacion(donacionesAsociada)
+					    .addAllListaDonacion(donacionesAsociada)
 					    .build();
 
 				responseObserver.onNext(response);

@@ -13,15 +13,23 @@
 
 
 import ApiClient from './ApiClient';
+import Categoria from './model/Categoria';
 import Donacion from './model/Donacion';
 import DonacionList from './model/DonacionList';
 import Error from './model/Error';
 import Evento from './model/Evento';
+import EventoCategoria from './model/EventoCategoria';
+import EventoDonacion from './model/EventoDonacion';
+import EventoDonacionObjeto from './model/EventoDonacionObjeto';
 import EventoList from './model/EventoList';
+import EventoListaDonacion from './model/EventoListaDonacion';
+import EventoRol from './model/EventoRol';
+import EventoUsersDto from './model/EventoUsersDto';
+import EventoUsersListDto from './model/EventoUsersListDto';
+import EventoUsuario from './model/EventoUsuario';
 import Login from './model/Login';
 import Rol from './model/Rol';
 import Token from './model/Token';
-import UsersListDto from './model/UsersListDto';
 import Usuario from './model/Usuario';
 import UsuarioList from './model/UsuarioList';
 import DonacionesApi from './api/DonacionesApi';
@@ -68,6 +76,12 @@ export {
     ApiClient,
 
     /**
+     * The Categoria model constructor.
+     * @property {module:model/Categoria}
+     */
+    Categoria,
+
+    /**
      * The Donacion model constructor.
      * @property {module:model/Donacion}
      */
@@ -92,10 +106,58 @@ export {
     Evento,
 
     /**
+     * The EventoCategoria model constructor.
+     * @property {module:model/EventoCategoria}
+     */
+    EventoCategoria,
+
+    /**
+     * The EventoDonacion model constructor.
+     * @property {module:model/EventoDonacion}
+     */
+    EventoDonacion,
+
+    /**
+     * The EventoDonacionObjeto model constructor.
+     * @property {module:model/EventoDonacionObjeto}
+     */
+    EventoDonacionObjeto,
+
+    /**
      * The EventoList model constructor.
      * @property {module:model/EventoList}
      */
     EventoList,
+
+    /**
+     * The EventoListaDonacion model constructor.
+     * @property {module:model/EventoListaDonacion}
+     */
+    EventoListaDonacion,
+
+    /**
+     * The EventoRol model constructor.
+     * @property {module:model/EventoRol}
+     */
+    EventoRol,
+
+    /**
+     * The EventoUsersDto model constructor.
+     * @property {module:model/EventoUsersDto}
+     */
+    EventoUsersDto,
+
+    /**
+     * The EventoUsersListDto model constructor.
+     * @property {module:model/EventoUsersListDto}
+     */
+    EventoUsersListDto,
+
+    /**
+     * The EventoUsuario model constructor.
+     * @property {module:model/EventoUsuario}
+     */
+    EventoUsuario,
 
     /**
      * The Login model constructor.
@@ -114,12 +176,6 @@ export {
      * @property {module:model/Token}
      */
     Token,
-
-    /**
-     * The UsersListDto model constructor.
-     * @property {module:model/UsersListDto}
-     */
-    UsersListDto,
 
     /**
      * The Usuario model constructor.
