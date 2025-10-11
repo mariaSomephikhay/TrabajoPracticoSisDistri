@@ -280,7 +280,7 @@ Bearer Auth.apiKey = 'YOUR API KEY';
 
 let apiInstance = new ApiDocumentada.EventosApi();
 let id = 56; // Number | 
-let payload = new ApiDocumentada.EventoDonacion(); // EventoDonacion | 
+let payload = new ApiDocumentada.EventoDonacionReq(); // EventoDonacionReq | 
 apiInstance.insertDonacionesToEvento(id, payload, (error, data, response) => {
   if (error) {
     console.error(error);
@@ -296,7 +296,7 @@ apiInstance.insertDonacionesToEvento(id, payload, (error, data, response) => {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **Number**|  | 
- **payload** | [**EventoDonacion**](EventoDonacion.md)|  | 
+ **payload** | [**EventoDonacionReq**](EventoDonacionReq.md)|  | 
 
 ### Return type
 

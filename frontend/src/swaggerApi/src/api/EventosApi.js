@@ -15,7 +15,7 @@
 import ApiClient from "../ApiClient";
 import Error from '../model/Error';
 import Evento from '../model/Evento';
-import EventoDonacion from '../model/EventoDonacion';
+import EventoDonacionReq from '../model/EventoDonacionReq';
 import EventoList from '../model/EventoList';
 import EventoListaDonacion from '../model/EventoListaDonacion';
 import EventoUsersDto from '../model/EventoUsersDto';
@@ -260,7 +260,7 @@ export default class EventosApi {
     /**
      * Agregar donaciones al evento
      * @param {Number} id 
-     * @param {module:model/EventoDonacion} payload 
+     * @param {module:model/EventoDonacionReq} payload 
      * @param {module:api/EventosApi~insertDonacionesToEventoCallback} callback The callback function, accepting three arguments: error, data, response
      */
     insertDonacionesToEvento(id, payload, callback) {
