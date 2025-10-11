@@ -4,8 +4,10 @@ package com.grupoK.connector.database.serviceImp;
 import com.grupoK.connector.database.configuration.annotations.ConsumerServerAnnotation;
 import com.grupoK.connector.database.configuration.annotations.GrpcServerAnnotation;
 import com.grupoK.connector.database.entities.Donacion;
+import com.grupoK.connector.database.entities.Organizacion;
 import com.grupoK.connector.database.entities.Usuario;
 import com.grupoK.connector.database.repositories.IDonacionRepository;
+import com.grupoK.connector.database.repositories.IOrganizacionRepository;
 import com.grupoK.connector.database.service.IDonacionService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,8 @@ import java.util.Optional;
 @Service
 public class DonacionService implements IDonacionService {
 
+    @Autowired
+    private IOrganizacionRepository organizacionRepository;
 	@Autowired
 	private IDonacionRepository donacionRepository;
 	
@@ -28,6 +32,8 @@ public class DonacionService implements IDonacionService {
 		if(donacion.getId() == 0 || donacion.getId() == null) {
 			donacion.setId(null); //Proto lo devuelve con un 0
 			donacion.setUsuarioAlta(donacion.getUsuarioModificacion());
+            if(donacion.getOrganizacion() == null)
+                donacion.setOrganizacion(obtenerOrganizacionPropia(1)); //El id 1 es de nuestra organizacion
         	return donacionRepository.save(donacion);
         }
         else {
@@ -77,6 +83,14 @@ public class DonacionService implements IDonacionService {
 		}
 		
 	}
+
+    private Organizacion obtenerOrganizacionPropia (Integer idOrganizacion) throws  Exception{
+        Optional<Organizacion> organizacionPropia = organizacionRepository.findById(idOrganizacion);
+        if(organizacionPropia.isEmpty())
+            throw new Exception("Organizacion propia no encontrada");
+
+        return  organizacionPropia.get();
+    }
 
 
 }

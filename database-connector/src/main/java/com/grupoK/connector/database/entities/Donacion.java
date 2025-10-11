@@ -20,8 +20,12 @@ public class Donacion {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	
-	@ManyToOne(fetch = FetchType.EAGER)
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="id_organizacion",nullable=false)
+    private Organizacion organizacion;
+
+    @ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="id_categoria",nullable=false)
 	private Categoria categoria;
 	
@@ -51,6 +55,13 @@ public class Donacion {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="id_usuario_modificacion",nullable=false)
 	private Usuario usuarioModificacion;
-	
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="id_solicitud",nullable=true)
+    private Solicitud solicitud;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="id_oferta",nullable=true)
+    private Oferta oferta;
 
 }
