@@ -19,20 +19,21 @@ categoriaDto = api.model("Solicitud.Categoria", {
     "id": fields.Integer(required=True),
     "descripcion": fields.String(required=True)
 })
-DonacionCortaDto =  api.model("Solicitud.DonacionCortaDto", {
-        "id": fields.Integer(required=True),
-        "descripcion": fields.String(required=True),
-        "categoria": fields.Nested(categoriaDto, required=True)
+donacionDto = api.model("Solicitud.Donacion", {
+    "id": fields.Integer(required=False),
+    "categoria": fields.Nested(categoriaDto, required=True),
+    "descripcion": fields.String(required=True),
+    "cantidad": fields.Integer(required=True)
 })
 OrganizacionDto =  api.model("Solicitud.OrganizacionDto", {
         "id": fields.Integer(required=True),
         "nombre": fields.String(required=True),
         "externa": fields.Boolean(required=False)
 })
-SolicitudDonacionDto = api.model("Transferencia", {
+SolicitudDonacionDto = api.model("Solicitud", {
     "id_solicitud_donacion": fields.Integer(required=True),
     "id_organizacion_solicitante": fields.Integer(required=True),
-    "donacion": fields.Nested(DonacionCortaDto)
+    "donacion": fields.List(fields.Nested(donacionDto))
 })
 
 #######################################################
@@ -41,10 +42,10 @@ SolicitudDonacionDto = api.model("Transferencia", {
 
 # Kafka - Endpoints
 @api.route("/donacion/new")
-class Transferencia(Resource):
+class Solicitud(Resource):
     @api.doc(security='Bearer Auth')
-    #@SecurityConfig.authRequired("PRESIDENTE", "VOCAL")
-    @api.doc(id="newRequest") # Esto define el operationId
+    @SecurityConfig.authRequired("PRESIDENTE", "VOCAL")
+    @api.doc(id="newRequestDonacion") # Esto define el operationId
     @api.expect(SolicitudDonacionDto) #Request
     @api.response(201, "Created", model=SolicitudDonacionDto)
     @api.response(401, "Unauthorized", model=errorDto)

@@ -40,6 +40,9 @@ Pasos para levantar los proyectos de Sistemas Distribuidos:
 - Server gRPC: 9090
 - Server Producer Kafka: 9099
 - Server Consumer Kafka: 9098
-- Kafka:
+- Kafka Broker (conexion desde servidores):
   - localhost: 29092
   - docker: 9092
+- Kafka UI (vista):
+  - localhost: 9091
+  - docker: 8080
