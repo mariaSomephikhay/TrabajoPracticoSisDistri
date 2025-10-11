@@ -10,8 +10,12 @@ public class Producer {
 	@Autowired
 	KafkaTemplate<String, String> kafkaTemplate;
 	
-	public void sendMsgToTopic(String topic, String message) {
+	public void sendMsgToTopic(String topic, String message) throws Exception {
+		try {
 		kafkaTemplate.send(topic, message);
+		} catch (Exception e){
+			throw new Exception("Ocurrio un error al producir el mensaje: "+ e);
+		}
 	}
 	
 }
