@@ -38,7 +38,7 @@ class Transferencia(Resource):
     @SecurityConfig.authRequired("PRESIDENTE", "VOCAL")
     @api.doc(id="newTransfer") # Esto define el operationId
     @api.expect(transferenciaDto) #Request
-    @api.response(201, "Created", model=transferenciaDto)
+    @api.response(200, "Success")
     @api.response(401, "Unauthorized", model=errorDto)
     @api.response(400, "Bad Request", model=errorDto)
     @api.response(500, "Internal server error", model=errorDto)
@@ -51,10 +51,10 @@ class Transferencia(Resource):
             data = request.get_json()
 
             # Endpoint del producer en Java
-            url = f"{PRODUCER_URL}/transfer/donation/{id_solicitante}/new"
-            response = requests.post(url, json=data)
+            url = f"{PRODUCER_URL}/donation/transfer/{id_solicitante}/new"
+            requests.post(url, json=data)
 
-            return json.loads(response), 201
+            return 200
         
         except Exception as e:
             return {"error": str(e)}, 500
