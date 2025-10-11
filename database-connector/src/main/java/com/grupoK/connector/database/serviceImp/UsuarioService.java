@@ -2,18 +2,12 @@ package com.grupoK.connector.database.serviceImp;
 
 
 import com.grupoK.connector.database.configuration.annotations.GrpcServerAnnotation;
-<<<<<<< HEAD
-=======
 import com.grupoK.connector.database.entities.Organizacion;
->>>>>>> cc4d66570e63a1564f79ced5fad1633b6043b1d0
 import com.grupoK.connector.database.entities.Usuario;
 import com.grupoK.connector.database.exceptions.UserEmailAlreadyExistsException;
 import com.grupoK.connector.database.exceptions.UserNotFoundException;
 import com.grupoK.connector.database.exceptions.UserUsernameAlreadyExistsException;
-<<<<<<< HEAD
-=======
 import com.grupoK.connector.database.repositories.IOrganizacionRepository;
->>>>>>> cc4d66570e63a1564f79ced5fad1633b6043b1d0
 import com.grupoK.connector.database.repositories.IUsuarioRepository;
 import com.grupoK.connector.database.service.IUsuarioService;
 import org.apache.commons.lang3.StringUtils;

@@ -4,15 +4,10 @@ package com.grupoK.connector.database.serviceImp;
 import com.grupoK.connector.database.configuration.annotations.ConsumerServerAnnotation;
 import com.grupoK.connector.database.configuration.annotations.GrpcServerAnnotation;
 import com.grupoK.connector.database.entities.Donacion;
-<<<<<<< HEAD
-import com.grupoK.connector.database.entities.Usuario;
-import com.grupoK.connector.database.repositories.IDonacionRepository;
-=======
 import com.grupoK.connector.database.entities.Organizacion;
 import com.grupoK.connector.database.entities.Usuario;
 import com.grupoK.connector.database.repositories.IDonacionRepository;
 import com.grupoK.connector.database.repositories.IOrganizacionRepository;
->>>>>>> cc4d66570e63a1564f79ced5fad1633b6043b1d0
 import com.grupoK.connector.database.service.IDonacionService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;

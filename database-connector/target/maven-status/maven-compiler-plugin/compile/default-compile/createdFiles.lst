@@ -1,21 +1,10 @@
-<<<<<<< HEAD
-=======
 com\grupoK\connector\database\entities\Organizacion.class
->>>>>>> cc4d66570e63a1564f79ced5fad1633b6043b1d0
 com\grupoK\connector\database\configuration\DatabaseConfiguration.class
 com\grupoK\connector\database\repositories\ICategoriaRepository.class
 com\grupoK\connector\database\serviceImp\EventoDonacionService.class
 com\grupoK\connector\database\exceptions\UserUsernameAlreadyExistsException.class
 com\grupoK\connector\database\service\IEventoService.class
 com\grupoK\connector\database\repositories\IEventoDonacionRepository.class
-<<<<<<< HEAD
-com\grupoK\connector\database\exceptions\UserNotFoundException.class
-com\grupoK\connector\database\configuration\annotations\GrpcServerAnnotation.class
-com\grupoK\connector\database\configuration\annotations\ConsumerServerAnnotation.class
-com\grupoK\connector\database\entities\enums\TipoRoles.class
-com\grupoK\connector\database\service\IEventoDonacionService.class
-com\grupoK\connector\database\entities\enums\TipoCategoria.class
-=======
 com\grupoK\connector\database\repositories\IOrganizacionRepository.class
 com\grupoK\connector\database\exceptions\UserNotFoundException.class
 com\grupoK\connector\database\configuration\annotations\GrpcServerAnnotation.class
@@ -26,7 +15,6 @@ com\grupoK\connector\database\entities\Solicitud.class
 com\grupoK\connector\database\service\IEventoDonacionService.class
 com\grupoK\connector\database\entities\enums\TipoCategoria.class
 com\grupoK\connector\database\repositories\ISolicitudRepository.class
->>>>>>> cc4d66570e63a1564f79ced5fad1633b6043b1d0
 com\grupoK\connector\database\entities\EventoDonacion.class
 com\grupoK\connector\database\entities\Donacion.class
 com\grupoK\connector\database\service\IUsuarioService.class
@@ -40,10 +28,7 @@ com\grupoK\connector\database\entities\Evento.class
 com\grupoK\connector\database\repositories\IDonacionRepository.class
 com\grupoK\connector\database\exceptions\UserEmailAlreadyExistsException.class
 com\grupoK\connector\database\repositories\IEventoRepository.class
-<<<<<<< HEAD
-=======
 com\grupoK\connector\database\entities\Oferta.class
->>>>>>> cc4d66570e63a1564f79ced5fad1633b6043b1d0
 com\grupoK\connector\database\serviceImp\EventoService.class
 com\grupoK\connector\database\entities\Rol.class
 com\grupoK\connector\database\repositories\IRolRepository.class
