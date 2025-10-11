@@ -12,7 +12,7 @@ public class DonacionWrapper {
 	
 	@Autowired
 	private UsuarioWrapper usuarioWrapper;
-	
+
 	public com.grupoK.grpc.proto.Donacion toGrpcDonacion(Donacion donacionModel){
 		return com.grupoK.grpc.proto.Donacion.newBuilder()
 				.setId(donacionModel.getId())
@@ -24,8 +24,8 @@ public class DonacionWrapper {
 	}
 	
 	public Donacion toEntityDonacion(com.grupoK.grpc.proto.Donacion donacionModel) {
-		return new Donacion(donacionModel.getId(), categoriaWrapper.toEntityCategoria(donacionModel.getCategoria()),
+		return new Donacion(donacionModel.getId(), null, categoriaWrapper.toEntityCategoria(donacionModel.getCategoria()),
 				donacionModel.getDescripcion(), donacionModel.getCantidad(),
-				donacionModel.getEliminado(), null, null, null, usuarioWrapper.toEntityUsuario(donacionModel.getUsuario()));
+				donacionModel.getEliminado(), null, null, null, usuarioWrapper.toEntityUsuario(donacionModel.getUsuario()), null, null);
 	}	
 }

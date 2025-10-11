@@ -1,4 +1,4 @@
-package com.grupoK.grpc.server.configurations;
+package com.grupoK.consumer.configurations;
 
 import com.grupoK.connector.database.entities.*;
 import com.grupoK.connector.database.entities.enums.TipoCategoria;
@@ -16,7 +16,7 @@ public class DataInitializer {
 
     @Bean
     CommandLineRunner initData(IOrganizacionRepository orgRepo, ICategoriaRepository cateRepo, IDonacionRepository donacionRepo,
-                                         IUsuarioRepository usuarioRepo, IRolRepository rolRepo, ISolicitudRepository soliRepo) {
+                               IUsuarioRepository usuarioRepo, IRolRepository rolRepo, ISolicitudRepository soliRepo) {
         return args -> {
             if (rolRepo.count() == 0) {
                 Organizacion organizacionPropia = orgRepo.save(new Organizacion(null, "GrupoK", false));
@@ -229,6 +229,4 @@ public class DataInitializer {
             }
         };
     }
-
-
 }

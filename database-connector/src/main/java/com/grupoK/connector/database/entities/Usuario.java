@@ -62,5 +62,9 @@ public class Usuario {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="id_rol",nullable=false)
 	private Rol rol;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="id_organizacion",nullable=false)
+    private Organizacion organizacion;
 	
 }
