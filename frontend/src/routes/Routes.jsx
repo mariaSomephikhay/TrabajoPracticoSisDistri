@@ -21,7 +21,7 @@ import { EventNew } from '../pages/private/event/EventNew.jsx';
 import { useNotification } from "../context/NotificationContext.jsx"
 import { EventUsersManager } from '../pages/private/event/EventUsersManager.jsx';
 import { EventDonacionesManager } from '../pages/private/event/EventDonacionesManager.jsx';
-
+import { RequestDonationNewForm } from '../pages/private/donation/RequestDonationNewForm.jsx';
 
 export const OperatorRoutes = () => {
     const { notification, clearNotification } = useNotification()
@@ -48,6 +48,7 @@ export const OperatorRoutes = () => {
                 <Route path="/donation-inventory" element={<PrivateRoute allowedRoles={["PRESIDENTE", "VOCAL"]}> <DonationTable /></PrivateRoute>} /> 
                 <Route path="/donation/edit/:id" element={<PrivateRoute allowedRoles={["PRESIDENTE", "VOCAL"]}><DonationUpdateForm /></PrivateRoute>} /> 
                 <Route path="/donation/new" element={<PrivateRoute allowedRoles={["PRESIDENTE", "VOCAL"]}><DonationNewForm /></PrivateRoute>} /> 
+                <Route path="/donation/request/new" element={<PrivateRoute allowedRoles={["PRESIDENTE", "VOCAL"]}><RequestDonationNewForm /></PrivateRoute>} />
 
                 {/* RUTAS DEL EVENTO */}
                 <Route path="/events" element={<PrivateRoute allowedRoles={["PRESIDENTE","COORDINADOR","VOLUNTARIO"]}> <EventList /></PrivateRoute>} />
