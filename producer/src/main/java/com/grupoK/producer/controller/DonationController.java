@@ -17,13 +17,14 @@ public class DonationController {
     Producer producerService;
 
     @PostMapping("/transfer/{id_organization}/new")
-    public void producerTransferMsg(@PathVariable("id_organization") Long idOrganization, @RequestBody String message) {
+    public ResponseEntity<Void> producerTransferMsg(@PathVariable("id_organization") Long idOrganization, @RequestBody String message) {
         String topic = "transferencia-donaciones_" + idOrganization;
         try{
         	producerService.sendMsgToTopic(topic, message);
         }catch (Exception e) {
-        	
+            System.out.println(e);
         }
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/offer")
