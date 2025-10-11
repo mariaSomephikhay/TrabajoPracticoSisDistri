@@ -12,13 +12,14 @@ Pasos para levantar los proyectos de Sistemas Distribuidos:
 
 ## ⚡ Comandos rápidos
 
-| Proyecto                                   | Comando                                                                                                                               | Nota                                                                                                             |
-| ------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
-| Cliente React (Swagger)                    | `npx openapi-generator-cli generate -i <ruta_a_openapi.json> -g javascript -o ./src/swaggerApi`                                       | Reemplazar `<ruta_a_openapi.json>` por la ubicación real de tu archivo OpenAPI (http://127.0.0.1:8080/docs/json) |
-| Cliente Flask para consumir servicios gRPC | `pipenv run python -m grpc_tools.protoc -I=protos --python_out=generated --grpc_python_out=generated protos/donaciones_eventos.proto` | Ajustar ruta `.proto` según tu proyecto                                                                          |
-| Servidor Java gRPC                         | `mvn clean install`                                                                                                                   | Compila y genera stubs gRPC                                                                                      |
-| Correr Front                               | npm run dev                                                                                                                           | Ejecuta Front End                                                                                                |
-| Correr Cliente                             | python app.py                                                                                                                         | Ejecuta Cliente                                                                                                  |
+| Proyecto                                   | Comando                                                                                                                               | Nota                                                                                                                |
+| ------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| Cliente React (Swagger)                    | `npx openapi-generator-cli generate -i <ruta_a_openapi.json> -g javascript -o ./src/swaggerApi`                                       | Reemplazar `<ruta_a_openapi.json>` por la ubicación real de tu archivo OpenAPI (http://127.0.0.1:8080/swagger.json) |
+| Cliente Flask para consumir servicios gRPC | `pipenv run python -m grpc_tools.protoc -I=protos --python_out=generated --grpc_python_out=generated protos/donaciones_eventos.proto` | Ajustar ruta `.proto` según tu proyecto                                                                             |
+| Servidor Java gRPC                         | `mvn clean install`                                                                                                                   | Compila y genera stubs gRPC                                                                                         |
+| Correr Front                               | npm run dev                                                                                                                           | Ejecuta Front End                                                                                                   |
+| Correr Cliente                             | python app.py                                                                                                                         | Ejecuta Cliente                                                                                                     |
+| Correr kafka                               | docker-compose up -d                                                                                                                  | Vista de Kafka http://127.0.0.1:9090/                                                                               |
 
 ---
 
@@ -30,6 +31,7 @@ Pasos para levantar los proyectos de Sistemas Distribuidos:
   - `pipenv install` → Python
   - `npm install` → React
   - `mvn clean install` → Java
+- Para uso del consumer/producer ejecutar el docker-compose.yml de kafka (docker-compose up -d)
 
 ## ✅ Uso de puertos:
 
