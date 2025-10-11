@@ -22,12 +22,12 @@ class Login {
     /**
      * Constructs a new <code>Login</code>.
      * @alias module:model/Login
-     * @param password {String} 
      * @param username {String} 
+     * @param password {String} 
      */
-    constructor(password, username) { 
+    constructor(username, password) { 
         
-        Login.initialize(this, password, username);
+        Login.initialize(this, username, password);
     }
 
     /**
@@ -35,9 +35,9 @@ class Login {
      * This method is used by the constructors of any subclasses, in order to implement multiple inheritance (mix-ins).
      * Only for internal use.
      */
-    static initialize(obj, password, username) { 
-        obj['password'] = password;
+    static initialize(obj, username, password) { 
         obj['username'] = username;
+        obj['password'] = password;
     }
 
     /**
@@ -51,11 +51,11 @@ class Login {
         if (data) {
             obj = obj || new Login();
 
-            if (data.hasOwnProperty('password')) {
-                obj['password'] = ApiClient.convertToType(data['password'], 'String');
-            }
             if (data.hasOwnProperty('username')) {
                 obj['username'] = ApiClient.convertToType(data['username'], 'String');
+            }
+            if (data.hasOwnProperty('password')) {
+                obj['password'] = ApiClient.convertToType(data['password'], 'String');
             }
         }
         return obj;
@@ -74,12 +74,12 @@ class Login {
             }
         }
         // ensure the json data is a string
-        if (data['password'] && !(typeof data['password'] === 'string' || data['password'] instanceof String)) {
-            throw new Error("Expected the field `password` to be a primitive type in the JSON string but got " + data['password']);
-        }
-        // ensure the json data is a string
         if (data['username'] && !(typeof data['username'] === 'string' || data['username'] instanceof String)) {
             throw new Error("Expected the field `username` to be a primitive type in the JSON string but got " + data['username']);
+        }
+        // ensure the json data is a string
+        if (data['password'] && !(typeof data['password'] === 'string' || data['password'] instanceof String)) {
+            throw new Error("Expected the field `password` to be a primitive type in the JSON string but got " + data['password']);
         }
 
         return true;
@@ -88,17 +88,17 @@ class Login {
 
 }
 
-Login.RequiredProperties = ["password", "username"];
-
-/**
- * @member {String} password
- */
-Login.prototype['password'] = undefined;
+Login.RequiredProperties = ["username", "password"];
 
 /**
  * @member {String} username
  */
 Login.prototype['username'] = undefined;
+
+/**
+ * @member {String} password
+ */
+Login.prototype['password'] = undefined;
 
 
 

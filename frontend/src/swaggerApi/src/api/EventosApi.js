@@ -13,8 +13,13 @@
 
 
 import ApiClient from "../ApiClient";
-import Donacion from '../model/Donacion';
 import Error from '../model/Error';
+import Evento from '../model/Evento';
+import EventoDonacion from '../model/EventoDonacion';
+import EventoList from '../model/EventoList';
+import EventoListaDonacion from '../model/EventoListaDonacion';
+import EventoUsersDto from '../model/EventoUsersDto';
+import EventoUsersListDto from '../model/EventoUsersListDto';
 
 /**
 * Eventos service.
@@ -39,15 +44,15 @@ export default class EventosApi {
      * Callback function to receive the result of the createEvent operation.
      * @callback module:api/EventosApi~createEventCallback
      * @param {String} error Error message, if any.
-     * @param {module:model/Donacion} data The data returned by the service call.
+     * @param {module:model/Evento} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
      */
 
     /**
      * Insertar nuevo evento
-     * @param {module:model/Donacion} payload 
+     * @param {module:model/Evento} payload 
      * @param {module:api/EventosApi~createEventCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link module:model/Donacion}
+     * data is of type: {@link module:model/Evento}
      */
     createEvent(payload, callback) {
       let postBody = payload;
@@ -68,7 +73,7 @@ export default class EventosApi {
       let authNames = ['Bearer Auth'];
       let contentTypes = ['application/json'];
       let accepts = ['application/json'];
-      let returnType = Donacion;
+      let returnType = Evento;
       return this.apiClient.callApi(
         '/evento/new', 'POST',
         pathParams, queryParams, headerParams, formParams, postBody,
@@ -80,7 +85,7 @@ export default class EventosApi {
      * Callback function to receive the result of the deleteEventById operation.
      * @callback module:api/EventosApi~deleteEventByIdCallback
      * @param {String} error Error message, if any.
-     * @param {module:model/Donacion} data The data returned by the service call.
+     * @param {module:model/Evento} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
      */
 
@@ -88,7 +93,7 @@ export default class EventosApi {
      * Eliminar evento
      * @param {Number} id 
      * @param {module:api/EventosApi~deleteEventByIdCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link module:model/Donacion}
+     * data is of type: {@link module:model/Evento}
      */
     deleteEventById(id, callback) {
       let postBody = null;
@@ -110,9 +115,311 @@ export default class EventosApi {
       let authNames = ['Bearer Auth'];
       let contentTypes = [];
       let accepts = ['application/json'];
-      let returnType = Donacion;
+      let returnType = Evento;
       return this.apiClient.callApi(
         '/evento/delete/{id}', 'DELETE',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, null, callback
+      );
+    }
+
+    /**
+     * Callback function to receive the result of the getEventoById operation.
+     * @callback module:api/EventosApi~getEventoByIdCallback
+     * @param {String} error Error message, if any.
+     * @param {module:model/Evento} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Obtener Evento
+     * @param {Number} id 
+     * @param {module:api/EventosApi~getEventoByIdCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link module:model/Evento}
+     */
+    getEventoById(id, callback) {
+      let postBody = null;
+      // verify the required parameter 'id' is set
+      if (id === undefined || id === null) {
+        throw new Error("Missing the required parameter 'id' when calling getEventoById");
+      }
+
+      let pathParams = {
+        'id': id
+      };
+      let queryParams = {
+      };
+      let headerParams = {
+      };
+      let formParams = {
+      };
+
+      let authNames = ['Bearer Auth'];
+      let contentTypes = [];
+      let accepts = ['application/json'];
+      let returnType = Evento;
+      return this.apiClient.callApi(
+        '/evento/{id}', 'GET',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, null, callback
+      );
+    }
+
+    /**
+     * Callback function to receive the result of the getEventoWithDonacionesById operation.
+     * @callback module:api/EventosApi~getEventoWithDonacionesByIdCallback
+     * @param {String} error Error message, if any.
+     * @param {module:model/EventoListaDonacion} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Obtener donaciones del evento
+     * @param {Number} id 
+     * @param {module:api/EventosApi~getEventoWithDonacionesByIdCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link module:model/EventoListaDonacion}
+     */
+    getEventoWithDonacionesById(id, callback) {
+      let postBody = null;
+      // verify the required parameter 'id' is set
+      if (id === undefined || id === null) {
+        throw new Error("Missing the required parameter 'id' when calling getEventoWithDonacionesById");
+      }
+
+      let pathParams = {
+        'id': id
+      };
+      let queryParams = {
+      };
+      let headerParams = {
+      };
+      let formParams = {
+      };
+
+      let authNames = ['Bearer Auth'];
+      let contentTypes = [];
+      let accepts = ['application/json'];
+      let returnType = EventoListaDonacion;
+      return this.apiClient.callApi(
+        '/evento/{id}/donaciones', 'GET',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, null, callback
+      );
+    }
+
+    /**
+     * Callback function to receive the result of the getEventoWithUsersById operation.
+     * @callback module:api/EventosApi~getEventoWithUsersByIdCallback
+     * @param {String} error Error message, if any.
+     * @param {module:model/EventoUsersDto} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Obtener usuarios del evento
+     * @param {Number} id 
+     * @param {module:api/EventosApi~getEventoWithUsersByIdCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link module:model/EventoUsersDto}
+     */
+    getEventoWithUsersById(id, callback) {
+      let postBody = null;
+      // verify the required parameter 'id' is set
+      if (id === undefined || id === null) {
+        throw new Error("Missing the required parameter 'id' when calling getEventoWithUsersById");
+      }
+
+      let pathParams = {
+        'id': id
+      };
+      let queryParams = {
+      };
+      let headerParams = {
+      };
+      let formParams = {
+      };
+
+      let authNames = ['Bearer Auth'];
+      let contentTypes = [];
+      let accepts = ['application/json'];
+      let returnType = EventoUsersDto;
+      return this.apiClient.callApi(
+        '/evento/{id}/usuarios', 'GET',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, null, callback
+      );
+    }
+
+    /**
+     * Callback function to receive the result of the insertDonacionesToEvento operation.
+     * @callback module:api/EventosApi~insertDonacionesToEventoCallback
+     * @param {String} error Error message, if any.
+     * @param data This operation does not return a value.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Agregar donaciones al evento
+     * @param {Number} id 
+     * @param {module:model/EventoDonacion} payload 
+     * @param {module:api/EventosApi~insertDonacionesToEventoCallback} callback The callback function, accepting three arguments: error, data, response
+     */
+    insertDonacionesToEvento(id, payload, callback) {
+      let postBody = payload;
+      // verify the required parameter 'id' is set
+      if (id === undefined || id === null) {
+        throw new Error("Missing the required parameter 'id' when calling insertDonacionesToEvento");
+      }
+      // verify the required parameter 'payload' is set
+      if (payload === undefined || payload === null) {
+        throw new Error("Missing the required parameter 'payload' when calling insertDonacionesToEvento");
+      }
+
+      let pathParams = {
+        'id': id
+      };
+      let queryParams = {
+      };
+      let headerParams = {
+      };
+      let formParams = {
+      };
+
+      let authNames = ['Bearer Auth'];
+      let contentTypes = ['application/json'];
+      let accepts = ['application/json'];
+      let returnType = null;
+      return this.apiClient.callApi(
+        '/evento/{id}/donaciones/add', 'PUT',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, null, callback
+      );
+    }
+
+    /**
+     * Callback function to receive the result of the insertUsersToEvento operation.
+     * @callback module:api/EventosApi~insertUsersToEventoCallback
+     * @param {String} error Error message, if any.
+     * @param {module:model/EventoUsersDto} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Agregar usuarios a un evento
+     * @param {Number} id 
+     * @param {module:model/EventoUsersListDto} payload 
+     * @param {module:api/EventosApi~insertUsersToEventoCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link module:model/EventoUsersDto}
+     */
+    insertUsersToEvento(id, payload, callback) {
+      let postBody = payload;
+      // verify the required parameter 'id' is set
+      if (id === undefined || id === null) {
+        throw new Error("Missing the required parameter 'id' when calling insertUsersToEvento");
+      }
+      // verify the required parameter 'payload' is set
+      if (payload === undefined || payload === null) {
+        throw new Error("Missing the required parameter 'payload' when calling insertUsersToEvento");
+      }
+
+      let pathParams = {
+        'id': id
+      };
+      let queryParams = {
+      };
+      let headerParams = {
+      };
+      let formParams = {
+      };
+
+      let authNames = ['Bearer Auth'];
+      let contentTypes = ['application/json'];
+      let accepts = ['application/json'];
+      let returnType = EventoUsersDto;
+      return this.apiClient.callApi(
+        '/evento/{id}/users/add', 'PUT',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, null, callback
+      );
+    }
+
+    /**
+     * Callback function to receive the result of the listEventos operation.
+     * @callback module:api/EventosApi~listEventosCallback
+     * @param {String} error Error message, if any.
+     * @param {module:model/EventoList} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Obtener todos los eventos
+     * @param {module:api/EventosApi~listEventosCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link module:model/EventoList}
+     */
+    listEventos(callback) {
+      let postBody = null;
+
+      let pathParams = {
+      };
+      let queryParams = {
+      };
+      let headerParams = {
+      };
+      let formParams = {
+      };
+
+      let authNames = ['Bearer Auth'];
+      let contentTypes = [];
+      let accepts = ['application/json'];
+      let returnType = EventoList;
+      return this.apiClient.callApi(
+        '/evento/', 'GET',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, null, callback
+      );
+    }
+
+    /**
+     * Callback function to receive the result of the updateEventoById operation.
+     * @callback module:api/EventosApi~updateEventoByIdCallback
+     * @param {String} error Error message, if any.
+     * @param {module:model/Evento} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Actualizar un donacion
+     * @param {Number} id 
+     * @param {module:model/Evento} payload 
+     * @param {module:api/EventosApi~updateEventoByIdCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link module:model/Evento}
+     */
+    updateEventoById(id, payload, callback) {
+      let postBody = payload;
+      // verify the required parameter 'id' is set
+      if (id === undefined || id === null) {
+        throw new Error("Missing the required parameter 'id' when calling updateEventoById");
+      }
+      // verify the required parameter 'payload' is set
+      if (payload === undefined || payload === null) {
+        throw new Error("Missing the required parameter 'payload' when calling updateEventoById");
+      }
+
+      let pathParams = {
+        'id': id
+      };
+      let queryParams = {
+      };
+      let headerParams = {
+      };
+      let formParams = {
+      };
+
+      let authNames = ['Bearer Auth'];
+      let contentTypes = ['application/json'];
+      let accepts = ['application/json'];
+      let returnType = Evento;
+      return this.apiClient.callApi(
+        '/evento/{id}', 'PUT',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, null, callback
       );

@@ -54,12 +54,14 @@ export const Login = () => {
         </form>
 
         {/* Mensaje debajo */}
-        <p className="text-center mt-3 mb-0">
-          ¿No tienes una cuenta?{" "}
-          <NavLink className="fw-bold text-decoration-none" to="/register">
-            Regístrate
-          </NavLink>
-        </p>
+        {/*        
+          <p className="text-center mt-3 mb-0">
+            ¿No tienes una cuenta?{" "}
+            <NavLink className="fw-bold text-decoration-none" to="/register">
+              Regístrate
+            </NavLink>
+          </p> 
+        */}
       </div>
     </div>
   )

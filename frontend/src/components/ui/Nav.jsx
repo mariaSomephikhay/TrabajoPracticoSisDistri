@@ -29,13 +29,21 @@ export const Nav = () => {
                     Gestión de Usuarios
                   </NavLink>
                 </li>
+              </>
+            )}
+            {isAuthenticated && (userAuthenticated?.rol.descripcion === "PRESIDENTE" || userAuthenticated?.rol.descripcion === "VOCAL") &&(
+              <>
                 <li className="nav-item">
-                  <NavLink className="nav-link text-white" to="#">
+                  <NavLink className="nav-link text-white" to="/donation-inventory">
                     Inventario de donaciones
                   </NavLink>
                 </li>
+              </>
+            )}
+            {isAuthenticated && (userAuthenticated?.rol.descripcion === "PRESIDENTE" || userAuthenticated?.rol.descripcion === "COORDINADOR" || userAuthenticated?.rol.descripcion === "VOLUNTARIO") &&(
+              <>
                 <li className="nav-item">
-                  <NavLink className="nav-link text-white" to="#">
+                  <NavLink className="nav-link text-white" to="/events">
                     Eventos solidarios
                   </NavLink>
                 </li>
