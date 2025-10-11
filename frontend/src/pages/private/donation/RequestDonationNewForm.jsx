@@ -11,6 +11,7 @@ export const RequestDonationNewForm = () => {
   });
   const [solicitud, setSolicitud] = useState({
     id_organizacion_solicitante: 1,
+    id_solicitud_donacion: "",
     donacion: []
   });
 
