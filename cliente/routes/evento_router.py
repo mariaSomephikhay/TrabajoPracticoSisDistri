@@ -11,6 +11,7 @@ api = Namespace("eventos", description="Operaciones de eventos")
 cliente = ManagerServiceImpl()
 
 
+
 #######################################################
 # Definición de modelos para el swagger
 #######################################################

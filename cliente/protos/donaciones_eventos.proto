@@ -115,6 +115,7 @@ message EventoWithAllListDonacionesDetails {
     repeated DonacionesAsociadas listaDonacion = 2;
 }
 
+
 service ManagerService{
   rpc getUserByUsername (UserUsername) returns (Usuario) {};
   rpc getUserById (UserId) returns (Usuario) {};
