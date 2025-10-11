@@ -267,7 +267,11 @@ export const EventUpdateForm = () => {
             <button type="button" className="btn btn-primary" onClick={handleGestionUsuarios}>
               Gestionar usuarios
             </button>
+          </>
+        )}
 
+        {userAuthenticated.rol.descripcion != 'VOLUNTARIO' && (
+          <>
             <button type="button" className="btn btn-primary" onClick={handleGestionDonaciones}>
               Gestionar donaciones
             </button>
