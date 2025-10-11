@@ -57,10 +57,6 @@ public class Donacion {
 	private Usuario usuarioModificacion;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="id_solicitud",nullable=true)
-    private Solicitud solicitud;
-
-    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="id_oferta",nullable=true)
     private Oferta oferta;
 

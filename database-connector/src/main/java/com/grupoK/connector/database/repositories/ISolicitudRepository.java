@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 import java.io.Serializable;
 
 @Repository
-public interface ISolicitudRepository extends JpaRepository<Solicitud, Serializable> {
+public interface ISolicitudRepository extends JpaRepository<Solicitud, Integer> {
 }
