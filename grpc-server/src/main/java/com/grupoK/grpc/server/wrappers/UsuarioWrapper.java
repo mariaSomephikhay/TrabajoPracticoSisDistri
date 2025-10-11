@@ -40,7 +40,8 @@ public class UsuarioWrapper {
     			null, 
     			null,
     			null,
-    			rolWrapper.toEntityRol(userModel.getRol()));
+    			rolWrapper.toEntityRol(userModel.getRol()),
+                null);
     }
     
 }
