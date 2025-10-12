@@ -6,6 +6,11 @@ import json
 from config.security_config import SecurityConfig
 from datetime import datetime
 import random
+from grpc_manager_service import ManagerServiceImpl
+import grpc
+
+api = Namespace("donaciones", description="Operaciones de donaciones")
+cliente = ManagerServiceImpl()
 
 PRODUCER_URL  = config('PRODUCER_URL', cast=str)
 
@@ -28,14 +33,26 @@ donacionDto = api.model("Solicitud.Donacion", {
     "cantidad": fields.Integer(required=True)
 })
 OrganizacionDto =  api.model("Solicitud.OrganizacionDto", {
-        "id": fields.Integer(required=True),
-        "nombre": fields.String(required=True),
-        "externa": fields.Boolean(required=False)
+    "id": fields.Integer(required=True),
+    "nombre": fields.String(required=True),
+    "externa": fields.Boolean(required=False)
 })
 SolicitudDonacionDto = api.model("Solicitud", {
     "id_solicitud_donacion": fields.String(required=True),
     "id_organizacion_solicitante": fields.Integer(required=True),
-    "donacion": fields.List(fields.Nested(donacionDto))
+    "donaciones": fields.List(fields.Nested(donacionDto))
+})
+SolicitudDonacionListDto = api.model("SolicitudList", {
+    "solicitudes": fields.List(fields.Nested(SolicitudDonacionDto))
+})
+SolicitudDonacionGetDto = api.model("SolicitudGet", {
+    "id": fields.String(required=True),
+    "organizacionSolicitante": fields.Nested(OrganizacionDto),
+    "activa": fields.Boolean(required=True),
+    "donaciones": fields.List(fields.Nested(donacionDto))
+})
+SolicitudDonacionGetListDto = api.model("SolicitudGetList", {
+    "solicitudes": fields.List(fields.Nested(SolicitudDonacionGetDto))
 })
 
 #######################################################
@@ -74,3 +91,23 @@ class Solicitud(Resource):
         
         except Exception as e:
             return {"error": str(e)}, 500
+        
+@api.route("/")
+class Solicitud(Resource):
+    @api.doc(security='Bearer Auth')
+    @SecurityConfig.authRequired("PRESIDENTE", "VOCAL")
+    @api.doc(id="getAllRequestDonacion") # Esto define el operationId
+    @api.response(200, "Success", model=SolicitudDonacionGetListDto)
+    @api.response(401, "Unauthorized", model=errorDto)
+    @api.response(500, "Internal server error", model=errorDto)
+    def get(self):
+        """Obtener todos las solicitudes donaciones"""
+        try:
+            result = cliente.getAllSolicitudDonaciones()
+            
+            return json.loads(result), 200
+        except Exception as e:
+            if e.code() == grpc.StatusCode.UNAUTHENTICATED:
+                return  {"error": str(e.details())}, 401
+            else:
+                return {"error": str(e)}, 500

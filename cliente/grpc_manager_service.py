@@ -100,3 +100,8 @@ class ManagerServiceImpl(object):
         request = ParseDict(id, service_pb2.EventoId(), ignore_unknown_fields=True)
         response = self.stub.getEventoWithUsersById(request)
         return MessageToJson(response, preserving_proto_field_name=True)
+    
+    def getAllSolicitudDonaciones(self): 
+        param = service_pb2.Empty() #inicializao param con el valor del mensaje empty
+        response = self.stub.getAllSolicitudDonaciones(param) #llamo al servicio getAllUsers y le paso Empty (param)como esta declarado en el prot 
+        return MessageToJson(response)   
