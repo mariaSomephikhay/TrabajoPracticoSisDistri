@@ -1,3 +1,5 @@
+from decouple import config
+import requests
 from flask import request
 from flask_restx import Namespace, Resource, fields
 from google.protobuf.timestamp_pb2 import Timestamp
@@ -8,6 +10,8 @@ from grpc_manager_service import ManagerServiceImpl
 import grpc
 from datetime import datetime
 import random
+
+PRODUCER_URL  = config('PRODUCER_URL', cast=str)
 
 api = Namespace("eventos", description="Operaciones de eventos")
 cliente = ManagerServiceImpl()
@@ -21,7 +25,10 @@ eventoDto = api.model("Evento", {
     "id": fields.String(required=False),
     "nombre": fields.String(required=True),
     "descripcion": fields.String(required=True),
-    "fecha": fields.DateTime(required=True)
+    "fecha": fields.DateTime(required=True),
+    "idOrganizacion": fields.Integer(required=False),
+    "activo": fields.Boolean(required=False),
+    "publicado": fields.Boolean(required=False)
 })
 categoriaDto = api.model("Evento.Categoria", {
     "id": fields.Integer(required=True),
@@ -74,8 +81,16 @@ eventoUsersDto = api.model("EventoUsersDto", {
     "users": fields.List(fields.Nested(userDto, required=False))
 })
 
-
-
+#######################################################
+# Obetjos de kafka
+#######################################################
+eventoKafka = api.model("eventoKafka", {
+    "id_organizacion": fields.String(required=True),
+    "id_evento": fields.String(required=True),
+    "nombre": fields.String(required=True),
+    "descripcion": fields.String(required=True),
+    "fecha": fields.DateTime(required=True)
+})
 
 #######################################################
 # Definición de endpoints para el swagger
@@ -198,7 +213,16 @@ class EventoList(Resource):
         """Obtener todos los eventos"""
         try:
             result = cliente.getAllEventos()
-            return json.loads(result), 200
+
+            eventos = json.loads(result)
+
+            if eventos.get('eventos'):
+                for evento in eventos['eventos']:
+                    # Lógica para determinar los valores de 'activo' y 'publicado'
+                    evento['activo'] = evento.get('activo', False)  # Si no existe, asignar False
+                    evento['publicado'] = evento.get('publicado', False)  # Lo mismo para 'publicado'
+
+            return eventos, 200
         except Exception as e:
             if e.code() == grpc.StatusCode.UNAUTHENTICATED:
                 return  {"error": str(e.details())}, 401
@@ -335,3 +359,32 @@ class getEventoWithUsersById(Resource):
                 return {"error": str(e.details())}, 401
             else:
                 return {"error": str(e.details())}, 500
+
+# Kafka - Endpoints
+@api.route("/request/new")
+class Solicitud(Resource):
+    @api.doc(security='Bearer Auth')
+    @SecurityConfig.authRequired("PRESIDENTE", "COORDINADOR")
+    @api.doc(id="newRequesEventoKafka") 
+    @api.expect(eventoKafka)
+    @api.response(201, "Created", model=eventoKafka)
+    @api.response(401, "Unauthorized", model=errorDto)
+    @api.response(400, "Bad Request", model=errorDto)
+    @api.response(500, "Internal server error", model=errorDto)
+    def post(self):
+        """Publicar evento en kafka"""
+        try:
+            if not request.is_json:
+                return {"error": "Bad Request"}, 400
+            
+            data = request.get_json()
+
+            # Endpoint del producer en Java
+            url = f"{PRODUCER_URL}/event/request/new"
+            
+            response = requests.post(url, json=data)
+
+            return response.json(), response.status_code
+        
+        except Exception as e:
+            return {"error": str(e)}, 500
