@@ -1,5 +1,7 @@
 package com.grupoK.consumer.modelDto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.*;
 
 @Getter
@@ -9,10 +11,13 @@ import lombok.*;
 @ToString
 
 public class DonacionDto {
-
-    private String categoria;
-
+	
+	@JsonProperty("categoria")
+    private CategoriaDto categoria;
+	
+	@JsonProperty("descripcion")
     private String descripcion;
-
+	
+	@JsonProperty("cantidad")
     private Integer cantidad;
 }

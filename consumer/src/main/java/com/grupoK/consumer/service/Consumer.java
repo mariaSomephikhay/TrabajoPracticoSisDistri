@@ -26,7 +26,7 @@ public class Consumer {
         try {
             SolicitudDto solicitud = objectMapper.readValue(record.value(), SolicitudDto.class); //Proceso el mensaje
 
-            Solicitud request = solicitudService.findById(solicitud.getIdSolicitud());
+            Solicitud request = solicitudService.findById(solicitud.getId());
             List<SolicitudDonacion> donacionesAsociadas = solicitudService.findAllDonationsAssociatedByRequest(request);
             solicitudService.saveOrUpdate(request, donacionesAsociadas);
 
