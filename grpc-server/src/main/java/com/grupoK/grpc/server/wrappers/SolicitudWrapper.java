@@ -2,16 +2,23 @@ package com.grupoK.grpc.server.wrappers;
 
 import java.util.List;
 
-import com.grupoK.connector.database.entities.Solicitud;
-import com.grupoK.connector.database.entities.SolicitudDonacion;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+import com.grupoK.connector.database.entities.Solicitud;
+
+@Component
 public class SolicitudWrapper {
-    /*public com.grupoK.grpc.proto.Rol toGrpcRol(Solicitud solicitud, List<SolicitudDonacion> donaciones) {
-        return com.grupoK.grpc.proto.Solicitud.newBuilder().
-                .setId(rolModel.getId())
-                .setDescripcion(rolModel.getRol().getDescription())
+	
+	@Autowired
+	private OrganizacionWrapper organizacionWrapper;
+	
+    public com.grupoK.grpc.proto.SolicitudDonacion toGrpcSolicitudDonacion(Solicitud solicitud) {
+        return com.grupoK.grpc.proto.SolicitudDonacion.newBuilder()
+        		.setId(solicitud.getId())
+        		.setOrganizacionSolicitante(organizacionWrapper.toGrpcRol(solicitud.getOrganizacionSolicitante()))
                 .build();
-    }*/
+    }
     
 
 }

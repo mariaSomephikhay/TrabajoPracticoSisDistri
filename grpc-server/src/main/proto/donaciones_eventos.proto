@@ -121,16 +121,21 @@ message EventoWithAllListDonacionesDetails {
 
 //------------SOLICITUDES-----------//
 
+message Organizacion {
+    int32 id = 1;
+    string nombre = 2;
+    bool externa = 3;
+}
+
 message SolicitudDonacion {
-    string id_solicitud_donacion = 1;
-    int32 id_organizacion_solicitante= 2;
+    string id = 1;
+    Organizacion organizacionSolicitante= 2;
     DonacionList donaciones = 3;
 }
 
 message ListSolicitudDonacion {
     repeated SolicitudDonacion solicitudes = 1;
 }
-
 
 service ManagerService{
   rpc getUserByUsername (UserUsername) returns (Usuario) {};
