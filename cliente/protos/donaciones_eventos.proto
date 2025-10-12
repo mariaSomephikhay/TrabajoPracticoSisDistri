@@ -72,7 +72,7 @@ message DonacionesAsociadas {
 //------------EVENTO-----------//
 
 message Evento {
-    int32 id = 1;
+    string id = 1;
     string nombre = 2;
     string descripcion = 3;
     google.protobuf.Timestamp fecha = 4;
@@ -80,7 +80,7 @@ message Evento {
 }
 
 message EventoId {
-    int32 id = 1;
+    string id = 1;
 }
 
 message EventoList {
@@ -88,7 +88,7 @@ message EventoList {
 }
 
 message EventoWithListUsers {
-	int32 id = 1;
+	string id = 1;
     repeated UserId usersIds = 2;
 }
 
@@ -98,7 +98,7 @@ message EventoWithListUsersDetails {
 }
 
 message EventoWithListDonaciones {
-	int32 idEvento = 1;
+	string idEvento = 1;
     int32 donacionId = 2;
     int32 cantidad = 3;
     Usuario usuario = 4;
