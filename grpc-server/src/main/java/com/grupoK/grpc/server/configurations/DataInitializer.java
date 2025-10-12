@@ -16,7 +16,7 @@ public class DataInitializer {
 
     @Bean
     CommandLineRunner initData(IOrganizacionRepository orgRepo, ICategoriaRepository cateRepo, IDonacionRepository donacionRepo,
-                                         IUsuarioRepository usuarioRepo, IRolRepository rolRepo, ISolicitudRepository soliRepo) {
+                               IUsuarioRepository usuarioRepo, IRolRepository rolRepo, ISolicitudRepository soliRepo, ISolicitudDonacionRepository soliDonaRepo) {
         return args -> {
             if (rolRepo.count() == 0) {
                 Organizacion organizacionPropia = orgRepo.save(new Organizacion(null, "GrupoK", false));
@@ -44,6 +44,7 @@ public class DataInitializer {
                         presidente,         // rol
                         organizacionPropia  //organizacion
                 ));
+            
 
                 usuarioRepo.save(new Usuario(
                         null,
@@ -92,6 +93,22 @@ public class DataInitializer {
                         coordinador,
                         organizacionExternaDos
                 ));
+                
+                usuarioRepo.save(new Usuario(
+                        null,			   // id
+                        "Kafka",           // username
+                        "$2b$12$4pzYx189NUVwtpsK5uTuUOJR60MhqKZVYjss.2pZPuipv2/P/TwmW", // password(user1)
+                        "Kafka@mail.com",   // email
+                        "Kafka",          // nombre
+                        "Kafka",           // apellido
+                        "9091",      // telefono
+                        true,              // activo
+                        null,			   // lst de evento
+                        null,              // fechaAlta (se genera sola)
+                        null,              // fechaModificacion (se genera sola)
+                        presidente,         // rol
+                        organizacionPropia  //organizacion
+                ));
 
             }
 
@@ -103,9 +120,9 @@ public class DataInitializer {
                 Organizacion organizacionExternaTres = orgRepo.findById(4).get();
 
                 Categoria alimento = cateRepo.save(new Categoria(null, TipoCategoria.ALIMENTO));
-                Categoria juguete = cateRepo.save(new Categoria(null, TipoCategoria.JUGUETE));
+                cateRepo.save(new Categoria(null, TipoCategoria.JUGUETE));
                 cateRepo.save(new Categoria(null, TipoCategoria.ROPA));
-                cateRepo.save(new Categoria(null, TipoCategoria.UTIL_ESCOLAR));
+                Categoria escolar = cateRepo.save(new Categoria(null, TipoCategoria.UTIL_ESCOLAR));
 
                 Usuario usuario = (usuarioRepo.findByUsername("user1")).get();
                 Usuario usuarioExternoUno = (usuarioRepo.findByUsername("user3")).get();
@@ -113,7 +130,7 @@ public class DataInitializer {
 
                 donacionRepo.save(new Donacion(
                         null,	// id
-                        organizacionPropia,
+                        //organizacionPropia,
                         alimento, // categoria
                         "Pure de tomates", // descripcion
                         3, // cantidad
@@ -122,28 +139,26 @@ public class DataInitializer {
                         usuario,
                         null,
                         usuario,
-                        null,
                         null
                 ));
                 donacionRepo.save(new Donacion(
                         null,	// id
-                        organizacionPropia,
-                        juguete, // categoria
-                        "Peluche", // descripcion
+                        ///organizacionPropia,
+                        escolar, // categoria
+                        "Cartuchera", // descripcion
                         2, // cantidad
                         false,   // eliminado
                         null,          // fechaAlta (se genera sola)
                         usuario,
                         null,
                         usuario,
-                        null,
                         null
                 ));
 
 
                 Donacion donacionExternaUno = donacionRepo.save(new Donacion(
                         null,	// id
-                        organizacionExternaUno,
+                        //organizacionExternaUno,
                         cateRepo.findById(3).get(), // categoria
                         "Pantalones", // descripcion
                         10, // cantidad
@@ -152,14 +167,13 @@ public class DataInitializer {
                         usuarioExternoUno,
                         null,
                         usuarioExternoUno,
-                        null,
                         null
                 ));
                 List<Donacion> donacionesExternasDos = donacionRepo.saveAll(
                         Arrays.asList(
                                 new Donacion(
                                         null,	// id
-                                        organizacionExternaDos,
+                                        //organizacionExternaDos,
                                         cateRepo.findById(4).get(), // categoria
                                         "Cartucheras", // descripcion
                                         4, // cantidad
@@ -168,12 +182,11 @@ public class DataInitializer {
                                         usuarioExternoDos,
                                         null,
                                         usuarioExternoDos,
-                                        null,
                                         null
                                 ),
                                 new Donacion(
                                         null,	// id
-                                        organizacionExternaDos,
+                                        //organizacionExternaDos,
                                         cateRepo.findById(1).get(), // categoria
                                         "Carne", // descripcion
                                         8, // cantidad
@@ -182,7 +195,6 @@ public class DataInitializer {
                                         usuarioExternoDos,
                                         null,
                                         usuarioExternoDos,
-                                        null,
                                         null
                                 )
                         )
@@ -203,32 +215,44 @@ public class DataInitializer {
                 List<Solicitud> solicitudes = soliRepo.saveAll(
                         Arrays.asList(
                                 new Solicitud(
-                                        null, // id
+                                        "1", // id
                                         organizacionPropia, // organizacion solicitante
-                                        organizacionExternaDos, // organizacion donante
-                                        Arrays.asList(donacionExternaDos, donacionExternaTres), // donaciones (tienen que ser de una sola organizacion y distintas a la de la organizacion solicitante)
+                                        //organizacionExternaDos, // organizacion donante
+                                        true, // activa
                                         false, // procesada
                                         null  // fechaAlta (se genera sola)
                                 ),
                                 new Solicitud(
-                                        null, // id
+                                        "2", // id
                                         organizacionExternaTres, // organizacion solicitante
-                                        organizacionExternaUno, // organizacion donante
-                                        Arrays.asList(donacionExternaUno), // donaciones (tienen que ser de una sola organizacion y distintas a la de la organizacion solicitante)
+                                        //organizacionExternaUno, // organizacion donante
+                                        true, // activa
                                         false, // procesada
                                         null  // fechaAlta (se genera sola)
                                 )
                         ));
 
-                donacionExternaUno.setSolicitud(solicitudes.get(1));
-                donacionRepo.save(donacionExternaUno);
-                donacionExternaDos.setSolicitud(solicitudes.get(0));
-                donacionRepo.save(donacionExternaDos);
-                donacionExternaTres.setSolicitud(solicitudes.get(0));
-                donacionRepo.save(donacionExternaTres);
+                soliDonaRepo.saveAll(Arrays.asList(
+                        new SolicitudDonacion(
+                                null,
+                                solicitudes.get(0),
+                                donacionExternaDos//,
+                                //1
+                        ),
+                        new SolicitudDonacion(
+                                null,
+                                solicitudes.get(0),
+                                donacionExternaTres//,
+                                //2
+                        ),
+                        new SolicitudDonacion(
+                                null,
+                                solicitudes.get(1),
+                                donacionExternaUno//,
+                                //2
+                        )
+                ));
             }
         };
     }
-
-
 }

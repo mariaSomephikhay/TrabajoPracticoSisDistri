@@ -16,11 +16,13 @@ import ApiClient from './ApiClient';
 import Categoria from './model/Categoria';
 import Donacion from './model/Donacion';
 import DonacionList from './model/DonacionList';
+import DonacionTransferencia from './model/DonacionTransferencia';
 import Error from './model/Error';
 import Evento from './model/Evento';
 import EventoCategoria from './model/EventoCategoria';
 import EventoDonacion from './model/EventoDonacion';
 import EventoDonacionObjeto from './model/EventoDonacionObjeto';
+import EventoDonacionReq from './model/EventoDonacionReq';
 import EventoList from './model/EventoList';
 import EventoListaDonacion from './model/EventoListaDonacion';
 import EventoRol from './model/EventoRol';
@@ -29,11 +31,18 @@ import EventoUsersListDto from './model/EventoUsersListDto';
 import EventoUsuario from './model/EventoUsuario';
 import Login from './model/Login';
 import Rol from './model/Rol';
+import Solicitud from './model/Solicitud';
+import SolicitudCategoria from './model/SolicitudCategoria';
+import SolicitudDonacion from './model/SolicitudDonacion';
+import SolicitudError from './model/SolicitudError';
 import Token from './model/Token';
+import Transferencia from './model/Transferencia';
 import Usuario from './model/Usuario';
 import UsuarioList from './model/UsuarioList';
 import DonacionesApi from './api/DonacionesApi';
 import EventosApi from './api/EventosApi';
+import SolicitudesApi from './api/SolicitudesApi';
+import TransferenciasApi from './api/TransferenciasApi';
 import UserApi from './api/UserApi';
 
 
@@ -94,6 +103,12 @@ export {
     DonacionList,
 
     /**
+     * The DonacionTransferencia model constructor.
+     * @property {module:model/DonacionTransferencia}
+     */
+    DonacionTransferencia,
+
+    /**
      * The Error model constructor.
      * @property {module:model/Error}
      */
@@ -122,6 +137,12 @@ export {
      * @property {module:model/EventoDonacionObjeto}
      */
     EventoDonacionObjeto,
+
+    /**
+     * The EventoDonacionReq model constructor.
+     * @property {module:model/EventoDonacionReq}
+     */
+    EventoDonacionReq,
 
     /**
      * The EventoList model constructor.
@@ -172,10 +193,40 @@ export {
     Rol,
 
     /**
+     * The Solicitud model constructor.
+     * @property {module:model/Solicitud}
+     */
+    Solicitud,
+
+    /**
+     * The SolicitudCategoria model constructor.
+     * @property {module:model/SolicitudCategoria}
+     */
+    SolicitudCategoria,
+
+    /**
+     * The SolicitudDonacion model constructor.
+     * @property {module:model/SolicitudDonacion}
+     */
+    SolicitudDonacion,
+
+    /**
+     * The SolicitudError model constructor.
+     * @property {module:model/SolicitudError}
+     */
+    SolicitudError,
+
+    /**
      * The Token model constructor.
      * @property {module:model/Token}
      */
     Token,
+
+    /**
+     * The Transferencia model constructor.
+     * @property {module:model/Transferencia}
+     */
+    Transferencia,
 
     /**
      * The Usuario model constructor.
@@ -200,6 +251,18 @@ export {
     * @property {module:api/EventosApi}
     */
     EventosApi,
+
+    /**
+    * The SolicitudesApi service constructor.
+    * @property {module:api/SolicitudesApi}
+    */
+    SolicitudesApi,
+
+    /**
+    * The TransferenciasApi service constructor.
+    * @property {module:api/TransferenciasApi}
+    */
+    TransferenciasApi,
 
     /**
     * The UserApi service constructor.

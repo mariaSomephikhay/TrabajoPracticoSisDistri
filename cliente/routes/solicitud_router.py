@@ -4,6 +4,8 @@ from flask import request
 from flask_restx import Namespace, Resource, fields
 import json
 from config.security_config import SecurityConfig
+from datetime import datetime
+import random
 
 PRODUCER_URL  = config('PRODUCER_URL', cast=str)
 
@@ -19,20 +21,21 @@ categoriaDto = api.model("Solicitud.Categoria", {
     "id": fields.Integer(required=True),
     "descripcion": fields.String(required=True)
 })
-DonacionCortaDto =  api.model("Solicitud.DonacionCortaDto", {
-        "id": fields.Integer(required=True),
-        "descripcion": fields.String(required=True),
-        "categoria": fields.Nested(categoriaDto, required=True)
+donacionDto = api.model("Solicitud.Donacion", {
+    "id": fields.Integer(required=False),
+    "categoria": fields.Nested(categoriaDto, required=True),
+    "descripcion": fields.String(required=True),
+    "cantidad": fields.Integer(required=True)
 })
 OrganizacionDto =  api.model("Solicitud.OrganizacionDto", {
         "id": fields.Integer(required=True),
         "nombre": fields.String(required=True),
         "externa": fields.Boolean(required=False)
 })
-SolicitudDonacionDto = api.model("Transferencia", {
-    "id_solicitud_donacion": fields.Integer(required=True),
+SolicitudDonacionDto = api.model("Solicitud", {
+    "id_solicitud_donacion": fields.String(required=True),
     "id_organizacion_solicitante": fields.Integer(required=True),
-    "donacion": fields.Nested(DonacionCortaDto)
+    "donacion": fields.List(fields.Nested(donacionDto))
 })
 
 #######################################################
@@ -41,10 +44,10 @@ SolicitudDonacionDto = api.model("Transferencia", {
 
 # Kafka - Endpoints
 @api.route("/donacion/new")
-class Transferencia(Resource):
+class Solicitud(Resource):
     @api.doc(security='Bearer Auth')
-    #@SecurityConfig.authRequired("PRESIDENTE", "VOCAL")
-    @api.doc(id="newRequest") # Esto define el operationId
+    @SecurityConfig.authRequired("PRESIDENTE", "VOCAL")
+    @api.doc(id="newRequestDonacion") # Esto define el operationId
     @api.expect(SolicitudDonacionDto) #Request
     @api.response(201, "Created", model=SolicitudDonacionDto)
     @api.response(401, "Unauthorized", model=errorDto)
@@ -57,6 +60,11 @@ class Transferencia(Resource):
                 return {"error": "Bad Request"}, 400
             
             data = request.get_json()
+
+            # Generar ID único tipo GK-fechahora-random4digitos
+            fecha_hora = datetime.now().strftime("%Y%m%d%H%M%S")
+            random_digits = f"{random.randint(0, 9999):04}"
+            data["id_solicitud_donacion"] = f"GK-{fecha_hora}-{random_digits}"
 
             # Endpoint del producer en Java
             url = f"{PRODUCER_URL}/donation/request/new"
