@@ -1,4 +1,5 @@
 com\grupoK\connector\database\entities\Organizacion.class
+com\grupoK\connector\database\entities\SolicitudDonacion.class
 com\grupoK\connector\database\configuration\DatabaseConfiguration.class
 com\grupoK\connector\database\repositories\ICategoriaRepository.class
 com\grupoK\connector\database\serviceImp\EventoDonacionService.class
@@ -7,6 +8,9 @@ com\grupoK\connector\database\service\IEventoService.class
 com\grupoK\connector\database\repositories\IEventoDonacionRepository.class
 com\grupoK\connector\database\repositories\IOrganizacionRepository.class
 com\grupoK\connector\database\exceptions\UserNotFoundException.class
+com\grupoK\connector\database\service\IOrganizacionService.class
+com\grupoK\connector\database\serviceImp\OrganizacionService.class
+com\grupoK\connector\database\repositories\ISolicitudDonacionRepository.class
 com\grupoK\connector\database\configuration\annotations\GrpcServerAnnotation.class
 com\grupoK\connector\database\repositories\IOfertaRepository.class
 com\grupoK\connector\database\configuration\annotations\ConsumerServerAnnotation.class
@@ -15,6 +19,7 @@ com\grupoK\connector\database\entities\Solicitud.class
 com\grupoK\connector\database\service\IEventoDonacionService.class
 com\grupoK\connector\database\entities\enums\TipoCategoria.class
 com\grupoK\connector\database\repositories\ISolicitudRepository.class
+com\grupoK\connector\database\service\ISolicitudService.class
 com\grupoK\connector\database\entities\EventoDonacion.class
 com\grupoK\connector\database\entities\Donacion.class
 com\grupoK\connector\database\service\IUsuarioService.class
@@ -29,6 +34,7 @@ com\grupoK\connector\database\repositories\IDonacionRepository.class
 com\grupoK\connector\database\exceptions\UserEmailAlreadyExistsException.class
 com\grupoK\connector\database\repositories\IEventoRepository.class
 com\grupoK\connector\database\entities\Oferta.class
+com\grupoK\connector\database\serviceImp\SolicitudService.class
 com\grupoK\connector\database\serviceImp\EventoService.class
 com\grupoK\connector\database\entities\Rol.class
 com\grupoK\connector\database\repositories\IRolRepository.class
