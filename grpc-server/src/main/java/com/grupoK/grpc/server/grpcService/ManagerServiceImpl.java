@@ -7,6 +7,8 @@ import java.util.stream.Collectors;
 import com.grupoK.connector.database.entities.Donacion;
 import com.grupoK.connector.database.entities.Evento;
 import com.grupoK.connector.database.entities.EventoDonacion;
+import com.grupoK.connector.database.entities.Solicitud;
+import com.grupoK.connector.database.entities.SolicitudDonacion;
 import com.grupoK.connector.database.entities.Usuario;
 import com.grupoK.connector.database.exceptions.UserEmailAlreadyExistsException;
 import com.grupoK.connector.database.exceptions.UserNotFoundException;
@@ -14,6 +16,7 @@ import com.grupoK.connector.database.exceptions.UserUsernameAlreadyExistsExcepti
 import com.grupoK.connector.database.serviceImp.DonacionService;
 import com.grupoK.connector.database.serviceImp.EventoDonacionService;
 import com.grupoK.connector.database.serviceImp.EventoService;
+import com.grupoK.connector.database.serviceImp.SolicitudService;
 import com.grupoK.connector.database.serviceImp.UsuarioService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +24,7 @@ import org.springframework.grpc.server.service.GrpcService;
 
 import com.grupoK.grpc.server.wrappers.DonacionWrapper;
 import com.grupoK.grpc.server.wrappers.EventoWrapper;
+import com.grupoK.grpc.server.wrappers.SolicitudWrapper;
 import com.grupoK.grpc.server.wrappers.UsuarioWrapper;
 import com.grupoK.grpc.proto.DonacionId;
 import com.grupoK.grpc.proto.DonacionIdUsu;
@@ -32,11 +36,11 @@ import com.grupoK.grpc.proto.EventoList;
 import com.grupoK.grpc.proto.EventoWithAllListDonacionesDetails;
 import com.grupoK.grpc.proto.EventoWithListDonacionesDetails;
 import com.grupoK.grpc.proto.EventoWithListUsersDetails;
+import com.grupoK.grpc.proto.ListSolicitudDonacion;
 import com.grupoK.grpc.proto.ManagerServiceGrpc;
 import com.grupoK.grpc.proto.UserId;
 import com.grupoK.grpc.proto.UserUsername;
 import com.grupoK.grpc.proto.UsuarioList;
-
 import io.grpc.stub.StreamObserver;
 
 @GrpcService
@@ -59,6 +63,12 @@ public class ManagerServiceImpl extends ManagerServiceGrpc.ManagerServiceImplBas
 	
 	@Autowired
 	private EventoDonacionService eventoDonacionService;
+	
+	@Autowired
+	private SolicitudService solicitudService;
+	
+	@Autowired
+	private SolicitudWrapper solicitudWrapper;
 	
 	@Override
 	public void getUserById(UserId request, StreamObserver<com.grupoK.grpc.proto.Usuario> responseObserver) {
@@ -406,10 +416,48 @@ public class ManagerServiceImpl extends ManagerServiceGrpc.ManagerServiceImplBas
 		}
 
 		
-		/*@Override
-		
-		public ListSolicitudDonacion getAllSolicitudDonaciones() {
-			return null;
-		}*/
+		@Override
+		public void getAllSolicitudDonaciones(Empty request, StreamObserver<ListSolicitudDonacion> responseObserver) {
+			
+			try {
+				List<Solicitud> solicitudes = solicitudService.findAll();
+			
+			/*ListSolicitudDonacion response = ListSolicitudDonacion.newBuilder()
+					.addAllSolicitudes(solicitudes.stream()
+	                		.map(solicitud -> solicitudWrapper.toGrpcSolicitudDonacion(solicitud, solicitudService.findAllDonationsAssociatedByRequest(solicitud)))
+	                .build();
+	                */
+				
+				ListSolicitudDonacion response = ListSolicitudDonacion.newBuilder()
+					    .addAllSolicitudes(solicitudes.stream()
+					            .map(solicitud -> {
+					                try {
+					                    // Obtener donaciones asociadas a esta solicitud
+					                    List<SolicitudDonacion> donationsAssociated =
+					                        solicitudService.findAllDonationsAssociatedByRequest(solicitud);
+					                    
+					                    List<Donacion> donaciones = donationsAssociated.stream()
+					                            .map(SolicitudDonacion::getDonacion)
+					                            .toList();
+					                    // Mapear a gRPC usando el wrapper
+					                    return solicitudWrapper.toGrpcSolicitudDonacion(solicitud, donaciones);
+					                }catch (Exception e) {
+					                	throw new RuntimeException("Error al obtener donaciones asociadas: " + e.getMessage(), e);
+					    			}
+					         
+					            })
+					            .toList()
+					    )
+					    .build();
+			System.out.println(response);	
+	        responseObserver.onNext(response);
+	        responseObserver.onCompleted();
+	        
+			}catch (Exception e) {
+				responseObserver.onError(io.grpc.Status.INTERNAL
+		                .withDescription("Internal server error: " + e.getMessage())
+		                .asRuntimeException());
+			}
+		}
 
 }
