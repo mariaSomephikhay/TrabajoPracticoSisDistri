@@ -1,8 +1,12 @@
 syntax = "proto3";
 
 package managerservice;
+option  java_multiple_files=true;
+option java_package="com.grupoK.grpc.proto";
+option  java_outer_classname="ManagerServiceProto";
 
 import "google/protobuf/timestamp.proto";
+
 
 //PARA CUANDO ES NULO
 message Empty{}
@@ -115,6 +119,18 @@ message EventoWithAllListDonacionesDetails {
     repeated DonacionesAsociadas listaDonacion = 2;
 }
 
+//------------SOLICITUDES-----------//
+
+message SolicitudDonacion {
+    string id_solicitud_donacion = 1;
+    int32 id_organizacion_solicitante= 2;
+    DonacionList donaciones = 3;
+}
+
+message ListSolicitudDonacion {
+    repeated SolicitudDonacion solicitudes = 1;
+}
+
 
 service ManagerService{
   rpc getUserByUsername (UserUsername) returns (Usuario) {};
@@ -137,5 +153,7 @@ service ManagerService{
   rpc getEventoWithUsersById (EventoId) returns (EventoWithListUsersDetails) {};
   rpc getEventoWithDonacionesById (EventoId) returns (EventoWithAllListDonacionesDetails) {};
   
+  //------------SOLICITUDES-----------//
+  rpc getAllSolicitudDonaciones(Empty) returns (ListSolicitudDonacion) {};  
   //AGREGAR ACA TODOS LOS SERVICIOS
 }
