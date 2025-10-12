@@ -52,4 +52,14 @@ public class Evento {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="id_usuario_alta",nullable=false)
 	private Usuario idUsuarioAlta;
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="id_organizacion",nullable=false)
+    private Organizacion organizacion;
+	
+	@Column(name="activo", nullable=false)
+	private Boolean activo;
+	
+	@Column(name="publicado", nullable=false)
+	private Boolean publicado;
 }
