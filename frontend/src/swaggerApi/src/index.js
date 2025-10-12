@@ -23,6 +23,7 @@ import EventoCategoria from './model/EventoCategoria';
 import EventoDonacion from './model/EventoDonacion';
 import EventoDonacionObjeto from './model/EventoDonacionObjeto';
 import EventoDonacionReq from './model/EventoDonacionReq';
+import EventoKafka from './model/EventoKafka';
 import EventoList from './model/EventoList';
 import EventoListaDonacion from './model/EventoListaDonacion';
 import EventoRol from './model/EventoRol';
@@ -146,6 +147,12 @@ export {
      * @property {module:model/EventoDonacionReq}
      */
     EventoDonacionReq,
+
+    /**
+     * The EventoKafka model constructor.
+     * @property {module:model/EventoKafka}
+     */
+    EventoKafka,
 
     /**
      * The EventoList model constructor.

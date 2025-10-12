@@ -41,6 +41,27 @@ export const EventList = () => {
     setShowModal(true) 
   }
 
+  const handlePublicarEvento = async (event) => {
+  console.log("Publicar evento: ", event);
+  try {
+    EventService.enviarNotifiacionKafka(event);
+
+    const updatedEvent = { ...event, publicado: true };
+
+    await EventService.modificarEvento(event.id, updatedEvent);
+
+    setEvents((prevEvents) =>
+      prevEvents.map((ev) =>
+        ev.id === event.id ? updatedEvent : ev
+      )
+    );
+  } catch (error) {
+    console.error(error);
+    alert("Error al crear la solicitud de donacion");
+  }
+};
+
+
   const handleDeleteEvent = async () => {
   try {
     await EventService.eliminarEvento(eventSelected.id);
@@ -80,12 +101,20 @@ export const EventList = () => {
           { key: "nombre", header: "Nombre" },
           { key: "descripcion", header: "Descripción" },
           { key: "fecha", header: "Fecha Evento", render: (value) => value.toLocaleString(),},
+          { key: "idOrganizacion", header: "Tipo evento", render: (value) => ( <span style={{ color: value !== 1 ? "red" : "green", fontWeight: "bold" }}> {value !== 1 ? "Externo" : "Propio"}</span>),},
         ]}
         data={events}
         actions={
             [
-              { label: "Editar", icon: editIcon, onClick: (u) => handleEditEvent(u.id) },
-              { label: "Eliminar", icon: deleteIcon, onClick: (u) => handleDeleteEventOnClick(u) },
+              { label: "Editar", icon: editIcon,show: (u) => u.idOrganizacion === 1, onClick: (u) => handleEditEvent(u.id) },
+              { label: "Eliminar", icon: deleteIcon, show: (u) => u.idOrganizacion === 1, onClick: (u) => handleDeleteEventOnClick(u) },
+              {
+                label: "Publicar",
+                icon: null,
+                show: (u) => u.publicado === false && u.idOrganizacion === 1,
+                onClick: (u) => handlePublicarEvento(u),
+              }
+
             ]
           
         }

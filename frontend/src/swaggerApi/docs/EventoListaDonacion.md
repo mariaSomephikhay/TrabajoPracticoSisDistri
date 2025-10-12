@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**idEvento** | **Number** |  | [optional] 
+**idEvento** | **String** |  | [optional] 
 **listaDonacion** | [**[EventoDonacion]**](EventoDonacion.md) | Lista de las donaciones | 
 
 

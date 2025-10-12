@@ -12,7 +12,8 @@ Method | HTTP request | Description
 [**insertDonacionesToEvento**](EventosApi.md#insertDonacionesToEvento) | **PUT** /evento/{id}/donaciones/add | Agregar donaciones al evento
 [**insertUsersToEvento**](EventosApi.md#insertUsersToEvento) | **PUT** /evento/{id}/users/add | Agregar usuarios a un evento
 [**listEventos**](EventosApi.md#listEventos) | **GET** /evento/ | Obtener todos los eventos
-[**updateEventoById**](EventosApi.md#updateEventoById) | **PUT** /evento/{id} | Actualizar un donacion
+[**newRequesEventoKafka**](EventosApi.md#newRequesEventoKafka) | **POST** /evento/request/new | Publicar evento en kafka
+[**updateEventoById**](EventosApi.md#updateEventoById) | **PUT** /evento/{id} | Actualizar un evento
 
 
 
@@ -83,7 +84,7 @@ Bearer Auth.apiKey = 'YOUR API KEY';
 //Bearer Auth.apiKeyPrefix = 'Token';
 
 let apiInstance = new ApiDocumentada.EventosApi();
-let id = 56; // Number | 
+let id = "id_example"; // String | 
 apiInstance.deleteEventById(id, (error, data, response) => {
   if (error) {
     console.error(error);
@@ -98,7 +99,7 @@ apiInstance.deleteEventById(id, (error, data, response) => {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **Number**|  | 
+ **id** | **String**|  | 
 
 ### Return type
 
@@ -132,7 +133,7 @@ Bearer Auth.apiKey = 'YOUR API KEY';
 //Bearer Auth.apiKeyPrefix = 'Token';
 
 let apiInstance = new ApiDocumentada.EventosApi();
-let id = 56; // Number | 
+let id = "id_example"; // String | 
 apiInstance.getEventoById(id, (error, data, response) => {
   if (error) {
     console.error(error);
@@ -147,7 +148,7 @@ apiInstance.getEventoById(id, (error, data, response) => {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **Number**|  | 
+ **id** | **String**|  | 
 
 ### Return type
 
@@ -181,7 +182,7 @@ Bearer Auth.apiKey = 'YOUR API KEY';
 //Bearer Auth.apiKeyPrefix = 'Token';
 
 let apiInstance = new ApiDocumentada.EventosApi();
-let id = 56; // Number | 
+let id = "id_example"; // String | 
 apiInstance.getEventoWithDonacionesById(id, (error, data, response) => {
   if (error) {
     console.error(error);
@@ -196,7 +197,7 @@ apiInstance.getEventoWithDonacionesById(id, (error, data, response) => {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **Number**|  | 
+ **id** | **String**|  | 
 
 ### Return type
 
@@ -230,7 +231,7 @@ Bearer Auth.apiKey = 'YOUR API KEY';
 //Bearer Auth.apiKeyPrefix = 'Token';
 
 let apiInstance = new ApiDocumentada.EventosApi();
-let id = 56; // Number | 
+let id = "id_example"; // String | 
 apiInstance.getEventoWithUsersById(id, (error, data, response) => {
   if (error) {
     console.error(error);
@@ -245,7 +246,7 @@ apiInstance.getEventoWithUsersById(id, (error, data, response) => {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **Number**|  | 
+ **id** | **String**|  | 
 
 ### Return type
 
@@ -279,7 +280,7 @@ Bearer Auth.apiKey = 'YOUR API KEY';
 //Bearer Auth.apiKeyPrefix = 'Token';
 
 let apiInstance = new ApiDocumentada.EventosApi();
-let id = 56; // Number | 
+let id = "id_example"; // String | 
 let payload = new ApiDocumentada.EventoDonacionReq(); // EventoDonacionReq | 
 apiInstance.insertDonacionesToEvento(id, payload, (error, data, response) => {
   if (error) {
@@ -295,7 +296,7 @@ apiInstance.insertDonacionesToEvento(id, payload, (error, data, response) => {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **Number**|  | 
+ **id** | **String**|  | 
  **payload** | [**EventoDonacionReq**](EventoDonacionReq.md)|  | 
 
 ### Return type
@@ -330,7 +331,7 @@ Bearer Auth.apiKey = 'YOUR API KEY';
 //Bearer Auth.apiKeyPrefix = 'Token';
 
 let apiInstance = new ApiDocumentada.EventosApi();
-let id = 56; // Number | 
+let id = "id_example"; // String | 
 let payload = new ApiDocumentada.EventoUsersListDto(); // EventoUsersListDto | 
 apiInstance.insertUsersToEvento(id, payload, (error, data, response) => {
   if (error) {
@@ -346,7 +347,7 @@ apiInstance.insertUsersToEvento(id, payload, (error, data, response) => {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **Number**|  | 
+ **id** | **String**|  | 
  **payload** | [**EventoUsersListDto**](EventoUsersListDto.md)|  | 
 
 ### Return type
@@ -408,11 +409,11 @@ This endpoint does not need any parameter.
 - **Accept**: application/json
 
 
-## updateEventoById
+## newRequesEventoKafka
 
-> Evento updateEventoById(id, payload)
+> EventoKafka newRequesEventoKafka(payload)
 
-Actualizar un donacion
+Publicar evento en kafka
 
 ### Example
 
@@ -426,7 +427,56 @@ Bearer Auth.apiKey = 'YOUR API KEY';
 //Bearer Auth.apiKeyPrefix = 'Token';
 
 let apiInstance = new ApiDocumentada.EventosApi();
-let id = 56; // Number | 
+let payload = new ApiDocumentada.EventoKafka(); // EventoKafka | 
+apiInstance.newRequesEventoKafka(payload, (error, data, response) => {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+});
+```
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **payload** | [**EventoKafka**](EventoKafka.md)|  | 
+
+### Return type
+
+[**EventoKafka**](EventoKafka.md)
+
+### Authorization
+
+[Bearer Auth](../README.md#Bearer Auth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+
+## updateEventoById
+
+> Evento updateEventoById(id, payload)
+
+Actualizar un evento
+
+### Example
+
+```javascript
+import ApiDocumentada from 'api_documentada';
+let defaultClient = ApiDocumentada.ApiClient.instance;
+// Configure API key authorization: Bearer Auth
+let Bearer Auth = defaultClient.authentications['Bearer Auth'];
+Bearer Auth.apiKey = 'YOUR API KEY';
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//Bearer Auth.apiKeyPrefix = 'Token';
+
+let apiInstance = new ApiDocumentada.EventosApi();
+let id = "id_example"; // String | 
 let payload = new ApiDocumentada.Evento(); // Evento | 
 apiInstance.updateEventoById(id, payload, (error, data, response) => {
   if (error) {
@@ -442,7 +492,7 @@ apiInstance.updateEventoById(id, payload, (error, data, response) => {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **Number**|  | 
+ **id** | **String**|  | 
  **payload** | [**Evento**](Evento.md)|  | 
 
 ### Return type

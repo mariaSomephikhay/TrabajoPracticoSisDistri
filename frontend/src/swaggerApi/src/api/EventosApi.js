@@ -16,6 +16,7 @@ import ApiClient from "../ApiClient";
 import Error from '../model/Error';
 import Evento from '../model/Evento';
 import EventoDonacionReq from '../model/EventoDonacionReq';
+import EventoKafka from '../model/EventoKafka';
 import EventoList from '../model/EventoList';
 import EventoListaDonacion from '../model/EventoListaDonacion';
 import EventoUsersDto from '../model/EventoUsersDto';
@@ -91,7 +92,7 @@ export default class EventosApi {
 
     /**
      * Eliminar evento
-     * @param {Number} id 
+     * @param {String} id 
      * @param {module:api/EventosApi~deleteEventByIdCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/Evento}
      */
@@ -133,7 +134,7 @@ export default class EventosApi {
 
     /**
      * Obtener Evento
-     * @param {Number} id 
+     * @param {String} id 
      * @param {module:api/EventosApi~getEventoByIdCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/Evento}
      */
@@ -175,7 +176,7 @@ export default class EventosApi {
 
     /**
      * Obtener donaciones del evento
-     * @param {Number} id 
+     * @param {String} id 
      * @param {module:api/EventosApi~getEventoWithDonacionesByIdCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/EventoListaDonacion}
      */
@@ -217,7 +218,7 @@ export default class EventosApi {
 
     /**
      * Obtener usuarios del evento
-     * @param {Number} id 
+     * @param {String} id 
      * @param {module:api/EventosApi~getEventoWithUsersByIdCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/EventoUsersDto}
      */
@@ -259,7 +260,7 @@ export default class EventosApi {
 
     /**
      * Agregar donaciones al evento
-     * @param {Number} id 
+     * @param {String} id 
      * @param {module:model/EventoDonacionReq} payload 
      * @param {module:api/EventosApi~insertDonacionesToEventoCallback} callback The callback function, accepting three arguments: error, data, response
      */
@@ -305,7 +306,7 @@ export default class EventosApi {
 
     /**
      * Agregar usuarios a un evento
-     * @param {Number} id 
+     * @param {String} id 
      * @param {module:model/EventoUsersListDto} payload 
      * @param {module:api/EventosApi~insertUsersToEventoCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/EventoUsersDto}
@@ -379,6 +380,47 @@ export default class EventosApi {
     }
 
     /**
+     * Callback function to receive the result of the newRequesEventoKafka operation.
+     * @callback module:api/EventosApi~newRequesEventoKafkaCallback
+     * @param {String} error Error message, if any.
+     * @param {module:model/EventoKafka} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Publicar evento en kafka
+     * @param {module:model/EventoKafka} payload 
+     * @param {module:api/EventosApi~newRequesEventoKafkaCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link module:model/EventoKafka}
+     */
+    newRequesEventoKafka(payload, callback) {
+      let postBody = payload;
+      // verify the required parameter 'payload' is set
+      if (payload === undefined || payload === null) {
+        throw new Error("Missing the required parameter 'payload' when calling newRequesEventoKafka");
+      }
+
+      let pathParams = {
+      };
+      let queryParams = {
+      };
+      let headerParams = {
+      };
+      let formParams = {
+      };
+
+      let authNames = ['Bearer Auth'];
+      let contentTypes = ['application/json'];
+      let accepts = ['application/json'];
+      let returnType = EventoKafka;
+      return this.apiClient.callApi(
+        '/evento/request/new', 'POST',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, null, callback
+      );
+    }
+
+    /**
      * Callback function to receive the result of the updateEventoById operation.
      * @callback module:api/EventosApi~updateEventoByIdCallback
      * @param {String} error Error message, if any.
@@ -387,8 +429,8 @@ export default class EventosApi {
      */
 
     /**
-     * Actualizar un donacion
-     * @param {Number} id 
+     * Actualizar un evento
+     * @param {String} id 
      * @param {module:model/Evento} payload 
      * @param {module:api/EventosApi~updateEventoByIdCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/Evento}
