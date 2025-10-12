@@ -12,6 +12,7 @@ import com.grupoK.connector.database.entities.Evento;
 import com.grupoK.connector.database.serviceImp.EventoService;
 import com.grupoK.connector.database.serviceImp.OrganizacionService;
 import com.grupoK.connector.database.serviceImp.UsuarioService;
+import com.grupoK.consumer.modelDto.EventoBajaDto;
 import com.grupoK.consumer.modelDto.EventoDto;
 
 @Service
@@ -26,7 +27,7 @@ public class ConsumerEvento {
 	private UsuarioService usuarioService;
 	
 	@KafkaListener(topicPattern = "_eventos-solidarios_", groupId = "grupo_k")
-	public void consumeSolicitud(ConsumerRecord<String, String> record) {
+	public void consumeEvento(ConsumerRecord<String, String> record) {
 	    System.out.println("Transferencia recibida desde " + record.topic());
 	    System.out.println("Contenido: " + record.value());
 
@@ -53,6 +54,26 @@ public class ConsumerEvento {
 	            eventoService.saveOrUpdate(entityEvento);
 	        } else {
 	            System.out.println("Evento de nuestra organizacion, no se guarda idEvento " + evento.getId());
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	}
+	
+	@KafkaListener(topicPattern = "_baja-evento-solidario_", groupId = "grupo_k")
+	public void consumeBajaEvento(ConsumerRecord<String, String> record) {
+	    System.out.println("Transferencia recibida desde " + record.topic());
+	    System.out.println("Contenido: " + record.value());
+
+	    ObjectMapper objectMapper = new ObjectMapper();
+
+	    try {
+	    	EventoBajaDto evento = objectMapper.readValue(record.value(), EventoBajaDto.class);
+
+	        if (!evento.getIdOrganizacion().equals("1")) {
+	        	eventoService.detele(eventoService.findById(evento.getId()));
+	        } else {
+	            System.out.println("Evento de nuestra organizacion, no se elimina idEvento " + evento.getId());
 	        }
 	    } catch (Exception e) {
 	        e.printStackTrace();
