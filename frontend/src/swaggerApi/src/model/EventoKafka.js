@@ -14,21 +14,23 @@
 import ApiClient from '../ApiClient';
 
 /**
- * The Evento model module.
- * @module model/Evento
+ * The EventoKafka model module.
+ * @module model/EventoKafka
  * @version 1.0
  */
-class Evento {
+class EventoKafka {
     /**
-     * Constructs a new <code>Evento</code>.
-     * @alias module:model/Evento
+     * Constructs a new <code>EventoKafka</code>.
+     * @alias module:model/EventoKafka
+     * @param idOrganizacion {String} 
+     * @param idEvento {String} 
      * @param nombre {String} 
      * @param descripcion {String} 
      * @param fecha {Date} 
      */
-    constructor(nombre, descripcion, fecha) { 
+    constructor(idOrganizacion, idEvento, nombre, descripcion, fecha) { 
         
-        Evento.initialize(this, nombre, descripcion, fecha);
+        EventoKafka.initialize(this, idOrganizacion, idEvento, nombre, descripcion, fecha);
     }
 
     /**
@@ -36,25 +38,30 @@ class Evento {
      * This method is used by the constructors of any subclasses, in order to implement multiple inheritance (mix-ins).
      * Only for internal use.
      */
-    static initialize(obj, nombre, descripcion, fecha) { 
+    static initialize(obj, idOrganizacion, idEvento, nombre, descripcion, fecha) { 
+        obj['id_organizacion'] = idOrganizacion;
+        obj['id_evento'] = idEvento;
         obj['nombre'] = nombre;
         obj['descripcion'] = descripcion;
         obj['fecha'] = fecha;
     }
 
     /**
-     * Constructs a <code>Evento</code> from a plain JavaScript object, optionally creating a new instance.
+     * Constructs a <code>EventoKafka</code> from a plain JavaScript object, optionally creating a new instance.
      * Copies all relevant properties from <code>data</code> to <code>obj</code> if supplied or a new instance if not.
      * @param {Object} data The plain JavaScript object bearing properties of interest.
-     * @param {module:model/Evento} obj Optional instance to populate.
-     * @return {module:model/Evento} The populated <code>Evento</code> instance.
+     * @param {module:model/EventoKafka} obj Optional instance to populate.
+     * @return {module:model/EventoKafka} The populated <code>EventoKafka</code> instance.
      */
     static constructFromObject(data, obj) {
         if (data) {
-            obj = obj || new Evento();
+            obj = obj || new EventoKafka();
 
-            if (data.hasOwnProperty('id')) {
-                obj['id'] = ApiClient.convertToType(data['id'], 'String');
+            if (data.hasOwnProperty('id_organizacion')) {
+                obj['id_organizacion'] = ApiClient.convertToType(data['id_organizacion'], 'String');
+            }
+            if (data.hasOwnProperty('id_evento')) {
+                obj['id_evento'] = ApiClient.convertToType(data['id_evento'], 'String');
             }
             if (data.hasOwnProperty('nombre')) {
                 obj['nombre'] = ApiClient.convertToType(data['nombre'], 'String');
@@ -65,34 +72,29 @@ class Evento {
             if (data.hasOwnProperty('fecha')) {
                 obj['fecha'] = ApiClient.convertToType(data['fecha'], 'Date');
             }
-            if (data.hasOwnProperty('idOrganizacion')) {
-                obj['idOrganizacion'] = ApiClient.convertToType(data['idOrganizacion'], 'Number');
-            }
-            if (data.hasOwnProperty('activo')) {
-                obj['activo'] = ApiClient.convertToType(data['activo'], 'Boolean');
-            }
-            if (data.hasOwnProperty('publicado')) {
-                obj['publicado'] = ApiClient.convertToType(data['publicado'], 'Boolean');
-            }
         }
         return obj;
     }
 
     /**
-     * Validates the JSON data with respect to <code>Evento</code>.
+     * Validates the JSON data with respect to <code>EventoKafka</code>.
      * @param {Object} data The plain JavaScript object bearing properties of interest.
-     * @return {boolean} to indicate whether the JSON data is valid with respect to <code>Evento</code>.
+     * @return {boolean} to indicate whether the JSON data is valid with respect to <code>EventoKafka</code>.
      */
     static validateJSON(data) {
         // check to make sure all required properties are present in the JSON string
-        for (const property of Evento.RequiredProperties) {
+        for (const property of EventoKafka.RequiredProperties) {
             if (!data.hasOwnProperty(property)) {
                 throw new Error("The required field `" + property + "` is not found in the JSON data: " + JSON.stringify(data));
             }
         }
         // ensure the json data is a string
-        if (data['id'] && !(typeof data['id'] === 'string' || data['id'] instanceof String)) {
-            throw new Error("Expected the field `id` to be a primitive type in the JSON string but got " + data['id']);
+        if (data['id_organizacion'] && !(typeof data['id_organizacion'] === 'string' || data['id_organizacion'] instanceof String)) {
+            throw new Error("Expected the field `id_organizacion` to be a primitive type in the JSON string but got " + data['id_organizacion']);
+        }
+        // ensure the json data is a string
+        if (data['id_evento'] && !(typeof data['id_evento'] === 'string' || data['id_evento'] instanceof String)) {
+            throw new Error("Expected the field `id_evento` to be a primitive type in the JSON string but got " + data['id_evento']);
         }
         // ensure the json data is a string
         if (data['nombre'] && !(typeof data['nombre'] === 'string' || data['nombre'] instanceof String)) {
@@ -109,47 +111,37 @@ class Evento {
 
 }
 
-Evento.RequiredProperties = ["nombre", "descripcion", "fecha"];
+EventoKafka.RequiredProperties = ["id_organizacion", "id_evento", "nombre", "descripcion", "fecha"];
 
 /**
- * @member {String} id
+ * @member {String} id_organizacion
  */
-Evento.prototype['id'] = undefined;
+EventoKafka.prototype['id_organizacion'] = undefined;
+
+/**
+ * @member {String} id_evento
+ */
+EventoKafka.prototype['id_evento'] = undefined;
 
 /**
  * @member {String} nombre
  */
-Evento.prototype['nombre'] = undefined;
+EventoKafka.prototype['nombre'] = undefined;
 
 /**
  * @member {String} descripcion
  */
-Evento.prototype['descripcion'] = undefined;
+EventoKafka.prototype['descripcion'] = undefined;
 
 /**
  * @member {Date} fecha
  */
-Evento.prototype['fecha'] = undefined;
-
-/**
- * @member {Number} idOrganizacion
- */
-Evento.prototype['idOrganizacion'] = undefined;
-
-/**
- * @member {Boolean} activo
- */
-Evento.prototype['activo'] = undefined;
-
-/**
- * @member {Boolean} publicado
- */
-Evento.prototype['publicado'] = undefined;
+EventoKafka.prototype['fecha'] = undefined;
 
 
 
 
 
 
-export default Evento;
+export default EventoKafka;
 

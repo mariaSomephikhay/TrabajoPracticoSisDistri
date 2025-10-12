@@ -1,15 +1,13 @@
-# ApiDocumentada.Evento
+# ApiDocumentada.EventoKafka
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **String** |  | [optional] 
+**idOrganizacion** | **String** |  | 
+**idEvento** | **String** |  | 
 **nombre** | **String** |  | 
 **descripcion** | **String** |  | 
 **fecha** | **Date** |  | 
-**idOrganizacion** | **Number** |  | [optional] 
-**activo** | **Boolean** |  | [optional] 
-**publicado** | **Boolean** |  | [optional] 
 
 

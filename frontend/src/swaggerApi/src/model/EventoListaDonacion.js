@@ -51,7 +51,7 @@ class EventoListaDonacion {
             obj = obj || new EventoListaDonacion();
 
             if (data.hasOwnProperty('idEvento')) {
-                obj['idEvento'] = ApiClient.convertToType(data['idEvento'], 'Number');
+                obj['idEvento'] = ApiClient.convertToType(data['idEvento'], 'String');
             }
             if (data.hasOwnProperty('listaDonacion')) {
                 obj['listaDonacion'] = ApiClient.convertToType(data['listaDonacion'], [EventoDonacion]);
@@ -71,6 +71,10 @@ class EventoListaDonacion {
             if (!data.hasOwnProperty(property)) {
                 throw new Error("The required field `" + property + "` is not found in the JSON data: " + JSON.stringify(data));
             }
+        }
+        // ensure the json data is a string
+        if (data['idEvento'] && !(typeof data['idEvento'] === 'string' || data['idEvento'] instanceof String)) {
+            throw new Error("Expected the field `idEvento` to be a primitive type in the JSON string but got " + data['idEvento']);
         }
         if (data['listaDonacion']) { // data not null
             // ensure the json data is an array
@@ -92,7 +96,7 @@ class EventoListaDonacion {
 EventoListaDonacion.RequiredProperties = ["listaDonacion"];
 
 /**
- * @member {Number} idEvento
+ * @member {String} idEvento
  */
 EventoListaDonacion.prototype['idEvento'] = undefined;
 

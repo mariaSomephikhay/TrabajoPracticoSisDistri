@@ -89,6 +89,23 @@ const EventService = {
         }
     },
 
+    enviarNotifiacionKafka: async (evento) => {
+        try {
+          const body = {
+          id_organizacion : 1,
+          id_evento : evento.id,
+          nombre : evento.nombre,
+          descripcion : evento.descripcion,
+          fecha : evento.fecha
+          };
+          console.log("Body a enviar a Kafka: ", body);
+          return await eventosApi.newRequesEventoKafka(body);
+        } catch (err) {
+          console.error("Error al insertar usuarios al evento:", err);
+          throw err;
+        }
+    },
+
 };
 
 export default EventService;

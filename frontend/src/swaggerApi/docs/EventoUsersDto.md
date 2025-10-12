@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **Number** |  | [optional] 
+**id** | **String** |  | [optional] 
 **users** | [**[EventoUsuario]**](EventoUsuario.md) |  | [optional] 
 
 

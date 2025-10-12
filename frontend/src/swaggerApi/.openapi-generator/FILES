@@ -13,6 +13,7 @@ docs/EventoCategoria.md
 docs/EventoDonacion.md
 docs/EventoDonacionObjeto.md
 docs/EventoDonacionReq.md
+docs/EventoKafka.md
 docs/EventoList.md
 docs/EventoListaDonacion.md
 docs/EventoRol.md
@@ -56,6 +57,7 @@ src/model/EventoCategoria.js
 src/model/EventoDonacion.js
 src/model/EventoDonacionObjeto.js
 src/model/EventoDonacionReq.js
+src/model/EventoKafka.js
 src/model/EventoList.js
 src/model/EventoListaDonacion.js
 src/model/EventoRol.js

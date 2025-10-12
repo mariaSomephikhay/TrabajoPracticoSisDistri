@@ -15,7 +15,7 @@ export const EventNew = () => {
     e.preventDefault();
     try {
       const fechaISO = new Date(event.fecha).toISOString();
-      const dataToSend = { ...event, fecha: fechaISO };
+      const dataToSend = { ...event, fecha: fechaISO, idOrganizacion: 1 , publicado: false};
       await EventService.registrarEvento(dataToSend);
       alert('Evento creado correctamente');
       navigate('/events');
