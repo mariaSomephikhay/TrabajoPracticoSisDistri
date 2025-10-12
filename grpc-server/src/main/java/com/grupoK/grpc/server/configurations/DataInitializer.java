@@ -44,6 +44,7 @@ public class DataInitializer {
                         presidente,         // rol
                         organizacionPropia  //organizacion
                 ));
+            
 
                 usuarioRepo.save(new Usuario(
                         null,
@@ -92,6 +93,22 @@ public class DataInitializer {
                         coordinador,
                         organizacionExternaDos
                 ));
+                
+                usuarioRepo.save(new Usuario(
+                        null,			   // id
+                        "Kafka",           // username
+                        "$2b$12$4pzYx189NUVwtpsK5uTuUOJR60MhqKZVYjss.2pZPuipv2/P/TwmW", // password(user1)
+                        "Kafka@mail.com",   // email
+                        "Kafka",          // nombre
+                        "Kafka",           // apellido
+                        "9091",      // telefono
+                        true,              // activo
+                        null,			   // lst de evento
+                        null,              // fechaAlta (se genera sola)
+                        null,              // fechaModificacion (se genera sola)
+                        presidente,         // rol
+                        organizacionPropia  //organizacion
+                ));
 
             }
 
@@ -113,7 +130,7 @@ public class DataInitializer {
 
                 donacionRepo.save(new Donacion(
                         null,	// id
-                        organizacionPropia,
+                        //organizacionPropia,
                         alimento, // categoria
                         "Pure de tomates", // descripcion
                         3, // cantidad
@@ -126,7 +143,7 @@ public class DataInitializer {
                 ));
                 donacionRepo.save(new Donacion(
                         null,	// id
-                        organizacionPropia,
+                        ///organizacionPropia,
                         escolar, // categoria
                         "Cartuchera", // descripcion
                         2, // cantidad
@@ -141,7 +158,7 @@ public class DataInitializer {
 
                 Donacion donacionExternaUno = donacionRepo.save(new Donacion(
                         null,	// id
-                        organizacionExternaUno,
+                        //organizacionExternaUno,
                         cateRepo.findById(3).get(), // categoria
                         "Pantalones", // descripcion
                         10, // cantidad
@@ -156,7 +173,7 @@ public class DataInitializer {
                         Arrays.asList(
                                 new Donacion(
                                         null,	// id
-                                        organizacionExternaDos,
+                                        //organizacionExternaDos,
                                         cateRepo.findById(4).get(), // categoria
                                         "Cartucheras", // descripcion
                                         4, // cantidad
@@ -169,7 +186,7 @@ public class DataInitializer {
                                 ),
                                 new Donacion(
                                         null,	// id
-                                        organizacionExternaDos,
+                                        //organizacionExternaDos,
                                         cateRepo.findById(1).get(), // categoria
                                         "Carne", // descripcion
                                         8, // cantidad
@@ -198,17 +215,17 @@ public class DataInitializer {
                 List<Solicitud> solicitudes = soliRepo.saveAll(
                         Arrays.asList(
                                 new Solicitud(
-                                        null, // id
+                                        "1", // id
                                         organizacionPropia, // organizacion solicitante
-                                        organizacionExternaDos, // organizacion donante
+                                        //organizacionExternaDos, // organizacion donante
                                         true, // activa
                                         false, // procesada
                                         null  // fechaAlta (se genera sola)
                                 ),
                                 new Solicitud(
-                                        null, // id
+                                        "2", // id
                                         organizacionExternaTres, // organizacion solicitante
-                                        organizacionExternaUno, // organizacion donante
+                                        //organizacionExternaUno, // organizacion donante
                                         true, // activa
                                         false, // procesada
                                         null  // fechaAlta (se genera sola)
@@ -219,20 +236,20 @@ public class DataInitializer {
                         new SolicitudDonacion(
                                 null,
                                 solicitudes.get(0),
-                                donacionExternaDos,
-                                1
+                                donacionExternaDos//,
+                                //1
                         ),
                         new SolicitudDonacion(
                                 null,
                                 solicitudes.get(0),
-                                donacionExternaTres,
-                                2
+                                donacionExternaTres//,
+                                //2
                         ),
                         new SolicitudDonacion(
                                 null,
                                 solicitudes.get(1),
-                                donacionExternaUno,
-                                2
+                                donacionExternaUno//,
+                                //2
                         )
                 ));
             }
