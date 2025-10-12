@@ -169,7 +169,7 @@ export const RequestDonationNewForm = () => {
         ) : (
           <div className="text-center">
             <h3 className="text-success mb-3">¡Solicitud creada con éxito!</h3>
-            <NavLink to="/..." className="btn btn-success">Ir a ...</NavLink>
+            <NavLink to="/donation-request" className="btn btn-success">Ir a ver las solicitudes</NavLink>
           </div>
         )}
       </div>
