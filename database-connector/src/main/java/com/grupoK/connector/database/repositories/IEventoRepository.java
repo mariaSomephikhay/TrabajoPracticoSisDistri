@@ -17,7 +17,7 @@ public interface IEventoRepository extends JpaRepository<Evento, Serializable>{
 	Optional<Evento> findByNombre(@Param("nombre") String nombre);
 	
 	@Query("SELECT e.usuarios FROM Evento e WHERE e.id = :eventoId")
-	List<Usuario> findUsuariosByEventoId(Integer eventoId);
+	List<Usuario> findUsuariosByEventoId(String eventoId);
 
 
 }
