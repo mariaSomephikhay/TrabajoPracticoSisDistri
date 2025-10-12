@@ -43,7 +43,7 @@ SolicitudDonacionDto = api.model("Solicitud", {
 #######################################################
 
 # Kafka - Endpoints
-@api.route("/donacion/new")
+@api.route("/request/new")
 class Solicitud(Resource):
     @api.doc(security='Bearer Auth')
     @SecurityConfig.authRequired("PRESIDENTE", "VOCAL")
