@@ -87,7 +87,7 @@ export const RequestDonationInventory = () => {
         data={solicitud}
         actions={[
           { label: "Eliminar", icon: deleteIcon, onClick: (d) => handleDeleteDonationOnClick(d), 
-              hidden: (d) => !d.activa  //La donacion eliminada no tiene sentido que se le renderice el boton de eliminar
+              hidden: (d) => !d.activa || d.organizacionSolicitante.id !== 1  //La donacion eliminada no tiene sentido que se le renderice el boton de eliminar
           },
         ]}
         emptyMessage="No hay donaciones disponibles"
