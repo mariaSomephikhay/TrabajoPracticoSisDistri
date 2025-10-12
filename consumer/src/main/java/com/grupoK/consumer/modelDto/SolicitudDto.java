@@ -12,15 +12,13 @@ import java.util.List;
 @ToString
 public class SolicitudDto {
 
-    @JsonProperty("id_solicitud")
-    private Integer idSolicitud;
+    @JsonProperty("id_solicitud_donacion")
+    private String id;
 
     @JsonProperty("id_organizacion_solicitante")
     private Integer idOrganizacionSolicitante;
 
-    @JsonProperty("id_organizacion_donante")
-    private Integer idOrganizacionDonante;
-
+    @JsonProperty("donacion")
     private List<DonacionDto> donaciones;
 
 }
