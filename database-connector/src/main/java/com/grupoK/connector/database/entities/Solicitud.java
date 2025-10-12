@@ -22,16 +22,15 @@ public class Solicitud {
 
     @NonNull
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private String id;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="id_organizacion_solicitante",nullable=false)
     private Organizacion organizacionSolicitante;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="id_organizacion_donante",nullable=false)
-    private Organizacion organizacionDonante;
+    //@ManyToOne(fetch = FetchType.EAGER)
+    //@JoinColumn(name="id_organizacion_donante",nullable=false)
+    //private Organizacion organizacionDonante;
 
     @Column(name="activa", nullable=false)
     private Boolean activa;

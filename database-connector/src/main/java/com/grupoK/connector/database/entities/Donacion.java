@@ -21,9 +21,9 @@ public class Donacion {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    /*@ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="id_organizacion",nullable=false)
-    private Organizacion organizacion;
+    private Organizacion organizacion;*/
 
     @ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="id_categoria",nullable=false)

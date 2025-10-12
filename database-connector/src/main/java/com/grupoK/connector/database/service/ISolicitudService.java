@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ISolicitudService {
-    Solicitud findById (Integer idSolicitud)throws Exception;
+    Solicitud findById (String idSolicitud)throws Exception;
     Solicitud saveOrUpdate(Solicitud solicitud, List<SolicitudDonacion> donacionesAsociadas) throws Exception;
-    Solicitud delete(Integer idSolicitud) throws Exception;
+    Solicitud delete(String idSolicitud) throws Exception;
     List<Solicitud> findAll();
     List<SolicitudDonacion> findAllDonationsAssociatedByRequest(Solicitud solicitud) throws  Exception;
 }

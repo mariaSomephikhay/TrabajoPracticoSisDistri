@@ -29,7 +29,7 @@ public class SolicitudService implements ISolicitudService {
     private IDonacionRepository donacionRepository;
 
     @Override
-    public Solicitud findById(Integer idSolicitud) throws Exception {
+    public Solicitud findById(String idSolicitud) throws Exception {
         Optional<Solicitud> request = solicitudRepository.findById(idSolicitud);
         if(request.isEmpty())
             throw new Exception("Solicitud no encontrada");
@@ -41,17 +41,22 @@ public class SolicitudService implements ISolicitudService {
         if(hasValidationErrors(solicitud, donacionesAsociadas))
             throw new Exception("La solicitud no cumple con las validaciones requeridas");
 
-        if(solicitud.getId() == null || solicitud.getId().equals(0)) {
+        //if(solicitud.getId() == null || solicitud.getId().equals(0)) {
             //Valores por defecto al crearse la solicitud
             solicitud.setActiva(true);
             solicitud.setProcesada(false);
+            donacionesAsociadas.forEach(d -> donacionRepository.save(d.getDonacion()));
+            
             Solicitud nuevaSolicitud = solicitudRepository.save(solicitud);
 
             donacionesAsociadas.forEach(d -> d.setSolicitud(nuevaSolicitud));
             solicitudDonacionRepository.saveAll(donacionesAsociadas);
 
             return nuevaSolicitud;
-        }
+            
+        //las solicitudes no se editan
+        //en todo caso las organizacion las dan de bajas
+        /*}
         else {
             Solicitud solicitudActual = findById(solicitud.getId());
 
@@ -61,11 +66,11 @@ public class SolicitudService implements ISolicitudService {
 
             processRequestAndDonations(solicitudActual, donacionesActuales);
             return solicitudRepository.save(solicitudActual);
-        }
+        }*/
     }
 
     @Override
-    public Solicitud delete(Integer idSolicitud) throws Exception {
+    public Solicitud delete(String idSolicitud) throws Exception {
         Solicitud solicitudBD = findById(idSolicitud);
         List<SolicitudDonacion> donationsAssociatedToRequest = findAllDonationsAssociatedByRequest(solicitudBD);
 
@@ -96,13 +101,13 @@ public class SolicitudService implements ISolicitudService {
             return  true;
         else if(donaciones.isEmpty()) //Debe tener al menos una donacion
             return  true;
-        else if(nuevaSolicitud.getOrganizacionDonante() == null || nuevaSolicitud.getOrganizacionSolicitante() == null) //Debe tener sus organzacion solicitante y donante
-            return true;
-        else if(nuevaSolicitud.getOrganizacionSolicitante().equals(nuevaSolicitud.getOrganizacionDonante())) //No pueden ser las mismas organizaciones
-            return true;
-        else if(donaciones.stream()
-                .anyMatch(d -> d.getDonacion().getOrganizacion().equals(nuevaSolicitud.getOrganizacionSolicitante()))) //Las donaciones no pueden pertenecer a la misma organizacion que las solicita
-            return true;
+        //else if(nuevaSolicitud.getOrganizacionDonante() == null || nuevaSolicitud.getOrganizacionSolicitante() == null) //Debe tener sus organzacion solicitante y donante
+            //return true;
+        //else if(nuevaSolicitud.getOrganizacionSolicitante().equals(nuevaSolicitud.getOrganizacionDonante())) //No pueden ser las mismas organizaciones
+            //return true;
+        //else if(donaciones.stream()
+          //      .anyMatch(d -> d.getDonacion().getOrganizacion().equals(nuevaSolicitud.getOrganizacionSolicitante()))) //Las donaciones no pueden pertenecer a la misma organizacion que las solicita
+           // return true;
         else
             return false;
     }
@@ -113,7 +118,7 @@ public class SolicitudService implements ISolicitudService {
          * Tambien se debera descontar e incrementar el inventario de las organizaciones solicitantes y donantes
          */
 
-        Map<Donacion, Integer> map = donations.stream()
+    /*    Map<Donacion, Integer> map = donations.stream()
                 .collect(Collectors.toMap(SolicitudDonacion::getDonacion, SolicitudDonacion::getCantidadSolicitada));
         map.forEach((donacion, cantidadSolicitada) -> {
 
@@ -144,7 +149,7 @@ public class SolicitudService implements ISolicitudService {
             donacionRepository.save(donatioRequest);
         });
 
-        request.setProcesada(true); //Se proceso correctamente la solicitud
+        request.setProcesada(true); //Se proceso correctamente la solicitud*/
     }
 
 }
