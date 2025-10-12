@@ -15,6 +15,7 @@
 import ApiClient from "../ApiClient";
 import Solicitud from '../model/Solicitud';
 import SolicitudError from '../model/SolicitudError';
+import SolicitudGetList from '../model/SolicitudGetList';
 
 /**
 * Solicitudes service.
@@ -34,6 +35,42 @@ export default class SolicitudesApi {
         this.apiClient = apiClient || ApiClient.instance;
     }
 
+
+    /**
+     * Callback function to receive the result of the getAllRequestDonacion operation.
+     * @callback module:api/SolicitudesApi~getAllRequestDonacionCallback
+     * @param {String} error Error message, if any.
+     * @param {module:model/SolicitudGetList} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Obtener todos las solicitudes donaciones
+     * @param {module:api/SolicitudesApi~getAllRequestDonacionCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link module:model/SolicitudGetList}
+     */
+    getAllRequestDonacion(callback) {
+      let postBody = null;
+
+      let pathParams = {
+      };
+      let queryParams = {
+      };
+      let headerParams = {
+      };
+      let formParams = {
+      };
+
+      let authNames = ['Bearer Auth'];
+      let contentTypes = [];
+      let accepts = ['application/json'];
+      let returnType = SolicitudGetList;
+      return this.apiClient.callApi(
+        '/solicitud/', 'GET',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, null, callback
+      );
+    }
 
     /**
      * Callback function to receive the result of the newRequestDonacion operation.
@@ -70,7 +107,7 @@ export default class SolicitudesApi {
       let accepts = ['application/json'];
       let returnType = Solicitud;
       return this.apiClient.callApi(
-        '/solicitud/donacion/new', 'POST',
+        '/solicitud/request/new', 'POST',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, null, callback
       );

@@ -23,7 +23,7 @@ class Solicitud {
     /**
      * Constructs a new <code>Solicitud</code>.
      * @alias module:model/Solicitud
-     * @param idSolicitudDonacion {Number} 
+     * @param idSolicitudDonacion {String} 
      * @param idOrganizacionSolicitante {Number} 
      */
     constructor(idSolicitudDonacion, idOrganizacionSolicitante) { 
@@ -53,13 +53,13 @@ class Solicitud {
             obj = obj || new Solicitud();
 
             if (data.hasOwnProperty('id_solicitud_donacion')) {
-                obj['id_solicitud_donacion'] = ApiClient.convertToType(data['id_solicitud_donacion'], 'Number');
+                obj['id_solicitud_donacion'] = ApiClient.convertToType(data['id_solicitud_donacion'], 'String');
             }
             if (data.hasOwnProperty('id_organizacion_solicitante')) {
                 obj['id_organizacion_solicitante'] = ApiClient.convertToType(data['id_organizacion_solicitante'], 'Number');
             }
-            if (data.hasOwnProperty('donacion')) {
-                obj['donacion'] = ApiClient.convertToType(data['donacion'], [SolicitudDonacion]);
+            if (data.hasOwnProperty('donaciones')) {
+                obj['donaciones'] = ApiClient.convertToType(data['donaciones'], [SolicitudDonacion]);
             }
         }
         return obj;
@@ -77,13 +77,17 @@ class Solicitud {
                 throw new Error("The required field `" + property + "` is not found in the JSON data: " + JSON.stringify(data));
             }
         }
-        if (data['donacion']) { // data not null
+        // ensure the json data is a string
+        if (data['id_solicitud_donacion'] && !(typeof data['id_solicitud_donacion'] === 'string' || data['id_solicitud_donacion'] instanceof String)) {
+            throw new Error("Expected the field `id_solicitud_donacion` to be a primitive type in the JSON string but got " + data['id_solicitud_donacion']);
+        }
+        if (data['donaciones']) { // data not null
             // ensure the json data is an array
-            if (!Array.isArray(data['donacion'])) {
-                throw new Error("Expected the field `donacion` to be an array in the JSON data but got " + data['donacion']);
+            if (!Array.isArray(data['donaciones'])) {
+                throw new Error("Expected the field `donaciones` to be an array in the JSON data but got " + data['donaciones']);
             }
-            // validate the optional field `donacion` (array)
-            for (const item of data['donacion']) {
+            // validate the optional field `donaciones` (array)
+            for (const item of data['donaciones']) {
                 SolicitudDonacion.validateJSON(item);
             };
         }
@@ -97,7 +101,7 @@ class Solicitud {
 Solicitud.RequiredProperties = ["id_solicitud_donacion", "id_organizacion_solicitante"];
 
 /**
- * @member {Number} id_solicitud_donacion
+ * @member {String} id_solicitud_donacion
  */
 Solicitud.prototype['id_solicitud_donacion'] = undefined;
 
@@ -107,9 +111,9 @@ Solicitud.prototype['id_solicitud_donacion'] = undefined;
 Solicitud.prototype['id_organizacion_solicitante'] = undefined;
 
 /**
- * @member {Array.<module:model/SolicitudDonacion>} donacion
+ * @member {Array.<module:model/SolicitudDonacion>} donaciones
  */
-Solicitud.prototype['donacion'] = undefined;
+Solicitud.prototype['donaciones'] = undefined;
 
 
 

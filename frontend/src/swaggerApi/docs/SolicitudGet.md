@@ -1,11 +1,12 @@
-# ApiDocumentada.Solicitud
+# ApiDocumentada.SolicitudGet
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**idSolicitudDonacion** | **String** |  | 
-**idOrganizacionSolicitante** | **Number** |  | 
+**id** | **String** |  | 
+**organizacionSolicitante** | [**SolicitudOrganizacionDto**](SolicitudOrganizacionDto.md) |  | [optional] 
+**activa** | **Boolean** |  | 
 **donaciones** | [**[SolicitudDonacion]**](SolicitudDonacion.md) |  | [optional] 
 
 

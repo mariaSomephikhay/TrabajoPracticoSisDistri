@@ -35,6 +35,9 @@ import Solicitud from './model/Solicitud';
 import SolicitudCategoria from './model/SolicitudCategoria';
 import SolicitudDonacion from './model/SolicitudDonacion';
 import SolicitudError from './model/SolicitudError';
+import SolicitudGet from './model/SolicitudGet';
+import SolicitudGetList from './model/SolicitudGetList';
+import SolicitudOrganizacionDto from './model/SolicitudOrganizacionDto';
 import Token from './model/Token';
 import Transferencia from './model/Transferencia';
 import Usuario from './model/Usuario';
@@ -215,6 +218,24 @@ export {
      * @property {module:model/SolicitudError}
      */
     SolicitudError,
+
+    /**
+     * The SolicitudGet model constructor.
+     * @property {module:model/SolicitudGet}
+     */
+    SolicitudGet,
+
+    /**
+     * The SolicitudGetList model constructor.
+     * @property {module:model/SolicitudGetList}
+     */
+    SolicitudGetList,
+
+    /**
+     * The SolicitudOrganizacionDto model constructor.
+     * @property {module:model/SolicitudOrganizacionDto}
+     */
+    SolicitudOrganizacionDto,
 
     /**
      * The Token model constructor.

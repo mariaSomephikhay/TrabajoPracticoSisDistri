@@ -10,7 +10,7 @@ Method | HTTP request | Description
 
 ## newTransfer
 
-> Transferencia newTransfer(idSolicitante, payload)
+> newTransfer(idSolicitante, payload)
 
 Enviar transferencia de donaciones a organizacion
 
@@ -32,7 +32,7 @@ apiInstance.newTransfer(idSolicitante, payload, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully. Returned data: ' + data);
+    console.log('API called successfully.');
   }
 });
 ```
@@ -47,7 +47,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**Transferencia**](Transferencia.md)
+null (empty response body)
 
 ### Authorization
 

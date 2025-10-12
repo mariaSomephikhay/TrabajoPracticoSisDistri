@@ -9,6 +9,15 @@ const RequestDonationService = {
       console.error("Error al crear solicitud de donacion:", err)
       throw err;
     }
+  },
+
+  obtenerListadoSolicitudDonaciones: async () => {
+    try {
+      return await solicitudApi.getAllRequestDonacion()
+    } catch (err) {
+      console.error("Error al obtener donaciones:", err)
+      throw err
+    }
   }
 
 }
