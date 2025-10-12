@@ -33,8 +33,8 @@ public class Solicitud {
     @JoinColumn(name="id_organizacion_donante",nullable=false)
     private Organizacion organizacionDonante;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "solicitud")
-    private List<Donacion> donaciones;
+    @Column(name="activa", nullable=false)
+    private Boolean activa;
 
     @Column(name="procesada", nullable=false)
     private Boolean procesada;

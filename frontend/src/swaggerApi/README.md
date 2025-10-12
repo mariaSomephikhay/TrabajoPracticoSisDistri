@@ -141,6 +141,8 @@ Class | Method | HTTP request | Description
 *ApiDocumentada.EventosApi* | [**insertUsersToEvento**](docs/EventosApi.md#insertUsersToEvento) | **PUT** /evento/{id}/users/add | Agregar usuarios a un evento
 *ApiDocumentada.EventosApi* | [**listEventos**](docs/EventosApi.md#listEventos) | **GET** /evento/ | Obtener todos los eventos
 *ApiDocumentada.EventosApi* | [**updateEventoById**](docs/EventosApi.md#updateEventoById) | **PUT** /evento/{id} | Actualizar un donacion
+*ApiDocumentada.SolicitudesApi* | [**newRequestDonacion**](docs/SolicitudesApi.md#newRequestDonacion) | **POST** /solicitud/donacion/new | Enviar solicitud de donaciones a kafka
+*ApiDocumentada.TransferenciasApi* | [**newTransfer**](docs/TransferenciasApi.md#newTransfer) | **POST** /transferencia/donacion/{id_solicitante}/new | Enviar transferencia de donaciones a organizacion
 *ApiDocumentada.UserApi* | [**createUser**](docs/UserApi.md#createUser) | **POST** /user/new | Dar de alta un nuevo usuario
 *ApiDocumentada.UserApi* | [**deleteUserById**](docs/UserApi.md#deleteUserById) | **DELETE** /user/{id} | Eliminar usuario
 *ApiDocumentada.UserApi* | [**getUserById**](docs/UserApi.md#getUserById) | **GET** /user/{id} | Obtener usuario
@@ -155,11 +157,13 @@ Class | Method | HTTP request | Description
  - [ApiDocumentada.Categoria](docs/Categoria.md)
  - [ApiDocumentada.Donacion](docs/Donacion.md)
  - [ApiDocumentada.DonacionList](docs/DonacionList.md)
+ - [ApiDocumentada.DonacionTransferencia](docs/DonacionTransferencia.md)
  - [ApiDocumentada.Error](docs/Error.md)
  - [ApiDocumentada.Evento](docs/Evento.md)
  - [ApiDocumentada.EventoCategoria](docs/EventoCategoria.md)
  - [ApiDocumentada.EventoDonacion](docs/EventoDonacion.md)
  - [ApiDocumentada.EventoDonacionObjeto](docs/EventoDonacionObjeto.md)
+ - [ApiDocumentada.EventoDonacionReq](docs/EventoDonacionReq.md)
  - [ApiDocumentada.EventoList](docs/EventoList.md)
  - [ApiDocumentada.EventoListaDonacion](docs/EventoListaDonacion.md)
  - [ApiDocumentada.EventoRol](docs/EventoRol.md)
@@ -168,7 +172,12 @@ Class | Method | HTTP request | Description
  - [ApiDocumentada.EventoUsuario](docs/EventoUsuario.md)
  - [ApiDocumentada.Login](docs/Login.md)
  - [ApiDocumentada.Rol](docs/Rol.md)
+ - [ApiDocumentada.Solicitud](docs/Solicitud.md)
+ - [ApiDocumentada.SolicitudCategoria](docs/SolicitudCategoria.md)
+ - [ApiDocumentada.SolicitudDonacion](docs/SolicitudDonacion.md)
+ - [ApiDocumentada.SolicitudError](docs/SolicitudError.md)
  - [ApiDocumentada.Token](docs/Token.md)
+ - [ApiDocumentada.Transferencia](docs/Transferencia.md)
  - [ApiDocumentada.Usuario](docs/Usuario.md)
  - [ApiDocumentada.UsuarioList](docs/UsuarioList.md)
 
