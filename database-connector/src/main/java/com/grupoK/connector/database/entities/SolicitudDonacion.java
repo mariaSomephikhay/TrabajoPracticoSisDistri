@@ -31,8 +31,9 @@ public class SolicitudDonacion {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="id_donacion",nullable=false)
     private Donacion donacion;
-
-    @Column(name="cantidad_solicitada", nullable=false, length=30)
-    private Integer cantidadSolicitada;
+    
+    //cantidad ya esta en donacion
+    //@Column(name="cantidad_solicitada", nullable=false, length=30)
+    //private Integer cantidadSolicitada;
 
 }

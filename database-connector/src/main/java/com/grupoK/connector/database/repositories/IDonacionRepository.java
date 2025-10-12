@@ -11,6 +11,6 @@ import java.util.List;
 
 @Repository
 public interface IDonacionRepository extends JpaRepository<Donacion, Integer>{
-    List<Donacion> findAllByOrganizacion(@Param("organizacion") Organizacion organizacion);
+    //List<Donacion> findAllByOrganizacion(@Param("organizacion") Organizacion organizacion);
 
 }

@@ -32,8 +32,8 @@ public class DonacionService implements IDonacionService {
 		if(donacion.getId() == 0 || donacion.getId() == null) {
 			donacion.setId(null); //Proto lo devuelve con un 0
 			donacion.setUsuarioAlta(donacion.getUsuarioModificacion());
-            if(donacion.getOrganizacion() == null)
-                donacion.setOrganizacion(obtenerOrganizacionPropia(1)); //El id 1 es de nuestra organizacion
+            //if(donacion.getOrganizacion() == null)
+              //  donacion.setOrganizacion(obtenerOrganizacionPropia(1)); //El id 1 es de nuestra organizacion
         	return donacionRepository.save(donacion);
         }
         else {
