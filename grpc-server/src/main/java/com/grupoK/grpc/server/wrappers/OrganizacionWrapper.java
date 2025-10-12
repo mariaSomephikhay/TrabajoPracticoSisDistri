@@ -1,7 +1,7 @@
 package com.grupoK.grpc.server.wrappers;
 
-import org.springframework.stereotype.Component;
 
+import org.springframework.stereotype.Component;
 import com.grupoK.connector.database.entities.Organizacion;
 
 
@@ -16,5 +16,12 @@ public class OrganizacionWrapper {
                 .build();
     }
     
+    public Organizacion toEntityOrganizacion(com.grupoK.grpc.proto.Organizacion organizacionModel) {
+    	return new Organizacion(
+    			organizacionModel.getId(),
+    			organizacionModel.getNombre(),
+    			organizacionModel.getExterna()
+    			);
+    }
 
 }
