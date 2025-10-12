@@ -39,7 +39,7 @@ export default class TransferenciasApi {
      * Callback function to receive the result of the newTransfer operation.
      * @callback module:api/TransferenciasApi~newTransferCallback
      * @param {String} error Error message, if any.
-     * @param {module:model/Transferencia} data The data returned by the service call.
+     * @param data This operation does not return a value.
      * @param {String} response The complete HTTP response.
      */
 
@@ -48,7 +48,6 @@ export default class TransferenciasApi {
      * @param {Number} idSolicitante 
      * @param {module:model/Transferencia} payload 
      * @param {module:api/TransferenciasApi~newTransferCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link module:model/Transferencia}
      */
     newTransfer(idSolicitante, payload, callback) {
       let postBody = payload;
@@ -74,7 +73,7 @@ export default class TransferenciasApi {
       let authNames = ['Bearer Auth'];
       let contentTypes = ['application/json'];
       let accepts = ['application/json'];
-      let returnType = Transferencia;
+      let returnType = null;
       return this.apiClient.callApi(
         '/transferencia/donacion/{id_solicitante}/new', 'POST',
         pathParams, queryParams, headerParams, formParams, postBody,

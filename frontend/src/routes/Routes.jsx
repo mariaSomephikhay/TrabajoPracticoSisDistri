@@ -22,7 +22,7 @@ import { useNotification } from "../context/NotificationContext.jsx"
 import { EventUsersManager } from '../pages/private/event/EventUsersManager.jsx';
 import { EventDonacionesManager } from '../pages/private/event/EventDonacionesManager.jsx';
 import { RequestDonationNewForm } from '../pages/private/donation/RequestDonationNewForm.jsx';
-
+import { RequestDonationInventory } from '../pages/private/donation/RequestDonationInventory.jsx';
 export const OperatorRoutes = () => {
     const { notification, clearNotification } = useNotification()
 
@@ -49,7 +49,8 @@ export const OperatorRoutes = () => {
                 <Route path="/donation/edit/:id" element={<PrivateRoute allowedRoles={["PRESIDENTE", "VOCAL"]}><DonationUpdateForm /></PrivateRoute>} /> 
                 <Route path="/donation/new" element={<PrivateRoute allowedRoles={["PRESIDENTE", "VOCAL"]}><DonationNewForm /></PrivateRoute>} /> 
                 <Route path="/donation/request/new" element={<PrivateRoute allowedRoles={["PRESIDENTE", "VOCAL"]}><RequestDonationNewForm /></PrivateRoute>} />
-
+                <Route path="/donation-request" element={<PrivateRoute allowedRoles={["PRESIDENTE", "VOCAL"]}><RequestDonationInventory /></PrivateRoute>} />
+                
                 {/* RUTAS DEL EVENTO */}
                 <Route path="/events" element={<PrivateRoute allowedRoles={["PRESIDENTE","COORDINADOR","VOLUNTARIO"]}> <EventList /></PrivateRoute>} />
                 <Route path="/events/edit/:id" element={<PrivateRoute allowedRoles={["PRESIDENTE","COORDINADOR","VOLUNTARIO"]}><EventUpdateForm /></PrivateRoute>} /> 

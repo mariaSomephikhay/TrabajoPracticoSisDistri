@@ -26,6 +26,9 @@ docs/Solicitud.md
 docs/SolicitudCategoria.md
 docs/SolicitudDonacion.md
 docs/SolicitudError.md
+docs/SolicitudGet.md
+docs/SolicitudGetList.md
+docs/SolicitudOrganizacionDto.md
 docs/SolicitudesApi.md
 docs/Token.md
 docs/Transferencia.md
@@ -65,6 +68,9 @@ src/model/Solicitud.js
 src/model/SolicitudCategoria.js
 src/model/SolicitudDonacion.js
 src/model/SolicitudError.js
+src/model/SolicitudGet.js
+src/model/SolicitudGetList.js
+src/model/SolicitudOrganizacionDto.js
 src/model/Token.js
 src/model/Transferencia.js
 src/model/Usuario.js

@@ -141,7 +141,8 @@ Class | Method | HTTP request | Description
 *ApiDocumentada.EventosApi* | [**insertUsersToEvento**](docs/EventosApi.md#insertUsersToEvento) | **PUT** /evento/{id}/users/add | Agregar usuarios a un evento
 *ApiDocumentada.EventosApi* | [**listEventos**](docs/EventosApi.md#listEventos) | **GET** /evento/ | Obtener todos los eventos
 *ApiDocumentada.EventosApi* | [**updateEventoById**](docs/EventosApi.md#updateEventoById) | **PUT** /evento/{id} | Actualizar un donacion
-*ApiDocumentada.SolicitudesApi* | [**newRequestDonacion**](docs/SolicitudesApi.md#newRequestDonacion) | **POST** /solicitud/donacion/new | Enviar solicitud de donaciones a kafka
+*ApiDocumentada.SolicitudesApi* | [**getAllRequestDonacion**](docs/SolicitudesApi.md#getAllRequestDonacion) | **GET** /solicitud/ | Obtener todos las solicitudes donaciones
+*ApiDocumentada.SolicitudesApi* | [**newRequestDonacion**](docs/SolicitudesApi.md#newRequestDonacion) | **POST** /solicitud/request/new | Enviar solicitud de donaciones a kafka
 *ApiDocumentada.TransferenciasApi* | [**newTransfer**](docs/TransferenciasApi.md#newTransfer) | **POST** /transferencia/donacion/{id_solicitante}/new | Enviar transferencia de donaciones a organizacion
 *ApiDocumentada.UserApi* | [**createUser**](docs/UserApi.md#createUser) | **POST** /user/new | Dar de alta un nuevo usuario
 *ApiDocumentada.UserApi* | [**deleteUserById**](docs/UserApi.md#deleteUserById) | **DELETE** /user/{id} | Eliminar usuario
@@ -176,6 +177,9 @@ Class | Method | HTTP request | Description
  - [ApiDocumentada.SolicitudCategoria](docs/SolicitudCategoria.md)
  - [ApiDocumentada.SolicitudDonacion](docs/SolicitudDonacion.md)
  - [ApiDocumentada.SolicitudError](docs/SolicitudError.md)
+ - [ApiDocumentada.SolicitudGet](docs/SolicitudGet.md)
+ - [ApiDocumentada.SolicitudGetList](docs/SolicitudGetList.md)
+ - [ApiDocumentada.SolicitudOrganizacionDto](docs/SolicitudOrganizacionDto.md)
  - [ApiDocumentada.Token](docs/Token.md)
  - [ApiDocumentada.Transferencia](docs/Transferencia.md)
  - [ApiDocumentada.Usuario](docs/Usuario.md)
