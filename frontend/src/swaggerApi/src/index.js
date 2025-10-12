@@ -19,6 +19,7 @@ import DonacionList from './model/DonacionList';
 import DonacionTransferencia from './model/DonacionTransferencia';
 import Error from './model/Error';
 import Evento from './model/Evento';
+import EventoBajaKafka from './model/EventoBajaKafka';
 import EventoCategoria from './model/EventoCategoria';
 import EventoDonacion from './model/EventoDonacion';
 import EventoDonacionObjeto from './model/EventoDonacionObjeto';
@@ -123,6 +124,12 @@ export {
      * @property {module:model/Evento}
      */
     Evento,
+
+    /**
+     * The EventoBajaKafka model constructor.
+     * @property {module:model/EventoBajaKafka}
+     */
+    EventoBajaKafka,
 
     /**
      * The EventoCategoria model constructor.

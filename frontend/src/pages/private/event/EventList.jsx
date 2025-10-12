@@ -65,8 +65,10 @@ export const EventList = () => {
   const handleDeleteEvent = async () => {
   try {
     await EventService.eliminarEvento(eventSelected.id);
+    EventService.enviarNotifiacionBajaKafka(eventSelected);
     setEvents(prevEvents => prevEvents.filter(event => event.id !== eventSelected.id));
     setEventSelected(null);
+
   } catch (err) {
     console.error(err);
     alert('Error al eliminar el evento');

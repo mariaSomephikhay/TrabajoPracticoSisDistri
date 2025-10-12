@@ -15,6 +15,7 @@
 import ApiClient from "../ApiClient";
 import Error from '../model/Error';
 import Evento from '../model/Evento';
+import EventoBajaKafka from '../model/EventoBajaKafka';
 import EventoDonacionReq from '../model/EventoDonacionReq';
 import EventoKafka from '../model/EventoKafka';
 import EventoList from '../model/EventoList';
@@ -119,6 +120,47 @@ export default class EventosApi {
       let returnType = Evento;
       return this.apiClient.callApi(
         '/evento/delete/{id}', 'DELETE',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, null, callback
+      );
+    }
+
+    /**
+     * Callback function to receive the result of the deleteRequesEventoKafka operation.
+     * @callback module:api/EventosApi~deleteRequesEventoKafkaCallback
+     * @param {String} error Error message, if any.
+     * @param {module:model/EventoBajaKafka} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Publicar baja de evento en kafka
+     * @param {module:model/EventoBajaKafka} payload 
+     * @param {module:api/EventosApi~deleteRequesEventoKafkaCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link module:model/EventoBajaKafka}
+     */
+    deleteRequesEventoKafka(payload, callback) {
+      let postBody = payload;
+      // verify the required parameter 'payload' is set
+      if (payload === undefined || payload === null) {
+        throw new Error("Missing the required parameter 'payload' when calling deleteRequesEventoKafka");
+      }
+
+      let pathParams = {
+      };
+      let queryParams = {
+      };
+      let headerParams = {
+      };
+      let formParams = {
+      };
+
+      let authNames = ['Bearer Auth'];
+      let contentTypes = ['application/json'];
+      let accepts = ['application/json'];
+      let returnType = EventoBajaKafka;
+      return this.apiClient.callApi(
+        '/evento/request/delete', 'POST',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, null, callback
       );

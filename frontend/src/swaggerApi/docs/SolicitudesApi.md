@@ -4,10 +4,7 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-<<<<<<< HEAD
 [**getAllRequestDonacion**](SolicitudesApi.md#getAllRequestDonacion) | **GET** /solicitud/ | Obtener todos las solicitudes donaciones
-=======
->>>>>>> 5ee4cee (logica del front para publicar evento)
 [**newRequestDonacion**](SolicitudesApi.md#newRequestDonacion) | **POST** /solicitud/request/new | Enviar solicitud de donaciones a kafka
 
 

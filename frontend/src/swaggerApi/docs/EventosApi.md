@@ -6,6 +6,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**createEvent**](EventosApi.md#createEvent) | **POST** /evento/new | Insertar nuevo evento
 [**deleteEventById**](EventosApi.md#deleteEventById) | **DELETE** /evento/delete/{id} | Eliminar evento
+[**deleteRequesEventoKafka**](EventosApi.md#deleteRequesEventoKafka) | **POST** /evento/request/delete | Publicar baja de evento en kafka
 [**getEventoById**](EventosApi.md#getEventoById) | **GET** /evento/{id} | Obtener Evento
 [**getEventoWithDonacionesById**](EventosApi.md#getEventoWithDonacionesById) | **GET** /evento/{id}/donaciones | Obtener donaciones del evento
 [**getEventoWithUsersById**](EventosApi.md#getEventoWithUsersById) | **GET** /evento/{id}/usuarios | Obtener usuarios del evento
@@ -112,6 +113,55 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## deleteRequesEventoKafka
+
+> EventoBajaKafka deleteRequesEventoKafka(payload)
+
+Publicar baja de evento en kafka
+
+### Example
+
+```javascript
+import ApiDocumentada from 'api_documentada';
+let defaultClient = ApiDocumentada.ApiClient.instance;
+// Configure API key authorization: Bearer Auth
+let Bearer Auth = defaultClient.authentications['Bearer Auth'];
+Bearer Auth.apiKey = 'YOUR API KEY';
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//Bearer Auth.apiKeyPrefix = 'Token';
+
+let apiInstance = new ApiDocumentada.EventosApi();
+let payload = new ApiDocumentada.EventoBajaKafka(); // EventoBajaKafka | 
+apiInstance.deleteRequesEventoKafka(payload, (error, data, response) => {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+});
+```
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **payload** | [**EventoBajaKafka**](EventoBajaKafka.md)|  | 
+
+### Return type
+
+[**EventoBajaKafka**](EventoBajaKafka.md)
+
+### Authorization
+
+[Bearer Auth](../README.md#Bearer Auth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 
