@@ -92,6 +92,11 @@ eventoKafka = api.model("eventoKafka", {
     "fecha": fields.DateTime(required=True)
 })
 
+eventoBajaKafka = api.model("eventoBajaKafka", {
+    "id_organizacion": fields.String(required=True),
+    "id_evento": fields.String(required=True)
+})
+
 #######################################################
 # Definición de endpoints para el swagger
 #######################################################
@@ -213,6 +218,8 @@ class EventoList(Resource):
         """Obtener todos los eventos"""
         try:
             result = cliente.getAllEventos()
+
+            print(result)
 
             eventos = json.loads(result)
 
@@ -381,6 +388,35 @@ class Solicitud(Resource):
 
             # Endpoint del producer en Java
             url = f"{PRODUCER_URL}/event/request/new"
+            
+            response = requests.post(url, json=data)
+
+            return response.json(), response.status_code
+        
+        except Exception as e:
+            return {"error": str(e)}, 500
+
+# Kafka - Endpoints
+@api.route("/request/delete")
+class Solicitud(Resource):
+    @api.doc(security='Bearer Auth')
+    @SecurityConfig.authRequired("PRESIDENTE", "COORDINADOR")
+    @api.doc(id="deleteRequesEventoKafka") 
+    @api.expect(eventoBajaKafka)
+    @api.response(201, "Created", model=eventoBajaKafka)
+    @api.response(401, "Unauthorized", model=errorDto)
+    @api.response(400, "Bad Request", model=errorDto)
+    @api.response(500, "Internal server error", model=errorDto)
+    def post(self):
+        """Publicar baja de evento en kafka"""
+        try:
+            if not request.is_json:
+                return {"error": "Bad Request"}, 400
+            
+            data = request.get_json()
+
+            # Endpoint del producer en Java
+            url = f"{PRODUCER_URL}/event/request/delete"
             
             response = requests.post(url, json=data)
 
