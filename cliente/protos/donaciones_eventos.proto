@@ -115,6 +115,25 @@ message EventoWithAllListDonacionesDetails {
     repeated DonacionesAsociadas listaDonacion = 2;
 }
 
+//------------SOLICITUDES-----------//
+
+message Organizacion {
+    int32 id = 1;
+    string nombre = 2;
+    bool externa = 3;
+}
+
+message SolicitudDonacion {
+    string id = 1;
+    Organizacion organizacionSolicitante= 2;
+    bool activa = 3;
+    repeated Donacion donaciones = 4;
+}
+
+message ListSolicitudDonacion {
+    repeated SolicitudDonacion solicitudes = 1;
+}
+
 
 service ManagerService{
   rpc getUserByUsername (UserUsername) returns (Usuario) {};
@@ -137,5 +156,7 @@ service ManagerService{
   rpc getEventoWithUsersById (EventoId) returns (EventoWithListUsersDetails) {};
   rpc getEventoWithDonacionesById (EventoId) returns (EventoWithAllListDonacionesDetails) {};
   
+  //------------SOLICITUDES-----------//
+  rpc getAllSolicitudDonaciones (Empty) returns (ListSolicitudDonacion) {};  
   //AGREGAR ACA TODOS LOS SERVICIOS
 }
