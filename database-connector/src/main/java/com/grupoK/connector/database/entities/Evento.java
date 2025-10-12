@@ -18,10 +18,14 @@ import java.util.List;
 @Table(name="evento")
 public class Evento {
 	
+//	@NonNull
+//	@Id
+//	@GeneratedValue(strategy = GenerationType.IDENTITY)
+//	private Integer id;
+	
 	@NonNull
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+    @Id
+    private String id;
 	
 	@Column(name="nombre", nullable=false, length=30)
 	private String nombre;

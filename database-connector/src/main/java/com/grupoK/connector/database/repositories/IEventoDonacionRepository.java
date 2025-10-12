@@ -14,7 +14,7 @@ import java.util.Optional;
 @Repository
 public interface IEventoDonacionRepository extends JpaRepository<EventoDonacion, Serializable>{
 	boolean existsByEventoAndDonacion(Evento evento, Donacion donacion);
-	Optional<EventoDonacion> findByEvento_IdAndDonacion_Id(Integer idEvento, Integer idDonacion);
-	Optional<List<EventoDonacion>> findByEvento_Id(Integer idEvento);
+	Optional<EventoDonacion> findByEvento_IdAndDonacion_Id(String idEvento, Integer idDonacion);
+	Optional<List<EventoDonacion>> findByEvento_Id(String idEvento);
 
 }
