@@ -18,8 +18,21 @@ public class EventController {
 
     
     @PostMapping("/request/new")
-    public ResponseEntity<Object> producerRequestDoantion(@RequestBody String message) {
+    public ResponseEntity<Object> producerRequestEvent(@RequestBody String message) {
         String topic = "_eventos-solidarios_";
+        try {
+        	producerService.sendMsgToTopic(topic, message);
+        }catch (Exception e) {
+        	Map<String, String> errorResponse = new HashMap<>();
+        	errorResponse.put("error", e.getMessage());
+        	return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+        }
+        return ResponseEntity.status(HttpStatus.CREATED).body(message);
+    }
+    
+    @PostMapping("/request/delete")
+    public ResponseEntity<Object> producerRequestDeleteEvent(@RequestBody String message) {
+        String topic = "_baja-evento-solidario_";
         try {
         	producerService.sendMsgToTopic(topic, message);
         }catch (Exception e) {
