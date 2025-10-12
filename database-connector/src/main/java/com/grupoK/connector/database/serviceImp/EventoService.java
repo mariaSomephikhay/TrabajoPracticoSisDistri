@@ -63,6 +63,7 @@ public class EventoService implements IEventoService {
 			preUpdated.setNombre(updated.getNombre());
 		if(updated.getFecha() != null)
 			preUpdated.setFecha(updated.getFecha());
+		preUpdated.setPublicado(updated.getPublicado());
 	}
 
 	@Override
