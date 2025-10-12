@@ -11,5 +11,5 @@ import java.util.List;
 
 public interface IEventoDonacionService {
 	boolean insertEventoDonacion(Evento evento, Donacion lstDonacion, int cantDonacion, Usuario user) throws Exception;
-	List<EventoDonacion> getEventoWithDonacionByIdEvento(Integer idEvento);
+	List<EventoDonacion> getEventoWithDonacionByIdEvento(String idEvento);
 }

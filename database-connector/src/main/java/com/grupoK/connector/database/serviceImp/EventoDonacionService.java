@@ -70,7 +70,7 @@ public class EventoDonacionService implements IEventoDonacionService {
 	}
 
 	@Override
-	public List<EventoDonacion> getEventoWithDonacionByIdEvento(Integer idEvento) {
+	public List<EventoDonacion> getEventoWithDonacionByIdEvento(String idEvento) {
 		Optional<List<EventoDonacion>> lst = repository.findByEvento_Id(idEvento);
 		return lst.get();
 	}

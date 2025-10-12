@@ -32,21 +32,26 @@ public class EventoService implements IEventoService {
 	@Override
 	public Evento saveOrUpdate(Evento evento) throws Exception{
 		
-		if(evento.getId() == 0 || evento.getId() == null) {
-			evento.setId(null); //Proto lo devuelve con un 0
-			evento.setIdUsuarioAlta(evento.getIdUsuarioAlta());
-        	eventoRepository.save(evento);
-        }
-        else {
-        	Evento eventoActual = (eventoRepository.findById(evento.getId())).get();
-        	map(eventoActual, evento);
-        	return eventoRepository.save(eventoActual);
-        }
-		return evento;
+//		if(evento.getId() == 0 || evento.getId() == null) {
+//			evento.setId(null); //Proto lo devuelve con un 0
+//			evento.setIdUsuarioAlta(evento.getIdUsuarioAlta());
+//        	eventoRepository.save(evento);
+//        }
+//        else {
+		
+		try {
+			Evento eventoActual = this.findById(evento.getId());
+			map(eventoActual, evento);
+			eventoRepository.save(eventoActual);
+		}catch (Exception e){
+			eventoRepository.save(evento);
+		}
+        
+        return evento;
 	}
 
 	@Override
-	public Evento findById(Integer id) throws Exception {
+	public Evento findById(String id) throws Exception {
 		return eventoRepository.findById(id)
 			.orElseThrow(() -> new Exception("No se encontró evento"));
 	}
@@ -85,9 +90,11 @@ public class EventoService implements IEventoService {
 	}
 
 	@Override
-	public List<Usuario> getUsersByIdEvento(Integer id) {
+	public List<Usuario> getUsersByIdEvento(String id) {
 		return eventoRepository.findUsuariosByEventoId(id);
 	}
+
+	
 
 	
 
