@@ -6,6 +6,8 @@ import json
 from config.security_config import SecurityConfig
 from grpc_manager_service import ManagerServiceImpl
 import grpc
+from datetime import datetime
+import random
 
 api = Namespace("eventos", description="Operaciones de eventos")
 cliente = ManagerServiceImpl()
@@ -16,7 +18,7 @@ cliente = ManagerServiceImpl()
 # Definición de modelos para el swagger
 #######################################################
 eventoDto = api.model("Evento", {
-    "id": fields.Integer(required=False),
+    "id": fields.String(required=False),
     "nombre": fields.String(required=True),
     "descripcion": fields.String(required=True),
     "fecha": fields.DateTime(required=True)
@@ -49,7 +51,7 @@ usersListDto = api.model('Evento.UsersListDto', {
     'usersIds': fields.List(fields.Integer, required=True, description='Lista de IDs de usuarios')
 })
 lstDonaciones = api.model('Evento.Lista.Donacion', {
-    "idEvento": fields.Integer(required=False),
+    "idEvento": fields.String(required=False),
     'listaDonacion' : fields.List(fields.Nested(donacionDto), required=True, description='Lista de las donaciones'),
 })
 rolDto = api.model("Evento.Rol", {
@@ -68,7 +70,7 @@ userDto = api.model("Evento.Usuario", {
     "rol": fields.Nested(rolDto, required=True)
 })
 eventoUsersDto = api.model("EventoUsersDto", {
-    "id": fields.Integer(required=False),
+    "id": fields.String(required=False),
     "users": fields.List(fields.Nested(userDto, required=False))
 })
 
@@ -96,6 +98,13 @@ class EventoInsert(Resource):
 
             payload = request.get_json()
 
+            if "id" not in payload:
+                fecha_hora = datetime.now().strftime("%Y%m%d%H%M%S")
+                random_digits = f"{random.randint(0, 9999):04}"
+                payload["id"] = f"GK-{fecha_hora}-{random_digits}"
+
+            print(payload)
+
             username = SecurityConfig.getUser()
             usuario = json.loads(cliente.getUserByUsername(username))
             payload["usuario"] = usuario
@@ -109,7 +118,7 @@ class EventoInsert(Resource):
             else:
                 return {"error": str(e.details())}, 500
 
-@api.route("/delete/<int:id>")
+@api.route("/delete/<string:id>")
 class Evento(Resource):
     @api.doc(security='Bearer Auth') # Esto hace que Swagger agregue el header para el token
     @SecurityConfig.authRequired("PRESIDENTE","COORDINADOR")
@@ -126,7 +135,7 @@ class Evento(Resource):
         except Exception as e:
             return {"error": str(e)}, 500
         
-@api.route("/<int:id>")
+@api.route("/<string:id>")
 class GetEvento(Resource):
     @api.doc(security='Bearer Auth') # Esto hace que Swagger agregue el header para el token
     @SecurityConfig.authRequired("PRESIDENTE", "COORDINADOR", "VOLUNTARIO")
@@ -156,7 +165,7 @@ class GetEvento(Resource):
     @api.response(400, "Bad Request", model=errorDto)
     @api.response(500, "Internal server error", model=errorDto)
     def put(self, id):
-        """Actualizar un donacion"""
+        """Actualizar un evento"""
         try:
             #print("REQUEST JSON:", request.get_json())  # <--- imprime el body
             if not request.is_json:
@@ -196,7 +205,7 @@ class EventoList(Resource):
             else:
                 return {"error": str(e)}, 500
             
-@api.route("/<int:id>/users/add")
+@api.route("/<string:id>/users/add")
 class AddUsersToEvento(Resource):
     @api.doc(security='Bearer Auth')
     @SecurityConfig.authRequired("PRESIDENTE", "COORDINADOR", "VOLUNTARIO")
@@ -230,7 +239,7 @@ class AddUsersToEvento(Resource):
             else:
                 return {"error": str(e.details())}, 500
             
-@api.route("/<int:id>/donaciones/add")
+@api.route("/<string:id>/donaciones/add")
 class AddDonacionesToEvento(Resource):
     @api.doc(security='Bearer Auth')
     @SecurityConfig.authRequired("PRESIDENTE", "COORDINADOR", "VOLUNTARIO")
@@ -272,7 +281,7 @@ class AddDonacionesToEvento(Resource):
             else:
                 return {"error": str(e.details())}, 500
 
-@api.route("/<int:id>/donaciones")
+@api.route("/<string:id>/donaciones")
 class getEventoWithDonacionesById(Resource):
     @api.doc(security='Bearer Auth')
     @SecurityConfig.authRequired("PRESIDENTE", "COORDINADOR", "VOLUNTARIO")
@@ -299,7 +308,7 @@ class getEventoWithDonacionesById(Resource):
             else:
                 return {"error": str(e.details())}, 500
 
-@api.route("/<int:id>/usuarios")
+@api.route("/<string:id>/usuarios")
 class getEventoWithUsersById(Resource):
     @api.doc(security='Bearer Auth')
     @SecurityConfig.authRequired("PRESIDENTE", "COORDINADOR", "VOLUNTARIO")
