@@ -130,7 +130,8 @@ message Organizacion {
 message SolicitudDonacion {
     string id = 1;
     Organizacion organizacionSolicitante= 2;
-    DonacionList donaciones = 3;
+    bool activa = 3;
+    repeated Donacion donaciones = 4;
 }
 
 message ListSolicitudDonacion {
