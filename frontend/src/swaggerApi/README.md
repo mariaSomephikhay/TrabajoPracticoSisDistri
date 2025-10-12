@@ -134,6 +134,7 @@ Class | Method | HTTP request | Description
 *ApiDocumentada.DonacionesApi* | [**updateDonationById**](docs/DonacionesApi.md#updateDonationById) | **PUT** /donacion/{id} | Actualizar un donacion
 *ApiDocumentada.EventosApi* | [**createEvent**](docs/EventosApi.md#createEvent) | **POST** /evento/new | Insertar nuevo evento
 *ApiDocumentada.EventosApi* | [**deleteEventById**](docs/EventosApi.md#deleteEventById) | **DELETE** /evento/delete/{id} | Eliminar evento
+*ApiDocumentada.EventosApi* | [**deleteRequesEventoKafka**](docs/EventosApi.md#deleteRequesEventoKafka) | **POST** /evento/request/delete | Publicar baja de evento en kafka
 *ApiDocumentada.EventosApi* | [**getEventoById**](docs/EventosApi.md#getEventoById) | **GET** /evento/{id} | Obtener Evento
 *ApiDocumentada.EventosApi* | [**getEventoWithDonacionesById**](docs/EventosApi.md#getEventoWithDonacionesById) | **GET** /evento/{id}/donaciones | Obtener donaciones del evento
 *ApiDocumentada.EventosApi* | [**getEventoWithUsersById**](docs/EventosApi.md#getEventoWithUsersById) | **GET** /evento/{id}/usuarios | Obtener usuarios del evento
@@ -162,6 +163,7 @@ Class | Method | HTTP request | Description
  - [ApiDocumentada.DonacionTransferencia](docs/DonacionTransferencia.md)
  - [ApiDocumentada.Error](docs/Error.md)
  - [ApiDocumentada.Evento](docs/Evento.md)
+ - [ApiDocumentada.EventoBajaKafka](docs/EventoBajaKafka.md)
  - [ApiDocumentada.EventoCategoria](docs/EventoCategoria.md)
  - [ApiDocumentada.EventoDonacion](docs/EventoDonacion.md)
  - [ApiDocumentada.EventoDonacionObjeto](docs/EventoDonacionObjeto.md)

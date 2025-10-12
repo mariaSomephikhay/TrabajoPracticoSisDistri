@@ -9,6 +9,7 @@ docs/DonacionTransferencia.md
 docs/DonacionesApi.md
 docs/Error.md
 docs/Evento.md
+docs/EventoBajaKafka.md
 docs/EventoCategoria.md
 docs/EventoDonacion.md
 docs/EventoDonacionObjeto.md
@@ -53,6 +54,7 @@ src/model/DonacionList.js
 src/model/DonacionTransferencia.js
 src/model/Error.js
 src/model/Evento.js
+src/model/EventoBajaKafka.js
 src/model/EventoCategoria.js
 src/model/EventoDonacion.js
 src/model/EventoDonacionObjeto.js
@@ -77,3 +79,4 @@ src/model/Token.js
 src/model/Transferencia.js
 src/model/Usuario.js
 src/model/UsuarioList.js
+test/model/EventoBajaKafka.spec.js
