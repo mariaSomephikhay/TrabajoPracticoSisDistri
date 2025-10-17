@@ -12,11 +12,11 @@ message UserUsername {
 }
 
 message UserId {
-    int32 id = 1;
+    string id = 1;
 }
 
 message Usuario {
-    int32 id = 1;
+    string id = 1;
     string username = 2;
     string password = 3;
     string email = 4;
