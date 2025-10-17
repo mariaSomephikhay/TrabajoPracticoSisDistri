@@ -42,5 +42,16 @@ public class EventController {
         }
         return ResponseEntity.status(HttpStatus.CREATED).body(message);
     }
+    
+    @PostMapping("/adhesion-evento/{id_organization}")
+    public ResponseEntity<Void> producerAddUsersToEvent(@PathVariable("id_organization") Long idOrganization, @RequestBody String message) {
+        String topic = "adhesion-evento_" + idOrganization;
+        try{
+        	producerService.sendMsgToTopic(topic, message);
+        }catch (Exception e) {
+            System.out.println(e);
+        }
+        return ResponseEntity.ok().build();
+    }
 
 }
