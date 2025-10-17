@@ -35,49 +35,44 @@ public class UsuarioService implements IUsuarioService {
 
 	@Override
 	public Usuario saveOrUpdate(Usuario usuario) {
-        if(usuario.getId() == 0 || usuario.getId() == null) {
-        	if(usuarioRepository.findByUsername(usuario.getUsername()).isPresent())
-                throw new UserUsernameAlreadyExistsException("El USERNAME ya está en uso.");
-        	else if(usuarioRepository.findByEmail(usuario.getEmail()).isPresent())
-                throw new UserEmailAlreadyExistsException("El EMAIL ya está en uso.");
-        	else {
-            	usuario.setId(null); //Proto lo devuelve con un 0
-            	usuario.setActivo(true); //Si no se pasa en la request proto lo devuelve en false
-                if(usuario.getOrganizacion() == null) {
-                    try {
-                        usuario.setOrganizacion(obtenerOrganizacionPropia(1));
-                    } catch (Exception e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-            	return usuarioRepository.save(usuario);
-        	}
-        }
-        else {        	
-            Optional<Usuario> userDB = usuarioRepository.findById(usuario.getId());
-            if (userDB.isEmpty())
-                throw new UserNotFoundException("No existe un usuario con ese ID.");
+		Optional<Usuario> userDB = usuarioRepository.findById(usuario.getId());
+		if (userDB.isEmpty()){
+			if(usuarioRepository.findByUsername(usuario.getUsername()).isPresent())
+				throw new UserUsernameAlreadyExistsException("El USERNAME ya está en uso.");
+	        else if(usuarioRepository.findByEmail(usuario.getEmail()).isPresent())
+	             throw new UserEmailAlreadyExistsException("El EMAIL ya está en uso.");
+	        else {
+	            usuario.setActivo(true); //Si no se pasa en la request proto lo devuelve en false
+	            if(usuario.getOrganizacion() == null) {
+	            	try {
+	            		usuario.setOrganizacion(obtenerOrganizacionPropia(1));
+	                } catch (Exception e) {
+	                	throw new RuntimeException(e);
+	                }
+	            }
+	            	return usuarioRepository.save(usuario);
+	        }
+		}else {
+				Usuario existingUser = userDB.get();
 
-            Usuario existingUser = userDB.get();
+	            // Se valida username solo si se cambio
+	            if (!StringUtils.equals(usuario.getUsername(), existingUser.getUsername())) {
+	                usuarioRepository.findByUsername(usuario.getUsername()).ifPresent(u -> {
+	                    if (!u.getId().equals(usuario.getId()))
+	                        throw new UserUsernameAlreadyExistsException("El USERNAME ya está en uso.");
+	                });
+	            }
 
-            // Se valida username solo si se cambio
-            if (!StringUtils.equals(usuario.getUsername(), existingUser.getUsername())) {
-                usuarioRepository.findByUsername(usuario.getUsername()).ifPresent(u -> {
-                    if (!u.getId().equals(usuario.getId()))
-                        throw new UserUsernameAlreadyExistsException("El USERNAME ya está en uso.");
-                });
-            }
-
-            // Se valida email solo si se cambio
-            if (!StringUtils.equals(usuario.getEmail(), existingUser.getEmail())) {
-                usuarioRepository.findByEmail(usuario.getEmail()).ifPresent(u -> {
-                    if (!u.getId().equals(usuario.getId()))
-                        throw new UserEmailAlreadyExistsException("El EMAIL ya está en uso.");
-                });
-            }  		
-        	map(existingUser, usuario);
-        	return usuarioRepository.save(existingUser);
-        }
+	            // Se valida email solo si se cambio
+	            if (!StringUtils.equals(usuario.getEmail(), existingUser.getEmail())) {
+	                usuarioRepository.findByEmail(usuario.getEmail()).ifPresent(u -> {
+	                    if (!u.getId().equals(usuario.getId()))
+	                        throw new UserEmailAlreadyExistsException("El EMAIL ya está en uso.");
+	                });
+	            }  		
+	        	map(existingUser, usuario);
+	        	return usuarioRepository.save(existingUser);
+			}
 	}
 	
 	
