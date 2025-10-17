@@ -21,13 +21,12 @@ import java.util.List;
 public class Usuario {
 	@NonNull
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	private String id;
 	
-	@Column(name="username", unique = true, nullable=false, length=15)
+	@Column(name="username", unique = true, nullable=true, length=15)
 	private String username;
 	
-	@Column(name="password", nullable=false, length=60)
+	@Column(name="password", nullable=true, length=60)
 	private String password;
 	
 	@Column(name="email", unique = true, nullable=false, length=50)
