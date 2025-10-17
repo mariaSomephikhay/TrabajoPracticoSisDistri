@@ -5,6 +5,8 @@ from utils.password_utils import hashPassword, verifyPassword, generateRandomPas
 from utils.mails_utils import enviarPasswordPorEmail, validarEmail, MailSendError
 from config.security_config import SecurityConfig
 from grpc_manager_service import ManagerServiceImpl
+from datetime import datetime
+import random
 
 api = Namespace("user", description="Operaciones de usuario")
 cliente = ManagerServiceImpl()
@@ -17,7 +19,7 @@ rolDto = api.model("Rol", {
     "descripcion": fields.String(required=True)
 })
 userDto = api.model("Usuario", {
-    "id": fields.Integer(required=False),
+    "id": fields.String(required=False),
     "username": fields.String(required=True),
     "password": fields.String(required=False),
     "email": fields.String(required=True),
@@ -88,6 +90,12 @@ class User(Resource):
                 return {"error": "Request body must be JSON"}, 400
 
             payload = request.get_json()
+
+            # Genero un ID Unico
+            if "id" not in payload:
+                fecha_hora = datetime.now().strftime("%Y%m%d%H%M%S")
+                random_digits = f"{random.randint(0, 9999):04}"
+                payload["id"] = f"GK-{fecha_hora}-{random_digits}"
 
             #Valido el email obtenido de la request
             validarEmail(payload["email"])

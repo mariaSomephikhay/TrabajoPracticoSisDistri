@@ -55,7 +55,7 @@ eventoListDto = api.model("EventoList", {
     "eventos": fields.List(fields.Nested(eventoDto))
 })
 usersListDto = api.model('Evento.UsersListDto', {
-    'usersIds': fields.List(fields.Integer, required=True, description='Lista de IDs de usuarios')
+    'usersIds': fields.List(fields.String, required=True, description='Lista de IDs de usuarios')
 })
 lstDonaciones = api.model('Evento.Lista.Donacion', {
     "idEvento": fields.String(required=False),
@@ -66,7 +66,7 @@ rolDto = api.model("Evento.Rol", {
     "descripcion": fields.String(required=True)
 })
 userDto = api.model("Evento.Usuario", {
-    "id": fields.Integer(required=False),
+    "id": fields.String(required=False),
     "username": fields.String(required=True),
     "password": fields.String(required=False),
     "email": fields.String(required=True),
@@ -95,6 +95,20 @@ eventoKafka = api.model("eventoKafka", {
 eventoBajaKafka = api.model("eventoBajaKafka", {
     "id_organizacion": fields.String(required=True),
     "id_evento": fields.String(required=True)
+})
+
+voluntarioDto = api.model("VoluntarioDto", {
+    "idOrganizacion": fields.Integer(required=True),
+    "idVoluntario": fields.Integer(required=True),
+    "nombre": fields.String(required=True),
+    "apellido": fields.String(required=True),
+    "telefono": fields.String(required=False),
+    "email": fields.String(required=True)
+})
+
+adhesionEventoKafka = api.model("adhesionEventoKafka", {
+    "id_evento": fields.String(required=True),
+    "voluntario": fields.Nested(voluntarioDto, required=True)
 })
 
 #######################################################
@@ -218,8 +232,6 @@ class EventoList(Resource):
         """Obtener todos los eventos"""
         try:
             result = cliente.getAllEventos()
-
-            print(result)
 
             eventos = json.loads(result)
 
@@ -421,6 +433,34 @@ class Solicitud(Resource):
             response = requests.post(url, json=data)
 
             return response.json(), response.status_code
+        
+        except Exception as e:
+            return {"error": str(e)}, 500
+
+# Kafka - Endpoints
+@api.route("/adhesion/evento/<int:id_organization>")
+class adhesion(Resource):
+    @api.doc(security='Bearer Auth')
+    @SecurityConfig.authRequired("PRESIDENTE", "COORDINADOR")
+    @api.doc(id="adhesionEvento") # Esto define el operationId
+    @api.expect(adhesionEventoKafka) #Request
+    @api.response(200, "Success")
+    @api.response(401, "Unauthorized", model=errorDto)
+    @api.response(400, "Bad Request", model=errorDto)
+    @api.response(500, "Internal server error", model=errorDto)
+    def post(self, id_organization):
+        """Adhesion de voluntario a evento"""
+        try:
+            if not request.is_json:
+                return {"error": "Bad Request"}, 400
+            
+            data = request.get_json()
+
+            # Endpoint del producer en Java
+            url = f"{PRODUCER_URL}/event/adhesion-evento/{id_organization}"
+            requests.post(url, json=data)
+
+            return 200
         
         except Exception as e:
             return {"error": str(e)}, 500
