@@ -30,7 +30,7 @@ public class DataInitializer {
                 rolRepo.save(new Rol(null, TipoRoles.VOCAL));
 
                 usuarioRepo.save(new Usuario(
-                        null,			   // id
+                        "GK-20251017133221-1111",			   // id
                         "user1",           // username
                         "$2b$12$4pzYx189NUVwtpsK5uTuUOJR60MhqKZVYjss.2pZPuipv2/P/TwmW", // password(user1)
                         "user@mail.com",   // email
@@ -47,7 +47,7 @@ public class DataInitializer {
             
 
                 usuarioRepo.save(new Usuario(
-                        null,
+                        "GK-20251017133221-2222",
                         "user2",
                         "$2b$12$q0cJWPMPkXziA2KuCig01.b88wmiRQxaBwAAQQWAwzUgU6R3VpSYe", //password (user2)
                         "user2@mail.com",
@@ -63,7 +63,7 @@ public class DataInitializer {
                 ));
 
                 usuarioRepo.save(new Usuario(
-                        null,
+                        "GK-20251017133221-3333",
                         "user3",
                         "$2b$12$q0cJWPMPkXziA2KuCig01.b88wmiRQxaBwAAQQWAwzUgU6R3VpSYe", //password (user2)
                         "user3@mail.com",
@@ -79,7 +79,7 @@ public class DataInitializer {
                 ));
 
                 usuarioRepo.save(new Usuario(
-                        null,
+                        "GK-20251017133221-4444",
                         "user4",
                         "$2b$12$q0cJWPMPkXziA2KuCig01.b88wmiRQxaBwAAQQWAwzUgU6R3VpSYe", //password (user2)
                         "user4@mail.com",
@@ -95,7 +95,7 @@ public class DataInitializer {
                 ));
                 
                 usuarioRepo.save(new Usuario(
-                        null,			   // id
+                        "GK-20251017133221-5555",			   // id
                         "Kafka",           // username
                         "$2b$12$4pzYx189NUVwtpsK5uTuUOJR60MhqKZVYjss.2pZPuipv2/P/TwmW", // password(user1)
                         "Kafka@mail.com",   // email
