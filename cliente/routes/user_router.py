@@ -5,6 +5,8 @@ from utils.password_utils import hashPassword, verifyPassword, generateRandomPas
 from utils.mails_utils import enviarPasswordPorEmail, validarEmail, MailSendError
 from config.security_config import SecurityConfig
 from grpc_manager_service import ManagerServiceImpl
+from datetime import datetime
+import random
 
 api = Namespace("user", description="Operaciones de usuario")
 cliente = ManagerServiceImpl()
@@ -17,7 +19,7 @@ rolDto = api.model("Rol", {
     "descripcion": fields.String(required=True)
 })
 userDto = api.model("Usuario", {
-    "id": fields.Integer(required=False),
+    "id": fields.String(required=False),
     "username": fields.String(required=True),
     "password": fields.String(required=False),
     "email": fields.String(required=True),
@@ -89,6 +91,12 @@ class User(Resource):
 
             payload = request.get_json()
 
+            # Genero un ID Unico
+            if "id" not in payload:
+                fecha_hora = datetime.now().strftime("%Y%m%d%H%M%S")
+                random_digits = f"{random.randint(0, 9999):04}"
+                payload["id"] = f"GK-{fecha_hora}-{random_digits}"
+
             #Valido el email obtenido de la request
             validarEmail(payload["email"])
 
@@ -105,7 +113,10 @@ class User(Resource):
             return json.loads(result), 201
         except MailSendError as e:
             return {"error": str(e)}, e.code or 500
+            print("error enviando mail: ")
+            print(e)
         except Exception as e:
+            print(e)
             error_msg = getattr(e, "details", lambda: str(e))()
             # Error de gRPC que devuelve el servicio
             if "ALREADY_EXISTS" in str(e):
@@ -198,6 +209,30 @@ class User(Resource):
             result = cliente.deleteUser(payload)
             return json.loads(result), 200
         except Exception as e:
+            error_msg = getattr(e, "details", lambda: str(e))()
+            # Error de gRPC que devuelve el servicio
+            if "NOT_FOUND" in str(e):
+                return {"error": error_msg}, 404
+            else:
+                return {"error": error_msg}, 500
+
+@api.route("/username/<string:username>")
+class User(Resource):
+    @api.doc(security='Bearer Auth') # Esto hace que Swagger agregue el header para el token
+    @SecurityConfig.authRequired("PRESIDENTE","VOLUNTARIO")
+    @api.doc(id="getUserByUsername") # Esto define el operationId
+    @api.response(200, "Success", model=userDto)
+    @api.response(403, "Access forbidden", model=errorDto)
+    @api.response(404, "Resource not found", model=errorDto)
+    @api.response(500, "Internal server error", model=errorDto)
+    def get(self, username):
+        """Obtener usuario"""
+        try:
+            payload = {"username": username}  # solo necesitas el id
+            result = cliente.getUserByUsername(payload)
+            return json.loads(result), 200
+        except Exception as e:
+            # Capturo solo el mensaje de gRPC si existe, o str(e) si no
             error_msg = getattr(e, "details", lambda: str(e))()
             # Error de gRPC que devuelve el servicio
             if "NOT_FOUND" in str(e):

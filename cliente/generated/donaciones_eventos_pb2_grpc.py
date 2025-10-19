@@ -5,7 +5,7 @@ import warnings
 
 import donaciones_eventos_pb2 as donaciones__eventos__pb2
 
-GRPC_GENERATED_VERSION = '1.74.0'
+GRPC_GENERATED_VERSION = '1.75.1'
 GRPC_VERSION = grpc.__version__
 _version_not_supported = False
 
@@ -109,6 +109,21 @@ class ManagerServiceStub(object):
                 request_serializer=donaciones__eventos__pb2.EventoWithListDonaciones.SerializeToString,
                 response_deserializer=donaciones__eventos__pb2.EventoWithListDonacionesDetails.FromString,
                 _registered_method=True)
+        self.getEventoWithUsersById = channel.unary_unary(
+                '/managerservice.ManagerService/getEventoWithUsersById',
+                request_serializer=donaciones__eventos__pb2.EventoId.SerializeToString,
+                response_deserializer=donaciones__eventos__pb2.EventoWithListUsersDetails.FromString,
+                _registered_method=True)
+        self.getEventoWithDonacionesById = channel.unary_unary(
+                '/managerservice.ManagerService/getEventoWithDonacionesById',
+                request_serializer=donaciones__eventos__pb2.EventoId.SerializeToString,
+                response_deserializer=donaciones__eventos__pb2.EventoWithAllListDonacionesDetails.FromString,
+                _registered_method=True)
+        self.getAllSolicitudDonaciones = channel.unary_unary(
+                '/managerservice.ManagerService/getAllSolicitudDonaciones',
+                request_serializer=donaciones__eventos__pb2.Empty.SerializeToString,
+                response_deserializer=donaciones__eventos__pb2.ListSolicitudDonacion.FromString,
+                _registered_method=True)
 
 
 class ManagerServiceServicer(object):
@@ -205,6 +220,25 @@ class ManagerServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def getEventoWithUsersById(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def getEventoWithDonacionesById(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def getAllSolicitudDonaciones(self, request, context):
+        """------------SOLICITUDES-----------//
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_ManagerServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -282,6 +316,21 @@ def add_ManagerServiceServicer_to_server(servicer, server):
                     servicer.insertDonacionesToEvento,
                     request_deserializer=donaciones__eventos__pb2.EventoWithListDonaciones.FromString,
                     response_serializer=donaciones__eventos__pb2.EventoWithListDonacionesDetails.SerializeToString,
+            ),
+            'getEventoWithUsersById': grpc.unary_unary_rpc_method_handler(
+                    servicer.getEventoWithUsersById,
+                    request_deserializer=donaciones__eventos__pb2.EventoId.FromString,
+                    response_serializer=donaciones__eventos__pb2.EventoWithListUsersDetails.SerializeToString,
+            ),
+            'getEventoWithDonacionesById': grpc.unary_unary_rpc_method_handler(
+                    servicer.getEventoWithDonacionesById,
+                    request_deserializer=donaciones__eventos__pb2.EventoId.FromString,
+                    response_serializer=donaciones__eventos__pb2.EventoWithAllListDonacionesDetails.SerializeToString,
+            ),
+            'getAllSolicitudDonaciones': grpc.unary_unary_rpc_method_handler(
+                    servicer.getAllSolicitudDonaciones,
+                    request_deserializer=donaciones__eventos__pb2.Empty.FromString,
+                    response_serializer=donaciones__eventos__pb2.ListSolicitudDonacion.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -689,6 +738,87 @@ class ManagerService(object):
             '/managerservice.ManagerService/insertDonacionesToEvento',
             donaciones__eventos__pb2.EventoWithListDonaciones.SerializeToString,
             donaciones__eventos__pb2.EventoWithListDonacionesDetails.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def getEventoWithUsersById(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/managerservice.ManagerService/getEventoWithUsersById',
+            donaciones__eventos__pb2.EventoId.SerializeToString,
+            donaciones__eventos__pb2.EventoWithListUsersDetails.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def getEventoWithDonacionesById(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/managerservice.ManagerService/getEventoWithDonacionesById',
+            donaciones__eventos__pb2.EventoId.SerializeToString,
+            donaciones__eventos__pb2.EventoWithAllListDonacionesDetails.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def getAllSolicitudDonaciones(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/managerservice.ManagerService/getAllSolicitudDonaciones',
+            donaciones__eventos__pb2.Empty.SerializeToString,
+            donaciones__eventos__pb2.ListSolicitudDonacion.FromString,
             options,
             channel_credentials,
             insecure,

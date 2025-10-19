@@ -12,11 +12,11 @@ message UserUsername {
 }
 
 message UserId {
-    int32 id = 1;
+    string id = 1;
 }
 
 message Usuario {
-    int32 id = 1;
+    string id = 1;
     string username = 2;
     string password = 3;
     string email = 4;
@@ -64,18 +64,26 @@ message Categoria {
     string descripcion = 2;
 }
 
+message DonacionesAsociadas {
+    Donacion donacion = 1;
+    int32 cantidad = 2;
+}
+
 //------------EVENTO-----------//
 
 message Evento {
-    int32 id = 1;
+    string id = 1;
     string nombre = 2;
     string descripcion = 3;
     google.protobuf.Timestamp fecha = 4;
     Usuario usuario = 6;
+    int32 idOrganizacion = 7;
+    bool activo = 8;
+    bool publicado = 9;
 }
 
 message EventoId {
-    int32 id = 1;
+    string id = 1;
 }
 
 message EventoList {
@@ -83,17 +91,17 @@ message EventoList {
 }
 
 message EventoWithListUsers {
-	int32 id = 1;
+	string id = 1;
     repeated UserId usersIds = 2;
 }
 
 message EventoWithListUsersDetails {
-	Evento id = 1;
+	Evento evento = 1;
     repeated Usuario users = 2;
 }
 
 message EventoWithListDonaciones {
-	int32 idEvento = 1;
+	string idEvento = 1;
     int32 donacionId = 2;
     int32 cantidad = 3;
     Usuario usuario = 4;
@@ -104,6 +112,31 @@ message EventoWithListDonacionesDetails {
     Donacion donacion = 2;
     int32 cantidad = 3;
 }
+
+message EventoWithAllListDonacionesDetails {
+	Evento id = 1;
+    repeated DonacionesAsociadas listaDonacion = 2;
+}
+
+//------------SOLICITUDES-----------//
+
+message Organizacion {
+    int32 id = 1;
+    string nombre = 2;
+    bool externa = 3;
+}
+
+message SolicitudDonacion {
+    string id = 1;
+    Organizacion organizacionSolicitante= 2;
+    bool activa = 3;
+    repeated Donacion donaciones = 4;
+}
+
+message ListSolicitudDonacion {
+    repeated SolicitudDonacion solicitudes = 1;
+}
+
 
 service ManagerService{
   rpc getUserByUsername (UserUsername) returns (Usuario) {};
@@ -123,6 +156,10 @@ service ManagerService{
   rpc getAllEventos (Empty) returns (EventoList) {};  
   rpc insertUsersToEvento (EventoWithListUsers) returns (EventoWithListUsersDetails) {};
   rpc insertDonacionesToEvento (EventoWithListDonaciones) returns (EventoWithListDonacionesDetails) {};
-
+  rpc getEventoWithUsersById (EventoId) returns (EventoWithListUsersDetails) {};
+  rpc getEventoWithDonacionesById (EventoId) returns (EventoWithAllListDonacionesDetails) {};
+  
+  //------------SOLICITUDES-----------//
+  rpc getAllSolicitudDonaciones (Empty) returns (ListSolicitudDonacion) {};  
   //AGREGAR ACA TODOS LOS SERVICIOS
 }
