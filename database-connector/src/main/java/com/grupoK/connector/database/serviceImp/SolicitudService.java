@@ -1,8 +1,6 @@
 package com.grupoK.connector.database.serviceImp;
 
 import com.grupoK.connector.database.configuration.annotations.ConsumerServerAnnotation;
-import com.grupoK.connector.database.entities.Donacion;
-import com.grupoK.connector.database.entities.Organizacion;
 import com.grupoK.connector.database.entities.Solicitud;
 import com.grupoK.connector.database.entities.SolicitudDonacion;
 import com.grupoK.connector.database.repositories.IDonacionRepository;
@@ -13,9 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @ConsumerServerAnnotation
 @Service
@@ -73,10 +69,13 @@ public class SolicitudService implements ISolicitudService {
     public Solicitud delete(String idSolicitud) throws Exception {
         Solicitud solicitudBD = findById(idSolicitud);
         List<SolicitudDonacion> donationsAssociatedToRequest = findAllDonationsAssociatedByRequest(solicitudBD);
-
+        
         //Baja fisica en la tabla SolicitudDonacion
         solicitudDonacionRepository.deleteAllById(donationsAssociatedToRequest.stream().map(SolicitudDonacion::getId).toList());
-
+        
+        //Baja fisica en la tabla de donaciones
+        donacionRepository.deleteAll(donationsAssociatedToRequest.stream().map(SolicitudDonacion::getDonacion).toList());;
+        
         //Baja logica de la solicitud
         solicitudBD.setActiva(false);
         return solicitudRepository.save(solicitudBD);
