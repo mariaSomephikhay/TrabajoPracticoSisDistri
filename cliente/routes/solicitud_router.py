@@ -54,6 +54,10 @@ SolicitudDonacionGetDto = api.model("SolicitudGet", {
 SolicitudDonacionGetListDto = api.model("SolicitudGetList", {
     "solicitudes": fields.List(fields.Nested(SolicitudDonacionGetDto))
 })
+SolicitudDonacionBajaDto = api.model("SolicitudBaja", {
+    "id_solicitud_donacion": fields.String(required=True),
+    "id_organizacion_solicitante": fields.Integer(required=True)
+})
 
 #######################################################
 # Definición de endpoints-kafka para el swagger
@@ -111,3 +115,29 @@ class Solicitud(Resource):
                 return  {"error": str(e.details())}, 401
             else:
                 return {"error": str(e)}, 500
+            
+@api.route("/delete")
+class Solicitud(Resource):
+    @api.doc(security='Bearer Auth')
+    @SecurityConfig.authRequired("PRESIDENTE", "VOCAL")
+    @api.doc(id="deleteRequestDonacion") # Esto define el operationId
+    @api.expect(SolicitudDonacionBajaDto) #Request
+    @api.response(201, "Success", model=SolicitudDonacionBajaDto)
+    @api.response(401, "Unauthorized", model=errorDto)
+    @api.response(500, "Internal server error", model=errorDto)
+    def delete(self):
+        """Enviar solicitud de donaciones a kafka"""
+        try:
+            if not request.is_json:
+                return {"error": "Bad Request"}, 400
+            
+            data = request.get_json()
+
+            # Endpoint del producer en Java
+            url = f"{PRODUCER_URL}/donation/request/delete"
+            response = requests.post(url, json=data)
+
+            return response.json(), response.status_code
+        
+        except Exception as e:
+            return {"error": str(e)}, 500
