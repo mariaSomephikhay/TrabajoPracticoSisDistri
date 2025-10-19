@@ -18,6 +18,7 @@ import com.grupoK.connector.database.serviceImp.SolicitudService;
 import com.grupoK.connector.database.serviceImp.UsuarioService;
 import com.grupoK.consumer.modelDto.SolicitudDto;
 import com.grupoK.consumer.modelDto.DonacionDto;
+import com.grupoK.consumer.modelDto.SolicitudBajaDto;
 
 @Service
 public class ConsumerSolicitud {
@@ -58,11 +59,8 @@ public class ConsumerSolicitud {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    
-        // 👉 acá procesás el JSON:
-        // - parsear con Jackson o Gson
-        // - actualizar inventario local (sumar o restar)
     }
+    
     //-------LOG para demostrar que otros grupos pueden consumir los mismos mesnajes a la vez
     @KafkaListener(topicPattern = "_solicitud-donaciones_", groupId = "Nova_Trend")
     public void consumeSolicitudNovaTrend(ConsumerRecord<String, String> record) {
@@ -75,6 +73,23 @@ public class ConsumerSolicitud {
         System.out.println("Esencia Viva - Transferencia recibida desde " + record.topic());
         System.out.println("Esencia Viva - Contenido: " + record.value());
     }
-  //---FIN DE LOG para demostrar que otros grupos pueden consumir los mismos mesnajes a la vez
+    //---FIN DE LOG para demostrar que otros grupos pueden consumir los mismos mesnajes a la vez
+  
+	@KafkaListener(topicPattern = "_baja-solicitud-donaciones_", groupId = "grupo_k")
+	public void consumeBajaEvento(ConsumerRecord<String, String> record) {
+	    System.out.println("Transferencia recibida desde " + record.topic());
+	    System.out.println("Contenido: " + record.value());
+
+	    ObjectMapper objectMapper = new ObjectMapper();
+
+	    try {
+	    	SolicitudBajaDto solicitud = objectMapper.readValue(record.value(), SolicitudBajaDto.class);
+
+	        solicitudService.delete(solicitud.getId());
+	        
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	}
 
 }
