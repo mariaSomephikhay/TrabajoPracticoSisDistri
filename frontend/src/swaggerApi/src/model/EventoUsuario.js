@@ -61,7 +61,7 @@ class EventoUsuario {
             obj = obj || new EventoUsuario();
 
             if (data.hasOwnProperty('id')) {
-                obj['id'] = ApiClient.convertToType(data['id'], 'Number');
+                obj['id'] = ApiClient.convertToType(data['id'], 'String');
             }
             if (data.hasOwnProperty('username')) {
                 obj['username'] = ApiClient.convertToType(data['username'], 'String');
@@ -104,6 +104,10 @@ class EventoUsuario {
             }
         }
         // ensure the json data is a string
+        if (data['id'] && !(typeof data['id'] === 'string' || data['id'] instanceof String)) {
+            throw new Error("Expected the field `id` to be a primitive type in the JSON string but got " + data['id']);
+        }
+        // ensure the json data is a string
         if (data['username'] && !(typeof data['username'] === 'string' || data['username'] instanceof String)) {
             throw new Error("Expected the field `username` to be a primitive type in the JSON string but got " + data['username']);
         }
@@ -141,7 +145,7 @@ class EventoUsuario {
 EventoUsuario.RequiredProperties = ["username", "email", "nombre", "apellido", "activo", "rol"];
 
 /**
- * @member {Number} id
+ * @member {String} id
  */
 EventoUsuario.prototype['id'] = undefined;
 

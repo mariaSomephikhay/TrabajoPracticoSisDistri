@@ -11,6 +11,15 @@ const RequestDonationService = {
     }
   },
 
+  bajaSolicitudDonacion: async (RequestDonation) => {
+    try {
+      return await solicitudApi.deleteRequestDonacion(RequestDonation)
+    } catch (err) {
+      console.error("Error al dar de baja la solicitud de donacion:", err)
+      throw err;
+    }
+  },
+
   obtenerListadoSolicitudDonaciones: async () => {
     try {
       return await solicitudApi.getAllRequestDonacion()

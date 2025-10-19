@@ -4,6 +4,6 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**usersIds** | **[Number]** | Lista de IDs de usuarios | 
+**usersIds** | **[String]** | Lista de IDs de usuarios | 
 
 

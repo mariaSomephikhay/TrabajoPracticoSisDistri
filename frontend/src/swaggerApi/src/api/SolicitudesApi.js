@@ -14,6 +14,7 @@
 
 import ApiClient from "../ApiClient";
 import Solicitud from '../model/Solicitud';
+import SolicitudBaja from '../model/SolicitudBaja';
 import SolicitudError from '../model/SolicitudError';
 import SolicitudGetList from '../model/SolicitudGetList';
 
@@ -35,6 +36,47 @@ export default class SolicitudesApi {
         this.apiClient = apiClient || ApiClient.instance;
     }
 
+
+    /**
+     * Callback function to receive the result of the deleteRequestDonacion operation.
+     * @callback module:api/SolicitudesApi~deleteRequestDonacionCallback
+     * @param {String} error Error message, if any.
+     * @param {module:model/SolicitudBaja} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Enviar solicitud de donaciones a kafka
+     * @param {module:model/SolicitudBaja} payload 
+     * @param {module:api/SolicitudesApi~deleteRequestDonacionCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link module:model/SolicitudBaja}
+     */
+    deleteRequestDonacion(payload, callback) {
+      let postBody = payload;
+      // verify the required parameter 'payload' is set
+      if (payload === undefined || payload === null) {
+        throw new Error("Missing the required parameter 'payload' when calling deleteRequestDonacion");
+      }
+
+      let pathParams = {
+      };
+      let queryParams = {
+      };
+      let headerParams = {
+      };
+      let formParams = {
+      };
+
+      let authNames = ['Bearer Auth'];
+      let contentTypes = ['application/json'];
+      let accepts = ['application/json'];
+      let returnType = SolicitudBaja;
+      return this.apiClient.callApi(
+        '/solicitud/delete', 'DELETE',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, null, callback
+      );
+    }
 
     /**
      * Callback function to receive the result of the getAllRequestDonacion operation.

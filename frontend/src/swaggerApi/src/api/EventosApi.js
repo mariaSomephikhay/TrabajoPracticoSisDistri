@@ -13,6 +13,7 @@
 
 
 import ApiClient from "../ApiClient";
+import AdhesionEventoKafka from '../model/AdhesionEventoKafka';
 import Error from '../model/Error';
 import Evento from '../model/Evento';
 import EventoBajaKafka from '../model/EventoBajaKafka';
@@ -41,6 +42,52 @@ export default class EventosApi {
         this.apiClient = apiClient || ApiClient.instance;
     }
 
+
+    /**
+     * Callback function to receive the result of the adhesionEvento operation.
+     * @callback module:api/EventosApi~adhesionEventoCallback
+     * @param {String} error Error message, if any.
+     * @param data This operation does not return a value.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Adhesion de voluntario a evento
+     * @param {Number} idOrganization 
+     * @param {module:model/AdhesionEventoKafka} payload 
+     * @param {module:api/EventosApi~adhesionEventoCallback} callback The callback function, accepting three arguments: error, data, response
+     */
+    adhesionEvento(idOrganization, payload, callback) {
+      let postBody = payload;
+      // verify the required parameter 'idOrganization' is set
+      if (idOrganization === undefined || idOrganization === null) {
+        throw new Error("Missing the required parameter 'idOrganization' when calling adhesionEvento");
+      }
+      // verify the required parameter 'payload' is set
+      if (payload === undefined || payload === null) {
+        throw new Error("Missing the required parameter 'payload' when calling adhesionEvento");
+      }
+
+      let pathParams = {
+        'id_organization': idOrganization
+      };
+      let queryParams = {
+      };
+      let headerParams = {
+      };
+      let formParams = {
+      };
+
+      let authNames = ['Bearer Auth'];
+      let contentTypes = ['application/json'];
+      let accepts = ['application/json'];
+      let returnType = null;
+      return this.apiClient.callApi(
+        '/evento/adhesion/evento/{id_organization}', 'POST',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, null, callback
+      );
+    }
 
     /**
      * Callback function to receive the result of the createEvent operation.

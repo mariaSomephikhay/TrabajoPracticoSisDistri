@@ -14,6 +14,10 @@ export const RequestDonationInventory = () => {
   const [loading, setLoading] = useState(true)
   const [showModal, setShowModal] = useState(false);
   const [error, setError] = useState(null)
+  const [bajaSolicitud, setBajaSolicitud] = useState({
+      id_solicitud_donacion: '',
+      id_organizacion_solicitante: ''
+      });
   
   useEffect(() => {
     const fetchDonation = async () => {
@@ -32,15 +36,27 @@ export const RequestDonationInventory = () => {
     fetchDonation()
   }, [])
 
-
-
-  const handleDeleteDonationOnClick = (solicitud) => { 
+/*  const handleDeleteDonationOnClick = (solicitud) => { 
     setSolicitudSelected(solicitud) 
     setShowModal(true) 
-  }
+  }*/
+
+const handleDeleteDonationOnClick = (solicitud) => {
+  // Guardamos la solicitud completa (por si la necesitás para mostrar info)
+  setSolicitudSelected(solicitud)
+  
+  // Armamos el objeto que se enviará para la baja
+  setBajaSolicitud({
+    id_solicitud_donacion: solicitud.id, 
+    id_organizacion_solicitante: solicitud.organizacionSolicitante?.id ?? ''
+  })
+  
+  setShowModal(true)
+}
   const handleConfirmDeleteDonation = async() => { 
     try {
       //baja producir en kafka
+      const data = await RequestDonationService.bajaSolicitudDonacion(bajaSolicitud)
       setSolicitudSelected(null) // Se limpia la selección
 
       // Actualización optimista: cambio eliminado a true inmediatamente
