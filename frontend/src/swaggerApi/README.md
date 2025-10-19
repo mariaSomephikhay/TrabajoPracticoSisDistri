@@ -132,6 +132,7 @@ Class | Method | HTTP request | Description
 *ApiDocumentada.DonacionesApi* | [**getDonationById**](docs/DonacionesApi.md#getDonationById) | **GET** /donacion/{id} | Obtener Donacion
 *ApiDocumentada.DonacionesApi* | [**listDonations**](docs/DonacionesApi.md#listDonations) | **GET** /donacion/ | Obtener todos las donaciones
 *ApiDocumentada.DonacionesApi* | [**updateDonationById**](docs/DonacionesApi.md#updateDonationById) | **PUT** /donacion/{id} | Actualizar un donacion
+*ApiDocumentada.EventosApi* | [**adhesionEvento**](docs/EventosApi.md#adhesionEvento) | **POST** /evento/adhesion/evento/{id_organization} | Adhesion de voluntario a evento
 *ApiDocumentada.EventosApi* | [**createEvent**](docs/EventosApi.md#createEvent) | **POST** /evento/new | Insertar nuevo evento
 *ApiDocumentada.EventosApi* | [**deleteEventById**](docs/EventosApi.md#deleteEventById) | **DELETE** /evento/delete/{id} | Eliminar evento
 *ApiDocumentada.EventosApi* | [**deleteRequesEventoKafka**](docs/EventosApi.md#deleteRequesEventoKafka) | **POST** /evento/request/delete | Publicar baja de evento en kafka
@@ -144,6 +145,8 @@ Class | Method | HTTP request | Description
 *ApiDocumentada.SolicitudesApi* | [**getAllRequestDonacion**](docs/SolicitudesApi.md#getAllRequestDonacion) | **GET** /solicitud/ | Obtener todos las solicitudes donaciones
 *ApiDocumentada.EventosApi* | [**newRequesEventoKafka**](docs/EventosApi.md#newRequesEventoKafka) | **POST** /evento/request/new | Publicar evento en kafka
 *ApiDocumentada.EventosApi* | [**updateEventoById**](docs/EventosApi.md#updateEventoById) | **PUT** /evento/{id} | Actualizar un evento
+*ApiDocumentada.SolicitudesApi* | [**deleteRequestDonacion**](docs/SolicitudesApi.md#deleteRequestDonacion) | **DELETE** /solicitud/delete | Enviar solicitud de donaciones a kafka
+*ApiDocumentada.SolicitudesApi* | [**getAllRequestDonacion**](docs/SolicitudesApi.md#getAllRequestDonacion) | **GET** /solicitud/ | Obtener todos las solicitudes donaciones
 *ApiDocumentada.SolicitudesApi* | [**newRequestDonacion**](docs/SolicitudesApi.md#newRequestDonacion) | **POST** /solicitud/request/new | Enviar solicitud de donaciones a kafka
 *ApiDocumentada.TransferenciasApi* | [**newTransfer**](docs/TransferenciasApi.md#newTransfer) | **POST** /transferencia/donacion/{id_solicitante}/new | Enviar transferencia de donaciones a organizacion
 *ApiDocumentada.UserApi* | [**createUser**](docs/UserApi.md#createUser) | **POST** /user/new | Dar de alta un nuevo usuario
@@ -157,6 +160,7 @@ Class | Method | HTTP request | Description
 
 ## Documentation for Models
 
+ - [ApiDocumentada.AdhesionEventoKafka](docs/AdhesionEventoKafka.md)
  - [ApiDocumentada.Categoria](docs/Categoria.md)
  - [ApiDocumentada.Donacion](docs/Donacion.md)
  - [ApiDocumentada.DonacionList](docs/DonacionList.md)
@@ -178,6 +182,7 @@ Class | Method | HTTP request | Description
  - [ApiDocumentada.Login](docs/Login.md)
  - [ApiDocumentada.Rol](docs/Rol.md)
  - [ApiDocumentada.Solicitud](docs/Solicitud.md)
+ - [ApiDocumentada.SolicitudBaja](docs/SolicitudBaja.md)
  - [ApiDocumentada.SolicitudCategoria](docs/SolicitudCategoria.md)
  - [ApiDocumentada.SolicitudDonacion](docs/SolicitudDonacion.md)
  - [ApiDocumentada.SolicitudError](docs/SolicitudError.md)
@@ -188,6 +193,7 @@ Class | Method | HTTP request | Description
  - [ApiDocumentada.Transferencia](docs/Transferencia.md)
  - [ApiDocumentada.Usuario](docs/Usuario.md)
  - [ApiDocumentada.UsuarioList](docs/UsuarioList.md)
+ - [ApiDocumentada.VoluntarioDto](docs/VoluntarioDto.md)
 
 
 ## Documentation for Authorization

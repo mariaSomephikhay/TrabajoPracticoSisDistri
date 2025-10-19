@@ -13,6 +13,7 @@
 
 
 import ApiClient from './ApiClient';
+import AdhesionEventoKafka from './model/AdhesionEventoKafka';
 import Categoria from './model/Categoria';
 import Donacion from './model/Donacion';
 import DonacionList from './model/DonacionList';
@@ -34,6 +35,7 @@ import EventoUsuario from './model/EventoUsuario';
 import Login from './model/Login';
 import Rol from './model/Rol';
 import Solicitud from './model/Solicitud';
+import SolicitudBaja from './model/SolicitudBaja';
 import SolicitudCategoria from './model/SolicitudCategoria';
 import SolicitudDonacion from './model/SolicitudDonacion';
 import SolicitudError from './model/SolicitudError';
@@ -44,6 +46,7 @@ import Token from './model/Token';
 import Transferencia from './model/Transferencia';
 import Usuario from './model/Usuario';
 import UsuarioList from './model/UsuarioList';
+import VoluntarioDto from './model/VoluntarioDto';
 import DonacionesApi from './api/DonacionesApi';
 import EventosApi from './api/EventosApi';
 import SolicitudesApi from './api/SolicitudesApi';
@@ -88,6 +91,12 @@ export {
      * @property {module:ApiClient}
      */
     ApiClient,
+
+    /**
+     * The AdhesionEventoKafka model constructor.
+     * @property {module:model/AdhesionEventoKafka}
+     */
+    AdhesionEventoKafka,
 
     /**
      * The Categoria model constructor.
@@ -216,6 +225,12 @@ export {
     Solicitud,
 
     /**
+     * The SolicitudBaja model constructor.
+     * @property {module:model/SolicitudBaja}
+     */
+    SolicitudBaja,
+
+    /**
      * The SolicitudCategoria model constructor.
      * @property {module:model/SolicitudCategoria}
      */
@@ -274,6 +289,12 @@ export {
      * @property {module:model/UsuarioList}
      */
     UsuarioList,
+
+    /**
+     * The VoluntarioDto model constructor.
+     * @property {module:model/VoluntarioDto}
+     */
+    VoluntarioDto,
 
     /**
     * The DonacionesApi service constructor.

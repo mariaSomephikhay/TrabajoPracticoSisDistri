@@ -4,6 +4,7 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**adhesionEvento**](EventosApi.md#adhesionEvento) | **POST** /evento/adhesion/evento/{id_organization} | Adhesion de voluntario a evento
 [**createEvent**](EventosApi.md#createEvent) | **POST** /evento/new | Insertar nuevo evento
 [**deleteEventById**](EventosApi.md#deleteEventById) | **DELETE** /evento/delete/{id} | Eliminar evento
 [**deleteRequesEventoKafka**](EventosApi.md#deleteRequesEventoKafka) | **POST** /evento/request/delete | Publicar baja de evento en kafka
@@ -16,6 +17,57 @@ Method | HTTP request | Description
 [**newRequesEventoKafka**](EventosApi.md#newRequesEventoKafka) | **POST** /evento/request/new | Publicar evento en kafka
 [**updateEventoById**](EventosApi.md#updateEventoById) | **PUT** /evento/{id} | Actualizar un evento
 
+
+
+## adhesionEvento
+
+> adhesionEvento(idOrganization, payload)
+
+Adhesion de voluntario a evento
+
+### Example
+
+```javascript
+import ApiDocumentada from 'api_documentada';
+let defaultClient = ApiDocumentada.ApiClient.instance;
+// Configure API key authorization: Bearer Auth
+let Bearer Auth = defaultClient.authentications['Bearer Auth'];
+Bearer Auth.apiKey = 'YOUR API KEY';
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//Bearer Auth.apiKeyPrefix = 'Token';
+
+let apiInstance = new ApiDocumentada.EventosApi();
+let idOrganization = 56; // Number | 
+let payload = new ApiDocumentada.AdhesionEventoKafka(); // AdhesionEventoKafka | 
+apiInstance.adhesionEvento(idOrganization, payload, (error, data, response) => {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully.');
+  }
+});
+```
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **idOrganization** | **Number**|  | 
+ **payload** | [**AdhesionEventoKafka**](AdhesionEventoKafka.md)|  | 
+
+### Return type
+
+null (empty response body)
+
+### Authorization
+
+[Bearer Auth](../README.md#Bearer Auth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
 
 
 ## createEvent

@@ -22,7 +22,7 @@ class EventoUsersListDto {
     /**
      * Constructs a new <code>EventoUsersListDto</code>.
      * @alias module:model/EventoUsersListDto
-     * @param usersIds {Array.<Number>} Lista de IDs de usuarios
+     * @param usersIds {Array.<String>} Lista de IDs de usuarios
      */
     constructor(usersIds) { 
         
@@ -50,7 +50,7 @@ class EventoUsersListDto {
             obj = obj || new EventoUsersListDto();
 
             if (data.hasOwnProperty('usersIds')) {
-                obj['usersIds'] = ApiClient.convertToType(data['usersIds'], ['Number']);
+                obj['usersIds'] = ApiClient.convertToType(data['usersIds'], ['String']);
             }
         }
         return obj;
@@ -83,7 +83,7 @@ EventoUsersListDto.RequiredProperties = ["usersIds"];
 
 /**
  * Lista de IDs de usuarios
- * @member {Array.<Number>} usersIds
+ * @member {Array.<String>} usersIds
  */
 EventoUsersListDto.prototype['usersIds'] = undefined;
 

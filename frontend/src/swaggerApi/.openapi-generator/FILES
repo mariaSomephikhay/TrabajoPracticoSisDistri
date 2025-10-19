@@ -2,6 +2,7 @@
 .gitignore
 .travis.yml
 README.md
+docs/AdhesionEventoKafka.md
 docs/Categoria.md
 docs/Donacion.md
 docs/DonacionList.md
@@ -25,6 +26,7 @@ docs/EventosApi.md
 docs/Login.md
 docs/Rol.md
 docs/Solicitud.md
+docs/SolicitudBaja.md
 docs/SolicitudCategoria.md
 docs/SolicitudDonacion.md
 docs/SolicitudError.md
@@ -38,6 +40,7 @@ docs/TransferenciasApi.md
 docs/UserApi.md
 docs/Usuario.md
 docs/UsuarioList.md
+docs/VoluntarioDto.md
 git_push.sh
 mocha.opts
 package.json
@@ -48,6 +51,7 @@ src/api/SolicitudesApi.js
 src/api/TransferenciasApi.js
 src/api/UserApi.js
 src/index.js
+src/model/AdhesionEventoKafka.js
 src/model/Categoria.js
 src/model/Donacion.js
 src/model/DonacionList.js
@@ -69,6 +73,7 @@ src/model/EventoUsuario.js
 src/model/Login.js
 src/model/Rol.js
 src/model/Solicitud.js
+src/model/SolicitudBaja.js
 src/model/SolicitudCategoria.js
 src/model/SolicitudDonacion.js
 src/model/SolicitudError.js
@@ -79,4 +84,5 @@ src/model/Token.js
 src/model/Transferencia.js
 src/model/Usuario.js
 src/model/UsuarioList.js
-test/model/EventoBajaKafka.spec.js
+src/model/VoluntarioDto.js
+test/model/SolicitudBaja.spec.js
