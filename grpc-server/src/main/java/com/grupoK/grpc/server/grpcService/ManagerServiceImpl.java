@@ -430,6 +430,7 @@ public class ManagerServiceImpl extends ManagerServiceGrpc.ManagerServiceImplBas
 				
 				ListSolicitudDonacion response = ListSolicitudDonacion.newBuilder()
 					    .addAllSolicitudes(solicitudes.stream()
+					    		.filter(Solicitud::getActiva)  //solo procesa las activas
 					            .map(solicitud -> {
 					                try {
 					                    // Obtener donaciones asociadas a esta solicitud
@@ -449,6 +450,8 @@ public class ManagerServiceImpl extends ManagerServiceGrpc.ManagerServiceImplBas
 					            .toList()
 					    )
 					    .build();
+				
+			
 			System.out.println(response);	
 	        responseObserver.onNext(response);
 	        responseObserver.onCompleted();
