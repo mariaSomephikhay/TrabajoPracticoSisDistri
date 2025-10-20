@@ -19,5 +19,7 @@ public interface IEventoRepository extends JpaRepository<Evento, Serializable>{
 	@Query("SELECT e.usuarios FROM Evento e WHERE e.id = :eventoId")
 	List<Usuario> findUsuariosByEventoId(String eventoId);
 
+	@Query("SELECT e FROM Evento e LEFT JOIN FETCH e.voluntarios WHERE e.id = :id")
+	Evento findByIdWithVoluntarios(@Param("id") String id);
 
 }
