@@ -66,6 +66,12 @@
       //expect(instance).to.be();
     });
 
+    it('should have the property activa (base name: "activa")', function() {
+      // uncomment below and update the code to test the property activa
+      //var instance = new ApiDocumentada.SolicitudGet();
+      //expect(instance).to.be();
+    });
+
     it('should have the property donaciones (base name: "donaciones")', function() {
       // uncomment below and update the code to test the property donaciones
       //var instance = new ApiDocumentada.SolicitudGet();

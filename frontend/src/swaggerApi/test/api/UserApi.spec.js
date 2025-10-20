@@ -78,6 +78,16 @@
         done();
       });
     });
+    describe('getUserByUsername', function() {
+      it('should call getUserByUsername successfully', function(done) {
+        //uncomment below and update the code to test getUserByUsername
+        //instance.getUserByUsername(function(error) {
+        //  if (error) throw error;
+        //expect().to.be();
+        //});
+        done();
+      });
+    });
     describe('listUsers', function() {
       it('should call listUsers successfully', function(done) {
         //uncomment below and update the code to test listUsers

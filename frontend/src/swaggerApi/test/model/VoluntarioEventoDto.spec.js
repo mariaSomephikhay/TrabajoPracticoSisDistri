@@ -28,7 +28,7 @@
   var instance;
 
   beforeEach(function() {
-    instance = new ApiDocumentada.Evento();
+    instance = new ApiDocumentada.VoluntarioEventoDto();
   });
 
   var getProperty = function(object, getter, property) {
@@ -47,52 +47,46 @@
       object[property] = value;
   }
 
-  describe('Evento', function() {
-    it('should create an instance of Evento', function() {
-      // uncomment below and update the code to test Evento
-      //var instance = new ApiDocumentada.Evento();
-      //expect(instance).to.be.a(ApiDocumentada.Evento);
+  describe('VoluntarioEventoDto', function() {
+    it('should create an instance of VoluntarioEventoDto', function() {
+      // uncomment below and update the code to test VoluntarioEventoDto
+      //var instance = new ApiDocumentada.VoluntarioEventoDto();
+      //expect(instance).to.be.a(ApiDocumentada.VoluntarioEventoDto);
     });
 
-    it('should have the property id (base name: "id")', function() {
-      // uncomment below and update the code to test the property id
-      //var instance = new ApiDocumentada.Evento();
+    it('should have the property idVoluntario (base name: "idVoluntario")', function() {
+      // uncomment below and update the code to test the property idVoluntario
+      //var instance = new ApiDocumentada.VoluntarioEventoDto();
       //expect(instance).to.be();
     });
 
     it('should have the property nombre (base name: "nombre")', function() {
       // uncomment below and update the code to test the property nombre
-      //var instance = new ApiDocumentada.Evento();
+      //var instance = new ApiDocumentada.VoluntarioEventoDto();
       //expect(instance).to.be();
     });
 
-    it('should have the property descripcion (base name: "descripcion")', function() {
-      // uncomment below and update the code to test the property descripcion
-      //var instance = new ApiDocumentada.Evento();
+    it('should have the property apellido (base name: "apellido")', function() {
+      // uncomment below and update the code to test the property apellido
+      //var instance = new ApiDocumentada.VoluntarioEventoDto();
       //expect(instance).to.be();
     });
 
-    it('should have the property fecha (base name: "fecha")', function() {
-      // uncomment below and update the code to test the property fecha
-      //var instance = new ApiDocumentada.Evento();
+    it('should have the property telefono (base name: "telefono")', function() {
+      // uncomment below and update the code to test the property telefono
+      //var instance = new ApiDocumentada.VoluntarioEventoDto();
       //expect(instance).to.be();
     });
 
-    it('should have the property idOrganizacion (base name: "idOrganizacion")', function() {
-      // uncomment below and update the code to test the property idOrganizacion
-      //var instance = new ApiDocumentada.Evento();
+    it('should have the property email (base name: "email")', function() {
+      // uncomment below and update the code to test the property email
+      //var instance = new ApiDocumentada.VoluntarioEventoDto();
       //expect(instance).to.be();
     });
 
-    it('should have the property activo (base name: "activo")', function() {
-      // uncomment below and update the code to test the property activo
-      //var instance = new ApiDocumentada.Evento();
-      //expect(instance).to.be();
-    });
-
-    it('should have the property publicado (base name: "publicado")', function() {
-      // uncomment below and update the code to test the property publicado
-      //var instance = new ApiDocumentada.Evento();
+    it('should have the property organizacion (base name: "organizacion")', function() {
+      // uncomment below and update the code to test the property organizacion
+      //var instance = new ApiDocumentada.VoluntarioEventoDto();
       //expect(instance).to.be();
     });
 

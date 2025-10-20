@@ -28,6 +28,7 @@ import EventoDonacionReq from './model/EventoDonacionReq';
 import EventoKafka from './model/EventoKafka';
 import EventoList from './model/EventoList';
 import EventoListaDonacion from './model/EventoListaDonacion';
+import EventoOrganizacionDto from './model/EventoOrganizacionDto';
 import EventoRol from './model/EventoRol';
 import EventoUsersDto from './model/EventoUsersDto';
 import EventoUsersListDto from './model/EventoUsersListDto';
@@ -35,7 +36,6 @@ import EventoUsuario from './model/EventoUsuario';
 import Login from './model/Login';
 import Rol from './model/Rol';
 import Solicitud from './model/Solicitud';
-import SolicitudBaja from './model/SolicitudBaja';
 import SolicitudCategoria from './model/SolicitudCategoria';
 import SolicitudDonacion from './model/SolicitudDonacion';
 import SolicitudError from './model/SolicitudError';
@@ -47,6 +47,7 @@ import Transferencia from './model/Transferencia';
 import Usuario from './model/Usuario';
 import UsuarioList from './model/UsuarioList';
 import VoluntarioDto from './model/VoluntarioDto';
+import VoluntarioEventoDto from './model/VoluntarioEventoDto';
 import DonacionesApi from './api/DonacionesApi';
 import EventosApi from './api/EventosApi';
 import SolicitudesApi from './api/SolicitudesApi';
@@ -183,6 +184,12 @@ export {
     EventoListaDonacion,
 
     /**
+     * The EventoOrganizacionDto model constructor.
+     * @property {module:model/EventoOrganizacionDto}
+     */
+    EventoOrganizacionDto,
+
+    /**
      * The EventoRol model constructor.
      * @property {module:model/EventoRol}
      */
@@ -223,12 +230,6 @@ export {
      * @property {module:model/Solicitud}
      */
     Solicitud,
-
-    /**
-     * The SolicitudBaja model constructor.
-     * @property {module:model/SolicitudBaja}
-     */
-    SolicitudBaja,
 
     /**
      * The SolicitudCategoria model constructor.
@@ -295,6 +296,12 @@ export {
      * @property {module:model/VoluntarioDto}
      */
     VoluntarioDto,
+
+    /**
+     * The VoluntarioEventoDto model constructor.
+     * @property {module:model/VoluntarioEventoDto}
+     */
+    VoluntarioEventoDto,
 
     /**
     * The DonacionesApi service constructor.

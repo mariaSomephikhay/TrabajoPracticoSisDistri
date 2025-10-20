@@ -28,7 +28,7 @@
   var instance;
 
   beforeEach(function() {
-    instance = new ApiDocumentada.SolicitudList();
+    instance = new ApiDocumentada.EventoOrganizacionDto();
   });
 
   var getProperty = function(object, getter, property) {
@@ -47,16 +47,28 @@
       object[property] = value;
   }
 
-  describe('SolicitudList', function() {
-    it('should create an instance of SolicitudList', function() {
-      // uncomment below and update the code to test SolicitudList
-      //var instance = new ApiDocumentada.SolicitudList();
-      //expect(instance).to.be.a(ApiDocumentada.SolicitudList);
+  describe('EventoOrganizacionDto', function() {
+    it('should create an instance of EventoOrganizacionDto', function() {
+      // uncomment below and update the code to test EventoOrganizacionDto
+      //var instance = new ApiDocumentada.EventoOrganizacionDto();
+      //expect(instance).to.be.a(ApiDocumentada.EventoOrganizacionDto);
     });
 
-    it('should have the property solicitudes (base name: "solicitudes")', function() {
-      // uncomment below and update the code to test the property solicitudes
-      //var instance = new ApiDocumentada.SolicitudList();
+    it('should have the property id (base name: "id")', function() {
+      // uncomment below and update the code to test the property id
+      //var instance = new ApiDocumentada.EventoOrganizacionDto();
+      //expect(instance).to.be();
+    });
+
+    it('should have the property nombre (base name: "nombre")', function() {
+      // uncomment below and update the code to test the property nombre
+      //var instance = new ApiDocumentada.EventoOrganizacionDto();
+      //expect(instance).to.be();
+    });
+
+    it('should have the property externa (base name: "externa")', function() {
+      // uncomment below and update the code to test the property externa
+      //var instance = new ApiDocumentada.EventoOrganizacionDto();
       //expect(instance).to.be();
     });
 

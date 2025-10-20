@@ -60,8 +60,8 @@
       //expect(instance).to.be();
     });
 
-    it('should have the property donaciones (base name: "donaciones")', function() {
-      // uncomment below and update the code to test the property donaciones
+    it('should have the property listaDonacion (base name: "listaDonacion")', function() {
+      // uncomment below and update the code to test the property listaDonacion
       //var instance = new ApiDocumentada.EventoListaDonacion();
       //expect(instance).to.be();
     });

@@ -41,7 +41,7 @@ export const EventUsersManager = () => {
 
   const handleSave = async () => {
     try {
-      const ids = selectedUserIds.map((id) => parseInt(id));
+      const ids = selectedUserIds.map((id) => id);
       await EventService.actualizarUsuariosDelEvento(id, ids);
       alert('Usuarios actualizados correctamente');
       navigate(`/events/edit/${id}`);
@@ -59,7 +59,7 @@ export const EventUsersManager = () => {
 
       <ul className="list-group mb-4">
         {allUsers.map((user) => {
-          const isSelected = selectedUserIds.includes(user.id.toString());
+          const isSelected = selectedUserIds.includes(user.id);
           return (
             <li
               key={user.id}

@@ -48,10 +48,20 @@
   }
 
   describe('SolicitudesApi', function() {
-    describe('newRequest', function() {
-      it('should call newRequest successfully', function(done) {
-        //uncomment below and update the code to test newRequest
-        //instance.newRequest(function(error) {
+    describe('getAllRequestDonacion', function() {
+      it('should call getAllRequestDonacion successfully', function(done) {
+        //uncomment below and update the code to test getAllRequestDonacion
+        //instance.getAllRequestDonacion(function(error) {
+        //  if (error) throw error;
+        //expect().to.be();
+        //});
+        done();
+      });
+    });
+    describe('newRequestDonacion', function() {
+      it('should call newRequestDonacion successfully', function(done) {
+        //uncomment below and update the code to test newRequestDonacion
+        //instance.newRequestDonacion(function(error) {
         //  if (error) throw error;
         //expect().to.be();
         //});
