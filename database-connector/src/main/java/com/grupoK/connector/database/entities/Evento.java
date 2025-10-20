@@ -62,4 +62,12 @@ public class Evento {
 	
 	@Column(name="publicado", nullable=false)
 	private Boolean publicado;
+	
+	@ManyToMany
+    @JoinTable(
+        name = "evento_voluntario",
+        joinColumns = @JoinColumn(name = "evento_id"),
+        inverseJoinColumns = @JoinColumn(name = "voluntario_id")
+    )
+    private List<Voluntario> voluntarios = new ArrayList<>();
 }
