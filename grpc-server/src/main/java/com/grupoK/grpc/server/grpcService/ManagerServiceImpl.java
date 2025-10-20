@@ -26,6 +26,7 @@ import com.grupoK.grpc.server.wrappers.DonacionWrapper;
 import com.grupoK.grpc.server.wrappers.EventoWrapper;
 import com.grupoK.grpc.server.wrappers.SolicitudWrapper;
 import com.grupoK.grpc.server.wrappers.UsuarioWrapper;
+import com.grupoK.grpc.server.wrappers.VoluntarioWrapper;
 import com.grupoK.grpc.proto.DonacionId;
 import com.grupoK.grpc.proto.DonacionIdUsu;
 import com.grupoK.grpc.proto.DonacionList;
@@ -69,6 +70,9 @@ public class ManagerServiceImpl extends ManagerServiceGrpc.ManagerServiceImplBas
 	
 	@Autowired
 	private SolicitudWrapper solicitudWrapper;
+	
+	@Autowired
+	private VoluntarioWrapper voluntarioWrapper;
 	
 	@Override
 	public void getUserById(UserId request, StreamObserver<com.grupoK.grpc.proto.Usuario> responseObserver) {
@@ -298,7 +302,7 @@ public class ManagerServiceImpl extends ManagerServiceGrpc.ManagerServiceImplBas
 				Evento evento = eventoService.findById(request.getId());
 		    	List<UserId> listaUsuarios = request.getUsersIdsList();
 
-		    	List<Integer> lstUsers = listaUsuarios.stream()
+		    	List<String> lstUsers = listaUsuarios.stream()
 		    	        .map(UserId::getId)
 		    	        .collect(Collectors.toList());
 
@@ -361,18 +365,22 @@ public class ManagerServiceImpl extends ManagerServiceGrpc.ManagerServiceImplBas
 
 			try {
 				List<Usuario> lstUsuarios = eventoService.getUsersByIdEvento(request.getId());
+				
 
 				//ARMADO DEL RESPONSE
-				Evento evento = eventoService.findById(request.getId());
+				Evento evento = eventoService.findByIdWithVoluntarios(request.getId());
 
 				EventoWithListUsersDetails response = EventoWithListUsersDetails.newBuilder()
 						.setEvento(eventoWrapper.toGrpcEvento(evento))
 	                    .addAllUsers(lstUsuarios.stream()
 	                    		.map(usuarioWrapper::toGrpcUsuario).toList())
+	                    .addAllVoluntarios(evento.getVoluntarios().stream()
+	                    		.map(voluntarioWrapper::toGrpcVoluntario).toList())
 	                    .build();
 	            responseObserver.onNext(response);
 	            responseObserver.onCompleted();
 
+	            //System.out.println(response);
 			}catch (Exception e) {
 				responseObserver.onError(io.grpc.Status.INTERNAL
 		                .withDescription("Internal server error: " + e.getMessage())

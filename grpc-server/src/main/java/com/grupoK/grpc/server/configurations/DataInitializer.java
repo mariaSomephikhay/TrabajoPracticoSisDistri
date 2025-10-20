@@ -8,6 +8,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
@@ -16,7 +17,7 @@ public class DataInitializer {
 
     @Bean
     CommandLineRunner initData(IOrganizacionRepository orgRepo, ICategoriaRepository cateRepo, IDonacionRepository donacionRepo,
-                               IUsuarioRepository usuarioRepo, IRolRepository rolRepo, ISolicitudRepository soliRepo, ISolicitudDonacionRepository soliDonaRepo) {
+                               IUsuarioRepository usuarioRepo, IRolRepository rolRepo, ISolicitudRepository soliRepo, ISolicitudDonacionRepository soliDonaRepo, IEventoRepository eventoRepo) {
         return args -> {
             if (rolRepo.count() == 0) {
                 Organizacion organizacionPropia = orgRepo.save(new Organizacion(null, "GrupoK", false));
@@ -252,6 +253,40 @@ public class DataInitializer {
                                 //2
                         )
                 ));
+            }
+            
+            if(eventoRepo.count() == 0) {
+            	Usuario usuario = (usuarioRepo.findByUsername("user1")).get();
+            	Organizacion organizacionPropia = orgRepo.findById(1).get();
+            	
+            	Evento evento = new Evento 
+            			("GK-20251019203949-1111",
+            			"Dia de la Independencia",
+            			"Dia de la Independencia",
+            			LocalDate.of(2025, 7, 9).atStartOfDay(),
+            			null,
+            			null,
+            			usuario,
+            			organizacionPropia, 
+            			true, 
+            			false,
+            			null);
+            	
+            	Evento evento2 = new Evento 
+            			("GK-20251019203949-2222",
+            			"Dia del Programador",
+            			"Dia del Programador",
+            			LocalDate.of(2025, 11, 25).atStartOfDay(),
+            			null,
+            			null,
+            			usuario,
+            			organizacionPropia, 
+            			true, 
+            			false,
+            			null);
+            	
+            	eventoRepo.save(evento);
+            	eventoRepo.save(evento2);
             }
         };
     }
