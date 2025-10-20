@@ -54,20 +54,20 @@
       //expect(instance).to.be.a(ApiDocumentada.Transferencia);
     });
 
-    it('should have the property idSolicitudDonacion (base name: "id_solicitud_donacion")', function() {
-      // uncomment below and update the code to test the property idSolicitudDonacion
+    it('should have the property idSolicitud (base name: "id_solicitud")', function() {
+      // uncomment below and update the code to test the property idSolicitud
       //var instance = new ApiDocumentada.Transferencia();
       //expect(instance).to.be();
     });
 
-    it('should have the property idOrganizacionSolicitante (base name: "id_organizacion_solicitante")', function() {
-      // uncomment below and update the code to test the property idOrganizacionSolicitante
+    it('should have the property idOrganizacionDonante (base name: "id_organizacion_donante")', function() {
+      // uncomment below and update the code to test the property idOrganizacionDonante
       //var instance = new ApiDocumentada.Transferencia();
       //expect(instance).to.be();
     });
 
-    it('should have the property donacion (base name: "donacion")', function() {
-      // uncomment below and update the code to test the property donacion
+    it('should have the property donaciones (base name: "donaciones")', function() {
+      // uncomment below and update the code to test the property donaciones
       //var instance = new ApiDocumentada.Transferencia();
       //expect(instance).to.be();
     });

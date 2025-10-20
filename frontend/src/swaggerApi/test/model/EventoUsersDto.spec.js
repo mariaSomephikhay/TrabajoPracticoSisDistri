@@ -54,8 +54,8 @@
       //expect(instance).to.be.a(ApiDocumentada.EventoUsersDto);
     });
 
-    it('should have the property id (base name: "id")', function() {
-      // uncomment below and update the code to test the property id
+    it('should have the property evento (base name: "evento")', function() {
+      // uncomment below and update the code to test the property evento
       //var instance = new ApiDocumentada.EventoUsersDto();
       //expect(instance).to.be();
     });

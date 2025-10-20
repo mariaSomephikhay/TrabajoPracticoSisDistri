@@ -12,7 +12,9 @@
  */
 
 import ApiClient from '../ApiClient';
+import Evento from './Evento';
 import EventoUsuario from './EventoUsuario';
+import VoluntarioEventoDto from './VoluntarioEventoDto';
 
 /**
  * The EventoUsersDto model module.
@@ -23,10 +25,11 @@ class EventoUsersDto {
     /**
      * Constructs a new <code>EventoUsersDto</code>.
      * @alias module:model/EventoUsersDto
+     * @param evento {module:model/Evento} 
      */
-    constructor() { 
+    constructor(evento) { 
         
-        EventoUsersDto.initialize(this);
+        EventoUsersDto.initialize(this, evento);
     }
 
     /**
@@ -34,7 +37,8 @@ class EventoUsersDto {
      * This method is used by the constructors of any subclasses, in order to implement multiple inheritance (mix-ins).
      * Only for internal use.
      */
-    static initialize(obj) { 
+    static initialize(obj, evento) { 
+        obj['evento'] = evento;
     }
 
     /**
@@ -48,11 +52,14 @@ class EventoUsersDto {
         if (data) {
             obj = obj || new EventoUsersDto();
 
-            if (data.hasOwnProperty('id')) {
-                obj['id'] = ApiClient.convertToType(data['id'], 'String');
+            if (data.hasOwnProperty('evento')) {
+                obj['evento'] = Evento.constructFromObject(data['evento']);
             }
             if (data.hasOwnProperty('users')) {
                 obj['users'] = ApiClient.convertToType(data['users'], [EventoUsuario]);
+            }
+            if (data.hasOwnProperty('voluntarios')) {
+                obj['voluntarios'] = ApiClient.convertToType(data['voluntarios'], [VoluntarioEventoDto]);
             }
         }
         return obj;
@@ -64,9 +71,15 @@ class EventoUsersDto {
      * @return {boolean} to indicate whether the JSON data is valid with respect to <code>EventoUsersDto</code>.
      */
     static validateJSON(data) {
-        // ensure the json data is a string
-        if (data['id'] && !(typeof data['id'] === 'string' || data['id'] instanceof String)) {
-            throw new Error("Expected the field `id` to be a primitive type in the JSON string but got " + data['id']);
+        // check to make sure all required properties are present in the JSON string
+        for (const property of EventoUsersDto.RequiredProperties) {
+            if (!data.hasOwnProperty(property)) {
+                throw new Error("The required field `" + property + "` is not found in the JSON data: " + JSON.stringify(data));
+            }
+        }
+        // validate the optional field `evento`
+        if (data['evento']) { // data not null
+          Evento.validateJSON(data['evento']);
         }
         if (data['users']) { // data not null
             // ensure the json data is an array
@@ -78,6 +91,16 @@ class EventoUsersDto {
                 EventoUsuario.validateJSON(item);
             };
         }
+        if (data['voluntarios']) { // data not null
+            // ensure the json data is an array
+            if (!Array.isArray(data['voluntarios'])) {
+                throw new Error("Expected the field `voluntarios` to be an array in the JSON data but got " + data['voluntarios']);
+            }
+            // validate the optional field `voluntarios` (array)
+            for (const item of data['voluntarios']) {
+                VoluntarioEventoDto.validateJSON(item);
+            };
+        }
 
         return true;
     }
@@ -85,17 +108,22 @@ class EventoUsersDto {
 
 }
 
-
+EventoUsersDto.RequiredProperties = ["evento"];
 
 /**
- * @member {String} id
+ * @member {module:model/Evento} evento
  */
-EventoUsersDto.prototype['id'] = undefined;
+EventoUsersDto.prototype['evento'] = undefined;
 
 /**
  * @member {Array.<module:model/EventoUsuario>} users
  */
 EventoUsersDto.prototype['users'] = undefined;
+
+/**
+ * @member {Array.<module:model/VoluntarioEventoDto>} voluntarios
+ */
+EventoUsersDto.prototype['voluntarios'] = undefined;
 
 
 

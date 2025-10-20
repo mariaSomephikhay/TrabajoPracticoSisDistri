@@ -60,8 +60,26 @@
       //expect(instance).to.be();
     });
 
-    it('should have the property evento (base name: "evento")', function() {
-      // uncomment below and update the code to test the property evento
+    it('should have the property idEvento (base name: "id_evento")', function() {
+      // uncomment below and update the code to test the property idEvento
+      //var instance = new ApiDocumentada.EventoKafka();
+      //expect(instance).to.be();
+    });
+
+    it('should have the property nombre (base name: "nombre")', function() {
+      // uncomment below and update the code to test the property nombre
+      //var instance = new ApiDocumentada.EventoKafka();
+      //expect(instance).to.be();
+    });
+
+    it('should have the property descripcion (base name: "descripcion")', function() {
+      // uncomment below and update the code to test the property descripcion
+      //var instance = new ApiDocumentada.EventoKafka();
+      //expect(instance).to.be();
+    });
+
+    it('should have the property fecha (base name: "fecha")', function() {
+      // uncomment below and update the code to test the property fecha
       //var instance = new ApiDocumentada.EventoKafka();
       //expect(instance).to.be();
     });

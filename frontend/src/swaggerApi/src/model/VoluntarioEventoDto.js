@@ -12,25 +12,26 @@
  */
 
 import ApiClient from '../ApiClient';
+import EventoOrganizacionDto from './EventoOrganizacionDto';
 
 /**
- * The VoluntarioDto model module.
- * @module model/VoluntarioDto
+ * The VoluntarioEventoDto model module.
+ * @module model/VoluntarioEventoDto
  * @version 1.0
  */
-class VoluntarioDto {
+class VoluntarioEventoDto {
     /**
-     * Constructs a new <code>VoluntarioDto</code>.
-     * @alias module:model/VoluntarioDto
-     * @param idOrganizacion {Number} 
+     * Constructs a new <code>VoluntarioEventoDto</code>.
+     * @alias module:model/VoluntarioEventoDto
      * @param idVoluntario {String} 
      * @param nombre {String} 
      * @param apellido {String} 
      * @param email {String} 
+     * @param organizacion {module:model/EventoOrganizacionDto} 
      */
-    constructor(idOrganizacion, idVoluntario, nombre, apellido, email) { 
+    constructor(idVoluntario, nombre, apellido, email, organizacion) { 
         
-        VoluntarioDto.initialize(this, idOrganizacion, idVoluntario, nombre, apellido, email);
+        VoluntarioEventoDto.initialize(this, idVoluntario, nombre, apellido, email, organizacion);
     }
 
     /**
@@ -38,28 +39,25 @@ class VoluntarioDto {
      * This method is used by the constructors of any subclasses, in order to implement multiple inheritance (mix-ins).
      * Only for internal use.
      */
-    static initialize(obj, idOrganizacion, idVoluntario, nombre, apellido, email) { 
-        obj['idOrganizacion'] = idOrganizacion;
+    static initialize(obj, idVoluntario, nombre, apellido, email, organizacion) { 
         obj['idVoluntario'] = idVoluntario;
         obj['nombre'] = nombre;
         obj['apellido'] = apellido;
         obj['email'] = email;
+        obj['organizacion'] = organizacion;
     }
 
     /**
-     * Constructs a <code>VoluntarioDto</code> from a plain JavaScript object, optionally creating a new instance.
+     * Constructs a <code>VoluntarioEventoDto</code> from a plain JavaScript object, optionally creating a new instance.
      * Copies all relevant properties from <code>data</code> to <code>obj</code> if supplied or a new instance if not.
      * @param {Object} data The plain JavaScript object bearing properties of interest.
-     * @param {module:model/VoluntarioDto} obj Optional instance to populate.
-     * @return {module:model/VoluntarioDto} The populated <code>VoluntarioDto</code> instance.
+     * @param {module:model/VoluntarioEventoDto} obj Optional instance to populate.
+     * @return {module:model/VoluntarioEventoDto} The populated <code>VoluntarioEventoDto</code> instance.
      */
     static constructFromObject(data, obj) {
         if (data) {
-            obj = obj || new VoluntarioDto();
+            obj = obj || new VoluntarioEventoDto();
 
-            if (data.hasOwnProperty('idOrganizacion')) {
-                obj['idOrganizacion'] = ApiClient.convertToType(data['idOrganizacion'], 'Number');
-            }
             if (data.hasOwnProperty('idVoluntario')) {
                 obj['idVoluntario'] = ApiClient.convertToType(data['idVoluntario'], 'String');
             }
@@ -75,18 +73,21 @@ class VoluntarioDto {
             if (data.hasOwnProperty('email')) {
                 obj['email'] = ApiClient.convertToType(data['email'], 'String');
             }
+            if (data.hasOwnProperty('organizacion')) {
+                obj['organizacion'] = EventoOrganizacionDto.constructFromObject(data['organizacion']);
+            }
         }
         return obj;
     }
 
     /**
-     * Validates the JSON data with respect to <code>VoluntarioDto</code>.
+     * Validates the JSON data with respect to <code>VoluntarioEventoDto</code>.
      * @param {Object} data The plain JavaScript object bearing properties of interest.
-     * @return {boolean} to indicate whether the JSON data is valid with respect to <code>VoluntarioDto</code>.
+     * @return {boolean} to indicate whether the JSON data is valid with respect to <code>VoluntarioEventoDto</code>.
      */
     static validateJSON(data) {
         // check to make sure all required properties are present in the JSON string
-        for (const property of VoluntarioDto.RequiredProperties) {
+        for (const property of VoluntarioEventoDto.RequiredProperties) {
             if (!data.hasOwnProperty(property)) {
                 throw new Error("The required field `" + property + "` is not found in the JSON data: " + JSON.stringify(data));
             }
@@ -111,6 +112,10 @@ class VoluntarioDto {
         if (data['email'] && !(typeof data['email'] === 'string' || data['email'] instanceof String)) {
             throw new Error("Expected the field `email` to be a primitive type in the JSON string but got " + data['email']);
         }
+        // validate the optional field `organizacion`
+        if (data['organizacion']) { // data not null
+          EventoOrganizacionDto.validateJSON(data['organizacion']);
+        }
 
         return true;
     }
@@ -118,42 +123,42 @@ class VoluntarioDto {
 
 }
 
-VoluntarioDto.RequiredProperties = ["idOrganizacion", "idVoluntario", "nombre", "apellido", "email"];
-
-/**
- * @member {Number} idOrganizacion
- */
-VoluntarioDto.prototype['idOrganizacion'] = undefined;
+VoluntarioEventoDto.RequiredProperties = ["idVoluntario", "nombre", "apellido", "email", "organizacion"];
 
 /**
  * @member {String} idVoluntario
  */
-VoluntarioDto.prototype['idVoluntario'] = undefined;
+VoluntarioEventoDto.prototype['idVoluntario'] = undefined;
 
 /**
  * @member {String} nombre
  */
-VoluntarioDto.prototype['nombre'] = undefined;
+VoluntarioEventoDto.prototype['nombre'] = undefined;
 
 /**
  * @member {String} apellido
  */
-VoluntarioDto.prototype['apellido'] = undefined;
+VoluntarioEventoDto.prototype['apellido'] = undefined;
 
 /**
  * @member {String} telefono
  */
-VoluntarioDto.prototype['telefono'] = undefined;
+VoluntarioEventoDto.prototype['telefono'] = undefined;
 
 /**
  * @member {String} email
  */
-VoluntarioDto.prototype['email'] = undefined;
+VoluntarioEventoDto.prototype['email'] = undefined;
+
+/**
+ * @member {module:model/EventoOrganizacionDto} organizacion
+ */
+VoluntarioEventoDto.prototype['organizacion'] = undefined;
 
 
 
 
 
 
-export default VoluntarioDto;
+export default VoluntarioEventoDto;
 

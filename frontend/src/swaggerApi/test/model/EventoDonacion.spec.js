@@ -54,20 +54,14 @@
       //expect(instance).to.be.a(ApiDocumentada.EventoDonacion);
     });
 
+    it('should have the property donacion (base name: "donacion")', function() {
+      // uncomment below and update the code to test the property donacion
+      //var instance = new ApiDocumentada.EventoDonacion();
+      //expect(instance).to.be();
+    });
+
     it('should have the property cantidad (base name: "cantidad")', function() {
       // uncomment below and update the code to test the property cantidad
-      //var instance = new ApiDocumentada.EventoDonacion();
-      //expect(instance).to.be();
-    });
-
-    it('should have the property descripcion (base name: "descripcion")', function() {
-      // uncomment below and update the code to test the property descripcion
-      //var instance = new ApiDocumentada.EventoDonacion();
-      //expect(instance).to.be();
-    });
-
-    it('should have the property id (base name: "id")', function() {
-      // uncomment below and update the code to test the property id
       //var instance = new ApiDocumentada.EventoDonacion();
       //expect(instance).to.be();
     });

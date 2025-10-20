@@ -18,6 +18,7 @@ docs/EventoDonacionReq.md
 docs/EventoKafka.md
 docs/EventoList.md
 docs/EventoListaDonacion.md
+docs/EventoOrganizacionDto.md
 docs/EventoRol.md
 docs/EventoUsersDto.md
 docs/EventoUsersListDto.md
@@ -26,7 +27,6 @@ docs/EventosApi.md
 docs/Login.md
 docs/Rol.md
 docs/Solicitud.md
-docs/SolicitudBaja.md
 docs/SolicitudCategoria.md
 docs/SolicitudDonacion.md
 docs/SolicitudError.md
@@ -41,6 +41,7 @@ docs/UserApi.md
 docs/Usuario.md
 docs/UsuarioList.md
 docs/VoluntarioDto.md
+docs/VoluntarioEventoDto.md
 git_push.sh
 mocha.opts
 package.json
@@ -66,6 +67,7 @@ src/model/EventoDonacionReq.js
 src/model/EventoKafka.js
 src/model/EventoList.js
 src/model/EventoListaDonacion.js
+src/model/EventoOrganizacionDto.js
 src/model/EventoRol.js
 src/model/EventoUsersDto.js
 src/model/EventoUsersListDto.js
@@ -73,7 +75,6 @@ src/model/EventoUsuario.js
 src/model/Login.js
 src/model/Rol.js
 src/model/Solicitud.js
-src/model/SolicitudBaja.js
 src/model/SolicitudCategoria.js
 src/model/SolicitudDonacion.js
 src/model/SolicitudError.js
@@ -85,4 +86,4 @@ src/model/Transferencia.js
 src/model/Usuario.js
 src/model/UsuarioList.js
 src/model/VoluntarioDto.js
-test/model/SolicitudBaja.spec.js
+src/model/VoluntarioEventoDto.js

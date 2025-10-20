@@ -48,6 +48,16 @@
   }
 
   describe('EventosApi', function() {
+    describe('adhesionEvento', function() {
+      it('should call adhesionEvento successfully', function(done) {
+        //uncomment below and update the code to test adhesionEvento
+        //instance.adhesionEvento(function(error) {
+        //  if (error) throw error;
+        //expect().to.be();
+        //});
+        done();
+      });
+    });
     describe('createEvent', function() {
       it('should call createEvent successfully', function(done) {
         //uncomment below and update the code to test createEvent
@@ -68,10 +78,40 @@
         done();
       });
     });
+    describe('deleteRequesEventoKafka', function() {
+      it('should call deleteRequesEventoKafka successfully', function(done) {
+        //uncomment below and update the code to test deleteRequesEventoKafka
+        //instance.deleteRequesEventoKafka(function(error) {
+        //  if (error) throw error;
+        //expect().to.be();
+        //});
+        done();
+      });
+    });
     describe('getEventoById', function() {
       it('should call getEventoById successfully', function(done) {
         //uncomment below and update the code to test getEventoById
         //instance.getEventoById(function(error) {
+        //  if (error) throw error;
+        //expect().to.be();
+        //});
+        done();
+      });
+    });
+    describe('getEventoWithDonacionesById', function() {
+      it('should call getEventoWithDonacionesById successfully', function(done) {
+        //uncomment below and update the code to test getEventoWithDonacionesById
+        //instance.getEventoWithDonacionesById(function(error) {
+        //  if (error) throw error;
+        //expect().to.be();
+        //});
+        done();
+      });
+    });
+    describe('getEventoWithUsersById', function() {
+      it('should call getEventoWithUsersById successfully', function(done) {
+        //uncomment below and update the code to test getEventoWithUsersById
+        //instance.getEventoWithUsersById(function(error) {
         //  if (error) throw error;
         //expect().to.be();
         //});
@@ -102,6 +142,16 @@
       it('should call listEventos successfully', function(done) {
         //uncomment below and update the code to test listEventos
         //instance.listEventos(function(error) {
+        //  if (error) throw error;
+        //expect().to.be();
+        //});
+        done();
+      });
+    });
+    describe('newRequesEventoKafka', function() {
+      it('should call newRequesEventoKafka successfully', function(done) {
+        //uncomment below and update the code to test newRequesEventoKafka
+        //instance.newRequesEventoKafka(function(error) {
         //  if (error) throw error;
         //expect().to.be();
         //});

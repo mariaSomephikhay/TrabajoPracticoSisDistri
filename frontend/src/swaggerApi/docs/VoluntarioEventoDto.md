@@ -1,14 +1,14 @@
-# ApiDocumentada.VoluntarioDto
+# ApiDocumentada.VoluntarioEventoDto
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**idOrganizacion** | **Number** |  | 
 **idVoluntario** | **String** |  | 
 **nombre** | **String** |  | 
 **apellido** | **String** |  | 
 **telefono** | **String** |  | [optional] 
 **email** | **String** |  | 
+**organizacion** | [**EventoOrganizacionDto**](EventoOrganizacionDto.md) |  | 
 
 

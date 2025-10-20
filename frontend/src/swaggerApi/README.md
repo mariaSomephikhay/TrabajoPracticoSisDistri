@@ -142,10 +142,8 @@ Class | Method | HTTP request | Description
 *ApiDocumentada.EventosApi* | [**insertDonacionesToEvento**](docs/EventosApi.md#insertDonacionesToEvento) | **PUT** /evento/{id}/donaciones/add | Agregar donaciones al evento
 *ApiDocumentada.EventosApi* | [**insertUsersToEvento**](docs/EventosApi.md#insertUsersToEvento) | **PUT** /evento/{id}/users/add | Agregar usuarios a un evento
 *ApiDocumentada.EventosApi* | [**listEventos**](docs/EventosApi.md#listEventos) | **GET** /evento/ | Obtener todos los eventos
-*ApiDocumentada.SolicitudesApi* | [**getAllRequestDonacion**](docs/SolicitudesApi.md#getAllRequestDonacion) | **GET** /solicitud/ | Obtener todos las solicitudes donaciones
 *ApiDocumentada.EventosApi* | [**newRequesEventoKafka**](docs/EventosApi.md#newRequesEventoKafka) | **POST** /evento/request/new | Publicar evento en kafka
 *ApiDocumentada.EventosApi* | [**updateEventoById**](docs/EventosApi.md#updateEventoById) | **PUT** /evento/{id} | Actualizar un evento
-*ApiDocumentada.SolicitudesApi* | [**deleteRequestDonacion**](docs/SolicitudesApi.md#deleteRequestDonacion) | **DELETE** /solicitud/delete | Enviar solicitud de donaciones a kafka
 *ApiDocumentada.SolicitudesApi* | [**getAllRequestDonacion**](docs/SolicitudesApi.md#getAllRequestDonacion) | **GET** /solicitud/ | Obtener todos las solicitudes donaciones
 *ApiDocumentada.SolicitudesApi* | [**newRequestDonacion**](docs/SolicitudesApi.md#newRequestDonacion) | **POST** /solicitud/request/new | Enviar solicitud de donaciones a kafka
 *ApiDocumentada.TransferenciasApi* | [**newTransfer**](docs/TransferenciasApi.md#newTransfer) | **POST** /transferencia/donacion/{id_solicitante}/new | Enviar transferencia de donaciones a organizacion
@@ -175,6 +173,7 @@ Class | Method | HTTP request | Description
  - [ApiDocumentada.EventoKafka](docs/EventoKafka.md)
  - [ApiDocumentada.EventoList](docs/EventoList.md)
  - [ApiDocumentada.EventoListaDonacion](docs/EventoListaDonacion.md)
+ - [ApiDocumentada.EventoOrganizacionDto](docs/EventoOrganizacionDto.md)
  - [ApiDocumentada.EventoRol](docs/EventoRol.md)
  - [ApiDocumentada.EventoUsersDto](docs/EventoUsersDto.md)
  - [ApiDocumentada.EventoUsersListDto](docs/EventoUsersListDto.md)
@@ -182,7 +181,6 @@ Class | Method | HTTP request | Description
  - [ApiDocumentada.Login](docs/Login.md)
  - [ApiDocumentada.Rol](docs/Rol.md)
  - [ApiDocumentada.Solicitud](docs/Solicitud.md)
- - [ApiDocumentada.SolicitudBaja](docs/SolicitudBaja.md)
  - [ApiDocumentada.SolicitudCategoria](docs/SolicitudCategoria.md)
  - [ApiDocumentada.SolicitudDonacion](docs/SolicitudDonacion.md)
  - [ApiDocumentada.SolicitudError](docs/SolicitudError.md)
@@ -194,6 +192,7 @@ Class | Method | HTTP request | Description
  - [ApiDocumentada.Usuario](docs/Usuario.md)
  - [ApiDocumentada.UsuarioList](docs/UsuarioList.md)
  - [ApiDocumentada.VoluntarioDto](docs/VoluntarioDto.md)
+ - [ApiDocumentada.VoluntarioEventoDto](docs/VoluntarioEventoDto.md)
 
 
 ## Documentation for Authorization

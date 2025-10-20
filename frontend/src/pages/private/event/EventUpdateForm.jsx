@@ -12,6 +12,7 @@ export const EventUpdateForm = () => {
   const [loading, setLoading] = useState(true);
   const [associatedUsers, setAssociatedUsers] = useState([]);
   const [associatedDonaciones, setAssociatedDonaciones] = useState([]);
+  const [associatedVoluntarios, setAssociatedVoluntarios] = useState([]);
   const { userAuthenticated } = useContext(AuthContext);
   const [selectedUserIds, setSelectedUserIds] = useState([]);
   const [currentUser, setCurrentUser] = useState(null);
@@ -46,10 +47,14 @@ export const EventUpdateForm = () => {
   useEffect(() => {
     EventService.obtenerListadoUsuariosAsociadosAEvento(id)
       .then((data) => {
+        console.log("Usuarios asociados:", data);
         const usuariosAsociados = data.users || [];
         setAssociatedUsers(usuariosAsociados);
         const asociados = data.users?.map((u) => u.id.toString()) || [];
         setSelectedUserIds(asociados);
+
+        const voluntariosAsociados = data.voluntarios || [];
+        setAssociatedVoluntarios(voluntariosAsociados);
       })
       .catch((error) => {
         console.error("Error al obtener usuarios asociados:", error);
@@ -225,6 +230,34 @@ export const EventUpdateForm = () => {
             <li className="list-group-item text-muted">No hay usuarios asociados.</li>
           )}
         </ul>
+      </div>
+
+      {/* Voluntarios asociadas */}
+      <div className="mb-3 mt-4">
+        <label className="form-label fw-bold">Voluntarios asociadas al evento</label>
+
+        {associatedVoluntarios.length > 0 ? (
+          <div className="table-responsive">
+            <table className="table table-bordered table-striped mt-2">
+              <thead className="table-primary">
+                <tr>
+                  <th style={{ width: '50%' }}>Nombre voluntario</th>
+                  <th style={{ width: '50%' }}>Organizacion</th>
+                </tr>
+              </thead>
+              <tbody>
+                {associatedVoluntarios.map((item, index) => (
+                  <tr key={index}>
+                    <td>{item.nombre + ' ' + item.apellido}</td>
+                    <td>{item.organizacion.nombre}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ) : (
+          <p className="text-muted">No hay donaciones asociadas.</p>
+        )}
       </div>
 
       {/* Donaciones asociadas */}
