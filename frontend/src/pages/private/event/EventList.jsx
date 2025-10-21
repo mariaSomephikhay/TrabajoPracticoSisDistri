@@ -3,6 +3,7 @@ import { Table } from '../../../components/ui/Table.jsx';
 import { AuthContext } from "../../../context/AuthContext.jsx";
 import editIcon from "../../../../public/icons/edit.svg";
 import deleteIcon from "../../../../public/icons/delete.svg";
+import publishIcon from "../../../../public/icons/publish.svg";
 import EventService from '../../../services/EventService.js';
 import { Modal } from "../../../components/ui/Modal.jsx"
 import { useNavigate } from 'react-router-dom'
@@ -13,6 +14,7 @@ export const EventList = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [showModalPublicar, setShowModalPublicar] = useState(false);
   const [eventSelected, setEventSelected] = useState(null)
   const navigate = useNavigate()
 
@@ -41,24 +43,33 @@ export const EventList = () => {
     setShowModal(true) 
   }
 
-  const handlePublicarEvento = async (event) => {
-  console.log("Publicar evento: ", event);
+  const handlePublicarEventOnClick = (event) => { 
+    setEventSelected(event) 
+    setShowModalPublicar(true) 
+  }
+
+  const handlePublicarEvento = async () => {
+  console.log("Publicar evento: ", eventSelected);
   try {
-    EventService.enviarNotifiacionKafka(event);
+    EventService.enviarNotifiacionKafka(eventSelected);
 
-    const updatedEvent = { ...event, publicado: true };
+    const updatedEvent = { ...eventSelected, publicado: true };
 
-    await EventService.modificarEvento(event.id, updatedEvent);
+    await EventService.modificarEvento(eventSelected.id, updatedEvent);
 
-    setEvents((prevEvents) =>
+    // Actualización optimista: cambio publicado a true inmediatamente
+    setEvents(prevEvent => prevEvent.map(e => e.id === eventSelected.id ? { ...e, publicado: true } : e));
+    /*setEvents((prevEvents) =>
       prevEvents.map((ev) =>
-        ev.id === event.id ? updatedEvent : ev
+        ev.id === eventSelected.id ? updatedEvent : ev
       )
-    );
+    );*/
   } catch (error) {
     console.error(error);
     alert("Error al crear la solicitud de donacion");
-  }
+  }finally { 
+    setShowModalPublicar(false) 
+  } 
 };
 
 
@@ -112,17 +123,24 @@ export const EventList = () => {
               { label: "Eliminar", icon: deleteIcon, show: (u) => u.idOrganizacion === 1, onClick: (u) => handleDeleteEventOnClick(u) },
               {
                 label: "Publicar",
-                icon: null,
-                show: (u) => u.publicado === false && u.idOrganizacion === 1,
-                onClick: (u) => handlePublicarEvento(u),
+                icon: publishIcon,
+                onClick: (u) => handlePublicarEventOnClick(u),
+                hidden: (u) => u.publicado || u.idOrganizacion !== 1
+               
               }
 
             ]
-          
+                  
         }
         emptyMessage="No hay eventos disponibles"
       />
-
+        <Modal
+              show={showModalPublicar}
+              title="Publicar evento"
+              message={`¿Estás seguro que deseas publicar el evento para las ONGs de la Red?`}
+              onConfirm={handlePublicarEvento}
+              onCancel={() => setShowModalPublicar(false)}
+        />
         <Modal
               show={showModal}
               title="Eliminar evento"
