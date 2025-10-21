@@ -23,6 +23,7 @@ import { EventUsersManager } from '../pages/private/event/EventUsersManager.jsx'
 import { EventDonacionesManager } from '../pages/private/event/EventDonacionesManager.jsx';
 import { RequestDonationNewForm } from '../pages/private/donation/RequestDonationNewForm.jsx';
 import { RequestDonationInventory } from '../pages/private/donation/RequestDonationInventory.jsx';
+import { ExternalEventManager } from '../pages/private/event/ExternalEventManager.jsx';
 export const OperatorRoutes = () => {
     const { notification, clearNotification } = useNotification()
 
@@ -57,7 +58,7 @@ export const OperatorRoutes = () => {
                 <Route path="/events/new/" element={<PrivateRoute allowedRoles={["PRESIDENTE","COORDINADOR"]}><EventNew /></PrivateRoute>} /> 
                 <Route path="/events/:id/users" element={<PrivateRoute allowedRoles={["PRESIDENTE","COORDINADOR","VOLUNTARIO"]}><EventUsersManager /></PrivateRoute>} />
                 <Route path="/events/:id/donaciones" element={<PrivateRoute allowedRoles={["PRESIDENTE","COORDINADOR"]}><EventDonacionesManager /></PrivateRoute>} />
-
+                <Route path="/events/external/event/:id" element={<PrivateRoute allowedRoles={["PRESIDENTE","COORDINADOR"]}><ExternalEventManager /></PrivateRoute>} />
 
                 {/* Ruta catch-all para 404 */} 
                 <Route path="*" element={<NotFound />} />

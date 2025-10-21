@@ -100,7 +100,7 @@ const EventService = {
           };
           return await eventosApi.newRequesEventoKafka(body);
         } catch (err) {
-          console.error("Error al insertar usuarios al evento:", err);
+          console.error("Error al enviar notifiacar un nuevo evento:", err);
           throw err;
         }
     },
@@ -113,7 +113,29 @@ const EventService = {
           };
           return await eventosApi.deleteRequesEventoKafka(body);
         } catch (err) {
-          console.error("Error al insertar usuarios al evento:", err);
+          console.error("Error al enviar notifiacion de baja de evento:", err);
+          throw err;
+        }
+    },
+
+    enviarNotifiacionAdhesionEvento: async (idOrganization,idEvento , user) => {
+        try {
+          const voluntarioDto = {
+            idOrganizacion: 1,
+            idVoluntario: user.voluntario.id,
+            nombre: user.voluntario.nombre,
+            apellido: user.voluntario.apellido,
+            telefono: user.voluntario.telefono,
+            email: user.voluntario.email
+          };
+
+          const body = {
+          id_evento : idEvento.idEvento,
+          voluntario: voluntarioDto
+          };
+          return await eventosApi.adhesionEvento(idOrganization.idOrganization,body);
+        } catch (err) {
+          console.error("Error al enviar notifiacion de adhesion:", err);
           throw err;
         }
     },

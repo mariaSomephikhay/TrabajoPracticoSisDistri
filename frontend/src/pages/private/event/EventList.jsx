@@ -4,6 +4,7 @@ import { AuthContext } from "../../../context/AuthContext.jsx";
 import editIcon from "../../../../public/icons/edit.svg";
 import deleteIcon from "../../../../public/icons/delete.svg";
 import publishIcon from "../../../../public/icons/publish.svg";
+import addIcon from "../../../../public/icons/add.png" 
 import EventService from '../../../services/EventService.js';
 import { Modal } from "../../../components/ui/Modal.jsx"
 import { useNavigate } from 'react-router-dom'
@@ -36,6 +37,10 @@ export const EventList = () => {
 
   const handleEditEvent = (id) => {
     navigate(`/events/edit/${id}`)
+  };
+
+  const handleAddExternalEvent = (id) => {
+    navigate(`/events/external/event/${id}`)
   };
 
   const handleDeleteEventOnClick = (event) => { 
@@ -126,8 +131,8 @@ export const EventList = () => {
                 icon: publishIcon,
                 onClick: (u) => handlePublicarEventOnClick(u),
                 hidden: (u) => u.publicado || u.idOrganizacion !== 1
-               
-              }
+              },
+              { label: "Adherirse", icon: addIcon, show: (u) => u.idOrganizacion !== 1, onClick: (u) => handleAddExternalEvent(u.id) },
 
             ]
                   
