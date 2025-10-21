@@ -92,5 +92,10 @@ public class DonacionService implements IDonacionService {
         return  organizacionPropia.get();
     }
 
+	@Override
+	public List<Donacion> findAllStock() {
+		return donacionRepository.findAllStock();
+	}
+
 
 }
