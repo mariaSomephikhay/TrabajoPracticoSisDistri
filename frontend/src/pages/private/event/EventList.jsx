@@ -124,15 +124,24 @@ export const EventList = () => {
         data={events}
         actions={
             [
-              { label: "Editar", icon: editIcon,show: (u) => u.idOrganizacion === 1, onClick: (u) => handleEditEvent(u.id) },
-              { label: "Eliminar", icon: deleteIcon, show: (u) => u.idOrganizacion === 1, onClick: (u) => handleDeleteEventOnClick(u) },
+              { label: "Editar", icon: editIcon,
+                onClick: (u) => handleEditEvent(u.id),
+                hidden: (u) => u.idOrganizacion !== 1
+              }, 
+              { label: "Eliminar", icon: deleteIcon, 
+                onClick: (u) => handleDeleteEventOnClick(u),
+                hidden: (u) => u.idOrganizacion !== 1
+              },
               {
                 label: "Publicar",
                 icon: publishIcon,
                 onClick: (u) => handlePublicarEventOnClick(u),
                 hidden: (u) => u.publicado || u.idOrganizacion !== 1
               },
-              { label: "Adherirse", icon: addIcon, show: (u) => u.idOrganizacion !== 1, onClick: (u) => handleAddExternalEvent(u.id) },
+              { label: "Adherirse", icon: addIcon, 
+                onClick: (u) => handleAddExternalEvent(u.id),
+                hidden: (u) => u.idOrganizacion === 1
+              },
 
             ]
                   
