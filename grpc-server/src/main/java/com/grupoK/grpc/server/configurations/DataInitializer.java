@@ -126,8 +126,8 @@ public class DataInitializer {
                 Categoria escolar = cateRepo.save(new Categoria(null, TipoCategoria.UTIL_ESCOLAR));
 
                 Usuario usuario = (usuarioRepo.findByUsername("user1")).get();
-                Usuario usuarioExternoUno = (usuarioRepo.findByUsername("user3")).get();
-                Usuario usuarioExternoDos = (usuarioRepo.findByUsername("user4")).get();
+                Usuario kafka = (usuarioRepo.findByUsername("Kafka")).get();
+                //Usuario usuarioExternoDos = (usuarioRepo.findByUsername("user4")).get();
 
                 donacionRepo.save(new Donacion(
                         null,	// id
@@ -137,9 +137,9 @@ public class DataInitializer {
                         3, // cantidad
                         false,   // eliminado
                         null,          // fechaAlta (se genera sola)
-                        usuario,
+                        kafka,
                         null,
-                        usuario,
+                        kafka,
                         null
                 ));
                 donacionRepo.save(new Donacion(
@@ -150,9 +150,9 @@ public class DataInitializer {
                         2, // cantidad
                         false,   // eliminado
                         null,          // fechaAlta (se genera sola)
-                        usuario,
+                        kafka,
                         null,
-                        usuario,
+                        kafka,
                         null
                 ));
 
@@ -165,12 +165,12 @@ public class DataInitializer {
                         10, // cantidad
                         false,   // eliminado
                         null,    // fechaAlta (se genera sola)
-                        usuarioExternoUno,
+                        kafka,
                         null,
-                        usuarioExternoUno,
+                        kafka,
                         null
                 ));
-                List<Donacion> donacionesExternasDos = donacionRepo.saveAll(
+                List<Donacion> donacionesinternasS = donacionRepo.saveAll(
                         Arrays.asList(
                                 new Donacion(
                                         null,	// id
@@ -180,9 +180,9 @@ public class DataInitializer {
                                         4, // cantidad
                                         false,   // eliminado
                                         null,    // fechaAlta (se genera sola)
-                                        usuarioExternoDos,
+                                        usuario,
                                         null,
-                                        usuarioExternoDos,
+                                        usuario,
                                         null
                                 ),
                                 new Donacion(
@@ -193,9 +193,9 @@ public class DataInitializer {
                                         8, // cantidad
                                         false,   // eliminado
                                         null,    // fechaAlta (se genera sola)
-                                        usuarioExternoDos,
+                                        usuario,
                                         null,
-                                        usuarioExternoDos,
+                                        usuario,
                                         null
                                 )
                         )
@@ -210,8 +210,8 @@ public class DataInitializer {
                 Organizacion organizacionExternaTres = orgRepo.findById(4).get();
 
                 Donacion donacionExternaUno = donacionRepo.findById(3).get();
-                Donacion donacionExternaDos = donacionRepo.findById(4).get();
-                Donacion donacionExternaTres = donacionRepo.findById(5).get();
+                Donacion donacioninternaSDos = donacionRepo.findById(4).get();
+                Donacion donacioninterneSTres = donacionRepo.findById(5).get();
 
                 List<Solicitud> solicitudes = soliRepo.saveAll(
                         Arrays.asList(
@@ -237,13 +237,13 @@ public class DataInitializer {
                         new SolicitudDonacion(
                                 null,
                                 solicitudes.get(0),
-                                donacionExternaDos//,
+                                donacioninternaSDos//,
                                 //1
                         ),
                         new SolicitudDonacion(
                                 null,
                                 solicitudes.get(0),
-                                donacionExternaTres//,
+                                donacioninterneSTres//,
                                 //2
                         ),
                         new SolicitudDonacion(
