@@ -68,6 +68,15 @@ message DonacionesAsociadas {
     Donacion donacion = 1;
     int32 cantidad = 2;
 }
+//------------Voluntario-----------//
+message Voluntario {
+    string id = 1;
+    string email = 2;
+    string nombre = 3;
+    string apellido = 4;
+    string telefono = 5;
+    Organizacion organizacion = 6;
+}
 
 //------------EVENTO-----------//
 
@@ -98,6 +107,7 @@ message EventoWithListUsers {
 message EventoWithListUsersDetails {
 	Evento evento = 1;
     repeated Usuario users = 2;
+    repeated Voluntario voluntarios = 3;
 }
 
 message EventoWithListDonaciones {

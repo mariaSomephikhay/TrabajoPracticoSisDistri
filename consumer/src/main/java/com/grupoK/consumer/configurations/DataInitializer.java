@@ -8,6 +8,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
@@ -16,7 +17,7 @@ public class DataInitializer {
 
     @Bean
     CommandLineRunner initData(IOrganizacionRepository orgRepo, ICategoriaRepository cateRepo, IDonacionRepository donacionRepo,
-                               IUsuarioRepository usuarioRepo, IRolRepository rolRepo, ISolicitudRepository soliRepo, ISolicitudDonacionRepository soliDonaRepo) {
+                               IUsuarioRepository usuarioRepo, IRolRepository rolRepo, ISolicitudRepository soliRepo, ISolicitudDonacionRepository soliDonaRepo, IEventoRepository eventoRepo) {
         return args -> {
             if (rolRepo.count() == 0) {
                 Organizacion organizacionPropia = orgRepo.save(new Organizacion(null, "GrupoK", false));
@@ -30,7 +31,7 @@ public class DataInitializer {
                 rolRepo.save(new Rol(null, TipoRoles.VOCAL));
 
                 usuarioRepo.save(new Usuario(
-                        null,			   // id
+                        "GK-20251017133221-1111",			   // id
                         "user1",           // username
                         "$2b$12$4pzYx189NUVwtpsK5uTuUOJR60MhqKZVYjss.2pZPuipv2/P/TwmW", // password(user1)
                         "user@mail.com",   // email
@@ -47,7 +48,7 @@ public class DataInitializer {
             
 
                 usuarioRepo.save(new Usuario(
-                        null,
+                        "GK-20251017133221-2222",
                         "user2",
                         "$2b$12$q0cJWPMPkXziA2KuCig01.b88wmiRQxaBwAAQQWAwzUgU6R3VpSYe", //password (user2)
                         "user2@mail.com",
@@ -63,7 +64,7 @@ public class DataInitializer {
                 ));
 
                 usuarioRepo.save(new Usuario(
-                        null,
+                        "GK-20251017133221-3333",
                         "user3",
                         "$2b$12$q0cJWPMPkXziA2KuCig01.b88wmiRQxaBwAAQQWAwzUgU6R3VpSYe", //password (user2)
                         "user3@mail.com",
@@ -79,7 +80,7 @@ public class DataInitializer {
                 ));
 
                 usuarioRepo.save(new Usuario(
-                        null,
+                        "GK-20251017133221-4444",
                         "user4",
                         "$2b$12$q0cJWPMPkXziA2KuCig01.b88wmiRQxaBwAAQQWAwzUgU6R3VpSYe", //password (user2)
                         "user4@mail.com",
@@ -95,7 +96,7 @@ public class DataInitializer {
                 ));
                 
                 usuarioRepo.save(new Usuario(
-                        null,			   // id
+                        "GK-20251017133221-5555",			   // id
                         "Kafka",           // username
                         "$2b$12$4pzYx189NUVwtpsK5uTuUOJR60MhqKZVYjss.2pZPuipv2/P/TwmW", // password(user1)
                         "Kafka@mail.com",   // email
@@ -252,6 +253,40 @@ public class DataInitializer {
                                 //2
                         )
                 ));
+            }
+            
+            if(eventoRepo.count() == 0) {
+            	Usuario usuario = (usuarioRepo.findByUsername("user1")).get();
+            	Organizacion organizacionPropia = orgRepo.findById(1).get();
+            	
+            	Evento evento = new Evento 
+            			("GK-20251019203949-1111",
+            			"Dia de la Independencia",
+            			"Dia de la Independencia",
+            			LocalDate.of(2025, 7, 9).atStartOfDay(),
+            			null,
+            			null,
+            			usuario,
+            			organizacionPropia, 
+            			true, 
+            			false,
+            			null);
+            	
+            	Evento evento2 = new Evento 
+            			("GK-20251019203949-2222",
+            			"Dia del Programador",
+            			"Dia del Programador",
+            			LocalDate.of(2025, 11, 25).atStartOfDay(),
+            			null,
+            			null,
+            			usuario,
+            			organizacionPropia, 
+            			true, 
+            			false,
+            			null);
+            	
+            	eventoRepo.save(evento);
+            	eventoRepo.save(evento2);
             }
         };
     }

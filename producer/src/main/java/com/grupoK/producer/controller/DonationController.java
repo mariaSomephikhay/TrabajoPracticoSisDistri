@@ -49,4 +49,16 @@ public class DonationController {
         return ResponseEntity.status(HttpStatus.CREATED).body(message);
     }
 
+    @PostMapping("/request/delete")
+    public ResponseEntity<Object> producerBajaRequestDonation(@RequestBody String message) {
+        String topic = "_baja-solicitud-donaciones_";
+        try {
+        	producerService.sendMsgToTopic(topic, message);
+        }catch (Exception e) {
+        	Map<String, String> errorResponse = new HashMap<>();
+        	errorResponse.put("error", e.getMessage());
+        	return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+        }
+        return ResponseEntity.status(HttpStatus.CREATED).body(message);
+    }
 }

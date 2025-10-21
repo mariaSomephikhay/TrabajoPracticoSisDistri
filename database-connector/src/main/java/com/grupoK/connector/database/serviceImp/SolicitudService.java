@@ -71,8 +71,12 @@ public class SolicitudService implements ISolicitudService {
         List<SolicitudDonacion> donationsAssociatedToRequest = findAllDonationsAssociatedByRequest(solicitudBD);
         
         //Baja fisica en la tabla SolicitudDonacion
-        solicitudDonacionRepository.deleteAllById(donationsAssociatedToRequest.stream().map(SolicitudDonacion::getId).toList());
-        
+        try {
+        	solicitudDonacionRepository.deleteAllById(donationsAssociatedToRequest.stream().map(SolicitudDonacion::getId).toList());
+        }
+        catch (Exception e) {
+        	System.out.println("solicitud sin donacion");
+        }
         //Baja fisica en la tabla de donaciones
         donacionRepository.deleteAll(donationsAssociatedToRequest.stream().map(SolicitudDonacion::getDonacion).toList());;
         

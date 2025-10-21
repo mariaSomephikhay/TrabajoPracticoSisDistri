@@ -3,6 +3,8 @@ package com.grupoK.connector.database.serviceImp;
 import com.grupoK.connector.database.configuration.annotations.GrpcServerAnnotation;
 import com.grupoK.connector.database.entities.Evento;
 import com.grupoK.connector.database.entities.Usuario;
+import com.grupoK.connector.database.entities.Voluntario;
+import com.grupoK.connector.database.exceptions.EventoNoEncontradoException;
 import com.grupoK.connector.database.repositories.IEventoRepository;
 import com.grupoK.connector.database.service.IEventoService;
 import com.grupoK.connector.database.service.IUsuarioService;
@@ -53,7 +55,7 @@ public class EventoService implements IEventoService {
 	@Override
 	public Evento findById(String id) throws Exception {
 		return eventoRepository.findById(id)
-			.orElseThrow(() -> new Exception("No se encontró evento"));
+			.orElseThrow(() -> new EventoNoEncontradoException("No se encontró evento"));
 	}
 	
 	private void map(Evento preUpdated, Evento updated) {
@@ -83,7 +85,7 @@ public class EventoService implements IEventoService {
 	}
 
 	@Override
-	public List<Usuario> saveUsersToEvento(Evento evento, List<Integer> lstUsersId) {
+	public List<Usuario> saveUsersToEvento(Evento evento, List<String> lstUsersId) {
 		List<Usuario> lstUsers = usuarioService.getUsersById(lstUsersId);
 		evento.setUsuarios(lstUsers);
 		eventoRepository.save(evento);
@@ -95,8 +97,16 @@ public class EventoService implements IEventoService {
 		return eventoRepository.findUsuariosByEventoId(id);
 	}
 
+	@Override
+	public Evento findByIdWithVoluntarios(String id) throws Exception {
+		return eventoRepository.findByIdWithVoluntarios(id);
+	}
 	
-
-	
+	@Override
+	public List<Voluntario> saveVoluntariosToEvento(Evento evento, List<Voluntario> lstVoluntarios) {
+		evento.setVoluntarios(lstVoluntarios);
+		eventoRepository.save(evento);
+		return lstVoluntarios;
+	}
 
 }

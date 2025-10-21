@@ -76,9 +76,23 @@ userDto = api.model("Evento.Usuario", {
     "activo": fields.Boolean(required=True),
     "rol": fields.Nested(rolDto, required=True)
 })
+OrganizacionDto =  api.model("Evento.OrganizacionDto", {
+    "id": fields.Integer(required=True),
+    "nombre": fields.String(required=True),
+    "externa": fields.Boolean(required=False)
+})
+voluntarioEventoDto = api.model("VoluntarioEventoDto", {
+    "idVoluntario": fields.String(required=True),
+    "nombre": fields.String(required=True),
+    "apellido": fields.String(required=True),
+    "telefono": fields.String(required=False),
+    "email": fields.String(required=True),
+    "organizacion": fields.Nested(OrganizacionDto, required=True)
+})
 eventoUsersDto = api.model("EventoUsersDto", {
-    "id": fields.String(required=False),
-    "users": fields.List(fields.Nested(userDto, required=False))
+    "evento": fields.Nested(eventoDto, required=True),
+    "users": fields.List(fields.Nested(userDto, required=False)),
+    "voluntarios": fields.List(fields.Nested(voluntarioEventoDto, required=False))
 })
 
 #######################################################
@@ -99,7 +113,7 @@ eventoBajaKafka = api.model("eventoBajaKafka", {
 
 voluntarioDto = api.model("VoluntarioDto", {
     "idOrganizacion": fields.Integer(required=True),
-    "idVoluntario": fields.Integer(required=True),
+    "idVoluntario": fields.String(required=True),
     "nombre": fields.String(required=True),
     "apellido": fields.String(required=True),
     "telefono": fields.String(required=False),
@@ -137,7 +151,7 @@ class EventoInsert(Resource):
                 random_digits = f"{random.randint(0, 9999):04}"
                 payload["id"] = f"GK-{fecha_hora}-{random_digits}"
 
-            print(payload)
+            #print(payload)
 
             username = SecurityConfig.getUser()
             usuario = json.loads(cliente.getUserByUsername(username))
@@ -264,6 +278,7 @@ class AddUsersToEvento(Resource):
         try:
             
             data = api.payload  
+            #print(data)
             payload = {
                 "id": id,
                 "usersIds": [{"id": user_id} for user_id in data.get("usersIds", [])]

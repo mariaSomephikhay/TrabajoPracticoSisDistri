@@ -7,9 +7,9 @@ import java.util.List;
 public interface IUsuarioService {
 	
 	List<Usuario> findAll();
-	Usuario findById(Integer id);
+	Usuario findById(String id);
 	Usuario findByUsername(String username);
 	Usuario saveOrUpdate(Usuario usuario);
-	Usuario delete(Integer id);
-	List<Usuario> getUsersById (List<Integer> lstId);
+	Usuario delete(String id);
+	List<Usuario> getUsersById (List<String> lstId);
 }

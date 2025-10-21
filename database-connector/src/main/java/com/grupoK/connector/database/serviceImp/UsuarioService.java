@@ -95,7 +95,7 @@ public class UsuarioService implements IUsuarioService {
 
 
 	@Override
-	public Usuario findById(Integer idUser) {
+	public Usuario findById(String idUser) {
 		Optional<Usuario> user = usuarioRepository.findById(idUser);
 		if(user.isEmpty()) 
             throw new UserNotFoundException("No existe un usuario con ese ID.");
@@ -116,7 +116,7 @@ public class UsuarioService implements IUsuarioService {
 
 
 	@Override
-	public Usuario delete(Integer id) {
+	public Usuario delete(String id) {
 		Usuario user = this.findById(id);
 		user.setActivo(false);
 		usuarioRepository.save(user);
@@ -125,10 +125,10 @@ public class UsuarioService implements IUsuarioService {
 
 
 	@Override
-	public List<Usuario> getUsersById(List<Integer> lstId) {
+	public List<Usuario> getUsersById(List<String> lstId) {
 		List<Usuario> lstUsers = new ArrayList<Usuario>();
 		try {
-			for (Integer id : lstId) {
+			for (String id : lstId) {
 				lstUsers.add(this.findById(id));
 	        }
 		}catch(Exception e) {
