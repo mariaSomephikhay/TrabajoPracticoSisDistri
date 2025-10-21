@@ -2,6 +2,7 @@ package com.grupoK.grpc.server.grpcService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import com.grupoK.connector.database.entities.Donacion;
@@ -438,7 +439,7 @@ public class ManagerServiceImpl extends ManagerServiceGrpc.ManagerServiceImplBas
 				
 				ListSolicitudDonacion response = ListSolicitudDonacion.newBuilder()
 					    .addAllSolicitudes(solicitudes.stream()
-					    		.filter(Solicitud::getActiva)  //solo procesa las activas
+					    		//.filter(Solicitud::getActiva)  //solo procesa las activas
 					            .map(solicitud -> {
 					                try {
 					                    // Obtener donaciones asociadas a esta solicitud
@@ -451,10 +452,14 @@ public class ManagerServiceImpl extends ManagerServiceGrpc.ManagerServiceImplBas
 					                    // Mapear a gRPC usando el wrapper
 					                    return solicitudWrapper.toGrpcSolicitudDonacion(solicitud, donaciones);
 					                }catch (Exception e) {
-					                	throw new RuntimeException("Error al obtener donaciones asociadas: " + e.getMessage(), e);
-					    			}
+					                	//throw new RuntimeException("Error al obtener donaciones asociadas: " + e.getMessage(), e);
+					                	System.out.println("Error al obtener donaciones para solicitud "
+					                             + solicitud.getId() + ": " + e.getMessage());
+					                	return null;
+					                }
 					         
 					            })
+					            .filter(Objects::nonNull) // quita las solicitudes fallidas 
 					            .toList()
 					    )
 					    .build();
