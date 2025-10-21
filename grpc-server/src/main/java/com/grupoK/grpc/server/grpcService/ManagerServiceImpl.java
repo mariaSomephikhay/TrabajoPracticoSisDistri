@@ -211,7 +211,7 @@ public class ManagerServiceImpl extends ManagerServiceGrpc.ManagerServiceImplBas
     public void getAllDonaciones(Empty request, StreamObserver<DonacionList> responseObserver) {
 
         // request -> DB -> map response -> return
-        List<Donacion> donaciones = donacionService.findAll();
+        List<Donacion> donaciones = donacionService.findAllStock();
 
         DonacionList response = DonacionList.newBuilder()
                 .addAllDonaciones(donaciones.stream()
