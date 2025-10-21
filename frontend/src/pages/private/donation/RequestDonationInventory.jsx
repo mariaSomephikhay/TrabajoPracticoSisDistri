@@ -60,7 +60,9 @@ const handleDeleteDonationOnClick = (solicitud) => {
       setSolicitudSelected(null) // Se limpia la selección
 
       // Actualización optimista: cambio eliminado a true inmediatamente
-      setSolicitud(prevRequest => prevRequest.map(d => d.id === solicitudSelected.id ? { ...d, activo: false } : d))
+      setSolicitud(prevRequest => prevRequest.map(d => d.id === solicitudSelected.id ? { ...d, activa: false } : d))
+      console.log(solicitudSelected);
+      
     } catch (err) { 
       console.error(err) 
       alert('Error al bajar la solicitud donacion')
