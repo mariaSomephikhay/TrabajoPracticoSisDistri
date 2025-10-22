@@ -1,0 +1,37 @@
+type SolicitudDonacion {
+	
+	id: ID!
+	organizacionSolicitante: Organizacion
+	activa: Boolean!
+	procesada: Boolean!
+	donaciones: [Donacion]
+}
+
+type Organizacion {
+	
+	id: ID!
+	nombre: String!
+}
+
+type TipoCategoria {
+
+	descripcion: String!
+}
+
+type Donacion {
+	id: ID!
+	categoria: TipoCategoria
+	descripcion: String
+	cantidad: Int
+}
+
+type OrganizacionResponse {
+  status: String!
+  message: String
+  data: Organizacion
+}
+
+type Query {
+	getSolicitud(id: ID!): SolicitudDonacion
+	getOrganizacion(id: ID!) : OrganizacionResponse
+}
