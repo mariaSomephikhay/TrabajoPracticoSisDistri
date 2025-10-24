@@ -4,6 +4,7 @@ import com.grupoK.connector.database.entities.Evento;
 import com.grupoK.connector.database.entities.Usuario;
 import com.grupoK.connector.database.entities.Voluntario;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface IEventoService {
@@ -17,4 +18,5 @@ public interface IEventoService {
 	List<Usuario> saveUsersToEvento(Evento evento, List<String> lstUsers);
 	List<Usuario> getUsersByIdEvento(String id);
 	List<Voluntario> saveVoluntariosToEvento(Evento evento, List<Voluntario> lstVoluntarios);
+	List<Evento> obtenerInforme(String idUser,LocalDate desde,LocalDate hasta, Integer modo);
 }

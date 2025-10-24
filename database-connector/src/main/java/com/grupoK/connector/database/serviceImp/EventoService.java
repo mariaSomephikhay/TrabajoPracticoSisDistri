@@ -2,18 +2,24 @@ package com.grupoK.connector.database.serviceImp;
 
 import com.grupoK.connector.database.configuration.annotations.GrpcServerAnnotation;
 import com.grupoK.connector.database.entities.Evento;
+import com.grupoK.connector.database.entities.EventoDonacion;
 import com.grupoK.connector.database.entities.Usuario;
 import com.grupoK.connector.database.entities.Voluntario;
 import com.grupoK.connector.database.exceptions.EventoNoEncontradoException;
 import com.grupoK.connector.database.repositories.IEventoRepository;
 import com.grupoK.connector.database.service.IEventoService;
 import com.grupoK.connector.database.service.IUsuarioService;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.TextStyle;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 @GrpcServerAnnotation
 @Service
@@ -24,6 +30,7 @@ public class EventoService implements IEventoService {
 	
 	@Autowired
 	private IUsuarioService usuarioService;
+	
 	
 	@Override
 	public Evento findByNombre(String nombre) throws Exception {
@@ -46,6 +53,7 @@ public class EventoService implements IEventoService {
 			map(eventoActual, evento);
 			eventoRepository.save(eventoActual);
 		}catch (Exception e){
+			evento.setActivo(true);
 			eventoRepository.save(evento);
 		}
         
@@ -108,5 +116,20 @@ public class EventoService implements IEventoService {
 		eventoRepository.save(evento);
 		return lstVoluntarios;
 	}
+
+	@Override
+	public List<Evento> obtenerInforme(String idUser, LocalDate desde, LocalDate hasta, Integer modo) {
+		LocalDateTime fechaDesdeDate = desde != null ? desde.atStartOfDay() : null;
+		LocalDateTime fechaHastaDate = hasta != null ? hasta.atStartOfDay() : null;
+		List<Evento> eventosAsociados = eventoRepository.filtrarEventos(idUser, fechaDesdeDate, fechaHastaDate);
+		List<Evento> lstEventos = new ArrayList<>();
+		
+		 for (Evento e : eventosAsociados) {
+			 lstEventos.addAll(eventoRepository.findEventosByIdAndModo(e.getId(), modo));
+		 }
+		
+		return lstEventos;
+	}
+
 
 }
