@@ -31,7 +31,25 @@ type OrganizacionResponse {
   data: Organizacion
 }
 
+type Evento {
+  id: ID
+  nombre: String
+  fecha: String
+  eventoDonaciones : [EventoDonacion]
+}
+
+type EventoDonacion {
+  cantRepartida: Int
+  donacion : Donacion
+}
+
+type InformeEvento {
+  mes: String
+  eventos: [Evento]
+}
+
 type Query {
 	getSolicitud(id: ID!): SolicitudDonacion
 	getOrganizacion(id: ID!) : OrganizacionResponse
+	informeParticipacionEventos(usuarioId: ID!, fechaDesde: String, fechaHasta: String,tieneDonacion: String): [InformeEvento]
 }

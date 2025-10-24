@@ -270,6 +270,7 @@ public class DataInitializer {
             			organizacionPropia, 
             			true, 
             			false,
+            			null,
             			null);
             	
             	Evento evento2 = new Evento 
@@ -283,6 +284,7 @@ public class DataInitializer {
             			organizacionPropia, 
             			true, 
             			false,
+            			null,
             			null);
             	
             	eventoRepo.save(evento);
