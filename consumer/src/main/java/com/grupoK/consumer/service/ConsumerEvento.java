@@ -64,6 +64,7 @@ public class ConsumerEvento {
 	                organizacionService.findById(Integer.parseInt(evento.getIdOrganizacion())),
 	                true,
 	                false,
+	                null,
 	                null
 	            );
 
