@@ -12,6 +12,7 @@ from datetime import datetime
 import random
 
 PRODUCER_URL  = config('PRODUCER_URL', cast=str)
+GRAPHQL_URL  = config('GRAPHQL_URL', cast=str)
 
 api = Namespace("eventos", description="Operaciones de eventos")
 cliente = ManagerServiceImpl()
@@ -123,6 +124,16 @@ voluntarioDto = api.model("VoluntarioDto", {
 adhesionEventoKafka = api.model("adhesionEventoKafka", {
     "id_evento": fields.String(required=True),
     "voluntario": fields.Nested(voluntarioDto, required=True)
+})
+
+#######################################################
+# Obetjos de GRAPHQL
+#######################################################
+filtroEvento = api.model("filtroEvento", {
+    "usuarioId": fields.String(required=True),
+    "fechaDesde": fields.Date(required=False),
+    "fechaHasta": fields.Date(required=False),
+    "tieneDonacion": fields.Integer(required=True)
 })
 
 #######################################################
@@ -476,6 +487,79 @@ class adhesion(Resource):
             requests.post(url, json=data)
 
             return 200
+        
+        except Exception as e:
+            return {"error": str(e)}, 500
+
+# GRAPHQL - Endpoints
+@api.route("/filtro/")
+class adhesion(Resource):
+    @api.doc(security='Bearer Auth')
+    @SecurityConfig.authRequired("PRESIDENTE", "COORDINADOR", "VOLUNTARIO")
+    @api.doc(id="filtroEvento") # Esto define el operationId
+    @api.expect(filtroEvento) #Request
+    @api.response(200, "Success")
+    @api.response(401, "Unauthorized", model=errorDto)
+    @api.response(400, "Bad Request", model=errorDto)
+    @api.response(500, "Internal server error", model=errorDto)
+    def post(self):
+        """Consulta de eventos con filtros"""
+        try:
+            if not request.is_json:
+                return {"error": "Bad Request"}, 400
+            
+            data = request.get_json()
+
+            # Endpoint del producer en Java
+            url = f"{GRAPHQL_URL}"
+            
+            data = request.json
+            usuarioId = data.get("usuarioId")
+            fechaDesde = data.get("fechaDesde") 
+            fechaHasta = data.get("fechaHasta")  
+            tieneDonacion = data.get("tieneDonacion")
+
+            query = """
+            query($usuarioId: ID!, $fechaDesde: String, $fechaHasta: String, $tieneDonacion: String!) {
+            informeParticipacionEventos(
+                usuarioId: $usuarioId,
+                fechaDesde: $fechaDesde,
+                fechaHasta: $fechaHasta,
+                tieneDonacion: $tieneDonacion
+            ) {
+                mes
+                eventos {
+                id
+                nombre
+                fecha
+                eventoDonaciones {
+                    cantRepartida
+                    donacion {
+                    id
+                    descripcion
+                    cantidad
+                    categoria {
+                        descripcion
+                    }
+                    }
+                }
+                }
+            }
+            }
+            """
+
+            variables = {
+                "usuarioId": usuarioId,
+                "fechaDesde": fechaDesde,
+                "fechaHasta": fechaHasta,
+                "tieneDonacion": str(tieneDonacion)
+            }
+
+            headers = {"Content-Type": "application/json"}
+
+            response = requests.post(url, headers=headers, json={"query": query, "variables": variables})
+
+            return response.json(), response.status_code
         
         except Exception as e:
             return {"error": str(e)}, 500
