@@ -52,6 +52,6 @@ public class EventoWrapper {
     			utilidades.toLocalDateTime(eventoModel.getFecha()),
     			null,null,
     			usuarioWrapper.toEntityUsuario(eventoModel.getUsuario()),
-    			organizacion, eventoModel.getActivo(), eventoModel.getPublicado(),null);
+    			organizacion, eventoModel.getActivo(), eventoModel.getPublicado(),null,null);
     }
 }
