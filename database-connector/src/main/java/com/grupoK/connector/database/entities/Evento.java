@@ -70,4 +70,7 @@ public class Evento {
         inverseJoinColumns = @JoinColumn(name = "voluntario_id")
     )
     private List<Voluntario> voluntarios = new ArrayList<>();
+	
+	@OneToMany(mappedBy = "evento", fetch = FetchType.LAZY)
+	private List<EventoDonacion> eventoDonaciones;
 }
