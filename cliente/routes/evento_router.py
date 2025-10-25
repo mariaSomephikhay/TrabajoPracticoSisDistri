@@ -514,7 +514,7 @@ class adhesion(Resource):
 
 # GRAPHQL - Endpoints
 @api.route("/filtro/")
-class adhesion(Resource):
+class consultarFiltro(Resource):
     @api.doc(security='Bearer Auth')
     @SecurityConfig.authRequired("PRESIDENTE", "COORDINADOR", "VOLUNTARIO", "VOCAL")
     @api.doc(id="filtroEvento") # Esto define el operationId
