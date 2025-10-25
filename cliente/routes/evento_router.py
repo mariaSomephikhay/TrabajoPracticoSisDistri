@@ -560,9 +560,7 @@ class consultarFiltro(Resource):
                     id
                     descripcion
                     cantidad
-                    categoria {
-                        descripcion
-                    }
+                    categoria 
                     }
                 }
                 }
