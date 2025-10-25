@@ -13,11 +13,12 @@ api = Namespace("donaciones", description="Operaciones de donaciones")
 cliente = ManagerServiceImpl()
 
 PRODUCER_URL  = config('PRODUCER_URL', cast=str)
+GRAPHQL_URL  = config('GRAPHQL_URL', cast=str)
 
 api = Namespace("solicitudes", description="Operaciones de solicitudes de donaciones")
 
 #######################################################
-# Definición de modelos para el swagger
+# Definición de modelos para el swagger Kafka
 #######################################################
 errorDto = api.model("Solicitud.Error", {
     "error": fields.String(required=True)
@@ -57,6 +58,47 @@ SolicitudDonacionGetListDto = api.model("SolicitudGetList", {
 SolicitudDonacionBajaDto = api.model("SolicitudBaja", {
     "id_solicitud_donacion": fields.String(required=True),
     "id_organizacion_solicitante": fields.Integer(required=True)
+})
+
+#######################################################
+# Definición de modelos para el swagger GraphQL
+#######################################################
+InformeSolicitudDto = api.model("InformeSolicitud", {
+    "categoria": fields.String(required=True),
+    "eliminado": fields.String(required=True),
+    "cantidad": fields.Integer(required=True),
+    "recibida": fields.Boolean(required=True),
+})
+
+InformeSolicitudListDto = api.model("InformeSolicitudList", {
+    "status": fields.String(required=True),
+    "message": fields.String(required=True),
+    "data": fields.List(fields.Nested(InformeSolicitudDto))
+})
+
+GraphQLInformeEnvelopeDto = api.model("Solicitud.GraphQLInformeEnvelope", {
+    "informeSolicitudes": fields.Nested(InformeSolicitudListDto)
+})
+GraphQLResponseDto = api.model("Solicitud.GraphQLResponse", {
+    "data": fields.Nested(GraphQLInformeEnvelopeDto)
+})
+
+VariablesInformeSolicitudDto = api.model("Solicitud.VariablesInformeSolicitud", {
+    "categoria":  fields.String(required=False),
+    "fechaDesde":  fields.String(required=False),
+    "fechaHasta":  fields.String(required=False),
+    "eliminado" :  fields.String(required=False)
+})
+
+FiltroInformeSolicitudDto = api.model("Solicitud.FiltronformeSolicitud", {
+    "filtro":  fields.Nested(VariablesInformeSolicitudDto, requerided=True)
+})
+
+queryInformeSolicitudDto = api.model("Solicitud.QueryInformeSolicitud", {
+    "query":  fields.String(required=True,
+                            example="query InformeSolicitudes($filtro: FiltroSolicitudInput) { informeSolicitudes(filtro: $filtro) { status message data { categoria eliminado cantidad recibida } } }",
+                            default="query InformeSolicitudes($filtro: FiltroSolicitudInput) { informeSolicitudes(filtro: $filtro) { status message data { categoria eliminado cantidad recibida } } }"),
+    "variables":   fields.Nested(FiltroInformeSolicitudDto,required=True)
 })
 
 #######################################################
@@ -141,3 +183,34 @@ class Solicitud(Resource):
         
         except Exception as e:
             return {"error": str(e)}, 500
+
+# GRAPHQL - Endpoints
+@api.route("/informe/")
+class adhesion(Resource):
+    @api.doc(security='Bearer Auth')
+    @SecurityConfig.authRequired("PRESIDENTE", "VOCAL")
+    @api.doc(id="informe") # Esto define el operationId
+    @api.expect(queryInformeSolicitudDto) #Request
+    @api.response(200, "Success", model=GraphQLResponseDto)
+    @api.response(401, "Unauthorized", model=errorDto)
+    @api.response(400, "Bad Request", model=errorDto)
+    @api.response(500, "Internal server error", model=errorDto)
+    def post(self):
+        """Consulta de eventos con filtros"""
+        try:
+            if not request.is_json:
+                return {"error": "Bad Request"}, 400
+            
+            data = request.get_json()
+
+            # Endpoint del producer en Java
+            url = f"{GRAPHQL_URL}"
+            
+            headers = {"Content-Type": "application/json"}
+
+            response = requests.post(url, headers=headers, json=data)
+
+            return response.json(), response.status_code
+        
+        except Exception as e:
+            return {"error": str(e)}, 500        
