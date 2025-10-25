@@ -5,6 +5,7 @@ type SolicitudDonacion {
 	activa: Boolean!
 	procesada: Boolean!
 	donaciones: [Donacion]
+	fechaAlta: String
 }
 
 type Organizacion {
@@ -13,10 +14,6 @@ type Organizacion {
 	nombre: String!
 }
 
-type TipoCategoria {
-
-	descripcion: String!
-}
 
 type Donacion {
 	id: ID!
@@ -48,8 +45,29 @@ type InformeEvento {
   eventos: [Evento]
 }
 
+type InformeSolicitud {
+  categoria: TipoCategoria
+  eliminado: String
+  cantidad: Int
+  recibida: Boolean
+}
+
+enum TipoCategoria {
+  ALIMENTO
+  JUGUETE
+  ROPA
+  UTIL_ESCOLAR
+}
+input FiltroSolicitudInput {
+  categoria: TipoCategoria
+  fechaDesde: String
+  fechaHasta: String
+  eliminado: String
+}
+
 type Query {
 	getSolicitud(id: ID!): SolicitudDonacion
+	informeSolicitudes(filtro: FiltroSolicitudInput): [InformeSolicitud]
 	getOrganizacion(id: ID!) : OrganizacionResponse
 	informeParticipacionEventos(usuarioId: ID!, fechaDesde: String, fechaHasta: String,tieneDonacion: String): [InformeEvento]
 }
