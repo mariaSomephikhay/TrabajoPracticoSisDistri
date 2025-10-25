@@ -11,15 +11,22 @@ APIREST_URL  = config('APIREST_URL', cast=str)
 #######################################################
 # Obetjos de la API REST
 #######################################################
+ListaValue = api.model("ListaValue", {
+    "key": fields.String(required=True),
+    "value": fields.String(required=True)
+})
 filtroDto = api.model("filtroDto", {
     "id": fields.Integer(required=True),
     "name": fields.String(required=True),
-    "valueFilter": fields.String(required=True),
     "usuario": fields.String(required=True),
-    "filterType": fields.String(required=True)
+    "filterType": fields.String(required=True),
+    "valueFilter": fields.List(fields.Nested(ListaValue), required=True)
 })
 errorDto = api.model("Error", {
     "error": fields.String(required=True)
+})
+ListaFiltrosDto = api.model("ListaFiltrosDto", {
+    "filtros": fields.List(fields.Nested(filtroDto), required=True)
 })
 #######################################################
 # Definición de endpoints para el swagger
@@ -40,12 +47,23 @@ class FilterInsert(Resource):
             return {"error": "Request body must be JSON"}, 400
 
         payload = request.get_json()  
-        data_to_send = {k: v for k, v in payload.items() if k != "id"} 
+
+        # Convertir valueFilter a string
+        value_filter_str = ";".join(f"{item['key']}:{item['value']}" for item in payload["valueFilter"])
+
+        # Crear nueva estructura
+        new_request = {
+            "name": payload["name"],
+            "valueFilter": value_filter_str,
+            "usuario": payload["usuario"],
+            "filterType": payload["filterType"]
+        }
+
 
         url = APIREST_URL + "filter/new"
         headers = {"Content-Type": "application/json"}
 
-        response = requests.post(url, json=data_to_send, headers=headers)
+        response = requests.post(url, json=new_request, headers=headers)
 
         print("Status code:", response.status_code)
 
@@ -59,7 +77,7 @@ class getFilter(Resource):
     @api.doc(security='Bearer Auth') # Esto hace que Swagger agregue el header para el token
     @SecurityConfig.authRequired("PRESIDENTE", "COORDINADOR", "VOLUNTARIO", "VOCAL")
     @api.doc(id="getFilter") # Esto define el operationId
-    @api.response(200, "Success", model=filtroDto)
+    @api.response(200, "Success", model=ListaFiltrosDto)
     @api.response(401, "Unauthorized", model=errorDto)
     @api.response(400, "Bad Request", model=errorDto)
     @api.response(500, "Internal server error", model=errorDto)
@@ -70,11 +88,32 @@ class getFilter(Resource):
 
         response = requests.get(url)
 
-        print("Status:", response.status_code)
-        print("Body:", response.text)
-
+        # Primero comprobar si la respuesta fue exitosa
         if response.status_code == 200:
-            return response.json(), 200
+            try:
+                data = response.json()  # Esto es una lista de filtros
+            except ValueError:
+                return {"error": "Respuesta no es JSON válido"}, 500
+
+            new_data = {"filtros": []}
+
+            for filtro in data:  # <-- data es una lista, no dict
+                key_value_pairs = []
+                for pair in filtro.get("valueFilter", "").split(";"):
+                    if ":" in pair:
+                        key, value = pair.split(":", 1)
+                        key_value_pairs.append({"key": key, "value": value})
+
+                new_data["filtros"].append({
+                    "id": filtro.get("id", 0),
+                    "name": filtro.get("name", ""),
+                    "usuario": filtro.get("usuario", ""),
+                    "filterType": filtro.get("filterType", ""),
+                    "valueFilter": key_value_pairs
+                })
+
+            return new_data, 200
+
         else:
             return {"error": response.text}, response.status_code
 
