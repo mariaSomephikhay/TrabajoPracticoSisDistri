@@ -140,6 +140,16 @@ const EventService = {
         }
     },
 
+    EventFilter: async (filter) => {
+      try {
+        const response = await eventosApi.filtroEvento(filter); 
+        return response; 
+      } catch (err) {
+        console.error("Error al obtener eventos:", err);
+        throw err;
+      }
+    },
+
 };
 
 export default EventService;

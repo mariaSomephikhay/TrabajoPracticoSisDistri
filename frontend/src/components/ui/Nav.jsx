@@ -58,6 +58,15 @@ export const Nav = () => {
                 </li>
               </>
             )}
+            { isAuthenticated &&(
+              <>
+                <li className="nav-item">
+                  <NavLink className="nav-link text-white" to="/events/filter">
+                    Participacion eventos
+                  </NavLink>
+                </li>
+              </>
+            )}
           </ul>
 
           <ul className="navbar-nav ms-auto mb-2 mb-md-0">

@@ -25,6 +25,9 @@ import EventoCategoria from './model/EventoCategoria';
 import EventoDonacion from './model/EventoDonacion';
 import EventoDonacionObjeto from './model/EventoDonacionObjeto';
 import EventoDonacionReq from './model/EventoDonacionReq';
+import EventoDonacionesDtoInforme from './model/EventoDonacionesDtoInforme';
+import EventoDtoFiltro from './model/EventoDtoFiltro';
+import EventoDtoInforme from './model/EventoDtoInforme';
 import EventoKafka from './model/EventoKafka';
 import EventoList from './model/EventoList';
 import EventoListaDonacion from './model/EventoListaDonacion';
@@ -33,9 +36,13 @@ import EventoRol from './model/EventoRol';
 import EventoUsersDto from './model/EventoUsersDto';
 import EventoUsersListDto from './model/EventoUsersListDto';
 import EventoUsuario from './model/EventoUsuario';
+import FiltroEvento from './model/FiltroEvento';
+import InformeEventosDto from './model/InformeEventosDto';
+import InformeParticipacionEventos from './model/InformeParticipacionEventos';
 import Login from './model/Login';
 import Rol from './model/Rol';
 import Solicitud from './model/Solicitud';
+import SolicitudBaja from './model/SolicitudBaja';
 import SolicitudCategoria from './model/SolicitudCategoria';
 import SolicitudDonacion from './model/SolicitudDonacion';
 import SolicitudError from './model/SolicitudError';
@@ -166,6 +173,24 @@ export {
     EventoDonacionReq,
 
     /**
+     * The EventoDonacionesDtoInforme model constructor.
+     * @property {module:model/EventoDonacionesDtoInforme}
+     */
+    EventoDonacionesDtoInforme,
+
+    /**
+     * The EventoDtoFiltro model constructor.
+     * @property {module:model/EventoDtoFiltro}
+     */
+    EventoDtoFiltro,
+
+    /**
+     * The EventoDtoInforme model constructor.
+     * @property {module:model/EventoDtoInforme}
+     */
+    EventoDtoInforme,
+
+    /**
      * The EventoKafka model constructor.
      * @property {module:model/EventoKafka}
      */
@@ -214,6 +239,24 @@ export {
     EventoUsuario,
 
     /**
+     * The FiltroEvento model constructor.
+     * @property {module:model/FiltroEvento}
+     */
+    FiltroEvento,
+
+    /**
+     * The InformeEventosDto model constructor.
+     * @property {module:model/InformeEventosDto}
+     */
+    InformeEventosDto,
+
+    /**
+     * The InformeParticipacionEventos model constructor.
+     * @property {module:model/InformeParticipacionEventos}
+     */
+    InformeParticipacionEventos,
+
+    /**
      * The Login model constructor.
      * @property {module:model/Login}
      */
@@ -230,6 +273,12 @@ export {
      * @property {module:model/Solicitud}
      */
     Solicitud,
+
+    /**
+     * The SolicitudBaja model constructor.
+     * @property {module:model/SolicitudBaja}
+     */
+    SolicitudBaja,
 
     /**
      * The SolicitudCategoria model constructor.

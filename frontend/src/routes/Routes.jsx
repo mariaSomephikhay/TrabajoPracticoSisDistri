@@ -24,6 +24,7 @@ import { EventDonacionesManager } from '../pages/private/event/EventDonacionesMa
 import { RequestDonationNewForm } from '../pages/private/donation/RequestDonationNewForm.jsx';
 import { RequestDonationInventory } from '../pages/private/donation/RequestDonationInventory.jsx';
 import { ExternalEventManager } from '../pages/private/event/ExternalEventManager.jsx';
+import { EventFilter } from '../pages/private/event/EventFilter.jsx';
 export const OperatorRoutes = () => {
     const { notification, clearNotification } = useNotification()
 
@@ -39,6 +40,8 @@ export const OperatorRoutes = () => {
                 
                 {/* Ruta privada para todos los usuarios autenticados */} 
                 <Route path="/" element={<PrivateRoute><Home /></PrivateRoute>} /> 
+                <Route path="/events/filter" element={<PrivateRoute><EventFilter /></PrivateRoute>} /> 
+
                 
                 {/* Rutas privadas solo para PRESIDENTE */} 
                 <Route path="/users" element={<PrivateRoute allowedRoles={["PRESIDENTE"]}> <UserTable /></PrivateRoute>} /> 

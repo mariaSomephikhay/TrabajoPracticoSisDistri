@@ -18,11 +18,13 @@ import Error from '../model/Error';
 import Evento from '../model/Evento';
 import EventoBajaKafka from '../model/EventoBajaKafka';
 import EventoDonacionReq from '../model/EventoDonacionReq';
+import EventoDtoFiltro from '../model/EventoDtoFiltro';
 import EventoKafka from '../model/EventoKafka';
 import EventoList from '../model/EventoList';
 import EventoListaDonacion from '../model/EventoListaDonacion';
 import EventoUsersDto from '../model/EventoUsersDto';
 import EventoUsersListDto from '../model/EventoUsersListDto';
+import FiltroEvento from '../model/FiltroEvento';
 
 /**
 * Eventos service.
@@ -208,6 +210,47 @@ export default class EventosApi {
       let returnType = EventoBajaKafka;
       return this.apiClient.callApi(
         '/evento/request/delete', 'POST',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, null, callback
+      );
+    }
+
+    /**
+     * Callback function to receive the result of the filtroEvento operation.
+     * @callback module:api/EventosApi~filtroEventoCallback
+     * @param {String} error Error message, if any.
+     * @param {module:model/EventoDtoFiltro} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Consulta de eventos con filtros
+     * @param {module:model/FiltroEvento} payload 
+     * @param {module:api/EventosApi~filtroEventoCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link module:model/EventoDtoFiltro}
+     */
+    filtroEvento(payload, callback) {
+      let postBody = payload;
+      // verify the required parameter 'payload' is set
+      if (payload === undefined || payload === null) {
+        throw new Error("Missing the required parameter 'payload' when calling filtroEvento");
+      }
+
+      let pathParams = {
+      };
+      let queryParams = {
+      };
+      let headerParams = {
+      };
+      let formParams = {
+      };
+
+      let authNames = ['Bearer Auth'];
+      let contentTypes = ['application/json'];
+      let accepts = ['application/json'];
+      let returnType = EventoDtoFiltro;
+      return this.apiClient.callApi(
+        '/evento/filtro/', 'POST',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, null, callback
       );
