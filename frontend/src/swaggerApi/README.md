@@ -145,6 +145,9 @@ Class | Method | HTTP request | Description
 *ApiDocumentada.EventosApi* | [**listEventos**](docs/EventosApi.md#listEventos) | **GET** /evento/ | Obtener todos los eventos
 *ApiDocumentada.EventosApi* | [**newRequesEventoKafka**](docs/EventosApi.md#newRequesEventoKafka) | **POST** /evento/request/new | Publicar evento en kafka
 *ApiDocumentada.EventosApi* | [**updateEventoById**](docs/EventosApi.md#updateEventoById) | **PUT** /evento/{id} | Actualizar un evento
+*ApiDocumentada.FiltrosApi* | [**createFilter**](docs/FiltrosApi.md#createFilter) | **POST** /filter/new | Insertar un nuevo filtro
+*ApiDocumentada.FiltrosApi* | [**deleteFilter**](docs/FiltrosApi.md#deleteFilter) | **DELETE** /filter/delete/{id} | Eliminar filtro por id
+*ApiDocumentada.FiltrosApi* | [**getFilter**](docs/FiltrosApi.md#getFilter) | **GET** /filter/{type}/{idUsuario} | traer filtro por usuario y tipo
 *ApiDocumentada.SolicitudesApi* | [**deleteRequestDonacion**](docs/SolicitudesApi.md#deleteRequestDonacion) | **DELETE** /solicitud/delete | Enviar solicitud de donaciones a kafka
 *ApiDocumentada.SolicitudesApi* | [**getAllRequestDonacion**](docs/SolicitudesApi.md#getAllRequestDonacion) | **GET** /solicitud/ | Obtener todos las solicitudes donaciones
 *ApiDocumentada.SolicitudesApi* | [**newRequestDonacion**](docs/SolicitudesApi.md#newRequestDonacion) | **POST** /solicitud/request/new | Enviar solicitud de donaciones a kafka
@@ -183,9 +186,12 @@ Class | Method | HTTP request | Description
  - [ApiDocumentada.EventoUsersDto](docs/EventoUsersDto.md)
  - [ApiDocumentada.EventoUsersListDto](docs/EventoUsersListDto.md)
  - [ApiDocumentada.EventoUsuario](docs/EventoUsuario.md)
+ - [ApiDocumentada.FiltroDto](docs/FiltroDto.md)
  - [ApiDocumentada.FiltroEvento](docs/FiltroEvento.md)
  - [ApiDocumentada.InformeEventosDto](docs/InformeEventosDto.md)
  - [ApiDocumentada.InformeParticipacionEventos](docs/InformeParticipacionEventos.md)
+ - [ApiDocumentada.ListaFiltrosDto](docs/ListaFiltrosDto.md)
+ - [ApiDocumentada.ListaValue](docs/ListaValue.md)
  - [ApiDocumentada.Login](docs/Login.md)
  - [ApiDocumentada.Rol](docs/Rol.md)
  - [ApiDocumentada.Solicitud](docs/Solicitud.md)
