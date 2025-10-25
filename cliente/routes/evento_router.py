@@ -135,6 +135,27 @@ filtroEvento = api.model("filtroEvento", {
     "fechaHasta": fields.Date(required=False),
     "tieneDonacion": fields.Integer(required=True)
 })
+eventoDonacionesDtoInforme = api.model("eventoDonacionesDtoInforme", {
+    "cantRepartida": fields.Integer(required=True),
+    "donacion": fields.Nested(donacionObjDto, required=True)
+})
+eventoDtoInforme = api.model("eventoDtoInforme", {
+    "id": fields.String(required=False),
+    "nombre": fields.String(required=True),
+    "descripcion": fields.String(required=True),
+    "fecha": fields.DateTime(required=True),
+    "eventoDonaciones": fields.List(fields.Nested(eventoDonacionesDtoInforme, required=False))
+})
+informeParticipacionEventos = api.model("informeParticipacionEventos", {
+    "mes": fields.String(required=True),
+    "eventos": fields.List(fields.Nested(eventoDtoInforme, required=True))
+})
+informeEventosDto = api.model("informeEventosDto", {
+    "informeParticipacionEventos": fields.List(fields.Nested(informeParticipacionEventos, required=True))
+})
+eventoDtoFiltro = api.model("eventoDtoFiltro", {
+    "data": fields.Nested(informeEventosDto, required=True)
+})
 
 #######################################################
 # Definición de endpoints para el swagger
@@ -495,10 +516,10 @@ class adhesion(Resource):
 @api.route("/filtro/")
 class adhesion(Resource):
     @api.doc(security='Bearer Auth')
-    @SecurityConfig.authRequired("PRESIDENTE", "COORDINADOR", "VOLUNTARIO")
+    @SecurityConfig.authRequired("PRESIDENTE", "COORDINADOR", "VOLUNTARIO", "VOCAL")
     @api.doc(id="filtroEvento") # Esto define el operationId
     @api.expect(filtroEvento) #Request
-    @api.response(200, "Success")
+    @api.response(200, "Success", model=eventoDtoFiltro)
     @api.response(401, "Unauthorized", model=errorDto)
     @api.response(400, "Bad Request", model=errorDto)
     @api.response(500, "Internal server error", model=errorDto)
@@ -532,6 +553,7 @@ class adhesion(Resource):
                 id
                 nombre
                 fecha
+                descripcion
                 eventoDonaciones {
                     cantRepartida
                     donacion {
