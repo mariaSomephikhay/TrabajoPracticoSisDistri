@@ -27,9 +27,13 @@ docs/EventoUsersDto.md
 docs/EventoUsersListDto.md
 docs/EventoUsuario.md
 docs/EventosApi.md
+docs/FiltroDto.md
 docs/FiltroEvento.md
+docs/FiltrosApi.md
 docs/InformeEventosDto.md
 docs/InformeParticipacionEventos.md
+docs/ListaFiltrosDto.md
+docs/ListaValue.md
 docs/Login.md
 docs/Rol.md
 docs/Solicitud.md
@@ -55,6 +59,7 @@ package.json
 src/ApiClient.js
 src/api/DonacionesApi.js
 src/api/EventosApi.js
+src/api/FiltrosApi.js
 src/api/SolicitudesApi.js
 src/api/TransferenciasApi.js
 src/api/UserApi.js
@@ -82,9 +87,12 @@ src/model/EventoRol.js
 src/model/EventoUsersDto.js
 src/model/EventoUsersListDto.js
 src/model/EventoUsuario.js
+src/model/FiltroDto.js
 src/model/FiltroEvento.js
 src/model/InformeEventosDto.js
 src/model/InformeParticipacionEventos.js
+src/model/ListaFiltrosDto.js
+src/model/ListaValue.js
 src/model/Login.js
 src/model/Rol.js
 src/model/Solicitud.js
@@ -101,3 +109,4 @@ src/model/Usuario.js
 src/model/UsuarioList.js
 src/model/VoluntarioDto.js
 src/model/VoluntarioEventoDto.js
+test/model/ListaValue.spec.js

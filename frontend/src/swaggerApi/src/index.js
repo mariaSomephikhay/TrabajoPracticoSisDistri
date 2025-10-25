@@ -36,9 +36,12 @@ import EventoRol from './model/EventoRol';
 import EventoUsersDto from './model/EventoUsersDto';
 import EventoUsersListDto from './model/EventoUsersListDto';
 import EventoUsuario from './model/EventoUsuario';
+import FiltroDto from './model/FiltroDto';
 import FiltroEvento from './model/FiltroEvento';
 import InformeEventosDto from './model/InformeEventosDto';
 import InformeParticipacionEventos from './model/InformeParticipacionEventos';
+import ListaFiltrosDto from './model/ListaFiltrosDto';
+import ListaValue from './model/ListaValue';
 import Login from './model/Login';
 import Rol from './model/Rol';
 import Solicitud from './model/Solicitud';
@@ -57,6 +60,7 @@ import VoluntarioDto from './model/VoluntarioDto';
 import VoluntarioEventoDto from './model/VoluntarioEventoDto';
 import DonacionesApi from './api/DonacionesApi';
 import EventosApi from './api/EventosApi';
+import FiltrosApi from './api/FiltrosApi';
 import SolicitudesApi from './api/SolicitudesApi';
 import TransferenciasApi from './api/TransferenciasApi';
 import UserApi from './api/UserApi';
@@ -239,6 +243,12 @@ export {
     EventoUsuario,
 
     /**
+     * The FiltroDto model constructor.
+     * @property {module:model/FiltroDto}
+     */
+    FiltroDto,
+
+    /**
      * The FiltroEvento model constructor.
      * @property {module:model/FiltroEvento}
      */
@@ -255,6 +265,18 @@ export {
      * @property {module:model/InformeParticipacionEventos}
      */
     InformeParticipacionEventos,
+
+    /**
+     * The ListaFiltrosDto model constructor.
+     * @property {module:model/ListaFiltrosDto}
+     */
+    ListaFiltrosDto,
+
+    /**
+     * The ListaValue model constructor.
+     * @property {module:model/ListaValue}
+     */
+    ListaValue,
 
     /**
      * The Login model constructor.
@@ -363,6 +385,12 @@ export {
     * @property {module:api/EventosApi}
     */
     EventosApi,
+
+    /**
+    * The FiltrosApi service constructor.
+    * @property {module:api/FiltrosApi}
+    */
+    FiltrosApi,
 
     /**
     * The SolicitudesApi service constructor.
