@@ -15,6 +15,9 @@ docs/EventoCategoria.md
 docs/EventoDonacion.md
 docs/EventoDonacionObjeto.md
 docs/EventoDonacionReq.md
+docs/EventoDonacionesDtoInforme.md
+docs/EventoDtoFiltro.md
+docs/EventoDtoInforme.md
 docs/EventoKafka.md
 docs/EventoList.md
 docs/EventoListaDonacion.md
@@ -24,9 +27,13 @@ docs/EventoUsersDto.md
 docs/EventoUsersListDto.md
 docs/EventoUsuario.md
 docs/EventosApi.md
+docs/FiltroEvento.md
+docs/InformeEventosDto.md
+docs/InformeParticipacionEventos.md
 docs/Login.md
 docs/Rol.md
 docs/Solicitud.md
+docs/SolicitudBaja.md
 docs/SolicitudCategoria.md
 docs/SolicitudDonacion.md
 docs/SolicitudError.md
@@ -64,6 +71,9 @@ src/model/EventoCategoria.js
 src/model/EventoDonacion.js
 src/model/EventoDonacionObjeto.js
 src/model/EventoDonacionReq.js
+src/model/EventoDonacionesDtoInforme.js
+src/model/EventoDtoFiltro.js
+src/model/EventoDtoInforme.js
 src/model/EventoKafka.js
 src/model/EventoList.js
 src/model/EventoListaDonacion.js
@@ -72,9 +82,13 @@ src/model/EventoRol.js
 src/model/EventoUsersDto.js
 src/model/EventoUsersListDto.js
 src/model/EventoUsuario.js
+src/model/FiltroEvento.js
+src/model/InformeEventosDto.js
+src/model/InformeParticipacionEventos.js
 src/model/Login.js
 src/model/Rol.js
 src/model/Solicitud.js
+src/model/SolicitudBaja.js
 src/model/SolicitudCategoria.js
 src/model/SolicitudDonacion.js
 src/model/SolicitudError.js

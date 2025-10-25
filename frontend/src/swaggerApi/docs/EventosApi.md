@@ -8,6 +8,7 @@ Method | HTTP request | Description
 [**createEvent**](EventosApi.md#createEvent) | **POST** /evento/new | Insertar nuevo evento
 [**deleteEventById**](EventosApi.md#deleteEventById) | **DELETE** /evento/delete/{id} | Eliminar evento
 [**deleteRequesEventoKafka**](EventosApi.md#deleteRequesEventoKafka) | **POST** /evento/request/delete | Publicar baja de evento en kafka
+[**filtroEvento**](EventosApi.md#filtroEvento) | **POST** /evento/filtro/ | Consulta de eventos con filtros
 [**getEventoById**](EventosApi.md#getEventoById) | **GET** /evento/{id} | Obtener Evento
 [**getEventoWithDonacionesById**](EventosApi.md#getEventoWithDonacionesById) | **GET** /evento/{id}/donaciones | Obtener donaciones del evento
 [**getEventoWithUsersById**](EventosApi.md#getEventoWithUsersById) | **GET** /evento/{id}/usuarios | Obtener usuarios del evento
@@ -206,6 +207,55 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**EventoBajaKafka**](EventoBajaKafka.md)
+
+### Authorization
+
+[Bearer Auth](../README.md#Bearer Auth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+
+## filtroEvento
+
+> EventoDtoFiltro filtroEvento(payload)
+
+Consulta de eventos con filtros
+
+### Example
+
+```javascript
+import ApiDocumentada from 'api_documentada';
+let defaultClient = ApiDocumentada.ApiClient.instance;
+// Configure API key authorization: Bearer Auth
+let Bearer Auth = defaultClient.authentications['Bearer Auth'];
+Bearer Auth.apiKey = 'YOUR API KEY';
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//Bearer Auth.apiKeyPrefix = 'Token';
+
+let apiInstance = new ApiDocumentada.EventosApi();
+let payload = new ApiDocumentada.FiltroEvento(); // FiltroEvento | 
+apiInstance.filtroEvento(payload, (error, data, response) => {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+});
+```
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **payload** | [**FiltroEvento**](FiltroEvento.md)|  | 
+
+### Return type
+
+[**EventoDtoFiltro**](EventoDtoFiltro.md)
 
 ### Authorization
 
