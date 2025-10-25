@@ -58,6 +58,12 @@
 		    <artifactId>graphql-java-tools</artifactId>
 		    <version>13.0.5</version> 
 		</dependency>
+	  <!-- Lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
 	  <!-- Internal dependencies -->
         <dependency>
             <groupId>com.grupoK</groupId>
