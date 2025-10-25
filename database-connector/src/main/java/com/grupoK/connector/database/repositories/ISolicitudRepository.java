@@ -1,14 +1,36 @@
 package com.grupoK.connector.database.repositories;
 
 import com.grupoK.connector.database.entities.Solicitud;
+import com.grupoK.connector.database.entities.enums.TipoCategoria;
 
-
+import java.time.LocalDateTime;
+import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-
-
 @Repository
-public interface ISolicitudRepository extends JpaRepository<Solicitud, String> {
+public interface ISolicitudRepository extends JpaRepository<Solicitud, String>{
+
+	@Query("""
+		    SELECT DISTINCT s FROM SolicitudDonacion sd
+		    JOIN sd.solicitud s
+		    JOIN sd.donacion d
+		    JOIN d.categoria c
+		    WHERE s.procesada = true
+		      AND (:categoria IS NULL OR c.descripcion = :categoria)
+		      AND (:desde IS NULL OR s.fechaAlta >= :desde)
+		      AND (:hasta IS NULL OR s.fechaAlta <= :hasta)
+		      AND (:eliminado IS NULL OR s.activa != :eliminado)
+		    ORDER BY s.fechaAlta ASC
+		""")
+	List<Solicitud> filtrarSolicitud(
+		    @Param("categoria") TipoCategoria categoria,
+		    @Param("desde") LocalDateTime desde,
+		    @Param("hasta") LocalDateTime hasta,
+		    @Param("eliminado") Boolean eliminado
+		);
+
 }

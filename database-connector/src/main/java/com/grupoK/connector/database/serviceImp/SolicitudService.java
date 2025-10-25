@@ -1,8 +1,10 @@
 package com.grupoK.connector.database.serviceImp;
 
 import com.grupoK.connector.database.configuration.annotations.ConsumerServerAnnotation;
+import com.grupoK.connector.database.entities.Categoria;
 import com.grupoK.connector.database.entities.Solicitud;
 import com.grupoK.connector.database.entities.SolicitudDonacion;
+import com.grupoK.connector.database.entities.enums.TipoCategoria;
 import com.grupoK.connector.database.repositories.IDonacionRepository;
 import com.grupoK.connector.database.repositories.ISolicitudDonacionRepository;
 import com.grupoK.connector.database.repositories.ISolicitudRepository;
@@ -10,7 +12,10 @@ import com.grupoK.connector.database.service.ISolicitudService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @ConsumerServerAnnotation
@@ -154,6 +159,25 @@ public class SolicitudService implements ISolicitudService {
 
         request.setProcesada(true); //Se proceso correctamente la solicitud*/
     }
+
+	@Override
+	public List<Solicitud> find(TipoCategoria categoria, LocalDateTime fechaDesde, LocalDateTime fechaHasta, Boolean activa) {
+		List<Solicitud> solicitudes = solicitudRepository.filtrarSolicitud(categoria,fechaDesde, fechaHasta, activa);
+		
+	    return solicitudes;
+	    /*.stream()
+	            .flatMap(solicitud -> {
+	                try {
+	                    return findAllDonationsAssociatedByRequest(solicitud.getSolicitud()).stream();
+	                } catch (Exception e) {
+	                    // Si no tiene donaciones, devolvemos un stream vacío
+	                    return null;
+	                }
+	            })
+	            .filter(Objects::nonNull)
+	            .toList();*/
+	    		
+	}
 
 }
 
