@@ -17,7 +17,7 @@ public class DataInitializer {
 
     @Bean
     CommandLineRunner initData(IOrganizacionRepository orgRepo, ICategoriaRepository cateRepo, IDonacionRepository donacionRepo,
-                               IUsuarioRepository usuarioRepo, IRolRepository rolRepo, ISolicitudRepository soliRepo, ISolicitudDonacionRepository soliDonaRepo, IEventoRepository eventoRepo) {
+                               IUsuarioRepository usuarioRepo, IRolRepository rolRepo, ISolicitudRepository soliRepo, ISolicitudDonacionRepository soliDonaRepo, IEventoRepository eventoRepo, IFilterTypeRepository filterTypeRepository, IFilterRepository filterRepository) {
         return args -> {
             if (rolRepo.count() == 0) {
                 Organizacion organizacionPropia = orgRepo.save(new Organizacion(null, "GrupoK", false));
@@ -289,6 +289,18 @@ public class DataInitializer {
             	
             	eventoRepo.save(evento);
             	eventoRepo.save(evento2);
+            }
+            
+            if(filterTypeRepository.count() == 0 && filterRepository.count() == 0) {
+            	FilterType filterTypeEvento = new FilterType(null, "Evento");
+            	FilterType filterTypeDonacion = new FilterType(null, "Donacion");
+            	
+            	filterTypeRepository.save(filterTypeEvento);
+            	filterTypeRepository.save(filterTypeDonacion);
+            	
+            	Usuario usuario = (usuarioRepo.findByUsername("user1")).get();
+            	Filter filter = new Filter(null,"Filtro por año 2024-2025","fechaDesde:2025-01-01;fechaHasta:2025-12-31;tieneDonacion:0",usuario,filterTypeEvento);
+            	filterRepository.save(filter);
             }
         };
     }
