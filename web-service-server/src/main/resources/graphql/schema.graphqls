@@ -35,6 +35,7 @@ type Evento {
   id: ID
   nombre: String
   fecha: String
+  descripcion: String
   eventoDonaciones : [EventoDonacion]
 }
 
