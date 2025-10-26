@@ -1,6 +1,7 @@
 package com.grupoK.connector.database.service;
 
 import com.grupoK.connector.database.entities.Categoria;
+import com.grupoK.connector.database.entities.Donacion;
 import com.grupoK.connector.database.entities.Solicitud;
 import com.grupoK.connector.database.entities.SolicitudDonacion;
 import com.grupoK.connector.database.entities.enums.TipoCategoria;
@@ -17,4 +18,5 @@ public interface ISolicitudService {
     List<Solicitud> findAll();
     List<SolicitudDonacion> findAllDonationsAssociatedByRequest(Solicitud solicitud) throws  Exception;
     List<Solicitud> find(TipoCategoria categoria, LocalDateTime fechaDesde, LocalDateTime fechaHasta, Boolean activa);
+    void processRequest(Solicitud solicitud, List<Donacion> donacionesSolicitadas) throws Exception;
 }

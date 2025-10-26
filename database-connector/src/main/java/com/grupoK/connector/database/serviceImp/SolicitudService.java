@@ -2,6 +2,7 @@ package com.grupoK.connector.database.serviceImp;
 
 import com.grupoK.connector.database.configuration.annotations.ConsumerServerAnnotation;
 import com.grupoK.connector.database.entities.Categoria;
+import com.grupoK.connector.database.entities.Donacion;
 import com.grupoK.connector.database.entities.Solicitud;
 import com.grupoK.connector.database.entities.SolicitudDonacion;
 import com.grupoK.connector.database.entities.enums.TipoCategoria;
@@ -71,6 +72,74 @@ public class SolicitudService implements ISolicitudService {
     }
 
     @Override
+    public void processRequest(Solicitud solicitud, List<Donacion> donacionesSolicitadas) throws Exception {
+        if(hasValidationErrorsByTransferProcess(solicitud, donacionesSolicitadas))
+            throw new Exception("La solicitud no cumple con las validaciones requeridas");
+
+        List<Donacion> stockDonante = donacionRepository.findAllByOrganizacion(donacionesSolicitadas.get(0).getUsuarioAlta().getOrganizacion().getId());
+        // Verificar si la organización donante tiene stock suficiente
+        for (Donacion donacionSolicitada : donacionesSolicitadas) {
+            Donacion stock = stockDonante.stream()
+                    .filter(d -> d.getCategoria().getId().equals(donacionSolicitada.getCategoria().getId()))
+                    .findFirst()
+                    .orElseThrow(() -> new Exception("No hay stock disponible para la categoría: "
+                            + donacionSolicitada.getCategoria().getDescripcion()));
+
+            if (stock.getCantidad() < donacionSolicitada.getCantidad()) {
+                throw new Exception("Stock insuficiente en categoría " + donacionSolicitada.getCategoria().getDescripcion() +
+                        ": disponible=" + stock.getCantidad() + ", solicitado=" + donacionSolicitada.getCantidad());
+            }
+        }
+
+        for (Donacion donacionSolicitada : donacionesSolicitadas) {
+            Donacion stock = stockDonante.stream()
+                    .filter(d -> d.getCategoria().getId().equals(donacionSolicitada.getCategoria().getId()))
+                    .findFirst()
+                    .get();
+
+            if (solicitud.getOrganizacionSolicitante().getExterna()) {
+                // Si es organización externa → se descuenta del stock del donante
+                stock.setCantidad(stock.getCantidad() - donacionSolicitada.getCantidad());
+            } else {
+                /**
+                 * Si es organización interna → se transfiere stock al solicitante
+                 * Tambien busca si ya existe una donación de la misma categoría en el solicitante o se crea una nueva
+                 */
+
+                List<Donacion> stockSolicitante = donacionRepository.findAllByOrganizacion(solicitud.getOrganizacionSolicitante().getId());
+                Donacion existente = stockSolicitante.stream()
+                        .filter(d -> d.getCategoria().getId().equals(donacionSolicitada.getCategoria().getId()))
+                        .findFirst()
+                        .orElse(null);
+                if (existente != null) {
+                    existente.setCantidad(existente.getCantidad() + donacionSolicitada.getCantidad());
+                    donacionRepository.save(existente);
+                } else {
+                    // crear nueva donación para el solicitante
+                    Donacion nueva = new Donacion();
+                    nueva.setCategoria(donacionSolicitada.getCategoria());
+                    nueva.setDescripcion(donacionSolicitada.getDescripcion());
+                    nueva.setCantidad(donacionSolicitada.getCantidad());
+                    nueva.setEliminado(false);
+                    nueva.setUsuarioAlta(donacionSolicitada.getUsuarioAlta());
+                    nueva.setUsuarioModificacion(donacionSolicitada.getUsuarioAlta());
+                    donacionRepository.save(nueva);
+                }
+
+                stock.setCantidad(stock.getCantidad() - donacionSolicitada.getCantidad());
+            }
+
+            //Actualizo el stock del donante
+            donacionRepository.save(stock);
+        }
+
+        // Marcar la solicitud como procesada
+        solicitud.setProcesada(true);
+        solicitudRepository.save(solicitud);
+
+    }
+
+    @Override
     public Solicitud delete(String idSolicitud) throws Exception {
         Solicitud solicitudBD = findById(idSolicitud);
         List<SolicitudDonacion> donationsAssociatedToRequest = findAllDonationsAssociatedByRequest(solicitudBD);
@@ -109,21 +178,28 @@ public class SolicitudService implements ISolicitudService {
             return  true;
         else if(donaciones.isEmpty()) //Debe tener al menos una donacion
             return  true;
-        //else if(nuevaSolicitud.getOrganizacionDonante() == null || nuevaSolicitud.getOrganizacionSolicitante() == null) //Debe tener sus organzacion solicitante y donante
-            //return true;
-        //else if(nuevaSolicitud.getOrganizacionSolicitante().equals(nuevaSolicitud.getOrganizacionDonante())) //No pueden ser las mismas organizaciones
-            //return true;
-        //else if(donaciones.stream()
-          //      .anyMatch(d -> d.getDonacion().getOrganizacion().equals(nuevaSolicitud.getOrganizacionSolicitante()))) //Las donaciones no pueden pertenecer a la misma organizacion que las solicita
-           // return true;
         else
             return false;
+    }
+
+    private Boolean hasValidationErrorsByTransferProcess(Solicitud solicitudATransferir, List<Donacion> donacionesDeTransferencia) {
+        if(solicitudATransferir == null)
+            return true;
+        else if(donacionesDeTransferencia.isEmpty())
+            return true;
+        else if(solicitudATransferir.getOrganizacionSolicitante() == null)
+            return true;
+        else if(donacionesDeTransferencia.stream()
+              .anyMatch(d -> d.getUsuarioAlta().getOrganizacion().getId() == solicitudATransferir.getOrganizacionSolicitante().getId())) //Las donaciones no pueden pertenecer a la misma organizacion que las solicita
+            return true;
+        else
+            return  false;
     }
 
     private void processRequestAndDonations(Solicitud request, List<SolicitudDonacion> donations) {
         /**
          * Lo unico que se deberia modificar es el booleano para saber si se transfirio la solicitud
-         * Tambien se debera descontar e incrementar el inventario de las organizaciones solicitantes y donantes
+         * Tambien se debera descontar e incrementar el inventario
          */
 
     /*    Map<Donacion, Integer> map = donations.stream()
