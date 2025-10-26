@@ -32,6 +32,16 @@ const FilterService = {
         }
     },
 
+    updateFilter: async (filtroId,updateFiltro) => {
+        try {
+            const response = await filtrosApi.updateFilter(filtroId,updateFiltro);
+            return response; 
+        } catch (err) {
+            console.error("Error al actualizar el filtro:", err);
+            throw err;
+        }
+    },
+
     
     filterSavedGRAPHQL: async (body) => {
         try {
