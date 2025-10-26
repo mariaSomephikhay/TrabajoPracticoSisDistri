@@ -63,7 +63,7 @@ export const OperatorRoutes = () => {
                 <Route path="/events/new/" element={<PrivateRoute allowedRoles={["PRESIDENTE","COORDINADOR"]}><EventNew /></PrivateRoute>} /> 
                 <Route path="/events/:id/users" element={<PrivateRoute allowedRoles={["PRESIDENTE","COORDINADOR","VOLUNTARIO"]}><EventUsersManager /></PrivateRoute>} />
                 <Route path="/events/:id/donaciones" element={<PrivateRoute allowedRoles={["PRESIDENTE","COORDINADOR"]}><EventDonacionesManager /></PrivateRoute>} />
-                <Route path="/events/external/event/:id" element={<PrivateRoute allowedRoles={["PRESIDENTE","COORDINADOR"]}><ExternalEventManager /></PrivateRoute>} />
+                <Route path="/events/external/event/:id" element={<PrivateRoute allowedRoles={["PRESIDENTE","COORDINADOR","VOLUNTARIO"]}><ExternalEventManager /></PrivateRoute>} />
 
                 {/* Ruta catch-all para 404 */} 
                 <Route path="*" element={<NotFound />} />
