@@ -28,6 +28,13 @@ type Donacion {
 	cantidad: Int
 }
 
+type DonacionEvento {
+	id: ID!
+	categoria: TipoCategoriaEvento
+	descripcion: String
+	cantidad: Int
+}
+
 
 type Evento {
   id: ID
@@ -39,7 +46,7 @@ type Evento {
 
 type EventoDonacion {
   cantRepartida: Int
-  donacion : Donacion
+  donacion : DonacionEvento
 }
 
 type InformeEvento {
@@ -53,6 +60,10 @@ type InformeSolicitud {
   eliminado: String
   cantidad: Int
   recibida: Boolean
+}
+
+type TipoCategoriaEvento {
+  descripcion : String!
 }
 
 enum TipoCategoria {
