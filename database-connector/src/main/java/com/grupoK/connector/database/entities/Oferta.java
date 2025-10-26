@@ -21,7 +21,6 @@ import java.util.List;
 public class Oferta {
     @NonNull
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @ManyToOne(fetch = FetchType.EAGER)
