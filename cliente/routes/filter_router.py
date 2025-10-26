@@ -263,9 +263,9 @@ class updateFilter(Resource):
 
 # GRAPHQL - Endpoints
 @api.route("/guardar/graphql/")
-class adhesion(Resource):
+class guardarGraphql(Resource):
     @api.doc(security='Bearer Auth')
-    #@SecurityConfig.authRequired("PRESIDENTE", "COORDINADOR", "VOLUNTARIO", "VOCAL")
+    @SecurityConfig.authRequired("PRESIDENTE", "COORDINADOR", "VOLUNTARIO", "VOCAL")
     @api.doc(id="subirQueryGraphqlDto") # Esto define el operationId
     @api.expect(subirQueryGraphqlDto) #Request
     @api.response(200, "Success", model=FiltrosGraphQLResponseDto)
@@ -283,11 +283,11 @@ class adhesion(Resource):
 
             # Endpoint del producer en Java
             url = f"{GRAPHQL_URL}"
-            print(data)
+            #print(data)
             headers = {"Content-Type": "application/json"}
 
             response = requests.post(url, headers=headers, json=data)
-            print(response.json())
+            #print(response.json())
             return response.json(), response.status_code
 
         except Exception as e:
@@ -295,9 +295,9 @@ class adhesion(Resource):
 
 # GRAPHQL - Endpoints
 @api.route("/traer/graphql/")
-class adhesion(Resource):
+class traerGraphql(Resource):
     @api.doc(security='Bearer Auth')
-    #@SecurityConfig.authRequired("PRESIDENTE", "COORDINADOR", "VOLUNTARIO", "VOCAL")
+    @SecurityConfig.authRequired("PRESIDENTE", "COORDINADOR", "VOLUNTARIO", "VOCAL")
     @api.doc(id="traerFiltrosGraphQL") # Esto define el operationId
     @api.expect(traerQueryGraphqlDto) #Request
     @api.response(200, "Success", model=FiltrosGraphQLResponseDto)
@@ -317,7 +317,7 @@ class adhesion(Resource):
             headers = {"Content-Type": "application/json"}
 
             response = requests.post(url, headers=headers, json=data)
-            print(response.json())
+            #print(response.json())
             return response.json(), response.status_code
 
         except Exception as e:
@@ -325,9 +325,9 @@ class adhesion(Resource):
 
 # GRAPHQL - Endpoints
 @api.route("/borrar/graphql/")
-class adhesion(Resource):
+class borrarGraphql(Resource):
     @api.doc(security='Bearer Auth')
-    #@SecurityConfig.authRequired("PRESIDENTE", "COORDINADOR", "VOLUNTARIO", "VOCAL")
+    @SecurityConfig.authRequired("PRESIDENTE", "COORDINADOR", "VOLUNTARIO", "VOCAL")
     @api.doc(id="borrarFiltrosGraphQL") # Esto define el operationId
     @api.expect(borrarQueryGraphqlDto) #Request
     @api.response(200, "Success", model=FiltrosGraphQLResponseDto)
@@ -341,15 +341,15 @@ class adhesion(Resource):
                 return {"error": "Bad Request"}, 400
             
             data = request.get_json()
-            print(data)
+            #print(data)
                 
             # Endpoint del producer en Java
             url = f"{GRAPHQL_URL}"
-            print(data)
+            #print(data)
             headers = {"Content-Type": "application/json"}
 
             response = requests.post(url, headers=headers, json=data)
-            print(response.json())
+            #print(response.json())
             return response.json(), response.status_code
 
         except Exception as e:

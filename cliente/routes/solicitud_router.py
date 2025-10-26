@@ -1,6 +1,6 @@
 from decouple import config
 import requests
-from flask import request
+from flask import request, Response
 from flask_restx import Namespace, Resource, fields
 import json
 from config.security_config import SecurityConfig
@@ -14,6 +14,7 @@ cliente = ManagerServiceImpl()
 
 PRODUCER_URL  = config('PRODUCER_URL', cast=str)
 GRAPHQL_URL  = config('GRAPHQL_URL', cast=str)
+APIREST_URL  = config('APIREST_URL', cast=str)
 
 api = Namespace("solicitudes", description="Operaciones de solicitudes de donaciones")
 
@@ -99,6 +100,21 @@ queryInformeSolicitudDto = api.model("Solicitud.QueryInformeSolicitud", {
                             example="query InformeSolicitudes($filtro: FiltroSolicitudInput) { informeSolicitudes(filtro: $filtro) { status message data { categoria eliminado cantidad recibida } } }",
                             default="query InformeSolicitudes($filtro: FiltroSolicitudInput) { informeSolicitudes(filtro: $filtro) { status message data { categoria eliminado cantidad recibida } } }"),
     "variables":   fields.Nested(FiltroInformeSolicitudDto,required=True)
+})
+
+#######################################################
+# Definición de modelos para el swagger Rest
+#######################################################
+
+filtroSolicitudDetalleDto = api.model("filtroSolicitudDetalleDto", {
+    "categoria": fields.String(required=False),
+    "fechaDesde": fields.String(required=False),
+    "fechaHasta": fields.String(required=False),
+    "eliminado": fields.String(required=False)
+})
+
+excelResponseDto = api.model("ExcelFileResponse", {
+    "file": fields.String(required=True)
 })
 
 #######################################################
@@ -211,6 +227,53 @@ class adhesion(Resource):
             response = requests.post(url, headers=headers, json=data)
             print(response.json())
             return response.json(), response.status_code
+
+        except Exception as e:
+            return {"error": str(e)}, 500        
+        
+#Rest Endpoints
+@api.route("/informe/excel")
+class Solicitud(Resource):
+    @api.doc(security='Bearer Auth')
+    @SecurityConfig.authRequired("PRESIDENTE", "VOCAL")
+    @api.doc(id="informeSolicitudesDetalle") # Esto define el operationId
+    @api.expect(filtroSolicitudDetalleDto) #Request
+    @api.response(200, "Success", model=excelResponseDto)
+    @api.response(401, "Unauthorized", model=errorDto)
+    @api.response(400, "Bad Request", model=errorDto)
+    @api.response(500, "Internal server error", model=errorDto)
+    @api.doc(security='Bearer Auth')
+    def post(self):
+        """Solcitudes de donaciones en Excel"""
+        try:
+            if not request.is_json:
+                return {"error": "Bad Request: se esperaba JSON"}, 400
+            
+            # Obtenemos el JSON del frontend
+            data = request.get_json()
+            
+            filtro_limpio = {k: v for k, v in data.items() if v is not None}
+            
+            # Enviamos la petición al endpoint Java
+            headers = {"Content-Type": "application/json"}
+            response = requests.post(APIREST_URL+"/solicitudes/informes" , headers=headers, json=filtro_limpio)
+
+            # Si Java responde con éxito (200), reenviamos el Excel al frontend
+            if response.status_code == 200:
+                return Response(
+                    response.content,
+                    status=200,
+                    content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                    headers={
+                        "Content-Disposition": "attachment; filename=informe_solicitudes.xlsx"
+                    }
+                )
+            else:
+                # Si hubo error, reenviamos el mensaje tal cual
+                return {
+                    "error": response.text
+                }, response.status_code
+    
 
         except Exception as e:
             return {"error": str(e)}, 500        
