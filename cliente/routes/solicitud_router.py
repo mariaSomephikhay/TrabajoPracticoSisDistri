@@ -60,6 +60,11 @@ SolicitudDonacionBajaDto = api.model("SolicitudBaja", {
     "id_solicitud_donacion": fields.String(required=True),
     "id_organizacion_solicitante": fields.Integer(required=True)
 })
+SolicitudDonacionTransferenciaDto = api.model("SolicitudTransferDonation", {
+    "id_solicitud": fields.String(required=True),
+    "id_organizacion_donante": fields.Integer(required=True),
+    "donaciones": fields.List(fields.Nested(donacionDto))
+})
 
 OfertaDto = api.model("Oferta", {
     "id_oferta": fields.Integer(required=True),
@@ -215,6 +220,33 @@ class Solicitud(Resource):
         except Exception as e:
             return {"error": str(e)}, 500
 
+@api.route("/transfer/<int:id>") #Es el id de la organizacion solicitante
+class Solicitud(Resource):
+    @api.doc(security='Bearer Auth')
+    @SecurityConfig.authRequired("PRESIDENTE", "VOCAL")
+    @api.doc(id="newTransfer") # Esto define el operationId
+    @api.expect(SolicitudDonacionTransferenciaDto) #Request
+    @api.response(200, "Success")
+    @api.response(401, "Unauthorized", model=errorDto)
+    @api.response(400, "Bad Request", model=errorDto)
+    @api.response(500, "Internal server error", model=errorDto)
+    def post(self, id):
+        """Enviar transferencia de donaciones a organizacion solicitante con kafka"""
+        try:
+            if not request.is_json:
+                return {"error": "Bad Request"}, 400
+            
+            data = request.get_json()
+
+            # Endpoint del producer en Java
+            url = f"{PRODUCER_URL}/donation/transfer/{id}"
+            requests.post(url, json=data)
+
+            return 200
+        
+        except Exception as e:
+            return {"error": str(e)}, 500
+
 @api.route("/offer/new")
 class Solicitud(Resource):
     @api.doc(security='Bearer Auth')
@@ -241,7 +273,7 @@ class Solicitud(Resource):
 
         except Exception as e:
             return {"error": str(e)}, 500
-        
+
 @api.route("/offer/<int:id>")
 class Solicitud(Resource):
     @api.doc(security='Bearer Auth')
