@@ -17,6 +17,8 @@ import Solicitud from '../model/Solicitud';
 import SolicitudBaja from '../model/SolicitudBaja';
 import SolicitudError from '../model/SolicitudError';
 import SolicitudGetList from '../model/SolicitudGetList';
+import SolicitudGraphQLResponse from '../model/SolicitudGraphQLResponse';
+import SolicitudQueryInformeSolicitud from '../model/SolicitudQueryInformeSolicitud';
 
 /**
 * Solicitudes service.
@@ -109,6 +111,47 @@ export default class SolicitudesApi {
       let returnType = SolicitudGetList;
       return this.apiClient.callApi(
         '/solicitud/', 'GET',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, null, callback
+      );
+    }
+
+    /**
+     * Callback function to receive the result of the informeSolicitudesDonaciones operation.
+     * @callback module:api/SolicitudesApi~informeSolicitudesDonacionesCallback
+     * @param {String} error Error message, if any.
+     * @param {module:model/SolicitudGraphQLResponse} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Consulta de informe de solicitudes con filtros
+     * @param {module:model/SolicitudQueryInformeSolicitud} payload 
+     * @param {module:api/SolicitudesApi~informeSolicitudesDonacionesCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link module:model/SolicitudGraphQLResponse}
+     */
+    informeSolicitudesDonaciones(payload, callback) {
+      let postBody = payload;
+      // verify the required parameter 'payload' is set
+      if (payload === undefined || payload === null) {
+        throw new Error("Missing the required parameter 'payload' when calling informeSolicitudesDonaciones");
+      }
+
+      let pathParams = {
+      };
+      let queryParams = {
+      };
+      let headerParams = {
+      };
+      let formParams = {
+      };
+
+      let authNames = ['Bearer Auth'];
+      let contentTypes = ['application/json'];
+      let accepts = ['application/json'];
+      let returnType = SolicitudGraphQLResponse;
+      return this.apiClient.callApi(
+        '/solicitud/informe/', 'POST',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, null, callback
       );

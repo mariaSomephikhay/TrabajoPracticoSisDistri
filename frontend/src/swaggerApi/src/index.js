@@ -14,6 +14,8 @@
 
 import ApiClient from './ApiClient';
 import AdhesionEventoKafka from './model/AdhesionEventoKafka';
+import BorrarQueryGraphql from './model/BorrarQueryGraphql';
+import BorrarVarGraphq from './model/BorrarVarGraphq';
 import Categoria from './model/Categoria';
 import Donacion from './model/Donacion';
 import DonacionList from './model/DonacionList';
@@ -38,21 +40,37 @@ import EventoUsersListDto from './model/EventoUsersListDto';
 import EventoUsuario from './model/EventoUsuario';
 import FiltroDto from './model/FiltroDto';
 import FiltroEvento from './model/FiltroEvento';
+import FiltrosGraphQLResponse from './model/FiltrosGraphQLResponse';
 import InformeEventosDto from './model/InformeEventosDto';
 import InformeParticipacionEventos from './model/InformeParticipacionEventos';
+import InformeSolicitud from './model/InformeSolicitud';
+import InformeSolicitudList from './model/InformeSolicitudList';
 import ListaFiltrosDto from './model/ListaFiltrosDto';
 import ListaValue from './model/ListaValue';
 import Login from './model/Login';
+import ResDataGraphql from './model/ResDataGraphql';
 import Rol from './model/Rol';
 import Solicitud from './model/Solicitud';
 import SolicitudBaja from './model/SolicitudBaja';
 import SolicitudCategoria from './model/SolicitudCategoria';
 import SolicitudDonacion from './model/SolicitudDonacion';
 import SolicitudError from './model/SolicitudError';
+import SolicitudFiltronformeSolicitud from './model/SolicitudFiltronformeSolicitud';
 import SolicitudGet from './model/SolicitudGet';
 import SolicitudGetList from './model/SolicitudGetList';
+import SolicitudGraphQLInformeEnvelope from './model/SolicitudGraphQLInformeEnvelope';
+import SolicitudGraphQLResponse from './model/SolicitudGraphQLResponse';
 import SolicitudOrganizacionDto from './model/SolicitudOrganizacionDto';
+import SolicitudQueryInformeSolicitud from './model/SolicitudQueryInformeSolicitud';
+import SolicitudVariablesInformeSolicitud from './model/SolicitudVariablesInformeSolicitud';
+import SubirFilGraphql from './model/SubirFilGraphql';
+import SubirQueryGraphql from './model/SubirQueryGraphql';
+import SubirVarGraphql from './model/SubirVarGraphql';
 import Token from './model/Token';
+import TraerFiltrosGraphQLEnvelope from './model/TraerFiltrosGraphQLEnvelope';
+import TraerFiltrosGraphqlDto from './model/TraerFiltrosGraphqlDto';
+import TraerQueryGraphql from './model/TraerQueryGraphql';
+import TraerVarGraphqlDto from './model/TraerVarGraphqlDto';
 import Transferencia from './model/Transferencia';
 import Usuario from './model/Usuario';
 import UsuarioList from './model/UsuarioList';
@@ -109,6 +127,18 @@ export {
      * @property {module:model/AdhesionEventoKafka}
      */
     AdhesionEventoKafka,
+
+    /**
+     * The BorrarQueryGraphql model constructor.
+     * @property {module:model/BorrarQueryGraphql}
+     */
+    BorrarQueryGraphql,
+
+    /**
+     * The BorrarVarGraphq model constructor.
+     * @property {module:model/BorrarVarGraphq}
+     */
+    BorrarVarGraphq,
 
     /**
      * The Categoria model constructor.
@@ -255,6 +285,12 @@ export {
     FiltroEvento,
 
     /**
+     * The FiltrosGraphQLResponse model constructor.
+     * @property {module:model/FiltrosGraphQLResponse}
+     */
+    FiltrosGraphQLResponse,
+
+    /**
      * The InformeEventosDto model constructor.
      * @property {module:model/InformeEventosDto}
      */
@@ -265,6 +301,18 @@ export {
      * @property {module:model/InformeParticipacionEventos}
      */
     InformeParticipacionEventos,
+
+    /**
+     * The InformeSolicitud model constructor.
+     * @property {module:model/InformeSolicitud}
+     */
+    InformeSolicitud,
+
+    /**
+     * The InformeSolicitudList model constructor.
+     * @property {module:model/InformeSolicitudList}
+     */
+    InformeSolicitudList,
 
     /**
      * The ListaFiltrosDto model constructor.
@@ -283,6 +331,12 @@ export {
      * @property {module:model/Login}
      */
     Login,
+
+    /**
+     * The ResDataGraphql model constructor.
+     * @property {module:model/ResDataGraphql}
+     */
+    ResDataGraphql,
 
     /**
      * The Rol model constructor.
@@ -321,6 +375,12 @@ export {
     SolicitudError,
 
     /**
+     * The SolicitudFiltronformeSolicitud model constructor.
+     * @property {module:model/SolicitudFiltronformeSolicitud}
+     */
+    SolicitudFiltronformeSolicitud,
+
+    /**
      * The SolicitudGet model constructor.
      * @property {module:model/SolicitudGet}
      */
@@ -333,16 +393,82 @@ export {
     SolicitudGetList,
 
     /**
+     * The SolicitudGraphQLInformeEnvelope model constructor.
+     * @property {module:model/SolicitudGraphQLInformeEnvelope}
+     */
+    SolicitudGraphQLInformeEnvelope,
+
+    /**
+     * The SolicitudGraphQLResponse model constructor.
+     * @property {module:model/SolicitudGraphQLResponse}
+     */
+    SolicitudGraphQLResponse,
+
+    /**
      * The SolicitudOrganizacionDto model constructor.
      * @property {module:model/SolicitudOrganizacionDto}
      */
     SolicitudOrganizacionDto,
 
     /**
+     * The SolicitudQueryInformeSolicitud model constructor.
+     * @property {module:model/SolicitudQueryInformeSolicitud}
+     */
+    SolicitudQueryInformeSolicitud,
+
+    /**
+     * The SolicitudVariablesInformeSolicitud model constructor.
+     * @property {module:model/SolicitudVariablesInformeSolicitud}
+     */
+    SolicitudVariablesInformeSolicitud,
+
+    /**
+     * The SubirFilGraphql model constructor.
+     * @property {module:model/SubirFilGraphql}
+     */
+    SubirFilGraphql,
+
+    /**
+     * The SubirQueryGraphql model constructor.
+     * @property {module:model/SubirQueryGraphql}
+     */
+    SubirQueryGraphql,
+
+    /**
+     * The SubirVarGraphql model constructor.
+     * @property {module:model/SubirVarGraphql}
+     */
+    SubirVarGraphql,
+
+    /**
      * The Token model constructor.
      * @property {module:model/Token}
      */
     Token,
+
+    /**
+     * The TraerFiltrosGraphQLEnvelope model constructor.
+     * @property {module:model/TraerFiltrosGraphQLEnvelope}
+     */
+    TraerFiltrosGraphQLEnvelope,
+
+    /**
+     * The TraerFiltrosGraphqlDto model constructor.
+     * @property {module:model/TraerFiltrosGraphqlDto}
+     */
+    TraerFiltrosGraphqlDto,
+
+    /**
+     * The TraerQueryGraphql model constructor.
+     * @property {module:model/TraerQueryGraphql}
+     */
+    TraerQueryGraphql,
+
+    /**
+     * The TraerVarGraphqlDto model constructor.
+     * @property {module:model/TraerVarGraphqlDto}
+     */
+    TraerVarGraphqlDto,
 
     /**
      * The Transferencia model constructor.

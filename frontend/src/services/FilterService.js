@@ -32,6 +32,39 @@ const FilterService = {
         }
     },
 
+    
+    filterSavedGRAPHQL: async (body) => {
+        try {
+          
+            const response = await filtrosApi.traerFiltrosGraphQL(body);
+            return response; 
+        } catch (err) {
+            console.error("Error al obtener filtros:", err);
+            throw err;
+        }
+    },
+
+    deleteFilterGRAPHQL: async (body) => {
+        try {
+            const response = await filtrosApi.borrarFiltrosGraphQL(body);
+            return response; 
+        } catch (err) {
+            console.error("Error al eliminar el filtro:", err);
+            throw err;
+        }
+    },
+
+    saveFilterGRAPHQL: async (newFiltro) => {
+        try {
+            const response = await filtrosApi.subirQueryGraphqlDto(newFiltro);
+            return response; 
+        } catch (err) {
+            console.error("Error al obtener filtros de evento:", err);
+            throw err;
+        }
+    },
+
+
 }
 
 export default FilterService

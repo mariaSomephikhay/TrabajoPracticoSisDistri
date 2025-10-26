@@ -27,6 +27,16 @@ const RequestDonationService = {
       console.error("Error al obtener donaciones:", err)
       throw err
     }
+  },
+
+  
+  obtenerInformeDonaciones: async (Query) => {
+    try {
+      return await solicitudApi.informeSolicitudesDonaciones(Query)
+    } catch (err) {
+      console.error("Error al obtener informe:", err)
+      throw err
+    }
   }
 
 }
