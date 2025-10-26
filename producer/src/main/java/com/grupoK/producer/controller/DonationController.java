@@ -16,15 +16,17 @@ public class DonationController {
     @Autowired
     Producer producerService;
 
-    @PostMapping("/transfer/{id_organization}/new")
-    public ResponseEntity<Void> producerTransferMsg(@PathVariable("id_organization") Long idOrganization, @RequestBody String message) {
-        String topic = "transferencia-donaciones_" + idOrganization;
+    @PostMapping("/transfer/{id}")
+    public ResponseEntity<Object> producerTransferMsg(@PathVariable("id") Long idOrganizacionSolicitante, @RequestBody String message) {
+        String topic = "_transferencia-donaciones-" + idOrganizacionSolicitante + "_";
         try{
         	producerService.sendMsgToTopic(topic, message);
         }catch (Exception e) {
-            System.out.println(e);
+            Map<String, String> errorResponse = new HashMap<>();
+            errorResponse.put("error", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
         }
-        return ResponseEntity.ok().build();
+        return ResponseEntity.status(HttpStatus.OK).body(message);
     }
 
     @PostMapping("/offer/new")
