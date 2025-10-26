@@ -189,14 +189,14 @@ class Solicitud(Resource):
 class adhesion(Resource):
     @api.doc(security='Bearer Auth')
     @SecurityConfig.authRequired("PRESIDENTE", "VOCAL")
-    @api.doc(id="informe") # Esto define el operationId
+    @api.doc(id="informeSolicitudesDonaciones") # Esto define el operationId
     @api.expect(queryInformeSolicitudDto) #Request
     @api.response(200, "Success", model=GraphQLResponseDto)
     @api.response(401, "Unauthorized", model=errorDto)
     @api.response(400, "Bad Request", model=errorDto)
     @api.response(500, "Internal server error", model=errorDto)
     def post(self):
-        """Consulta de eventos con filtros"""
+        """Consulta de informe de solicitudes con filtros"""
         try:
             if not request.is_json:
                 return {"error": "Bad Request"}, 400
@@ -205,12 +205,12 @@ class adhesion(Resource):
 
             # Endpoint del producer en Java
             url = f"{GRAPHQL_URL}"
-            
+            print(data)
             headers = {"Content-Type": "application/json"}
 
             response = requests.post(url, headers=headers, json=data)
-
+            print(response.json())
             return response.json(), response.status_code
-        
+
         except Exception as e:
             return {"error": str(e)}, 500        
