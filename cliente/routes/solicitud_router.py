@@ -235,9 +235,9 @@ class Solicitud(Resource):
 
             # Endpoint del producer en Java
             url = f"{PRODUCER_URL}/donation/offer/new"
-            requests.post(url, json=data)
+            response = requests.post(url, json=data)
 
-            return 201
+            return response.json(), 201
 
         except Exception as e:
             return {"error": str(e)}, 500
