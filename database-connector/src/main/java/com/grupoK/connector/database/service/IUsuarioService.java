@@ -1,5 +1,6 @@
 package com.grupoK.connector.database.service;
 
+import com.grupoK.connector.database.entities.Organizacion;
 import com.grupoK.connector.database.entities.Usuario;
 
 import java.util.List;
@@ -12,4 +13,5 @@ public interface IUsuarioService {
 	Usuario saveOrUpdate(Usuario usuario);
 	Usuario delete(String id);
 	List<Usuario> getUsersById (List<String> lstId);
+    List<Usuario> getUserByOrganizationId(Integer organizationId);
 }

@@ -86,6 +86,11 @@ public class DonacionService implements IDonacionService {
 		
 	}
 
+    @Override
+    public Usuario getUserCreatorByDonationId(Integer id) {
+        return donacionRepository.findUsuarioAltaByDonacionId(id);
+    }
+
     private Organizacion obtenerOrganizacionPropia (Integer idOrganizacion) throws  Exception{
         Optional<Organizacion> organizacionPropia = organizacionRepository.findById(idOrganizacion);
         if(organizacionPropia.isEmpty())
