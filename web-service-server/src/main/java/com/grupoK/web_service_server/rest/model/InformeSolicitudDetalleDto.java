@@ -27,4 +27,5 @@ public class InformeSolicitudDetalleDto {
 	 private Boolean eliminado;
 	 private Usuario usuarioAlta;
 	 private Usuario usuarioModificacion;
+	 private String tipo;
 }

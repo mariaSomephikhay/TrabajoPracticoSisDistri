@@ -80,9 +80,9 @@ public class SolicitudRestController {
                     for (Donacion d : donaciones) {
                     	
                     	TipoCategoria categoria = d.getCategoria().getDescripcion();
-        				
+        				String tipo = solicitud.getOrganizacionSolicitante().getId()==1? "Enviada" : "Recibida";
                     	InformeSolicitudDetalleDto informeNuevo = 
-                    				new InformeSolicitudDetalleDto(categoria.getDescription(), solicitud.getFechaAlta(), d.getDescripcion(), d.getCantidad(),!(solicitud.getActiva()),d.getUsuarioAlta(), d.getUsuarioModificacion());
+                    				new InformeSolicitudDetalleDto(categoria.getDescription(), solicitud.getFechaAlta(), d.getDescripcion(), d.getCantidad(),!(solicitud.getActiva()),d.getUsuarioAlta(), d.getUsuarioModificacion(),tipo);
                     	informes.add(informeNuevo);
                         
                     }
@@ -128,6 +128,7 @@ public class SolicitudRestController {
                 header.createCell(3).setCellValue("Eliminado");
                 header.createCell(4).setCellValue("Usuario Alta");
                 header.createCell(5).setCellValue("Usuario Modificacion");
+                header.createCell(6).setCellValue("Origen");
                 int rowNum = 1;
                 for (InformeSolicitudDetalleDto dto : entry.getValue()) {
                     Row row = sheet.createRow(rowNum++);
@@ -137,6 +138,7 @@ public class SolicitudRestController {
                     row.createCell(3).setCellValue(dto.getEliminado() ? "Sí" : "No");
                     row.createCell(4).setCellValue(dto.getUsuarioAlta().getUsername());
                     row.createCell(5).setCellValue(dto.getUsuarioModificacion().getUsername());
+                    row.createCell(6).setCellValue(dto.getTipo());
                 }
 
                 // Ajuste automático de columnas
