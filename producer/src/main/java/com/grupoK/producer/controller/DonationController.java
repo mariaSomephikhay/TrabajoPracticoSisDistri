@@ -27,13 +27,17 @@ public class DonationController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/offer")
-    public void producerOfferMsg(@RequestBody String message) {
-    	try {
-    		producerService.sendMsgToTopic("oferta-donaciones", message);
-	    }catch (Exception e) {
-	    	
-	    }
+    @PostMapping("/offer/new")
+    public ResponseEntity<Object> producerOfferMsg(@RequestBody String message) {
+        String topic = "_oferta-donaciones_";
+        try {
+            producerService.sendMsgToTopic(topic, message);
+        }catch (Exception e) {
+            Map<String, String> errorResponse = new HashMap<>();
+            errorResponse.put("error", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+        }
+        return ResponseEntity.status(HttpStatus.CREATED).body(message);
     }
     
     @PostMapping("/request/new")
