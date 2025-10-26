@@ -124,6 +124,42 @@ export const EventFilter = () => {
     }
   };
 
+  // Función para eliminar un filtro
+  const handleUpdateFiltro = async (filtroId) => {
+    try {
+      const idNum = Number(filtroId);
+      const newName = prompt("Ingrese el nombre del filtro:");
+      if (!newName) return;
+
+      const updateFiltro = {
+        usuario: dataUser,
+        filterType: "evento",
+        name: newName,
+        valueFilter: [
+          { key: "fechaDesde", value: fechaDesde || "" },
+          { key: "fechaHasta", value: fechaHasta || "" },
+          { key: "tieneDonacion", value: donacionFilter || "0" },
+        ],
+      };
+
+      await FilterService.updateFilter(idNum, updateFiltro);
+      alert("Filtro actualizado correctamente");
+
+      // Reemplazar el filtro actualizado en la lista
+      setFiltrosGuardados(prev =>
+        prev.map(f => f.id === idNum ? { ...f, ...updateFiltro } : f)
+      );
+
+      if (selectedFiltroGuardado === filtroId) {
+        setSelectedFiltroGuardado("");
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Error al actualizar el filtro");
+    }
+  };
+
+
 
   // Función para guardar el filtro actual
   const handleGuardarFiltro = async () => {
@@ -157,24 +193,23 @@ export const EventFilter = () => {
 
       {/* Selector de filtros guardados */}
           <div className="filter-group">
-            <label>Filtros guardados:</label>
-            <select
-              value={selectedFiltroGuardado}
-              onChange={(e) => {
-                setSelectedFiltroGuardado(e.target.value);
-                aplicarFiltroGuardado(e.target.value);
-              }}
-              className="filter-input"
-            >
-              <option value="">-- Seleccione un filtro --</option>
-              {filtrosGuardados.map(f => (
-                // Convertimos el value a string para evitar problemas de tipo
-                <option key={f.id} value={f.id.toString()}>{f.name}</option>
-              ))}
-            </select>
+          <label>Filtros guardados:</label>
+          <select
+            value={selectedFiltroGuardado}
+            onChange={(e) => {
+              setSelectedFiltroGuardado(e.target.value);
+              aplicarFiltroGuardado(e.target.value);
+            }}
+            className="filter-input"
+          >
+            <option value="">-- Seleccione un filtro --</option>
+            {filtrosGuardados.map(f => (
+              <option key={f.id} value={f.id.toString()}>{f.name}</option>
+            ))}
+          </select>
 
-            {/* Botón para eliminar filtro */}
-            {selectedFiltroGuardado && (
+          {selectedFiltroGuardado && (
+            <>
               <button
                 type="button"
                 onClick={() => handleEliminarFiltro(selectedFiltroGuardado)}
@@ -182,9 +217,18 @@ export const EventFilter = () => {
               >
                 Eliminar
               </button>
-            )}
 
-            {/* Botón para guardar el filtro actual */}
+              <button
+                type="button"
+                onClick={() => handleUpdateFiltro(selectedFiltroGuardado)}
+                className="filter-button update"
+              >
+                Actualizar
+              </button>
+            </>
+          )}
+
+          {!selectedFiltroGuardado && (
             <button
               type="button"
               onClick={handleGuardarFiltro}
@@ -192,9 +236,8 @@ export const EventFilter = () => {
             >
               Guardar filtro actual
             </button>
-          </div>
-        
-
+          )}
+        </div>
 
       {/* Cabecera de filtros */}
       <form className="filter-bar" onSubmit={handleSubmit}>

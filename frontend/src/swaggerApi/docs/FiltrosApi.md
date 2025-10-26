@@ -10,6 +10,7 @@ Method | HTTP request | Description
 [**getFilter**](FiltrosApi.md#getFilter) | **GET** /filter/{type}/{idUsuario} | traer filtro por usuario y tipo
 [**subirQueryGraphqlDto**](FiltrosApi.md#subirQueryGraphqlDto) | **POST** /filter/guardar/graphql/ | guarda filtros con graphql
 [**traerFiltrosGraphQL**](FiltrosApi.md#traerFiltrosGraphQL) | **POST** /filter/traer/graphql/ | trae filtros con graphql
+[**updateFilter**](FiltrosApi.md#updateFilter) | **PUT** /filter/update/{id} | actualizar filtro por id
 
 
 
@@ -298,6 +299,57 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**FiltrosGraphQLResponse**](FiltrosGraphQLResponse.md)
+
+### Authorization
+
+[Bearer Auth](../README.md#Bearer Auth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+
+## updateFilter
+
+> FiltroDto updateFilter(id, payload)
+
+actualizar filtro por id
+
+### Example
+
+```javascript
+import ApiDocumentada from 'api_documentada';
+let defaultClient = ApiDocumentada.ApiClient.instance;
+// Configure API key authorization: Bearer Auth
+let Bearer Auth = defaultClient.authentications['Bearer Auth'];
+Bearer Auth.apiKey = 'YOUR API KEY';
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//Bearer Auth.apiKeyPrefix = 'Token';
+
+let apiInstance = new ApiDocumentada.FiltrosApi();
+let id = 56; // Number | 
+let payload = new ApiDocumentada.FiltroDto(); // FiltroDto | 
+apiInstance.updateFilter(id, payload, (error, data, response) => {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+});
+```
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **Number**|  | 
+ **payload** | [**FiltroDto**](FiltroDto.md)|  | 
+
+### Return type
+
+[**FiltroDto**](FiltroDto.md)
 
 ### Authorization
 
