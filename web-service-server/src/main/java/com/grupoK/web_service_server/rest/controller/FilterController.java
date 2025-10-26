@@ -10,10 +10,14 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.grupoK.connector.database.entities.Filter;
 import com.grupoK.connector.database.serviceImp.FilterService;
+import com.grupoK.connector.database.serviceImp.FilterTypeService;
 import com.grupoK.web_service_server.rest.model.FilterDto;
 
 @RestController
@@ -23,11 +27,14 @@ public class FilterController {
 	@Autowired
     private FilterService filterService;
 	
+	@Autowired
+	private FilterTypeService filterTypeService;
+	
 	
 	@PostMapping("/new")
 	public ResponseEntity<Object> newFilter (@RequestBody FilterDto newFilter){	
 		try {	
-			filterService.saveOrUpdate(newFilter.getName(),newFilter.getValueFilter(),newFilter.getUsuario(),newFilter.getFilterType());
+			filterService.saveOrUpdate(null,newFilter.getName(),newFilter.getValueFilter(),newFilter.getUsuario(),newFilter.getFilterType());
 			return ResponseEntity.status(HttpStatus.CREATED).body("Filtro creado exitosamente");
 		}catch(Exception e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error al crear el filtro, " + e.getMessage());
@@ -62,6 +69,16 @@ public class FilterController {
 			return ResponseEntity.status(HttpStatus.OK).body("Filtro eliminado");
 		}catch(Exception e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error al eliminar filtro, " + e.getMessage());
+		}
+	}
+	
+	@PutMapping("/update/{idFilter}")
+	public ResponseEntity<Object> updateFilter (@PathVariable Integer idFilter,@RequestBody FilterDto updateFilter){	
+		try {	
+			filterService.saveOrUpdate(idFilter,updateFilter.getName(),updateFilter.getValueFilter(),updateFilter.getUsuario(),updateFilter.getFilterType());
+			return ResponseEntity.status(HttpStatus.OK).body("Filtro actualizado exitosamente");
+		}catch(Exception e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error al crear el filtro, " + e.getMessage());
 		}
 	}
 	

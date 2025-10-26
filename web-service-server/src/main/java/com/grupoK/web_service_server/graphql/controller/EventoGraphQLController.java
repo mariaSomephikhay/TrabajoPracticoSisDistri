@@ -26,9 +26,9 @@ public class EventoGraphQLController {
     															@Argument String fechaDesde,@Argument String fechaHasta
     															,@Argument String tieneDonacion) {
 
-        LocalDate fechaDesdeDate = fechaDesde != null ? LocalDate.parse(fechaDesde) : null;
-        LocalDate fechaHastaDate = fechaHasta != null ? LocalDate.parse(fechaHasta) : null;
-        
+		LocalDate fechaDesdeDate = (fechaDesde != null && !fechaDesde.isBlank()) ? LocalDate.parse(fechaDesde) : null;
+		LocalDate fechaHastaDate = (fechaHasta != null && !fechaHasta.isBlank()) ? LocalDate.parse(fechaHasta) : null;
+
         List<InformeEventoDto> lstInforme = new ArrayList<>();
         
         try {

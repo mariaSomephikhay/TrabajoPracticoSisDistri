@@ -26,7 +26,7 @@ public class FiltrosGraphqlController {
     @MutationMapping
     public GraphQLResponse<FilterInput> guardarFiltro(@Argument FilterInput filtro) {
 		try {	
-			filterservice.saveOrUpdate(filtro.getName(),filtro.getValueFilter(),filtro.getUsuario(),filtro.getFilterType());
+			filterservice.saveOrUpdate(null,filtro.getName(),filtro.getValueFilter(),filtro.getUsuario(),filtro.getFilterType());
 			return new GraphQLResponse<>("success","Filtro creado exitosamente", filtro);
 		}catch(Exception e) {
 			return new GraphQLResponse<>("success","Error al crear el filtro, " + e.getMessage(), filtro);
