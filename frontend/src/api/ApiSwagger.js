@@ -24,3 +24,5 @@ export const filtrosApi = new FiltrosApi(apiClient);
  * Aquí se pueden agregar más APIs a medida que se crean endpoints
  * por ejemplo: export const productApi = new ProductApi(apiClient);
  */
+
+

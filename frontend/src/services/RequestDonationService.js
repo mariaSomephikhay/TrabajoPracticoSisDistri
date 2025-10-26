@@ -1,4 +1,5 @@
 import { solicitudApi } from "../api/ApiSwagger.js";
+import { solicitudApiExtended } from "../api/CustomApiSolicitud.js";
 
 const RequestDonationService = {
 
@@ -37,8 +38,31 @@ const RequestDonationService = {
       console.error("Error al obtener informe:", err)
       throw err
     }
+  },
+
+  obtenerInformeDonacionesExcel: async (token, body) => {
+    try {
+      const response = await fetch(`${import.meta.env.VITE_APP_API_URL}/solicitud/informe/excel`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify(body)
+      });
+      const blob = await response.blob();
+      if (!response.ok) {
+        throw new Error("Error al generar el informe");
+      }
+      
+      return blob;
+    } catch (err) {
+      console.error("Error al obtener informe:", err);
+      throw err;
+    }
   }
 
 }
  
 export default RequestDonationService
+

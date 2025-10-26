@@ -6,6 +6,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**deleteRequestDonacion**](SolicitudesApi.md#deleteRequestDonacion) | **DELETE** /solicitud/delete | Enviar solicitud de donaciones a kafka
 [**getAllRequestDonacion**](SolicitudesApi.md#getAllRequestDonacion) | **GET** /solicitud/ | Obtener todos las solicitudes donaciones
+[**informeSolicitudesDetalle**](SolicitudesApi.md#informeSolicitudesDetalle) | **POST** /solicitud/informe/excel | Solcitudes de donaciones en Excel
 [**informeSolicitudesDonaciones**](SolicitudesApi.md#informeSolicitudesDonaciones) | **POST** /solicitud/informe/ | Consulta de informe de solicitudes con filtros
 [**newRequestDonacion**](SolicitudesApi.md#newRequestDonacion) | **POST** /solicitud/request/new | Enviar solicitud de donaciones a kafka
 
@@ -102,6 +103,55 @@ This endpoint does not need any parameter.
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## informeSolicitudesDetalle
+
+> ExcelFileResponse informeSolicitudesDetalle(payload)
+
+Solcitudes de donaciones en Excel
+
+### Example
+
+```javascript
+import ApiDocumentada from 'api_documentada';
+let defaultClient = ApiDocumentada.ApiClient.instance;
+// Configure API key authorization: Bearer Auth
+let Bearer Auth = defaultClient.authentications['Bearer Auth'];
+Bearer Auth.apiKey = 'YOUR API KEY';
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//Bearer Auth.apiKeyPrefix = 'Token';
+
+let apiInstance = new ApiDocumentada.SolicitudesApi();
+let payload = new ApiDocumentada.FiltroSolicitudDetalleDto(); // FiltroSolicitudDetalleDto | 
+apiInstance.informeSolicitudesDetalle(payload, (error, data, response) => {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+});
+```
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **payload** | [**FiltroSolicitudDetalleDto**](FiltroSolicitudDetalleDto.md)|  | 
+
+### Return type
+
+[**ExcelFileResponse**](ExcelFileResponse.md)
+
+### Authorization
+
+[Bearer Auth](../README.md#Bearer Auth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 

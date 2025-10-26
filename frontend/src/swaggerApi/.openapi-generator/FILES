@@ -29,8 +29,10 @@ docs/EventoUsersDto.md
 docs/EventoUsersListDto.md
 docs/EventoUsuario.md
 docs/EventosApi.md
+docs/ExcelFileResponse.md
 docs/FiltroDto.md
 docs/FiltroEvento.md
+docs/FiltroSolicitudDetalleDto.md
 docs/FiltrosApi.md
 docs/FiltrosGraphQLResponse.md
 docs/InformeEventosDto.md
@@ -107,8 +109,10 @@ src/model/EventoRol.js
 src/model/EventoUsersDto.js
 src/model/EventoUsersListDto.js
 src/model/EventoUsuario.js
+src/model/ExcelFileResponse.js
 src/model/FiltroDto.js
 src/model/FiltroEvento.js
+src/model/FiltroSolicitudDetalleDto.js
 src/model/FiltrosGraphQLResponse.js
 src/model/InformeEventosDto.js
 src/model/InformeParticipacionEventos.js
@@ -145,3 +149,5 @@ src/model/Usuario.js
 src/model/UsuarioList.js
 src/model/VoluntarioDto.js
 src/model/VoluntarioEventoDto.js
+test/model/ExcelFileResponse.spec.js
+test/model/FiltroSolicitudDetalleDto.spec.js

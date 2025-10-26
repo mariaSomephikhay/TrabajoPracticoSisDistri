@@ -193,20 +193,7 @@ export const EventFilter = () => {
 
       {/* Selector de filtros guardados */}
           <div className="filter-group">
-          <label>Filtros guardados:</label>
-          <select
-            value={selectedFiltroGuardado}
-            onChange={(e) => {
-              setSelectedFiltroGuardado(e.target.value);
-              aplicarFiltroGuardado(e.target.value);
-            }}
-            className="filter-input"
-          >
-            <option value="">-- Seleccione un filtro --</option>
-            {filtrosGuardados.map(f => (
-              <option key={f.id} value={f.id.toString()}>{f.name}</option>
-            ))}
-          </select>
+          
 
           {selectedFiltroGuardado && (
             <>
@@ -237,6 +224,21 @@ export const EventFilter = () => {
               Guardar filtro actual
             </button>
           )}
+
+          <label>Filtros guardados:</label>
+          <select
+            value={selectedFiltroGuardado}
+            onChange={(e) => {
+              setSelectedFiltroGuardado(e.target.value);
+              aplicarFiltroGuardado(e.target.value);
+            }}
+            className="filter-input"
+          >
+            <option value="">-- Seleccione un filtro --</option>
+            {filtrosGuardados.map(f => (
+              <option key={f.id} value={f.id.toString()}>{f.name}</option>
+            ))}
+          </select>
         </div>
 
       {/* Cabecera de filtros */}

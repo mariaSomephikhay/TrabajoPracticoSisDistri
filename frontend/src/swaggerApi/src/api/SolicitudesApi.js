@@ -13,6 +13,8 @@
 
 
 import ApiClient from "../ApiClient";
+import ExcelFileResponse from '../model/ExcelFileResponse';
+import FiltroSolicitudDetalleDto from '../model/FiltroSolicitudDetalleDto';
 import Solicitud from '../model/Solicitud';
 import SolicitudBaja from '../model/SolicitudBaja';
 import SolicitudError from '../model/SolicitudError';
@@ -111,6 +113,47 @@ export default class SolicitudesApi {
       let returnType = SolicitudGetList;
       return this.apiClient.callApi(
         '/solicitud/', 'GET',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, null, callback
+      );
+    }
+
+    /**
+     * Callback function to receive the result of the informeSolicitudesDetalle operation.
+     * @callback module:api/SolicitudesApi~informeSolicitudesDetalleCallback
+     * @param {String} error Error message, if any.
+     * @param {module:model/ExcelFileResponse} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Solcitudes de donaciones en Excel
+     * @param {module:model/FiltroSolicitudDetalleDto} payload 
+     * @param {module:api/SolicitudesApi~informeSolicitudesDetalleCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link module:model/ExcelFileResponse}
+     */
+    informeSolicitudesDetalle(payload, callback) {
+      let postBody = payload;
+      // verify the required parameter 'payload' is set
+      if (payload === undefined || payload === null) {
+        throw new Error("Missing the required parameter 'payload' when calling informeSolicitudesDetalle");
+      }
+
+      let pathParams = {
+      };
+      let queryParams = {
+      };
+      let headerParams = {
+      };
+      let formParams = {
+      };
+
+      let authNames = ['Bearer Auth'];
+      let contentTypes = ['application/json'];
+      let accepts = ['application/json'];
+      let returnType = ExcelFileResponse;
+      return this.apiClient.callApi(
+        '/solicitud/informe/excel', 'POST',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, null, callback
       );

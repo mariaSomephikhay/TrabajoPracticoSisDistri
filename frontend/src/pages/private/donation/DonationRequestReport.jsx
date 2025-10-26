@@ -6,7 +6,7 @@ import FilterService from '../../../services/FilterService.js';
 import "../../../estilos/EventFilter.css";
 
 export const RequestDonationReport = () => {
-  const { userAuthenticated } = useContext(AuthContext);
+  const { authToken, userAuthenticated } = useContext(AuthContext);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [data, setData] = useState([]);
@@ -45,10 +45,10 @@ export const RequestDonationReport = () => {
 
       const variables = {
         filtro: {
-          categoria,
+          categoria: categoria === "Categoria" ? null : categoria,
           fechaDesde,
           fechaHasta,
-          eliminado
+          eliminado: eliminado === "Ambos" ? null : eliminado
         }
       };
 
@@ -116,9 +116,9 @@ export const RequestDonationReport = () => {
 
     const parseValue = (key, val) => {
     if (val === "None" || val === null || val === undefined) {
-      if (key === "eliminado") return null;         // 'Ambos'
+      if (key === "eliminado") return "Ambos";         // 'Ambos'
       if (key === "fechaDesde" || key === "fechaHasta") return null; // fecha vacía
-      if (key === "categoria") return null;         // categoría vacía
+      if (key === "categoria") return "Categoria";         // categoría vacía
       return null;
     }
     return val;
@@ -140,6 +140,36 @@ export const RequestDonationReport = () => {
       parseValue("fechaHasta", filtro.valueFilter.find(fv => fv.key === "fechaHasta")?.value),
       parseValue("eliminado", filtro.valueFilter.find(fv => fv.key === "eliminado")?.value)
     );
+  };
+
+  const handleDescargarInforme = async () => {
+  try {
+    handleBuscarInforme(selectedCategoria || null , fechaDesde || null, fechaHasta || null, eliminadoFilter || null);
+    const body = {
+      categoria: selectedCategoria === "Categoria" || selectedCategoria === "None"? null : selectedCategoria,
+      fechaDesde,
+      fechaHasta,
+      eliminado: eliminadoFilter === "Ambos" || eliminadoFilter === "" ? null : eliminadoFilter
+    };
+
+    const blob = await RequestService.obtenerInformeDonacionesExcel(authToken, body);
+
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    
+    const formatoFiltro = (valor) => (valor ? valor : "Todos");
+
+    const fileName = `informe_donaciones_${formatoFiltro(body.categoria)}_${formatoFiltro(body.fechaDesde)}_${formatoFiltro(body.fechaHasta)}_${formatoFiltro(body.eliminado)}.xlsx`;
+    link.setAttribute("download", fileName);
+    document.body.appendChild(link);
+    link.click();
+
+    window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error(error);
+      alert("Error al descargar el informe Excel");
+    }
   };
 
   useEffect(() => {
@@ -243,6 +273,69 @@ export const RequestDonationReport = () => {
     }
   };
 
+  // funciona para actualizar filtro
+  const handleUpdateFiltro = async (filtroId) => {
+    try {
+      const id = Number(filtroId);
+      const newName = prompt("Ingrese el nombre del filtro:");
+      if (!newName) return;
+      const newFiltro = {
+       
+        valueFilter: [
+          { key: "categoria", value: selectedCategoria || 'None' },
+          { key: "fechaDesde", value: fechaDesde || null },
+          { key: "fechaHasta", value: fechaHasta || null },
+          { key: "eliminado", value: eliminadoFilter || 'None' },
+        ]
+      };
+
+      const revertFilter = (filtro) => {
+        return filtro.valueFilter
+          .map(({ key, value }) => {
+            // Si el valor es null, undefined o "", guardamos "None"
+            const safeValue = value === null || value === undefined || value === "" ? "None" : value;
+            return `${key}:${safeValue}`;
+          })
+          .join(";");
+      };
+
+      const valueFilter = revertFilter(newFiltro);
+
+      
+      const query = `mutation GuardarFiltro($filtro: FilterInput!) { guardarFiltro(filtro: $filtro) { status message data { id name valueFilter usuario filterType } } }`;
+      
+      const Query = {
+        query,
+        variables: {
+          filtro: {
+            id,
+            usuario: dataUser,
+            filterType: "donacion",
+            name:  newName,
+            valueFilter
+          }
+        }
+      };
+
+      //await FilterService.saveFilterGRAPHQL(Query);
+    
+      const response = await FilterService.saveFilterGRAPHQL(Query);
+      
+      alert("Filtro actualizado correctamente");
+      
+      //console.log("Filtros cargados:", response.data.guardarFiltro.data);
+      setFiltrosGuardados(prev =>
+        prev.map(f => f.id === id ? { ...f, ...newFiltro } : f)
+      );
+
+      if (selectedFiltroGuardado === filtroId) {
+        setSelectedFiltroGuardado("");
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Error al actualizar el filtro");
+    }
+  };
 
   if (loading) return <div>Cargando Informe...</div>;
   if (error) return <div>Error: {error}</div>;
@@ -253,6 +346,38 @@ export const RequestDonationReport = () => {
 
       {/* Selector de filtros guardados */}
           <div className="filter-group">
+            
+
+            {/* Botón para eliminar filtro */}
+            {selectedFiltroGuardado && (
+              <>
+                <button
+                  type="button"
+                  onClick={() => handleEliminarFiltro(selectedFiltroGuardado)}
+                  className="filter-button delete"
+                >
+                  Eliminar
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => handleUpdateFiltro(selectedFiltroGuardado)}
+                  className="filter-button update"
+                >
+                  Actualizar
+                </button>
+              </>
+            )}
+
+            {/* Botón para guardar el filtro actual */}
+            <button
+              type="button"
+              onClick={handleGuardarFiltro}
+              className="filter-button save"
+            >
+              Guardar filtro actual
+            </button>
+
             <label>Filtros guardados:</label>
             <select
               value={selectedFiltroGuardado}
@@ -268,26 +393,6 @@ export const RequestDonationReport = () => {
                 <option key={f.id} value={f.id.toString()}>{f.name}</option>
               ))}
             </select>
-
-            {/* Botón para eliminar filtro */}
-            {selectedFiltroGuardado && (
-              <button
-                type="button"
-                onClick={() => handleEliminarFiltro(selectedFiltroGuardado)}
-                className="filter-button delete"
-              >
-                Eliminar
-              </button>
-            )}
-
-            {/* Botón para guardar el filtro actual */}
-            <button
-              type="button"
-              onClick={handleGuardarFiltro}
-              className="filter-button save"
-            >
-              Guardar filtro actual
-            </button>
           </div>
         
 
@@ -334,6 +439,8 @@ export const RequestDonationReport = () => {
         </div>
 
         <button type="submit" className="filter-button">Buscar</button>
+
+        <button type="button" onClick={handleDescargarInforme} className="filter-button">Descargar Excel</button>
       </form>
 
       {/* Listado de resultados */}
