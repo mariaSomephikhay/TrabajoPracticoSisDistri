@@ -8,47 +8,26 @@ import java.util.stream.Collectors;
 import com.grupoK.connector.database.entities.Donacion;
 import com.grupoK.connector.database.entities.Evento;
 import com.grupoK.connector.database.entities.EventoDonacion;
+import com.grupoK.connector.database.entities.Oferta;
 import com.grupoK.connector.database.entities.Solicitud;
 import com.grupoK.connector.database.entities.SolicitudDonacion;
 import com.grupoK.connector.database.entities.Usuario;
 import com.grupoK.connector.database.exceptions.UserEmailAlreadyExistsException;
 import com.grupoK.connector.database.exceptions.UserNotFoundException;
 import com.grupoK.connector.database.exceptions.UserUsernameAlreadyExistsException;
-import com.grupoK.connector.database.serviceImp.DonacionService;
-import com.grupoK.connector.database.serviceImp.EventoDonacionService;
-import com.grupoK.connector.database.serviceImp.EventoService;
-import com.grupoK.connector.database.serviceImp.SolicitudService;
-import com.grupoK.connector.database.serviceImp.UsuarioService;
+import com.grupoK.connector.database.serviceImp.*;
 
+import com.grupoK.grpc.proto.*;
+import com.grupoK.grpc.server.wrappers.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.grpc.server.service.GrpcService;
 
-import com.grupoK.grpc.server.wrappers.DonacionWrapper;
-import com.grupoK.grpc.server.wrappers.EventoWrapper;
-import com.grupoK.grpc.server.wrappers.SolicitudWrapper;
-import com.grupoK.grpc.server.wrappers.UsuarioWrapper;
-import com.grupoK.grpc.server.wrappers.VoluntarioWrapper;
-import com.grupoK.grpc.proto.DonacionId;
-import com.grupoK.grpc.proto.DonacionIdUsu;
-import com.grupoK.grpc.proto.DonacionList;
-import com.grupoK.grpc.proto.DonacionesAsociadas;
-import com.grupoK.grpc.proto.Empty;
-import com.grupoK.grpc.proto.EventoId;
-import com.grupoK.grpc.proto.EventoList;
-import com.grupoK.grpc.proto.EventoWithAllListDonacionesDetails;
-import com.grupoK.grpc.proto.EventoWithListDonacionesDetails;
-import com.grupoK.grpc.proto.EventoWithListUsersDetails;
-import com.grupoK.grpc.proto.ListSolicitudDonacion;
-import com.grupoK.grpc.proto.ManagerServiceGrpc;
-import com.grupoK.grpc.proto.UserId;
-import com.grupoK.grpc.proto.UserUsername;
-import com.grupoK.grpc.proto.UsuarioList;
 import io.grpc.stub.StreamObserver;
 
 @GrpcService
 public class ManagerServiceImpl extends ManagerServiceGrpc.ManagerServiceImplBase{
 
-	@Autowired
+    @Autowired
 	private UsuarioService usuarioService;
 	@Autowired
 	private UsuarioWrapper usuarioWrapper;
@@ -71,6 +50,11 @@ public class ManagerServiceImpl extends ManagerServiceGrpc.ManagerServiceImplBas
 	
 	@Autowired
 	private SolicitudWrapper solicitudWrapper;
+
+    @Autowired
+    private OfertaService ofertaService;
+    @Autowired
+    private OfertaWrapper ofertaWrapper;
 	
 	@Autowired
 	private VoluntarioWrapper voluntarioWrapper;
@@ -475,5 +459,26 @@ public class ManagerServiceImpl extends ManagerServiceGrpc.ManagerServiceImplBas
 		                .asRuntimeException());
 			}
 		}
+
+        @Override
+        public void getAllOffersByOrganization(OrganizacionId request, StreamObserver<ListOferta> responseObserver) {
+            try {
+                List<Oferta> offers = ofertaService.findAllByOrganizationId(request.getId());
+
+                ListOferta response = ListOferta.newBuilder()
+                        .addAllOfertas(offers.stream()
+                                .map(ofertaWrapper::toGrpOferta).toList())
+                        .build();
+
+                responseObserver.onNext(response);
+                responseObserver.onCompleted();
+
+            }catch (Exception e) {
+                responseObserver.onError(io.grpc.Status.INTERNAL
+                        .withDescription("Internal server error: " + e.getMessage())
+                        .asRuntimeException());
+            }
+        }
+
 
 }
