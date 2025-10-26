@@ -87,6 +87,7 @@ type InformeSolicitudResponse {
 }
 
 input FilterInput {
+	id: ID
 	name: String!
 	valueFilter: String!
 	usuario: String!

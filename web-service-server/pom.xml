@@ -64,13 +64,19 @@
             <artifactId>lombok</artifactId>
             <scope>provided</scope>
         </dependency>
+        	  <!-- EXCEL -->
+      <dependency>
+		    <groupId>org.apache.poi</groupId>
+		    <artifactId>poi-ooxml</artifactId>
+		    <version>5.2.5</version>
+		</dependency>
 	  <!-- Internal dependencies -->
         <dependency>
             <groupId>com.grupoK</groupId>
             <artifactId>database-connector</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
-	
+		
 	</dependencies>
 		
 	<build>
