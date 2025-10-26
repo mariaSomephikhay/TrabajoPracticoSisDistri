@@ -174,7 +174,7 @@ public class DataInitializer {
                         Arrays.asList(
                                 new Donacion(
                                         null,	// id
-                                        //organizacionExternaDos,
+                                        //org interna,
                                         cateRepo.findById(4).get(), // categoria
                                         "Cartucheras", // descripcion
                                         4, // cantidad
@@ -187,7 +187,7 @@ public class DataInitializer {
                                 ),
                                 new Donacion(
                                         null,	// id
-                                        //organizacionExternaDos,
+                                        //oorg interna,
                                         cateRepo.findById(1).get(), // categoria
                                         "Carne", // descripcion
                                         8, // cantidad
@@ -200,6 +200,85 @@ public class DataInitializer {
                                 )
                         )
                 );
+                
+                donacionRepo.save(new Donacion(
+                        null,	// id
+                        //organizacionExterna,
+                        alimento, // categoria
+                        "Arroz", // descripcion
+                        10, // cantidad
+                        false,   // eliminado
+                        null,          // fechaAlta (se genera sola)
+                        kafka,
+                        null,
+                        kafka,
+                        null
+                ));
+                donacionRepo.save(new Donacion(
+                        null,	// id
+                        ///organizacionExterna,
+                        escolar, // categoria
+                        "Mochila", // descripcion
+                        5, // cantidad
+                        false,   // eliminado
+                        null,          // fechaAlta (se genera sola)
+                        kafka,
+                        null,
+                        kafka,
+                        null
+                ));
+                donacionRepo.save(new Donacion(
+                        null,	// id
+                        ///organizacionExterna,
+                        cateRepo.findById(3).get(), // categoria
+                        "Remeras", // descripcion
+                        7, // cantidad
+                        false,   // eliminado
+                        null,          // fechaAlta (se genera sola)
+                        kafka,
+                        null,
+                        kafka,
+                        null
+                ));
+                donacionRepo.save(new Donacion(
+                        null,	// id
+                        ///interna,
+                        escolar, // categoria
+                        "Reglas", // descripcion
+                        100, // cantidad
+                        false,   // eliminado
+                        null,          // fechaAlta (se genera sola)
+                        usuario,
+                        null,
+                        usuario,
+                        null
+                ));
+                donacionRepo.save(new Donacion(
+                        null,	// id
+                        //interna,
+                        alimento, // categoria
+                        "Chocolate", // descripcion
+                        150, // cantidad
+                        false,   // eliminado
+                        null,          // fechaAlta (se genera sola)
+                        usuario,
+                        null,
+                        usuario,
+                        null
+                ));
+                donacionRepo.save(new Donacion(
+                        null,	// id
+                        //interna,
+                        alimento, // categoria
+                        "Fideos", // descripcion
+                        110, // cantidad
+                        false,   // eliminado
+                        null,          // fechaAlta (se genera sola)
+                        usuario,
+                        null,
+                        usuario,
+                        null
+                ));
 
             }
 
@@ -212,7 +291,13 @@ public class DataInitializer {
                 Donacion donacionExternaUno = donacionRepo.findById(3).get();
                 Donacion donacioninternaSDos = donacionRepo.findById(4).get();
                 Donacion donacioninterneSTres = donacionRepo.findById(5).get();
-
+                Donacion arroz = donacionRepo.findById(6).get();
+                Donacion mochila = donacionRepo.findById(7).get();
+                Donacion remeras = donacionRepo.findById(8).get();
+                Donacion regla = donacionRepo.findById(9).get();
+                Donacion chocolate = donacionRepo.findById(10).get();
+                Donacion fideos = donacionRepo.findById(11).get();
+                
                 List<Solicitud> solicitudes = soliRepo.saveAll(
                         Arrays.asList(
                                 new Solicitud(
@@ -229,6 +314,30 @@ public class DataInitializer {
                                         //organizacionExternaUno, // organizacion donante
                                         true, // activa
                                         false, // procesada
+                                        null  // fechaAlta (se genera sola)
+                                ),
+                                new Solicitud(
+                                        "3", // id
+                                        organizacionExternaDos, // organizacion solicitante
+                                        //organizacionExternaUno, // organizacion donante
+                                        true, // activa
+                                        true, // procesada
+                                        null  // fechaAlta (se genera sola)
+                                ),
+                                new Solicitud(
+                                        "4", // id
+                                        organizacionExternaUno, // organizacion solicitante
+                                        //organizacionExternaUno, // organizacion donante
+                                        false, // activa
+                                        true, // procesada
+                                        null  // fechaAlta (se genera sola)
+                                ),
+                                new Solicitud(
+                                        "5", // id
+                                        organizacionPropia, // organizacion solicitante
+                                        //organizacionExternaUno, // organizacion donante
+                                        true, // activa
+                                        true, // procesada
                                         null  // fechaAlta (se genera sola)
                                 )
                         ));
@@ -251,7 +360,44 @@ public class DataInitializer {
                                 solicitudes.get(1),
                                 donacionExternaUno//,
                                 //2
+                        ),
+                        new SolicitudDonacion(
+                                null,
+                                solicitudes.get(2),
+                                arroz//,
+                                //2
+                        ),
+                        new SolicitudDonacion(
+                                null,
+                                solicitudes.get(2),
+                                mochila//,
+                                //2
+                        ),
+                        new SolicitudDonacion(
+                                null,
+                                solicitudes.get(3),
+                                remeras//,
+                                //2
+                        ),
+                        new SolicitudDonacion(
+                                null,
+                                solicitudes.get(4),
+                                regla//,
+                                //2
+                        ),
+                        new SolicitudDonacion(
+                                null,
+                                solicitudes.get(4),
+                                chocolate//,
+                                //2
+                        ),
+                        new SolicitudDonacion(
+                                null,
+                                solicitudes.get(4),
+                                fideos//,
+                                //2
                         )
+                     
                 ));
             }
             
