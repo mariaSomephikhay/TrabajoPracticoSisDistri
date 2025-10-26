@@ -34,15 +34,21 @@ public class FilterService implements IFilterService{
 	}
 
 	@Override
-	public Filter saveOrUpdate(String name, String value, String idUsuario, String type) throws Exception {
-		
+	public Filter saveOrUpdate(Integer id,String name, String value, String idUsuario, String type) throws Exception {
 		//buscarUsuario
 		Usuario user = usuarioService.findById(idUsuario);
 		
 		//buscarTipo
 		FilterType filterType = filterTypeService.findByType(type);
+		Filter filter = null;
+		if(id==null) {
+			filter = new Filter(null, name,value,user,filterType);
+		}else {
+			filter = findById(id);
+			filter.setName(name);
+			filter.setValueFilter(value);
+		}
 		
-		Filter filter = new Filter(null, name,value,user,filterType);
 		return filterRepository.save(filter);
 	}
 
@@ -53,6 +59,11 @@ public class FilterService implements IFilterService{
 			Filter filterEntidad = filter.get();
 			filterRepository.delete(filterEntidad);
 		}
+	}
+
+	@Override
+	public Filter findById(Integer id) throws Exception {
+		return filterRepository.findById(id).orElseThrow(() -> new Exception ("Filtro no encontrado"));
 	}
 
 }
