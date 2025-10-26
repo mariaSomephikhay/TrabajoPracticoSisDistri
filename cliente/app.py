@@ -5,7 +5,6 @@ from config.client_config import configClient
 from routes.user_router import api as userNS
 from routes.donacion_router import api as donacionNS
 from routes.evento_router import api as eventoNS
-from routes.transferencia_router import api as transferenciaNS
 from routes.solicitud_router import api as solicitudNS
 from routes.filter_router import api as filterNS
 
@@ -37,7 +36,6 @@ def create_app(config_name='development'):
     api.add_namespace(userNS, path="/user")
     api.add_namespace(donacionNS, path="/donacion")
     api.add_namespace(eventoNS, path="/evento")
-    api.add_namespace(transferenciaNS, path="/transferencia")
     api.add_namespace(solicitudNS, path="/solicitud")
     api.add_namespace(filterNS, path="/filter")
 
