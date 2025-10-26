@@ -141,6 +141,10 @@ message Organizacion {
     bool externa = 3;
 }
 
+message OrganizacionId {
+    int32 id = 1;
+}
+
 message SolicitudDonacion {
     string id = 1;
     Organizacion organizacionSolicitante= 2;
@@ -151,6 +155,17 @@ message SolicitudDonacion {
 message ListSolicitudDonacion {
     repeated SolicitudDonacion solicitudes = 1;
 }
+
+message Oferta {
+    int32 id = 1;
+    Organizacion organizacionDonante= 2;
+    repeated Donacion donaciones = 3;
+}
+
+message ListOferta {
+    repeated Oferta ofertas = 1;
+}
+
 
 service ManagerService{
   rpc getUserByUsername (UserUsername) returns (Usuario) {};
@@ -174,6 +189,8 @@ service ManagerService{
   rpc getEventoWithDonacionesById (EventoId) returns (EventoWithAllListDonacionesDetails) {};
   
   //------------SOLICITUDES-----------//
-  rpc getAllSolicitudDonaciones(Empty) returns (ListSolicitudDonacion) {};  
+  rpc getAllSolicitudDonaciones(Empty) returns (ListSolicitudDonacion) {};
+  rpc getAllOffersByOrganization (OrganizacionId) returns (ListOferta) {};
+
   //AGREGAR ACA TODOS LOS SERVICIOS
 }
