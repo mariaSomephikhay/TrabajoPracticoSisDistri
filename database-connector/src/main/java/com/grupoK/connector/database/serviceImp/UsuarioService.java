@@ -138,6 +138,11 @@ public class UsuarioService implements IUsuarioService {
 		return lstUsers;
 	}
 
+    @Override
+    public List<Usuario> getUserByOrganizationId(Integer orgniazationId) {
+        return usuarioRepository.findAllByOrganizacion_Id(orgniazationId);
+    }
+
     private Organizacion obtenerOrganizacionPropia (Integer idOrganizacion) throws  Exception{
         Optional<Organizacion> organizacionPropia = organizacionRepository.findById(idOrganizacion);
         if(organizacionPropia.isEmpty())

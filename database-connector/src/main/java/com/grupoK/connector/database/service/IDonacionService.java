@@ -13,4 +13,5 @@ public interface IDonacionService {
 	Donacion findById(Integer id) throws Exception;
 	Donacion saveOrUpdate(Donacion donacion) throws Exception;
 	Donacion delete(Integer id, Usuario usuario) throws Exception;
+    Usuario getUserCreatorByDonationId(Integer id);
 }

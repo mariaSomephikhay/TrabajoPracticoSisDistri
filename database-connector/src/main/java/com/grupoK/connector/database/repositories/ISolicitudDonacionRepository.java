@@ -1,5 +1,6 @@
 package com.grupoK.connector.database.repositories;
 
+import com.grupoK.connector.database.entities.Organizacion;
 import com.grupoK.connector.database.entities.Solicitud;
 import com.grupoK.connector.database.entities.SolicitudDonacion;
 import com.grupoK.connector.database.entities.enums.TipoCategoria;
@@ -16,6 +17,7 @@ import java.util.List;
 @Repository
 public interface ISolicitudDonacionRepository extends JpaRepository<SolicitudDonacion, Integer> {
     List<SolicitudDonacion> findAllBySolicitud(@Param("solicitud") Solicitud solicitud);
+
 	@Query("""
 		    SELECT DISTINCT sd FROM SolicitudDonacion sd
 		    JOIN sd.solicitud s
