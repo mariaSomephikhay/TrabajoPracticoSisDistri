@@ -124,6 +124,11 @@ class ManagerServiceStub(object):
                 request_serializer=donaciones__eventos__pb2.Empty.SerializeToString,
                 response_deserializer=donaciones__eventos__pb2.ListSolicitudDonacion.FromString,
                 _registered_method=True)
+        self.getAllOffersByOrganization = channel.unary_unary(
+                '/managerservice.ManagerService/getAllOffersByOrganization',
+                request_serializer=donaciones__eventos__pb2.OrganizacionId.SerializeToString,
+                response_deserializer=donaciones__eventos__pb2.ListOferta.FromString,
+                _registered_method=True)
 
 
 class ManagerServiceServicer(object):
@@ -239,6 +244,12 @@ class ManagerServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def getAllOffersByOrganization(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_ManagerServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -331,6 +342,11 @@ def add_ManagerServiceServicer_to_server(servicer, server):
                     servicer.getAllSolicitudDonaciones,
                     request_deserializer=donaciones__eventos__pb2.Empty.FromString,
                     response_serializer=donaciones__eventos__pb2.ListSolicitudDonacion.SerializeToString,
+            ),
+            'getAllOffersByOrganization': grpc.unary_unary_rpc_method_handler(
+                    servicer.getAllOffersByOrganization,
+                    request_deserializer=donaciones__eventos__pb2.OrganizacionId.FromString,
+                    response_serializer=donaciones__eventos__pb2.ListOferta.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -819,6 +835,33 @@ class ManagerService(object):
             '/managerservice.ManagerService/getAllSolicitudDonaciones',
             donaciones__eventos__pb2.Empty.SerializeToString,
             donaciones__eventos__pb2.ListSolicitudDonacion.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def getAllOffersByOrganization(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/managerservice.ManagerService/getAllOffersByOrganization',
+            donaciones__eventos__pb2.OrganizacionId.SerializeToString,
+            donaciones__eventos__pb2.ListOferta.FromString,
             options,
             channel_credentials,
             insecure,

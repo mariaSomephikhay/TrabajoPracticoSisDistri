@@ -105,3 +105,8 @@ class ManagerServiceImpl(object):
         param = service_pb2.Empty() #inicializao param con el valor del mensaje empty
         response = self.stub.getAllSolicitudDonaciones(param) #llamo al servicio getAllUsers y le paso Empty (param)como esta declarado en el prot 
         return MessageToJson(response)   
+    
+    def getAllOffersByIdOrganization(self, id): 
+        pOrganizacion = ParseDict(id, service_pb2.OrganizacionId(), ignore_unknown_fields=True) # Convierte el modelo json a un mensaje protobuf solo con los campos presentes
+        response = self.stub.getAllOffersByOrganization(pOrganizacion)
+        return MessageToJson(response) 
