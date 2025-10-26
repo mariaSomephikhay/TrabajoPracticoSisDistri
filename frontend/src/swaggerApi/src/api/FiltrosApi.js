@@ -293,5 +293,52 @@ export default class FiltrosApi {
       );
     }
 
+    /**
+     * Callback function to receive the result of the updateFilter operation.
+     * @callback module:api/FiltrosApi~updateFilterCallback
+     * @param {String} error Error message, if any.
+     * @param {module:model/FiltroDto} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * actualizar filtro por id
+     * @param {Number} id 
+     * @param {module:model/FiltroDto} payload 
+     * @param {module:api/FiltrosApi~updateFilterCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link module:model/FiltroDto}
+     */
+    updateFilter(id, payload, callback) {
+      let postBody = payload;
+      // verify the required parameter 'id' is set
+      if (id === undefined || id === null) {
+        throw new Error("Missing the required parameter 'id' when calling updateFilter");
+      }
+      // verify the required parameter 'payload' is set
+      if (payload === undefined || payload === null) {
+        throw new Error("Missing the required parameter 'payload' when calling updateFilter");
+      }
+
+      let pathParams = {
+        'id': id
+      };
+      let queryParams = {
+      };
+      let headerParams = {
+      };
+      let formParams = {
+      };
+
+      let authNames = ['Bearer Auth'];
+      let contentTypes = ['application/json'];
+      let accepts = ['application/json'];
+      let returnType = FiltroDto;
+      return this.apiClient.callApi(
+        '/filter/update/{id}', 'PUT',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, null, callback
+      );
+    }
+
 
 }

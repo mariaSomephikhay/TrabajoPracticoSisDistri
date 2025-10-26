@@ -38,8 +38,10 @@ import EventoRol from './model/EventoRol';
 import EventoUsersDto from './model/EventoUsersDto';
 import EventoUsersListDto from './model/EventoUsersListDto';
 import EventoUsuario from './model/EventoUsuario';
+import ExcelFileResponse from './model/ExcelFileResponse';
 import FiltroDto from './model/FiltroDto';
 import FiltroEvento from './model/FiltroEvento';
+import FiltroSolicitudDetalleDto from './model/FiltroSolicitudDetalleDto';
 import FiltrosGraphQLResponse from './model/FiltrosGraphQLResponse';
 import InformeEventosDto from './model/InformeEventosDto';
 import InformeParticipacionEventos from './model/InformeParticipacionEventos';
@@ -273,6 +275,12 @@ export {
     EventoUsuario,
 
     /**
+     * The ExcelFileResponse model constructor.
+     * @property {module:model/ExcelFileResponse}
+     */
+    ExcelFileResponse,
+
+    /**
      * The FiltroDto model constructor.
      * @property {module:model/FiltroDto}
      */
@@ -283,6 +291,12 @@ export {
      * @property {module:model/FiltroEvento}
      */
     FiltroEvento,
+
+    /**
+     * The FiltroSolicitudDetalleDto model constructor.
+     * @property {module:model/FiltroSolicitudDetalleDto}
+     */
+    FiltroSolicitudDetalleDto,
 
     /**
      * The FiltrosGraphQLResponse model constructor.

@@ -151,8 +151,10 @@ Class | Method | HTTP request | Description
 *ApiDocumentada.FiltrosApi* | [**getFilter**](docs/FiltrosApi.md#getFilter) | **GET** /filter/{type}/{idUsuario} | traer filtro por usuario y tipo
 *ApiDocumentada.FiltrosApi* | [**subirQueryGraphqlDto**](docs/FiltrosApi.md#subirQueryGraphqlDto) | **POST** /filter/guardar/graphql/ | guarda filtros con graphql
 *ApiDocumentada.FiltrosApi* | [**traerFiltrosGraphQL**](docs/FiltrosApi.md#traerFiltrosGraphQL) | **POST** /filter/traer/graphql/ | trae filtros con graphql
+*ApiDocumentada.FiltrosApi* | [**updateFilter**](docs/FiltrosApi.md#updateFilter) | **PUT** /filter/update/{id} | actualizar filtro por id
 *ApiDocumentada.SolicitudesApi* | [**deleteRequestDonacion**](docs/SolicitudesApi.md#deleteRequestDonacion) | **DELETE** /solicitud/delete | Enviar solicitud de donaciones a kafka
 *ApiDocumentada.SolicitudesApi* | [**getAllRequestDonacion**](docs/SolicitudesApi.md#getAllRequestDonacion) | **GET** /solicitud/ | Obtener todos las solicitudes donaciones
+*ApiDocumentada.SolicitudesApi* | [**informeSolicitudesDetalle**](docs/SolicitudesApi.md#informeSolicitudesDetalle) | **POST** /solicitud/informe/excel | Solcitudes de donaciones en Excel
 *ApiDocumentada.SolicitudesApi* | [**informeSolicitudesDonaciones**](docs/SolicitudesApi.md#informeSolicitudesDonaciones) | **POST** /solicitud/informe/ | Consulta de informe de solicitudes con filtros
 *ApiDocumentada.SolicitudesApi* | [**newRequestDonacion**](docs/SolicitudesApi.md#newRequestDonacion) | **POST** /solicitud/request/new | Enviar solicitud de donaciones a kafka
 *ApiDocumentada.TransferenciasApi* | [**newTransfer**](docs/TransferenciasApi.md#newTransfer) | **POST** /transferencia/donacion/{id_solicitante}/new | Enviar transferencia de donaciones a organizacion
@@ -192,8 +194,10 @@ Class | Method | HTTP request | Description
  - [ApiDocumentada.EventoUsersDto](docs/EventoUsersDto.md)
  - [ApiDocumentada.EventoUsersListDto](docs/EventoUsersListDto.md)
  - [ApiDocumentada.EventoUsuario](docs/EventoUsuario.md)
+ - [ApiDocumentada.ExcelFileResponse](docs/ExcelFileResponse.md)
  - [ApiDocumentada.FiltroDto](docs/FiltroDto.md)
  - [ApiDocumentada.FiltroEvento](docs/FiltroEvento.md)
+ - [ApiDocumentada.FiltroSolicitudDetalleDto](docs/FiltroSolicitudDetalleDto.md)
  - [ApiDocumentada.FiltrosGraphQLResponse](docs/FiltrosGraphQLResponse.md)
  - [ApiDocumentada.InformeEventosDto](docs/InformeEventosDto.md)
  - [ApiDocumentada.InformeParticipacionEventos](docs/InformeParticipacionEventos.md)

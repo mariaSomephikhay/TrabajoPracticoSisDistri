@@ -6,7 +6,7 @@ import FilterService from '../../../services/FilterService.js';
 import "../../../estilos/EventFilter.css";
 
 export const RequestDonationReport = () => {
-  const { userAuthenticated } = useContext(AuthContext);
+  const { authToken, userAuthenticated } = useContext(AuthContext);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [data, setData] = useState([]);
@@ -45,10 +45,10 @@ export const RequestDonationReport = () => {
 
       const variables = {
         filtro: {
-          categoria,
+          categoria: categoria === "Categoria" ? null : categoria,
           fechaDesde,
           fechaHasta,
-          eliminado
+          eliminado: eliminado === "Ambos" ? null : eliminado
         }
       };
 
@@ -116,9 +116,9 @@ export const RequestDonationReport = () => {
 
     const parseValue = (key, val) => {
     if (val === "None" || val === null || val === undefined) {
-      if (key === "eliminado") return null;         // 'Ambos'
+      if (key === "eliminado") return "Ambos";         // 'Ambos'
       if (key === "fechaDesde" || key === "fechaHasta") return null; // fecha vacía
-      if (key === "categoria") return null;         // categoría vacía
+      if (key === "categoria") return "Categoria";         // categoría vacía
       return null;
     }
     return val;
@@ -140,6 +140,36 @@ export const RequestDonationReport = () => {
       parseValue("fechaHasta", filtro.valueFilter.find(fv => fv.key === "fechaHasta")?.value),
       parseValue("eliminado", filtro.valueFilter.find(fv => fv.key === "eliminado")?.value)
     );
+  };
+
+  const handleDescargarInforme = async () => {
+  try {
+    handleBuscarInforme(selectedCategoria || null , fechaDesde || null, fechaHasta || null, eliminadoFilter || null);
+    const body = {
+      categoria: selectedCategoria === "Categoria" || selectedCategoria === "None"? null : selectedCategoria,
+      fechaDesde,
+      fechaHasta,
+      eliminado: eliminadoFilter === "Ambos" || eliminadoFilter === "" ? null : eliminadoFilter
+    };
+
+    const blob = await RequestService.obtenerInformeDonacionesExcel(authToken, body);
+
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    
+    const formatoFiltro = (valor) => (valor ? valor : "Todos");
+
+    const fileName = `informe_donaciones_${formatoFiltro(body.categoria)}_${formatoFiltro(body.fechaDesde)}_${formatoFiltro(body.fechaHasta)}_${formatoFiltro(body.eliminado)}.xlsx`;
+    link.setAttribute("download", fileName);
+    document.body.appendChild(link);
+    link.click();
+
+    window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error(error);
+      alert("Error al descargar el informe Excel");
+    }
   };
 
   useEffect(() => {
@@ -253,21 +283,7 @@ export const RequestDonationReport = () => {
 
       {/* Selector de filtros guardados */}
           <div className="filter-group">
-            <label>Filtros guardados:</label>
-            <select
-              value={selectedFiltroGuardado}
-              onChange={(i) => {
-                setSelectedFiltroGuardado(i.target.value);
-                aplicarFiltroGuardado(i.target.value);
-              }}
-              className="filter-input"
-            >
-              <option value="">-- Seleccione un filtro --</option>
-              {filtrosGuardados.map(f => (
-                // Convertimos el value a string para evitar problemas de tipo
-                <option key={f.id} value={f.id.toString()}>{f.name}</option>
-              ))}
-            </select>
+            
 
             {/* Botón para eliminar filtro */}
             {selectedFiltroGuardado && (
@@ -288,6 +304,22 @@ export const RequestDonationReport = () => {
             >
               Guardar filtro actual
             </button>
+
+            <label>Filtros guardados:</label>
+            <select
+              value={selectedFiltroGuardado}
+              onChange={(i) => {
+                setSelectedFiltroGuardado(i.target.value);
+                aplicarFiltroGuardado(i.target.value);
+              }}
+              className="filter-input"
+            >
+              <option value="">-- Seleccione un filtro --</option>
+              {filtrosGuardados.map(f => (
+                // Convertimos el value a string para evitar problemas de tipo
+                <option key={f.id} value={f.id.toString()}>{f.name}</option>
+              ))}
+            </select>
           </div>
         
 
@@ -334,6 +366,8 @@ export const RequestDonationReport = () => {
         </div>
 
         <button type="submit" className="filter-button">Buscar</button>
+
+        <button type="button" onClick={handleDescargarInforme} className="filter-button">Descargar Excel</button>
       </form>
 
       {/* Listado de resultados */}
