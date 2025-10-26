@@ -1,48 +1,72 @@
-import React, { useEffect, useState } from 'react';
-import { useParams, NavLink } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import EventService from '../../../services/EventService.js';
-import UserService from '../../../services/UserService.js'
+import UserService from '../../../services/UserService.js';
+import { AuthContext } from "../../../context/AuthContext.jsx";
 
 export const ExternalEventManager = () => {
-  const { id } = useParams(); // ID del evento
+  const { id } = useParams();
   const [users, setUsers] = useState([]);
   const [event, setEvent] = useState(null);
+  const [disabledButtons, setDisabledButtons] = useState({}); // 🔹 Para desactivar botones individualmente
+  const { userAuthenticated } = useContext(AuthContext);
 
-  // Cargar usuarios disponibles
   useEffect(() => {
     cargarUsuarios();
     cargarEvento();
   }, []);
 
   const cargarUsuarios = async () => {
-  try {
-    const response = await UserService.obtenerListadoUsuarios();
-    const lista = response.usuarios || [];
-    setUsers(lista);
-    console.log(lista);
-  } catch (error) {
-    console.error('Error al cargar los usuarios: ', error);
-  }
+    try {
+      const dataUser = await UserService.obtenerUsuarioPorUsername(userAuthenticated.username);
+      
+      if (dataUser.rol.descripcion === "PRESIDENTE" || dataUser.rol.descripcion === "COORDINADOR") {
+        const response = await UserService.obtenerListadoUsuarios();
+        const lista = response.usuarios || [];
+        setUsers(lista);
+        console.log(lista);
+      } else {
+        setUsers([dataUser]);
+        console.log(dataUser);
+      }
+
+    } catch (error) {
+      console.error('Error al cargar los usuarios: ', error);
+    }
   };
 
-const cargarEvento = async () => {
-  try {
-    console.log("Cargando evento con ID: ", id);
-    const data = await EventService.obtenerEvento(id);
-    setEvent(data);
-    console.log(data);
-  } catch (error) {
-    console.error('Error al cargar el evento: ', error);
-  }
-};
-
-  const handleEnviarNotifiacion = async (voluntario) => {
+  const cargarEvento = async () => {
     try {
-      console.log(voluntario)
-      await EventService.enviarNotifiacionAdhesionEvento({idOrganization: event.idOrganizacion}, {idEvento: event.id}, {voluntario});
-      
+      console.log("Cargando evento con ID: ", id);
+      const data = await EventService.obtenerEvento(id);
+      setEvent(data);
+      console.log(data);
     } catch (error) {
-      console.error('Error al adherirse al evento :', error);
+      console.error('Error al cargar el evento: ', error);
+    }
+  };
+
+  const handleEnviarNotificacion = async (voluntario) => {
+    // 🔹 Mostrar cartel de confirmación
+    const confirmar = window.confirm(`¿Deseas adherirte al evento?`);
+    if (!confirmar) return;
+
+    try {
+      console.log(voluntario);
+      await EventService.enviarNotifiacionAdhesionEvento(
+        { idOrganization: event.idOrganizacion },
+        { idEvento: event.id },
+        { voluntario }
+      );
+
+      // 🔹 Desactivar botón correspondiente
+      setDisabledButtons(prev => ({
+        ...prev,
+        [voluntario.id]: true
+      }));
+
+    } catch (error) {
+      console.error('Error al adherirse al evento:', error);
     }
   };
 
@@ -74,9 +98,10 @@ const cargarEvento = async () => {
               <td>
                 <button
                   className="btn btn-primary btn-sm"
-                  onClick={() => handleEnviarNotifiacion(usuario)}
+                  onClick={() => handleEnviarNotificacion(usuario)}
+                  disabled={disabledButtons[usuario.id]} // 🔹 Desactiva botón si ya se usó
                 >
-                  Adherir
+                  {disabledButtons[usuario.id] ? 'Enviado' : 'Adherir'}
                 </button>
               </td>
             </tr>
