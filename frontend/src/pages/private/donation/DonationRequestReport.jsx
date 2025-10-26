@@ -273,6 +273,69 @@ export const RequestDonationReport = () => {
     }
   };
 
+  // funciona para actualizar filtro
+  const handleUpdateFiltro = async (filtroId) => {
+    try {
+      const id = Number(filtroId);
+      const newName = prompt("Ingrese el nombre del filtro:");
+      if (!newName) return;
+      const newFiltro = {
+       
+        valueFilter: [
+          { key: "categoria", value: selectedCategoria || 'None' },
+          { key: "fechaDesde", value: fechaDesde || null },
+          { key: "fechaHasta", value: fechaHasta || null },
+          { key: "eliminado", value: eliminadoFilter || 'None' },
+        ]
+      };
+
+      const revertFilter = (filtro) => {
+        return filtro.valueFilter
+          .map(({ key, value }) => {
+            // Si el valor es null, undefined o "", guardamos "None"
+            const safeValue = value === null || value === undefined || value === "" ? "None" : value;
+            return `${key}:${safeValue}`;
+          })
+          .join(";");
+      };
+
+      const valueFilter = revertFilter(newFiltro);
+
+      
+      const query = `mutation GuardarFiltro($filtro: FilterInput!) { guardarFiltro(filtro: $filtro) { status message data { id name valueFilter usuario filterType } } }`;
+      
+      const Query = {
+        query,
+        variables: {
+          filtro: {
+            id,
+            usuario: dataUser,
+            filterType: "donacion",
+            name:  newName,
+            valueFilter
+          }
+        }
+      };
+
+      //await FilterService.saveFilterGRAPHQL(Query);
+    
+      const response = await FilterService.saveFilterGRAPHQL(Query);
+      
+      alert("Filtro actualizado correctamente");
+      
+      //console.log("Filtros cargados:", response.data.guardarFiltro.data);
+      setFiltrosGuardados(prev =>
+        prev.map(f => f.id === id ? { ...f, ...newFiltro } : f)
+      );
+
+      if (selectedFiltroGuardado === filtroId) {
+        setSelectedFiltroGuardado("");
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Error al actualizar el filtro");
+    }
+  };
 
   if (loading) return <div>Cargando Informe...</div>;
   if (error) return <div>Error: {error}</div>;
@@ -287,13 +350,23 @@ export const RequestDonationReport = () => {
 
             {/* Botón para eliminar filtro */}
             {selectedFiltroGuardado && (
-              <button
-                type="button"
-                onClick={() => handleEliminarFiltro(selectedFiltroGuardado)}
-                className="filter-button delete"
-              >
-                Eliminar
-              </button>
+              <>
+                <button
+                  type="button"
+                  onClick={() => handleEliminarFiltro(selectedFiltroGuardado)}
+                  className="filter-button delete"
+                >
+                  Eliminar
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => handleUpdateFiltro(selectedFiltroGuardado)}
+                  className="filter-button update"
+                >
+                  Actualizar
+                </button>
+              </>
             )}
 
             {/* Botón para guardar el filtro actual */}
