@@ -2,20 +2,17 @@ package com.grupoK.consumer.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import com.grupoK.connector.database.entities.*;
+import com.grupoK.connector.database.serviceImp.*;
+import com.grupoK.consumer.modelDto.OfertaDto;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.grupoK.connector.database.entities.Solicitud;
-import com.grupoK.connector.database.entities.Categoria;
-import com.grupoK.connector.database.entities.Donacion;
-import com.grupoK.connector.database.entities.SolicitudDonacion;
-import com.grupoK.connector.database.serviceImp.OrganizacionService;
-import com.grupoK.connector.database.serviceImp.SolicitudService;
-import com.grupoK.connector.database.serviceImp.UsuarioService;
 import com.grupoK.consumer.modelDto.SolicitudDto;
 import com.grupoK.consumer.modelDto.DonacionDto;
 import com.grupoK.consumer.modelDto.SolicitudBajaDto;
@@ -27,7 +24,12 @@ public class ConsumerSolicitud {
 	private SolicitudService solicitudService;
 	@Autowired
 	private OrganizacionService organizacionService;
-	
+
+	@Autowired
+    private OfertaService ofertaService;
+    @Autowired
+    private DonacionService donacionService;
+
 	@Autowired
 	private UsuarioService usuarioService;
 	
@@ -91,5 +93,31 @@ public class ConsumerSolicitud {
 	        e.printStackTrace();
 	    }
 	}
+
+    @KafkaListener(topics = "_oferta-donaciones_", groupId = "grupo_ofertas")
+    public void consumeOffers(ConsumerRecord<String, String> record) {
+        System.out.println("Oferta de donaciones recibida desde " + record.topic());
+        System.out.println("Contenido: " + record.value());
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        try {
+            OfertaDto ofertaDto = objectMapper.readValue(record.value(), OfertaDto.class);
+
+            Oferta ofertaEnditad = new Oferta(ofertaDto.getIdOferta(),
+                    organizacionService.findById(ofertaDto.getIdOrganizacionDonante()), ofertaDto.getDonaciones().stream().map(d -> {
+                try {
+                    return donacionService.findById(d.getId());
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }).collect(Collectors.toList()),null);
+
+            ofertaService.save(ofertaEnditad);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 }
