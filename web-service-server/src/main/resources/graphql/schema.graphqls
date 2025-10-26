@@ -75,8 +75,41 @@ type InformeSolicitudResponse {
   data: [InformeSolicitud]
 }
 
+input FilterInput {
+	name: String!
+	valueFilter: String!
+	usuario: String!
+	filterType: String!
+}
+
+type Filter {
+	id: ID
+	name: String
+	valueFilter: String
+	usuario: String
+	filterType: String
+}
+
+type FiltroResponse {
+  status: String!
+  message: String
+  data: Filter
+}
+
+type FiltrosResponse {
+  status: String!
+  message: String
+  data: [Filter]
+}
 
 type Query {
 	informeSolicitudes(filtro: FiltroSolicitudInput): InformeSolicitudResponse
 	informeParticipacionEventos(usuarioId: ID!, fechaDesde: String, fechaHasta: String,tieneDonacion: String): [InformeEvento]
+	traerFiltros(tipo: String!, usuario: String!): FiltrosResponse
+}
+
+
+type Mutation {
+	guardarFiltro(filtro: FilterInput!): FiltroResponse
+	borrarFiltro(id: ID!): FiltroResponse
 }

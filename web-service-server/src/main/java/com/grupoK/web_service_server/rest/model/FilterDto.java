@@ -1,4 +1,4 @@
-package com.grupoK.web_service_server.graphql.model;
+package com.grupoK.web_service_server.rest.model;
 
 public class FilterDto {
 	
