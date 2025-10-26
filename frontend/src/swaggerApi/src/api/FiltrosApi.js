@@ -13,9 +13,13 @@
 
 
 import ApiClient from "../ApiClient";
+import BorrarQueryGraphql from '../model/BorrarQueryGraphql';
 import Error from '../model/Error';
 import FiltroDto from '../model/FiltroDto';
+import FiltrosGraphQLResponse from '../model/FiltrosGraphQLResponse';
 import ListaFiltrosDto from '../model/ListaFiltrosDto';
+import SubirQueryGraphql from '../model/SubirQueryGraphql';
+import TraerQueryGraphql from '../model/TraerQueryGraphql';
 
 /**
 * Filtros service.
@@ -35,6 +39,47 @@ export default class FiltrosApi {
         this.apiClient = apiClient || ApiClient.instance;
     }
 
+
+    /**
+     * Callback function to receive the result of the borrarFiltrosGraphQL operation.
+     * @callback module:api/FiltrosApi~borrarFiltrosGraphQLCallback
+     * @param {String} error Error message, if any.
+     * @param {module:model/FiltrosGraphQLResponse} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * borra filtros con graphql
+     * @param {module:model/BorrarQueryGraphql} payload 
+     * @param {module:api/FiltrosApi~borrarFiltrosGraphQLCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link module:model/FiltrosGraphQLResponse}
+     */
+    borrarFiltrosGraphQL(payload, callback) {
+      let postBody = payload;
+      // verify the required parameter 'payload' is set
+      if (payload === undefined || payload === null) {
+        throw new Error("Missing the required parameter 'payload' when calling borrarFiltrosGraphQL");
+      }
+
+      let pathParams = {
+      };
+      let queryParams = {
+      };
+      let headerParams = {
+      };
+      let formParams = {
+      };
+
+      let authNames = ['Bearer Auth'];
+      let contentTypes = ['application/json'];
+      let accepts = ['application/json'];
+      let returnType = FiltrosGraphQLResponse;
+      return this.apiClient.callApi(
+        '/filter/borrar/graphql/', 'POST',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, null, callback
+      );
+    }
 
     /**
      * Callback function to receive the result of the createFilter operation.
@@ -161,6 +206,88 @@ export default class FiltrosApi {
       let returnType = ListaFiltrosDto;
       return this.apiClient.callApi(
         '/filter/{type}/{idUsuario}', 'GET',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, null, callback
+      );
+    }
+
+    /**
+     * Callback function to receive the result of the subirQueryGraphqlDto operation.
+     * @callback module:api/FiltrosApi~subirQueryGraphqlDtoCallback
+     * @param {String} error Error message, if any.
+     * @param {module:model/FiltrosGraphQLResponse} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * guarda filtros con graphql
+     * @param {module:model/SubirQueryGraphql} payload 
+     * @param {module:api/FiltrosApi~subirQueryGraphqlDtoCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link module:model/FiltrosGraphQLResponse}
+     */
+    subirQueryGraphqlDto(payload, callback) {
+      let postBody = payload;
+      // verify the required parameter 'payload' is set
+      if (payload === undefined || payload === null) {
+        throw new Error("Missing the required parameter 'payload' when calling subirQueryGraphqlDto");
+      }
+
+      let pathParams = {
+      };
+      let queryParams = {
+      };
+      let headerParams = {
+      };
+      let formParams = {
+      };
+
+      let authNames = ['Bearer Auth'];
+      let contentTypes = ['application/json'];
+      let accepts = ['application/json'];
+      let returnType = FiltrosGraphQLResponse;
+      return this.apiClient.callApi(
+        '/filter/guardar/graphql/', 'POST',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, null, callback
+      );
+    }
+
+    /**
+     * Callback function to receive the result of the traerFiltrosGraphQL operation.
+     * @callback module:api/FiltrosApi~traerFiltrosGraphQLCallback
+     * @param {String} error Error message, if any.
+     * @param {module:model/FiltrosGraphQLResponse} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * trae filtros con graphql
+     * @param {module:model/TraerQueryGraphql} payload 
+     * @param {module:api/FiltrosApi~traerFiltrosGraphQLCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link module:model/FiltrosGraphQLResponse}
+     */
+    traerFiltrosGraphQL(payload, callback) {
+      let postBody = payload;
+      // verify the required parameter 'payload' is set
+      if (payload === undefined || payload === null) {
+        throw new Error("Missing the required parameter 'payload' when calling traerFiltrosGraphQL");
+      }
+
+      let pathParams = {
+      };
+      let queryParams = {
+      };
+      let headerParams = {
+      };
+      let formParams = {
+      };
+
+      let authNames = ['Bearer Auth'];
+      let contentTypes = ['application/json'];
+      let accepts = ['application/json'];
+      let returnType = FiltrosGraphQLResponse;
+      return this.apiClient.callApi(
+        '/filter/traer/graphql/', 'POST',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, null, callback
       );

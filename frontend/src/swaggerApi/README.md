@@ -145,11 +145,15 @@ Class | Method | HTTP request | Description
 *ApiDocumentada.EventosApi* | [**listEventos**](docs/EventosApi.md#listEventos) | **GET** /evento/ | Obtener todos los eventos
 *ApiDocumentada.EventosApi* | [**newRequesEventoKafka**](docs/EventosApi.md#newRequesEventoKafka) | **POST** /evento/request/new | Publicar evento en kafka
 *ApiDocumentada.EventosApi* | [**updateEventoById**](docs/EventosApi.md#updateEventoById) | **PUT** /evento/{id} | Actualizar un evento
+*ApiDocumentada.FiltrosApi* | [**borrarFiltrosGraphQL**](docs/FiltrosApi.md#borrarFiltrosGraphQL) | **POST** /filter/borrar/graphql/ | borra filtros con graphql
 *ApiDocumentada.FiltrosApi* | [**createFilter**](docs/FiltrosApi.md#createFilter) | **POST** /filter/new | Insertar un nuevo filtro
 *ApiDocumentada.FiltrosApi* | [**deleteFilter**](docs/FiltrosApi.md#deleteFilter) | **DELETE** /filter/delete/{id} | Eliminar filtro por id
 *ApiDocumentada.FiltrosApi* | [**getFilter**](docs/FiltrosApi.md#getFilter) | **GET** /filter/{type}/{idUsuario} | traer filtro por usuario y tipo
+*ApiDocumentada.FiltrosApi* | [**subirQueryGraphqlDto**](docs/FiltrosApi.md#subirQueryGraphqlDto) | **POST** /filter/guardar/graphql/ | guarda filtros con graphql
+*ApiDocumentada.FiltrosApi* | [**traerFiltrosGraphQL**](docs/FiltrosApi.md#traerFiltrosGraphQL) | **POST** /filter/traer/graphql/ | trae filtros con graphql
 *ApiDocumentada.SolicitudesApi* | [**deleteRequestDonacion**](docs/SolicitudesApi.md#deleteRequestDonacion) | **DELETE** /solicitud/delete | Enviar solicitud de donaciones a kafka
 *ApiDocumentada.SolicitudesApi* | [**getAllRequestDonacion**](docs/SolicitudesApi.md#getAllRequestDonacion) | **GET** /solicitud/ | Obtener todos las solicitudes donaciones
+*ApiDocumentada.SolicitudesApi* | [**informeSolicitudesDonaciones**](docs/SolicitudesApi.md#informeSolicitudesDonaciones) | **POST** /solicitud/informe/ | Consulta de informe de solicitudes con filtros
 *ApiDocumentada.SolicitudesApi* | [**newRequestDonacion**](docs/SolicitudesApi.md#newRequestDonacion) | **POST** /solicitud/request/new | Enviar solicitud de donaciones a kafka
 *ApiDocumentada.TransferenciasApi* | [**newTransfer**](docs/TransferenciasApi.md#newTransfer) | **POST** /transferencia/donacion/{id_solicitante}/new | Enviar transferencia de donaciones a organizacion
 *ApiDocumentada.UserApi* | [**createUser**](docs/UserApi.md#createUser) | **POST** /user/new | Dar de alta un nuevo usuario
@@ -164,6 +168,8 @@ Class | Method | HTTP request | Description
 ## Documentation for Models
 
  - [ApiDocumentada.AdhesionEventoKafka](docs/AdhesionEventoKafka.md)
+ - [ApiDocumentada.BorrarQueryGraphql](docs/BorrarQueryGraphql.md)
+ - [ApiDocumentada.BorrarVarGraphq](docs/BorrarVarGraphq.md)
  - [ApiDocumentada.Categoria](docs/Categoria.md)
  - [ApiDocumentada.Donacion](docs/Donacion.md)
  - [ApiDocumentada.DonacionList](docs/DonacionList.md)
@@ -188,21 +194,37 @@ Class | Method | HTTP request | Description
  - [ApiDocumentada.EventoUsuario](docs/EventoUsuario.md)
  - [ApiDocumentada.FiltroDto](docs/FiltroDto.md)
  - [ApiDocumentada.FiltroEvento](docs/FiltroEvento.md)
+ - [ApiDocumentada.FiltrosGraphQLResponse](docs/FiltrosGraphQLResponse.md)
  - [ApiDocumentada.InformeEventosDto](docs/InformeEventosDto.md)
  - [ApiDocumentada.InformeParticipacionEventos](docs/InformeParticipacionEventos.md)
+ - [ApiDocumentada.InformeSolicitud](docs/InformeSolicitud.md)
+ - [ApiDocumentada.InformeSolicitudList](docs/InformeSolicitudList.md)
  - [ApiDocumentada.ListaFiltrosDto](docs/ListaFiltrosDto.md)
  - [ApiDocumentada.ListaValue](docs/ListaValue.md)
  - [ApiDocumentada.Login](docs/Login.md)
+ - [ApiDocumentada.ResDataGraphql](docs/ResDataGraphql.md)
  - [ApiDocumentada.Rol](docs/Rol.md)
  - [ApiDocumentada.Solicitud](docs/Solicitud.md)
  - [ApiDocumentada.SolicitudBaja](docs/SolicitudBaja.md)
  - [ApiDocumentada.SolicitudCategoria](docs/SolicitudCategoria.md)
  - [ApiDocumentada.SolicitudDonacion](docs/SolicitudDonacion.md)
  - [ApiDocumentada.SolicitudError](docs/SolicitudError.md)
+ - [ApiDocumentada.SolicitudFiltronformeSolicitud](docs/SolicitudFiltronformeSolicitud.md)
  - [ApiDocumentada.SolicitudGet](docs/SolicitudGet.md)
  - [ApiDocumentada.SolicitudGetList](docs/SolicitudGetList.md)
+ - [ApiDocumentada.SolicitudGraphQLInformeEnvelope](docs/SolicitudGraphQLInformeEnvelope.md)
+ - [ApiDocumentada.SolicitudGraphQLResponse](docs/SolicitudGraphQLResponse.md)
  - [ApiDocumentada.SolicitudOrganizacionDto](docs/SolicitudOrganizacionDto.md)
+ - [ApiDocumentada.SolicitudQueryInformeSolicitud](docs/SolicitudQueryInformeSolicitud.md)
+ - [ApiDocumentada.SolicitudVariablesInformeSolicitud](docs/SolicitudVariablesInformeSolicitud.md)
+ - [ApiDocumentada.SubirFilGraphql](docs/SubirFilGraphql.md)
+ - [ApiDocumentada.SubirQueryGraphql](docs/SubirQueryGraphql.md)
+ - [ApiDocumentada.SubirVarGraphql](docs/SubirVarGraphql.md)
  - [ApiDocumentada.Token](docs/Token.md)
+ - [ApiDocumentada.TraerFiltrosGraphQLEnvelope](docs/TraerFiltrosGraphQLEnvelope.md)
+ - [ApiDocumentada.TraerFiltrosGraphqlDto](docs/TraerFiltrosGraphqlDto.md)
+ - [ApiDocumentada.TraerQueryGraphql](docs/TraerQueryGraphql.md)
+ - [ApiDocumentada.TraerVarGraphqlDto](docs/TraerVarGraphqlDto.md)
  - [ApiDocumentada.Transferencia](docs/Transferencia.md)
  - [ApiDocumentada.Usuario](docs/Usuario.md)
  - [ApiDocumentada.UsuarioList](docs/UsuarioList.md)
