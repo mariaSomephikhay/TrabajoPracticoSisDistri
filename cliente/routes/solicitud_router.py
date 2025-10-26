@@ -251,9 +251,9 @@ class Solicitud(Resource):
             
             # Obtenemos el JSON del frontend
             data = request.get_json()
-            
+            print(data)
             filtro_limpio = {k: v for k, v in data.items() if v is not None}
-            
+            filtro_limpio = {k: v for k, v in filtro_limpio.items() if v is not ''}
             # Enviamos la petición al endpoint Java
             headers = {"Content-Type": "application/json"}
             response = requests.post(APIREST_URL+"/solicitudes/informes" , headers=headers, json=filtro_limpio)
