@@ -151,6 +151,7 @@ Class | Method | HTTP request | Description
 *ApiDocumentada.FiltrosApi* | [**getFilter**](docs/FiltrosApi.md#getFilter) | **GET** /filter/{type}/{idUsuario} | traer filtro por usuario y tipo
 *ApiDocumentada.FiltrosApi* | [**subirQueryGraphqlDto**](docs/FiltrosApi.md#subirQueryGraphqlDto) | **POST** /filter/guardar/graphql/ | guarda filtros con graphql
 *ApiDocumentada.FiltrosApi* | [**traerFiltrosGraphQL**](docs/FiltrosApi.md#traerFiltrosGraphQL) | **POST** /filter/traer/graphql/ | trae filtros con graphql
+*ApiDocumentada.FiltrosApi* | [**updateFilter**](docs/FiltrosApi.md#updateFilter) | **PUT** /filter/update/{id} | actualizar filtro por id
 *ApiDocumentada.SolicitudesApi* | [**deleteRequestDonacion**](docs/SolicitudesApi.md#deleteRequestDonacion) | **DELETE** /solicitud/delete | Enviar solicitud de donaciones a kafka
 *ApiDocumentada.SolicitudesApi* | [**getAllRequestDonacion**](docs/SolicitudesApi.md#getAllRequestDonacion) | **GET** /solicitud/ | Obtener todos las solicitudes donaciones
 *ApiDocumentada.SolicitudesApi* | [**informeSolicitudesDonaciones**](docs/SolicitudesApi.md#informeSolicitudesDonaciones) | **POST** /solicitud/informe/ | Consulta de informe de solicitudes con filtros
