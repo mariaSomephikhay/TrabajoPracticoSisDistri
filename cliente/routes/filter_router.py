@@ -7,6 +7,7 @@ from config.security_config import SecurityConfig
 
 api = Namespace("filtros", description="Operaciones de filtros")
 APIREST_URL  = config('APIREST_URL', cast=str)
+GRAPHQL_URL  = config('GRAPHQL_URL', cast=str)
 
 #######################################################
 # Obetjos de la API REST
@@ -27,6 +28,73 @@ errorDto = api.model("Error", {
 })
 ListaFiltrosDto = api.model("ListaFiltrosDto", {
     "filtros": fields.List(fields.Nested(filtroDto), required=True)
+})
+
+#######################################################
+# Obetjos de la API GraphQL
+#######################################################
+
+traerVarGraphqlDto = api.model("traerVarGraphqlDto", {
+    "usuario": fields.String(required=True),
+    "tipo": fields.String(required=True)
+})
+
+traerQueryGraphqlDto = api.model("traerQueryGraphql", {
+    "query": fields.String(required=True,
+                            example="query TraerFiltros($tipo: String!,$usuario: String!) { traerFiltros(tipo: $tipo, usuario: $usuario) { status message data { id name valueFilter usuario filterType } } }",
+                            default="query TraerFiltros($tipo: String!,$usuario: String!) { traerFiltros(tipo: $tipo, usuario: $usuario) { status message data { id name valueFilter usuario filterType } } }"),
+    "variables": fields.Nested(traerVarGraphqlDto),
+})
+
+subirFilGraphqlDto = api.model("subirFilGraphql", {
+    "name": fields.String(required=True),
+    "valueFilter": fields.String(required=True),
+    "usuario": fields.String(required=True),
+    "filterType": fields.String(required=True)
+})
+
+subirVarGraphqlDto = api.model("subirVarGraphql", {
+    "filtro": fields.Nested(subirFilGraphqlDto)
+})
+
+
+subirQueryGraphqlDto = api.model("subirQueryGraphql", {
+    "query": fields.String(required=True,
+                            example="mutation GuardarFiltro($filtro: FilterInput!) { guardarFiltro(filtro: $filtro) { status message data { id name valueFilter usuario filterType } } }",
+                            default="mutation GuardarFiltro($filtro: FilterInput!) { guardarFiltro(filtro: $filtro) { status message data { id name valueFilter usuario filterType } } }"),
+    "variables": fields.Nested(subirVarGraphqlDto)
+})
+
+borrarVarGraphqlDto = api.model("borrarVarGraphq", {
+    "id": fields.Integer(required=True)
+})
+
+borrarQueryGraphqlDto = api.model("borrarQueryGraphql", {
+    "query": fields.String(required=True,
+                            example="mutation BorrarFiltro($id: ID!) { borrarFiltro(id: $id) { status message data { id name valueFilter usuario filterType } } }",
+                            default="mutation BorrarFiltro($id: ID!) { borrarFiltro(id: $id) { status message data { id name valueFilter usuario filterType } } }"),
+    "variables": fields.Nested(borrarVarGraphqlDto),
+})
+
+resDataGraphqlDto = api.model("resDataGraphql", {
+    "id": fields.Integer(required=True),
+    "name": fields.String(required=True),
+    "valueFilter": fields.String(required=True),
+    "usuario": fields.String(required=True),
+    "filterType": fields.String(required=True)
+})
+
+traerFiltrosGraphqlDto = api.model("traerFiltrosGraphqlDto", {
+    "status": fields.String(required=True),
+    "message": fields.String(required=True),
+    "data": fields.List(fields.Nested(resDataGraphqlDto))
+})
+
+traerFiltrosGraphQLEnvelopeDto = api.model("traerFiltrosGraphQLEnvelope", {
+    "traerFiltros": fields.Nested(traerFiltrosGraphqlDto)
+})
+FiltrosGraphQLResponseDto = api.model("FiltrosGraphQLResponse", {
+    "data": fields.Nested(traerFiltrosGraphQLEnvelopeDto)
 })
 #######################################################
 # Definición de endpoints para el swagger
@@ -146,3 +214,96 @@ class deleteFilter(Resource):
             else:
                 return {"error": error_msg}, 500
 
+# GRAPHQL - Endpoints
+@api.route("/guardar/graphql/")
+class adhesion(Resource):
+    @api.doc(security='Bearer Auth')
+    #@SecurityConfig.authRequired("PRESIDENTE", "COORDINADOR", "VOLUNTARIO", "VOCAL")
+    @api.doc(id="subirQueryGraphqlDto") # Esto define el operationId
+    @api.expect(subirQueryGraphqlDto) #Request
+    @api.response(200, "Success", model=FiltrosGraphQLResponseDto)
+    @api.response(401, "Unauthorized", model=errorDto)
+    @api.response(400, "Bad Request", model=errorDto)
+    @api.response(500, "Internal server error", model=errorDto)
+    def post(self):
+        """guarda filtros con graphql"""
+        try:
+            
+            if not request.is_json:
+                return {"error": "Bad Request"}, 400
+            
+            data = request.get_json()
+
+            # Endpoint del producer en Java
+            url = f"{GRAPHQL_URL}"
+            print(data)
+            headers = {"Content-Type": "application/json"}
+
+            response = requests.post(url, headers=headers, json=data)
+            print(response.json())
+            return response.json(), response.status_code
+
+        except Exception as e:
+            return {"error": str(e)}, 500        
+
+# GRAPHQL - Endpoints
+@api.route("/traer/graphql/")
+class adhesion(Resource):
+    @api.doc(security='Bearer Auth')
+    #@SecurityConfig.authRequired("PRESIDENTE", "COORDINADOR", "VOLUNTARIO", "VOCAL")
+    @api.doc(id="traerFiltrosGraphQL") # Esto define el operationId
+    @api.expect(traerQueryGraphqlDto) #Request
+    @api.response(200, "Success", model=FiltrosGraphQLResponseDto)
+    @api.response(401, "Unauthorized", model=errorDto)
+    @api.response(400, "Bad Request", model=errorDto)
+    @api.response(500, "Internal server error", model=errorDto)
+    def post(self):
+        """trae filtros con graphql"""
+        try:
+            if not request.is_json:
+                return {"error": "Bad Request"}, 400
+            
+            data = request.get_json()
+
+            # Endpoint del producer en Java
+            url = f"{GRAPHQL_URL}"
+            headers = {"Content-Type": "application/json"}
+
+            response = requests.post(url, headers=headers, json=data)
+            print(response.json())
+            return response.json(), response.status_code
+
+        except Exception as e:
+            return {"error": str(e)}, 500   
+
+# GRAPHQL - Endpoints
+@api.route("/borrar/graphql/")
+class adhesion(Resource):
+    @api.doc(security='Bearer Auth')
+    #@SecurityConfig.authRequired("PRESIDENTE", "COORDINADOR", "VOLUNTARIO", "VOCAL")
+    @api.doc(id="borrarFiltrosGraphQL") # Esto define el operationId
+    @api.expect(borrarQueryGraphqlDto) #Request
+    @api.response(200, "Success", model=FiltrosGraphQLResponseDto)
+    @api.response(401, "Unauthorized", model=errorDto)
+    @api.response(400, "Bad Request", model=errorDto)
+    @api.response(500, "Internal server error", model=errorDto)
+    def post(self):
+        """borra filtros con graphql"""
+        try:
+            if not request.is_json:
+                return {"error": "Bad Request"}, 400
+            
+            data = request.get_json()
+            print(data)
+                
+            # Endpoint del producer en Java
+            url = f"{GRAPHQL_URL}"
+            print(data)
+            headers = {"Content-Type": "application/json"}
+
+            response = requests.post(url, headers=headers, json=data)
+            print(response.json())
+            return response.json(), response.status_code
+
+        except Exception as e:
+            return {"error": str(e)}, 500                   
