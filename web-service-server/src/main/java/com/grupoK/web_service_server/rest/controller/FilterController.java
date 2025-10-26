@@ -1,4 +1,4 @@
-package com.grupoK.web_service_server.graphql.controller;
+package com.grupoK.web_service_server.rest.controller;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.grupoK.connector.database.serviceImp.FilterService;
-import com.grupoK.web_service_server.graphql.model.FilterDto;
+import com.grupoK.web_service_server.rest.model.FilterDto;
 
 @RestController
 @RequestMapping("/filter")

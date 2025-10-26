@@ -52,6 +52,7 @@ public class SolicitudGraphqlController {
 	public GraphQLResponse<List<InformeSolicitudDto>> informeSolicitudes(@Argument FiltroSolicitudInput filtro) {
 		LocalDateTime fechaDesdeDate = filtro.getFechaHasta() != null ? LocalDate.parse(filtro.getFechaHasta()).atStartOfDay()  : null;
 		LocalDateTime fechaHastaDate = filtro.getFechaHasta() != null ? LocalDate.parse(filtro.getFechaHasta()).atStartOfDay() : null;
+		System.out.println(fechaHastaDate);
 	    Boolean eliminado;
 	    if (filtro.getEliminado()==null || filtro.getEliminado().equals("")) {
 	    	eliminado = null;
@@ -101,8 +102,8 @@ public class SolicitudGraphqlController {
 			}
 			
 		}
-		System.out.println(solicitudes);
-		System.out.println(informes);
+		//System.out.println(solicitudes);
+		//System.out.println(informes);
 		//return informes;
 		return new GraphQLResponse<>("success","Informe obtenido", informes);
 	}
