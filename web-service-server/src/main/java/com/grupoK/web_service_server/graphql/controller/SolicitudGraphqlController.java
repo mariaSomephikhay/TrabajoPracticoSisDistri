@@ -50,7 +50,7 @@ public class SolicitudGraphqlController {
 	
 	@QueryMapping
 	public GraphQLResponse<List<InformeSolicitudDto>> informeSolicitudes(@Argument FiltroSolicitudInput filtro) {
-		LocalDateTime fechaDesdeDate = filtro.getFechaHasta() != null ? LocalDate.parse(filtro.getFechaHasta()).atStartOfDay()  : null;
+		LocalDateTime fechaDesdeDate = filtro.getFechaDesde() != null ? LocalDate.parse(filtro.getFechaDesde()).atStartOfDay()  : null;
 		LocalDateTime fechaHastaDate = filtro.getFechaHasta() != null ? LocalDate.parse(filtro.getFechaHasta()).atStartOfDay() : null;
 		System.out.println(fechaHastaDate);
 	    Boolean eliminado;
