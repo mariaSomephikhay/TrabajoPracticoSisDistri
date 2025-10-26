@@ -13,11 +13,29 @@ import java.util.List;
 public class OfertaDto {
 
     @JsonProperty("id_oferta")
-    private Long idOferta;
+    private Integer idOferta;
 
     @JsonProperty("id_organizacion_donante")
-    private Long idOrganizacionDonante;
+    private Integer idOrganizacionDonante;
 
-    private List<DonacionDto> donaciones;
+    private List<DonacionOfertaDto> donaciones;
+
+    @Getter
+    @Setter
+    @ToString
+    public static class DonacionOfertaDto {
+
+        @JsonProperty("id")
+        private Integer id;
+
+        @JsonProperty("categoria")
+        private CategoriaDto categoria;
+
+        @JsonProperty("descripcion")
+        private String descripcion;
+
+        @JsonProperty("cantidad")
+        private Integer cantidad;
+    }
 
 }
