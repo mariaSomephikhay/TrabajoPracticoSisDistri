@@ -214,6 +214,53 @@ class deleteFilter(Resource):
             else:
                 return {"error": error_msg}, 500
 
+@api.route("/update/<int:id>")
+class updateFilter(Resource):
+    @api.doc(security='Bearer Auth') # Esto hace que Swagger agregue el header para el token
+    @SecurityConfig.authRequired("PRESIDENTE", "COORDINADOR", "VOLUNTARIO", "VOCAL")
+    @api.doc(id="updateFilter") # Esto define el operationId
+    @api.expect(filtroDto)
+    @api.response(200, "Success", model=filtroDto)
+    @api.response(403, "Access forbidden", model=errorDto)
+    @api.response(404, "Resource not found", model=errorDto)
+    @api.response(500, "Internal server error", model=errorDto)
+    def put(self, id):
+        """actualizar filtro por id"""
+        try:
+
+            if not request.is_json:
+                return {"error": "Request body must be JSON"}, 400
+
+            payload = request.get_json()  
+            
+            # Convertir valueFilter a string
+            value_filter_str = ";".join(f"{item['key']}:{item['value']}" for item in payload["valueFilter"])
+
+            # Crear nueva estructura
+            new_request = {
+                "name": payload["name"],
+                "valueFilter": value_filter_str,
+                "usuario": payload["usuario"],
+                "filterType": payload["filterType"]
+            }
+
+            url = APIREST_URL + "filter/update/" + str(id)
+            headers = {"Content-Type": "application/json"}
+
+            response = requests.put(url, json=new_request, headers=headers)
+
+            if response.status_code == 200:
+                return {"message": "Filtro actualizado correctamente"}, 200
+            else:
+                return {"error": response.text}, response.status_code
+        except Exception as e:
+            error_msg = getattr(e, "details", lambda: str(e))()
+            # Error de gRPC que devuelve el servicio
+            if "NOT_FOUND" in str(e):
+                return {"error": error_msg}, 404
+            else:
+                return {"error": error_msg}, 500
+
 # GRAPHQL - Endpoints
 @api.route("/guardar/graphql/")
 class adhesion(Resource):
