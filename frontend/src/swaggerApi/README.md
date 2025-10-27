@@ -153,11 +153,13 @@ Class | Method | HTTP request | Description
 *ApiDocumentada.FiltrosApi* | [**traerFiltrosGraphQL**](docs/FiltrosApi.md#traerFiltrosGraphQL) | **POST** /filter/traer/graphql/ | trae filtros con graphql
 *ApiDocumentada.FiltrosApi* | [**updateFilter**](docs/FiltrosApi.md#updateFilter) | **PUT** /filter/update/{id} | actualizar filtro por id
 *ApiDocumentada.SolicitudesApi* | [**deleteRequestDonacion**](docs/SolicitudesApi.md#deleteRequestDonacion) | **DELETE** /solicitud/delete | Enviar solicitud de donaciones a kafka
+*ApiDocumentada.SolicitudesApi* | [**getAllOffersByOrganization**](docs/SolicitudesApi.md#getAllOffersByOrganization) | **GET** /solicitud/offer/{id} | Obtener todos las ofertas de la organizacion donante
 *ApiDocumentada.SolicitudesApi* | [**getAllRequestDonacion**](docs/SolicitudesApi.md#getAllRequestDonacion) | **GET** /solicitud/ | Obtener todos las solicitudes donaciones
 *ApiDocumentada.SolicitudesApi* | [**informeSolicitudesDetalle**](docs/SolicitudesApi.md#informeSolicitudesDetalle) | **POST** /solicitud/informe/excel | Solcitudes de donaciones en Excel
 *ApiDocumentada.SolicitudesApi* | [**informeSolicitudesDonaciones**](docs/SolicitudesApi.md#informeSolicitudesDonaciones) | **POST** /solicitud/informe/ | Consulta de informe de solicitudes con filtros
+*ApiDocumentada.SolicitudesApi* | [**newOffer**](docs/SolicitudesApi.md#newOffer) | **POST** /solicitud/offer/new | Ofrecer donaciones de una organizacion a kafka
 *ApiDocumentada.SolicitudesApi* | [**newRequestDonacion**](docs/SolicitudesApi.md#newRequestDonacion) | **POST** /solicitud/request/new | Enviar solicitud de donaciones a kafka
-*ApiDocumentada.TransferenciasApi* | [**newTransfer**](docs/TransferenciasApi.md#newTransfer) | **POST** /transferencia/donacion/{id_solicitante}/new | Enviar transferencia de donaciones a organizacion
+*ApiDocumentada.SolicitudesApi* | [**newTransfer**](docs/SolicitudesApi.md#newTransfer) | **POST** /solicitud/transfer/{id} | Enviar transferencia de donaciones a organizacion solicitante con kafka
 *ApiDocumentada.UserApi* | [**createUser**](docs/UserApi.md#createUser) | **POST** /user/new | Dar de alta un nuevo usuario
 *ApiDocumentada.UserApi* | [**deleteUserById**](docs/UserApi.md#deleteUserById) | **DELETE** /user/{id} | Eliminar usuario
 *ApiDocumentada.UserApi* | [**getUserById**](docs/UserApi.md#getUserById) | **GET** /user/{id} | Obtener usuario
@@ -175,7 +177,6 @@ Class | Method | HTTP request | Description
  - [ApiDocumentada.Categoria](docs/Categoria.md)
  - [ApiDocumentada.Donacion](docs/Donacion.md)
  - [ApiDocumentada.DonacionList](docs/DonacionList.md)
- - [ApiDocumentada.DonacionTransferencia](docs/DonacionTransferencia.md)
  - [ApiDocumentada.Error](docs/Error.md)
  - [ApiDocumentada.Evento](docs/Evento.md)
  - [ApiDocumentada.EventoBajaKafka](docs/EventoBajaKafka.md)
@@ -206,6 +207,9 @@ Class | Method | HTTP request | Description
  - [ApiDocumentada.ListaFiltrosDto](docs/ListaFiltrosDto.md)
  - [ApiDocumentada.ListaValue](docs/ListaValue.md)
  - [ApiDocumentada.Login](docs/Login.md)
+ - [ApiDocumentada.Oferta](docs/Oferta.md)
+ - [ApiDocumentada.OfertaGet](docs/OfertaGet.md)
+ - [ApiDocumentada.OfertaGetList](docs/OfertaGetList.md)
  - [ApiDocumentada.ResDataGraphql](docs/ResDataGraphql.md)
  - [ApiDocumentada.Rol](docs/Rol.md)
  - [ApiDocumentada.Solicitud](docs/Solicitud.md)
@@ -220,6 +224,7 @@ Class | Method | HTTP request | Description
  - [ApiDocumentada.SolicitudGraphQLResponse](docs/SolicitudGraphQLResponse.md)
  - [ApiDocumentada.SolicitudOrganizacionDto](docs/SolicitudOrganizacionDto.md)
  - [ApiDocumentada.SolicitudQueryInformeSolicitud](docs/SolicitudQueryInformeSolicitud.md)
+ - [ApiDocumentada.SolicitudTransferDonation](docs/SolicitudTransferDonation.md)
  - [ApiDocumentada.SolicitudVariablesInformeSolicitud](docs/SolicitudVariablesInformeSolicitud.md)
  - [ApiDocumentada.SubirFilGraphql](docs/SubirFilGraphql.md)
  - [ApiDocumentada.SubirQueryGraphql](docs/SubirQueryGraphql.md)
@@ -229,7 +234,6 @@ Class | Method | HTTP request | Description
  - [ApiDocumentada.TraerFiltrosGraphqlDto](docs/TraerFiltrosGraphqlDto.md)
  - [ApiDocumentada.TraerQueryGraphql](docs/TraerQueryGraphql.md)
  - [ApiDocumentada.TraerVarGraphqlDto](docs/TraerVarGraphqlDto.md)
- - [ApiDocumentada.Transferencia](docs/Transferencia.md)
  - [ApiDocumentada.Usuario](docs/Usuario.md)
  - [ApiDocumentada.UsuarioList](docs/UsuarioList.md)
  - [ApiDocumentada.VoluntarioDto](docs/VoluntarioDto.md)

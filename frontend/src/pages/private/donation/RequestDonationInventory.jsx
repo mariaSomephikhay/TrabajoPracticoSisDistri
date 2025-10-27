@@ -86,7 +86,9 @@ const handleDeleteDonationOnClick = (solicitud) => {
       <Table
         columns={[
           { key: "id", header: "Identificador de solicitud" },
-          { key: "organizacionSolicitante", header: "Organización", render: (_, row) => row.organizacionSolicitante?.nombre ?? "-"},
+          { key: "organizacionSolicitante", header: "Organización", render: (_, row) => row.organizacionSolicitante?.nombre ?? "-",
+            onCellClick: (row) => navigate(`/donation/offers/${row.organizacionSolicitante?.id}`)
+          },
           {
             key: "donaciones",
             header: "Donaciones Asociadas",
@@ -105,7 +107,7 @@ const handleDeleteDonationOnClick = (solicitud) => {
         data={solicitud}
         actions={[
           { label: "Eliminar", icon: deleteIcon, onClick: (d) => handleDeleteDonationOnClick(d), 
-              hidden: (d) => !d.activa || d.organizacionSolicitante.id !== 1  //La donacion eliminada no tiene sentido que se le renderice el boton de eliminar
+            hidden: (d) => !d.activa || d.organizacionSolicitante.id !== 1 //La donacion eliminada no tiene sentido que se le renderice el boton de eliminar
           },
         ]}
         emptyMessage="No hay donaciones disponibles"

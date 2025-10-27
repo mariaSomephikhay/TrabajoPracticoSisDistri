@@ -26,6 +26,8 @@ import { RequestDonationInventory } from '../pages/private/donation/RequestDonat
 import { ExternalEventManager } from '../pages/private/event/ExternalEventManager.jsx';
 import { EventFilter } from '../pages/private/event/EventFilter.jsx';
 import { RequestDonationReport } from '../pages/private/donation/DonationRequestReport.jsx';
+import { DonationOffers } from '../pages/private/donation/DonationOffers.jsx';
+
 export const OperatorRoutes = () => {
     const { notification, clearNotification } = useNotification()
 
@@ -56,7 +58,8 @@ export const OperatorRoutes = () => {
                 <Route path="/donation/request/new" element={<PrivateRoute allowedRoles={["PRESIDENTE", "VOCAL"]}><RequestDonationNewForm /></PrivateRoute>} />
                 <Route path="/donation-request" element={<PrivateRoute allowedRoles={["PRESIDENTE", "VOCAL"]}><RequestDonationInventory /></PrivateRoute>} />
                 <Route path="/donation-request-report" element={<PrivateRoute allowedRoles={["PRESIDENTE", "VOCAL"]}><RequestDonationReport /></PrivateRoute>} />
-                
+                <Route path="/donation/offers/:id" element={<PrivateRoute allowedRoles={["PRESIDENTE", "VOCAL"]}><DonationOffers /></PrivateRoute>} />
+
                 {/* RUTAS DEL EVENTO */}
                 <Route path="/events" element={<PrivateRoute allowedRoles={["PRESIDENTE","COORDINADOR","VOLUNTARIO"]}> <EventList /></PrivateRoute>} />
                 <Route path="/events/edit/:id" element={<PrivateRoute allowedRoles={["PRESIDENTE","COORDINADOR","VOLUNTARIO"]}><EventUpdateForm /></PrivateRoute>} /> 

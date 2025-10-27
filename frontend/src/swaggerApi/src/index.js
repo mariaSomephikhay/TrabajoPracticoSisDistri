@@ -19,7 +19,6 @@ import BorrarVarGraphq from './model/BorrarVarGraphq';
 import Categoria from './model/Categoria';
 import Donacion from './model/Donacion';
 import DonacionList from './model/DonacionList';
-import DonacionTransferencia from './model/DonacionTransferencia';
 import Error from './model/Error';
 import Evento from './model/Evento';
 import EventoBajaKafka from './model/EventoBajaKafka';
@@ -50,6 +49,9 @@ import InformeSolicitudList from './model/InformeSolicitudList';
 import ListaFiltrosDto from './model/ListaFiltrosDto';
 import ListaValue from './model/ListaValue';
 import Login from './model/Login';
+import Oferta from './model/Oferta';
+import OfertaGet from './model/OfertaGet';
+import OfertaGetList from './model/OfertaGetList';
 import ResDataGraphql from './model/ResDataGraphql';
 import Rol from './model/Rol';
 import Solicitud from './model/Solicitud';
@@ -64,6 +66,7 @@ import SolicitudGraphQLInformeEnvelope from './model/SolicitudGraphQLInformeEnve
 import SolicitudGraphQLResponse from './model/SolicitudGraphQLResponse';
 import SolicitudOrganizacionDto from './model/SolicitudOrganizacionDto';
 import SolicitudQueryInformeSolicitud from './model/SolicitudQueryInformeSolicitud';
+import SolicitudTransferDonation from './model/SolicitudTransferDonation';
 import SolicitudVariablesInformeSolicitud from './model/SolicitudVariablesInformeSolicitud';
 import SubirFilGraphql from './model/SubirFilGraphql';
 import SubirQueryGraphql from './model/SubirQueryGraphql';
@@ -73,7 +76,6 @@ import TraerFiltrosGraphQLEnvelope from './model/TraerFiltrosGraphQLEnvelope';
 import TraerFiltrosGraphqlDto from './model/TraerFiltrosGraphqlDto';
 import TraerQueryGraphql from './model/TraerQueryGraphql';
 import TraerVarGraphqlDto from './model/TraerVarGraphqlDto';
-import Transferencia from './model/Transferencia';
 import Usuario from './model/Usuario';
 import UsuarioList from './model/UsuarioList';
 import VoluntarioDto from './model/VoluntarioDto';
@@ -82,7 +84,6 @@ import DonacionesApi from './api/DonacionesApi';
 import EventosApi from './api/EventosApi';
 import FiltrosApi from './api/FiltrosApi';
 import SolicitudesApi from './api/SolicitudesApi';
-import TransferenciasApi from './api/TransferenciasApi';
 import UserApi from './api/UserApi';
 
 
@@ -159,12 +160,6 @@ export {
      * @property {module:model/DonacionList}
      */
     DonacionList,
-
-    /**
-     * The DonacionTransferencia model constructor.
-     * @property {module:model/DonacionTransferencia}
-     */
-    DonacionTransferencia,
 
     /**
      * The Error model constructor.
@@ -347,6 +342,24 @@ export {
     Login,
 
     /**
+     * The Oferta model constructor.
+     * @property {module:model/Oferta}
+     */
+    Oferta,
+
+    /**
+     * The OfertaGet model constructor.
+     * @property {module:model/OfertaGet}
+     */
+    OfertaGet,
+
+    /**
+     * The OfertaGetList model constructor.
+     * @property {module:model/OfertaGetList}
+     */
+    OfertaGetList,
+
+    /**
      * The ResDataGraphql model constructor.
      * @property {module:model/ResDataGraphql}
      */
@@ -431,6 +444,12 @@ export {
     SolicitudQueryInformeSolicitud,
 
     /**
+     * The SolicitudTransferDonation model constructor.
+     * @property {module:model/SolicitudTransferDonation}
+     */
+    SolicitudTransferDonation,
+
+    /**
      * The SolicitudVariablesInformeSolicitud model constructor.
      * @property {module:model/SolicitudVariablesInformeSolicitud}
      */
@@ -485,12 +504,6 @@ export {
     TraerVarGraphqlDto,
 
     /**
-     * The Transferencia model constructor.
-     * @property {module:model/Transferencia}
-     */
-    Transferencia,
-
-    /**
      * The Usuario model constructor.
      * @property {module:model/Usuario}
      */
@@ -537,12 +550,6 @@ export {
     * @property {module:api/SolicitudesApi}
     */
     SolicitudesApi,
-
-    /**
-    * The TransferenciasApi service constructor.
-    * @property {module:api/TransferenciasApi}
-    */
-    TransferenciasApi,
 
     /**
     * The UserApi service constructor.

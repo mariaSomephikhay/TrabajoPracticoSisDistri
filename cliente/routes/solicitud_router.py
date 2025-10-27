@@ -72,7 +72,7 @@ OfertaDto = api.model("Oferta", {
     "donaciones": fields.List(fields.Nested(donacionDto))
 })
 OfertaGetDto = api.model("OfertaGet", {
-    "id_orferta": fields.String(required=True),
+    "id": fields.String(required=True),
     "organizacionDonante": fields.Nested(OrganizacionDto),
     "donaciones": fields.List(fields.Nested(donacionDto))
 })

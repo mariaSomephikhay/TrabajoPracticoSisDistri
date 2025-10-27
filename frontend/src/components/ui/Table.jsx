@@ -42,11 +42,20 @@ export const Table = ({
                 })}
               </td>
             )}
-            {columns.map((col) => (
-              <td key={col.key}>
-                {col.render ? col.render(row[col.key], row) : row[col.key]}
-              </td>
-            ))}
+            {columns.map((col) => {
+              const content = col.render ? col.render(row[col.key], row) : row[col.key];
+              const clickable = !!col.onCellClick;
+
+              return (
+                <td
+                  key={col.key}
+                  style={clickable ? { cursor: "pointer", color: "#0d6efd", textDecoration: "underline" } : {}}
+                  onClick={clickable ? () => col.onCellClick(row) : undefined}
+                >
+                  {content}
+                </td>
+              );
+            })}
           </tr>
         ))}
       </tbody>
