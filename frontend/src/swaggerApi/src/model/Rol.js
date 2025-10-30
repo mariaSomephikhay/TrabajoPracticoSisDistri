@@ -22,12 +22,12 @@ class Rol {
     /**
      * Constructs a new <code>Rol</code>.
      * @alias module:model/Rol
-     * @param id {Number} 
      * @param descripcion {String} 
+     * @param id {Number} 
      */
-    constructor(id, descripcion) { 
+    constructor(descripcion, id) { 
         
-        Rol.initialize(this, id, descripcion);
+        Rol.initialize(this, descripcion, id);
     }
 
     /**
@@ -35,9 +35,9 @@ class Rol {
      * This method is used by the constructors of any subclasses, in order to implement multiple inheritance (mix-ins).
      * Only for internal use.
      */
-    static initialize(obj, id, descripcion) { 
-        obj['id'] = id;
+    static initialize(obj, descripcion, id) { 
         obj['descripcion'] = descripcion;
+        obj['id'] = id;
     }
 
     /**
@@ -51,11 +51,11 @@ class Rol {
         if (data) {
             obj = obj || new Rol();
 
-            if (data.hasOwnProperty('id')) {
-                obj['id'] = ApiClient.convertToType(data['id'], 'Number');
-            }
             if (data.hasOwnProperty('descripcion')) {
                 obj['descripcion'] = ApiClient.convertToType(data['descripcion'], 'String');
+            }
+            if (data.hasOwnProperty('id')) {
+                obj['id'] = ApiClient.convertToType(data['id'], 'Number');
             }
         }
         return obj;
@@ -84,17 +84,17 @@ class Rol {
 
 }
 
-Rol.RequiredProperties = ["id", "descripcion"];
-
-/**
- * @member {Number} id
- */
-Rol.prototype['id'] = undefined;
+Rol.RequiredProperties = ["descripcion", "id"];
 
 /**
  * @member {String} descripcion
  */
 Rol.prototype['descripcion'] = undefined;
+
+/**
+ * @member {Number} id
+ */
+Rol.prototype['id'] = undefined;
 
 
 

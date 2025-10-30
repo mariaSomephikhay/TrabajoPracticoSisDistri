@@ -66,7 +66,7 @@ export const UserTable = () => {
   return (
     <div className="container mt-4">
       
-      {/* 🔹 Notificación local debajo del título */}
+      {/* Notificación local debajo del título */}
       {notification && (
         <div className={`alert alert-${notification.type} alert-dismissible fade show`} role="alert">
           {notification.message}
@@ -74,7 +74,7 @@ export const UserTable = () => {
         </div>
       )}
 
-      {/* 🔹 Título + Botón */}
+      {/* Título + Botón */}
       <div className="d-flex justify-content-between align-items-center mb-3">
         <button 
           className="btn btn-white btn-sm me-1"

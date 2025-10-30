@@ -4,11 +4,11 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**apellido** | **String** |  | 
+**email** | **String** |  | 
 **idOrganizacion** | **Number** |  | 
 **idVoluntario** | **String** |  | 
 **nombre** | **String** |  | 
-**apellido** | **String** |  | 
 **telefono** | **String** |  | [optional] 
-**email** | **String** |  | 
 
 

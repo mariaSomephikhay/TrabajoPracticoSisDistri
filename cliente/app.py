@@ -7,6 +7,8 @@ from routes.donacion_router import api as donacionNS
 from routes.evento_router import api as eventoNS
 from routes.solicitud_router import api as solicitudNS
 from routes.filter_router import api as filterNS
+from routes.soap_router import api as soapNS
+
 
 # Crear la app con una configuración
 def create_app(config_name='development'):
@@ -38,6 +40,7 @@ def create_app(config_name='development'):
     api.add_namespace(eventoNS, path="/evento")
     api.add_namespace(solicitudNS, path="/solicitud")
     api.add_namespace(filterNS, path="/filter")
+    api.add_namespace(soapNS, path="/soap")
 
     # Ruta para obtener el swagger en formato .json
     @app.route("/docs/json")

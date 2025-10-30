@@ -50,6 +50,11 @@ public class OfertaService implements IOfertaService {
         return newOffer;
     }
 
+    @Override
+    public Oferta getLast() {
+        return ofertaRepository.findTopByOrderByIdDesc();
+    }
+
     private boolean hasValidationsErrorsByDonations(List<Donacion> donaciones){
         if(donaciones == null)
             return true;

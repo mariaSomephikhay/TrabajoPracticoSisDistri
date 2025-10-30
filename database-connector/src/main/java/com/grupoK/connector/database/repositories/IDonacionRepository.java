@@ -34,4 +34,13 @@ public interface IDonacionRepository extends JpaRepository<Donacion, Integer>{
     """)
     List<Donacion> findAllByOrganizacion(@Param("idOrganizacion") Integer idOrganizacion);
 
+    @Query("""
+        SELECT DISTINCT d 
+        FROM Donacion d
+        JOIN d.usuarioAlta u
+        JOIN u.organizacion org
+        WHERE org.id = :idOrganizacion AND d.oferta IS NULL
+    """)
+    List<Donacion> findAllWithoutOfferByOrganizacion(@Param("idOrganizacion") Integer idOrganizacion);
+
 }

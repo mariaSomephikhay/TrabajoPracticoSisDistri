@@ -449,7 +449,6 @@ public class ManagerServiceImpl extends ManagerServiceGrpc.ManagerServiceImplBas
 					    .build();
 				
 			
-			System.out.println(response);	
 	        responseObserver.onNext(response);
 	        responseObserver.onCompleted();
 	        
@@ -460,7 +459,22 @@ public class ManagerServiceImpl extends ManagerServiceGrpc.ManagerServiceImplBas
 			}
 		}
 
-        @Override
+    @Override
+    public void getLastOffer(Empty request, StreamObserver<com.grupoK.grpc.proto.Oferta> responseObserver) {
+        try {
+            Oferta lastOffer = ofertaService.getLast();
+
+            responseObserver.onNext(ofertaWrapper.toGrpOferta(lastOffer));
+            responseObserver.onCompleted();
+
+        }catch (Exception e) {
+            responseObserver.onError(io.grpc.Status.INTERNAL
+                    .withDescription("Internal server error: " + e.getMessage())
+                    .asRuntimeException());
+        }
+    }
+
+    @Override
         public void getAllOffersByOrganization(OrganizacionId request, StreamObserver<ListOferta> responseObserver) {
             try {
                 List<Oferta> offers = ofertaService.findAllByOrganizationId(request.getId());
@@ -480,5 +494,24 @@ public class ManagerServiceImpl extends ManagerServiceGrpc.ManagerServiceImplBas
             }
         }
 
+        @Override
+        public void getAllDonacionesWithoutOffersByOrganization(OrganizacionId request, StreamObserver<DonacionList> responseObserver) {
+            try {
+                List<Donacion> donations = donacionService.getAllDonationsWithoutOfferByOrganization(request.getId());
+
+                DonacionList response = DonacionList.newBuilder()
+                        .addAllDonaciones(donations.stream()
+                                .map(donacionWrapper::toGrpcDonacion).toList())
+                        .build();
+
+                responseObserver.onNext(response);
+                responseObserver.onCompleted();
+
+            }catch (Exception e) {
+                responseObserver.onError(io.grpc.Status.INTERNAL
+                        .withDescription("Internal server error: " + e.getMessage())
+                        .asRuntimeException());
+            }
+        }
 
 }

@@ -4,11 +4,11 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**apellido** | **String** |  | 
+**email** | **String** |  | 
 **idVoluntario** | **String** |  | 
 **nombre** | **String** |  | 
-**apellido** | **String** |  | 
-**telefono** | **String** |  | [optional] 
-**email** | **String** |  | 
 **organizacion** | [**EventoOrganizacionDto**](EventoOrganizacionDto.md) |  | 
+**telefono** | **String** |  | [optional] 
 
 

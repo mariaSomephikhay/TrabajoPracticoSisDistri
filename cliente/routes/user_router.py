@@ -141,7 +141,7 @@ class UserList(Resource):
         except Exception as e:
             return {"error": str(e)}, 500
            
-@api.route("/<int:id>")
+@api.route("/<string:id>")
 class User(Resource):
     @api.doc(security='Bearer Auth') # Esto hace que Swagger agregue el header para el token
     @SecurityConfig.authRequired("PRESIDENTE")

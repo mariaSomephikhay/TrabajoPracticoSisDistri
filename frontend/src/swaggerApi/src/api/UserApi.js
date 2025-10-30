@@ -89,7 +89,7 @@ export default class UserApi {
 
     /**
      * Eliminar usuario
-     * @param {Number} id 
+     * @param {String} id 
      * @param {module:api/UserApi~deleteUserByIdCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/Usuario}
      */
@@ -131,7 +131,7 @@ export default class UserApi {
 
     /**
      * Obtener usuario
-     * @param {Number} id 
+     * @param {String} id 
      * @param {module:api/UserApi~getUserByIdCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/Usuario}
      */
@@ -292,7 +292,7 @@ export default class UserApi {
 
     /**
      * Actualizar un usuario
-     * @param {Number} id 
+     * @param {String} id 
      * @param {module:model/Usuario} payload 
      * @param {module:api/UserApi~updateUserByIdCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/Usuario}

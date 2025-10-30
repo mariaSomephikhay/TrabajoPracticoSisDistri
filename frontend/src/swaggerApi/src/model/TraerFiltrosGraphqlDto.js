@@ -23,12 +23,12 @@ class TraerFiltrosGraphqlDto {
     /**
      * Constructs a new <code>TraerFiltrosGraphqlDto</code>.
      * @alias module:model/TraerFiltrosGraphqlDto
-     * @param status {String} 
      * @param message {String} 
+     * @param status {String} 
      */
-    constructor(status, message) { 
+    constructor(message, status) { 
         
-        TraerFiltrosGraphqlDto.initialize(this, status, message);
+        TraerFiltrosGraphqlDto.initialize(this, message, status);
     }
 
     /**
@@ -36,9 +36,9 @@ class TraerFiltrosGraphqlDto {
      * This method is used by the constructors of any subclasses, in order to implement multiple inheritance (mix-ins).
      * Only for internal use.
      */
-    static initialize(obj, status, message) { 
-        obj['status'] = status;
+    static initialize(obj, message, status) { 
         obj['message'] = message;
+        obj['status'] = status;
     }
 
     /**
@@ -52,14 +52,14 @@ class TraerFiltrosGraphqlDto {
         if (data) {
             obj = obj || new TraerFiltrosGraphqlDto();
 
-            if (data.hasOwnProperty('status')) {
-                obj['status'] = ApiClient.convertToType(data['status'], 'String');
+            if (data.hasOwnProperty('data')) {
+                obj['data'] = ApiClient.convertToType(data['data'], [ResDataGraphql]);
             }
             if (data.hasOwnProperty('message')) {
                 obj['message'] = ApiClient.convertToType(data['message'], 'String');
             }
-            if (data.hasOwnProperty('data')) {
-                obj['data'] = ApiClient.convertToType(data['data'], [ResDataGraphql]);
+            if (data.hasOwnProperty('status')) {
+                obj['status'] = ApiClient.convertToType(data['status'], 'String');
             }
         }
         return obj;
@@ -77,14 +77,6 @@ class TraerFiltrosGraphqlDto {
                 throw new Error("The required field `" + property + "` is not found in the JSON data: " + JSON.stringify(data));
             }
         }
-        // ensure the json data is a string
-        if (data['status'] && !(typeof data['status'] === 'string' || data['status'] instanceof String)) {
-            throw new Error("Expected the field `status` to be a primitive type in the JSON string but got " + data['status']);
-        }
-        // ensure the json data is a string
-        if (data['message'] && !(typeof data['message'] === 'string' || data['message'] instanceof String)) {
-            throw new Error("Expected the field `message` to be a primitive type in the JSON string but got " + data['message']);
-        }
         if (data['data']) { // data not null
             // ensure the json data is an array
             if (!Array.isArray(data['data'])) {
@@ -95,6 +87,14 @@ class TraerFiltrosGraphqlDto {
                 ResDataGraphql.validateJSON(item);
             };
         }
+        // ensure the json data is a string
+        if (data['message'] && !(typeof data['message'] === 'string' || data['message'] instanceof String)) {
+            throw new Error("Expected the field `message` to be a primitive type in the JSON string but got " + data['message']);
+        }
+        // ensure the json data is a string
+        if (data['status'] && !(typeof data['status'] === 'string' || data['status'] instanceof String)) {
+            throw new Error("Expected the field `status` to be a primitive type in the JSON string but got " + data['status']);
+        }
 
         return true;
     }
@@ -102,12 +102,12 @@ class TraerFiltrosGraphqlDto {
 
 }
 
-TraerFiltrosGraphqlDto.RequiredProperties = ["status", "message"];
+TraerFiltrosGraphqlDto.RequiredProperties = ["message", "status"];
 
 /**
- * @member {String} status
+ * @member {Array.<module:model/ResDataGraphql>} data
  */
-TraerFiltrosGraphqlDto.prototype['status'] = undefined;
+TraerFiltrosGraphqlDto.prototype['data'] = undefined;
 
 /**
  * @member {String} message
@@ -115,9 +115,9 @@ TraerFiltrosGraphqlDto.prototype['status'] = undefined;
 TraerFiltrosGraphqlDto.prototype['message'] = undefined;
 
 /**
- * @member {Array.<module:model/ResDataGraphql>} data
+ * @member {String} status
  */
-TraerFiltrosGraphqlDto.prototype['data'] = undefined;
+TraerFiltrosGraphqlDto.prototype['status'] = undefined;
 
 
 

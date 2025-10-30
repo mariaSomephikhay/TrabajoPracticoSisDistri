@@ -25,6 +25,7 @@ public class SolicitudWrapper {
         		.setId(solicitud.getId())
         		.setOrganizacionSolicitante(organizacionWrapper.toGrpcRol(solicitud.getOrganizacionSolicitante()))
         		.setActiva(solicitud.getActiva())
+                .setProcesada(solicitud.getProcesada())
         		.addAllDonaciones(donaciones.stream()
                         .map(donacionWrapper::toGrpcDonacion)
                         .toList()

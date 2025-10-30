@@ -50,14 +50,14 @@ class SolicitudVariablesInformeSolicitud {
             if (data.hasOwnProperty('categoria')) {
                 obj['categoria'] = ApiClient.convertToType(data['categoria'], 'String');
             }
+            if (data.hasOwnProperty('eliminado')) {
+                obj['eliminado'] = ApiClient.convertToType(data['eliminado'], 'String');
+            }
             if (data.hasOwnProperty('fechaDesde')) {
                 obj['fechaDesde'] = ApiClient.convertToType(data['fechaDesde'], 'String');
             }
             if (data.hasOwnProperty('fechaHasta')) {
                 obj['fechaHasta'] = ApiClient.convertToType(data['fechaHasta'], 'String');
-            }
-            if (data.hasOwnProperty('eliminado')) {
-                obj['eliminado'] = ApiClient.convertToType(data['eliminado'], 'String');
             }
         }
         return obj;
@@ -74,16 +74,16 @@ class SolicitudVariablesInformeSolicitud {
             throw new Error("Expected the field `categoria` to be a primitive type in the JSON string but got " + data['categoria']);
         }
         // ensure the json data is a string
+        if (data['eliminado'] && !(typeof data['eliminado'] === 'string' || data['eliminado'] instanceof String)) {
+            throw new Error("Expected the field `eliminado` to be a primitive type in the JSON string but got " + data['eliminado']);
+        }
+        // ensure the json data is a string
         if (data['fechaDesde'] && !(typeof data['fechaDesde'] === 'string' || data['fechaDesde'] instanceof String)) {
             throw new Error("Expected the field `fechaDesde` to be a primitive type in the JSON string but got " + data['fechaDesde']);
         }
         // ensure the json data is a string
         if (data['fechaHasta'] && !(typeof data['fechaHasta'] === 'string' || data['fechaHasta'] instanceof String)) {
             throw new Error("Expected the field `fechaHasta` to be a primitive type in the JSON string but got " + data['fechaHasta']);
-        }
-        // ensure the json data is a string
-        if (data['eliminado'] && !(typeof data['eliminado'] === 'string' || data['eliminado'] instanceof String)) {
-            throw new Error("Expected the field `eliminado` to be a primitive type in the JSON string but got " + data['eliminado']);
         }
 
         return true;
@@ -100,6 +100,11 @@ class SolicitudVariablesInformeSolicitud {
 SolicitudVariablesInformeSolicitud.prototype['categoria'] = undefined;
 
 /**
+ * @member {String} eliminado
+ */
+SolicitudVariablesInformeSolicitud.prototype['eliminado'] = undefined;
+
+/**
  * @member {String} fechaDesde
  */
 SolicitudVariablesInformeSolicitud.prototype['fechaDesde'] = undefined;
@@ -108,11 +113,6 @@ SolicitudVariablesInformeSolicitud.prototype['fechaDesde'] = undefined;
  * @member {String} fechaHasta
  */
 SolicitudVariablesInformeSolicitud.prototype['fechaHasta'] = undefined;
-
-/**
- * @member {String} eliminado
- */
-SolicitudVariablesInformeSolicitud.prototype['eliminado'] = undefined;
 
 
 

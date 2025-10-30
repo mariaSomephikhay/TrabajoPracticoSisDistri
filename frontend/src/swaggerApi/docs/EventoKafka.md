@@ -4,10 +4,10 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**idOrganizacion** | **String** |  | 
-**idEvento** | **String** |  | 
-**nombre** | **String** |  | 
 **descripcion** | **String** |  | 
 **fecha** | **Date** |  | 
+**idEvento** | **String** |  | 
+**idOrganizacion** | **String** |  | 
+**nombre** | **String** |  | 
 
 

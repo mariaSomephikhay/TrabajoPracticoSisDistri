@@ -22,15 +22,15 @@ class VoluntarioDto {
     /**
      * Constructs a new <code>VoluntarioDto</code>.
      * @alias module:model/VoluntarioDto
+     * @param apellido {String} 
+     * @param email {String} 
      * @param idOrganizacion {Number} 
      * @param idVoluntario {String} 
      * @param nombre {String} 
-     * @param apellido {String} 
-     * @param email {String} 
      */
-    constructor(idOrganizacion, idVoluntario, nombre, apellido, email) { 
+    constructor(apellido, email, idOrganizacion, idVoluntario, nombre) { 
         
-        VoluntarioDto.initialize(this, idOrganizacion, idVoluntario, nombre, apellido, email);
+        VoluntarioDto.initialize(this, apellido, email, idOrganizacion, idVoluntario, nombre);
     }
 
     /**
@@ -38,12 +38,12 @@ class VoluntarioDto {
      * This method is used by the constructors of any subclasses, in order to implement multiple inheritance (mix-ins).
      * Only for internal use.
      */
-    static initialize(obj, idOrganizacion, idVoluntario, nombre, apellido, email) { 
+    static initialize(obj, apellido, email, idOrganizacion, idVoluntario, nombre) { 
+        obj['apellido'] = apellido;
+        obj['email'] = email;
         obj['idOrganizacion'] = idOrganizacion;
         obj['idVoluntario'] = idVoluntario;
         obj['nombre'] = nombre;
-        obj['apellido'] = apellido;
-        obj['email'] = email;
     }
 
     /**
@@ -57,6 +57,12 @@ class VoluntarioDto {
         if (data) {
             obj = obj || new VoluntarioDto();
 
+            if (data.hasOwnProperty('apellido')) {
+                obj['apellido'] = ApiClient.convertToType(data['apellido'], 'String');
+            }
+            if (data.hasOwnProperty('email')) {
+                obj['email'] = ApiClient.convertToType(data['email'], 'String');
+            }
             if (data.hasOwnProperty('idOrganizacion')) {
                 obj['idOrganizacion'] = ApiClient.convertToType(data['idOrganizacion'], 'Number');
             }
@@ -66,14 +72,8 @@ class VoluntarioDto {
             if (data.hasOwnProperty('nombre')) {
                 obj['nombre'] = ApiClient.convertToType(data['nombre'], 'String');
             }
-            if (data.hasOwnProperty('apellido')) {
-                obj['apellido'] = ApiClient.convertToType(data['apellido'], 'String');
-            }
             if (data.hasOwnProperty('telefono')) {
                 obj['telefono'] = ApiClient.convertToType(data['telefono'], 'String');
-            }
-            if (data.hasOwnProperty('email')) {
-                obj['email'] = ApiClient.convertToType(data['email'], 'String');
             }
         }
         return obj;
@@ -92,6 +92,14 @@ class VoluntarioDto {
             }
         }
         // ensure the json data is a string
+        if (data['apellido'] && !(typeof data['apellido'] === 'string' || data['apellido'] instanceof String)) {
+            throw new Error("Expected the field `apellido` to be a primitive type in the JSON string but got " + data['apellido']);
+        }
+        // ensure the json data is a string
+        if (data['email'] && !(typeof data['email'] === 'string' || data['email'] instanceof String)) {
+            throw new Error("Expected the field `email` to be a primitive type in the JSON string but got " + data['email']);
+        }
+        // ensure the json data is a string
         if (data['idVoluntario'] && !(typeof data['idVoluntario'] === 'string' || data['idVoluntario'] instanceof String)) {
             throw new Error("Expected the field `idVoluntario` to be a primitive type in the JSON string but got " + data['idVoluntario']);
         }
@@ -100,16 +108,8 @@ class VoluntarioDto {
             throw new Error("Expected the field `nombre` to be a primitive type in the JSON string but got " + data['nombre']);
         }
         // ensure the json data is a string
-        if (data['apellido'] && !(typeof data['apellido'] === 'string' || data['apellido'] instanceof String)) {
-            throw new Error("Expected the field `apellido` to be a primitive type in the JSON string but got " + data['apellido']);
-        }
-        // ensure the json data is a string
         if (data['telefono'] && !(typeof data['telefono'] === 'string' || data['telefono'] instanceof String)) {
             throw new Error("Expected the field `telefono` to be a primitive type in the JSON string but got " + data['telefono']);
-        }
-        // ensure the json data is a string
-        if (data['email'] && !(typeof data['email'] === 'string' || data['email'] instanceof String)) {
-            throw new Error("Expected the field `email` to be a primitive type in the JSON string but got " + data['email']);
         }
 
         return true;
@@ -118,7 +118,17 @@ class VoluntarioDto {
 
 }
 
-VoluntarioDto.RequiredProperties = ["idOrganizacion", "idVoluntario", "nombre", "apellido", "email"];
+VoluntarioDto.RequiredProperties = ["apellido", "email", "idOrganizacion", "idVoluntario", "nombre"];
+
+/**
+ * @member {String} apellido
+ */
+VoluntarioDto.prototype['apellido'] = undefined;
+
+/**
+ * @member {String} email
+ */
+VoluntarioDto.prototype['email'] = undefined;
 
 /**
  * @member {Number} idOrganizacion
@@ -136,19 +146,9 @@ VoluntarioDto.prototype['idVoluntario'] = undefined;
 VoluntarioDto.prototype['nombre'] = undefined;
 
 /**
- * @member {String} apellido
- */
-VoluntarioDto.prototype['apellido'] = undefined;
-
-/**
  * @member {String} telefono
  */
 VoluntarioDto.prototype['telefono'] = undefined;
-
-/**
- * @member {String} email
- */
-VoluntarioDto.prototype['email'] = undefined;
 
 
 

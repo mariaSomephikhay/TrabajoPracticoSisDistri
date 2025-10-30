@@ -69,8 +69,6 @@ public class ConsumerSolicitud {
             ObjectMapper objectMapper = new ObjectMapper();
             SolicitudTransferDto transferenciaDto = objectMapper.readValue(record.value(), SolicitudTransferDto.class); //Proceso el mensaje
 
-
-
             Solicitud request = solicitudService.findById(transferenciaDto.getId());
             List<Donacion> donacionesSolicitadas = transferenciaDto.getDonaciones().stream().map(d -> new Donacion(
                     null,  new Categoria(d.getCategoria().getId(), d.getCategoria().getDescripcion()), d.getDescripcion(), d.getCantidad(), false, null,

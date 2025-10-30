@@ -23,12 +23,12 @@ class Solicitud {
     /**
      * Constructs a new <code>Solicitud</code>.
      * @alias module:model/Solicitud
-     * @param idSolicitudDonacion {String} 
      * @param idOrganizacionSolicitante {Number} 
+     * @param idSolicitudDonacion {String} 
      */
-    constructor(idSolicitudDonacion, idOrganizacionSolicitante) { 
+    constructor(idOrganizacionSolicitante, idSolicitudDonacion) { 
         
-        Solicitud.initialize(this, idSolicitudDonacion, idOrganizacionSolicitante);
+        Solicitud.initialize(this, idOrganizacionSolicitante, idSolicitudDonacion);
     }
 
     /**
@@ -36,9 +36,9 @@ class Solicitud {
      * This method is used by the constructors of any subclasses, in order to implement multiple inheritance (mix-ins).
      * Only for internal use.
      */
-    static initialize(obj, idSolicitudDonacion, idOrganizacionSolicitante) { 
-        obj['id_solicitud_donacion'] = idSolicitudDonacion;
+    static initialize(obj, idOrganizacionSolicitante, idSolicitudDonacion) { 
         obj['id_organizacion_solicitante'] = idOrganizacionSolicitante;
+        obj['id_solicitud_donacion'] = idSolicitudDonacion;
     }
 
     /**
@@ -52,14 +52,14 @@ class Solicitud {
         if (data) {
             obj = obj || new Solicitud();
 
-            if (data.hasOwnProperty('id_solicitud_donacion')) {
-                obj['id_solicitud_donacion'] = ApiClient.convertToType(data['id_solicitud_donacion'], 'String');
+            if (data.hasOwnProperty('donaciones')) {
+                obj['donaciones'] = ApiClient.convertToType(data['donaciones'], [SolicitudDonacion]);
             }
             if (data.hasOwnProperty('id_organizacion_solicitante')) {
                 obj['id_organizacion_solicitante'] = ApiClient.convertToType(data['id_organizacion_solicitante'], 'Number');
             }
-            if (data.hasOwnProperty('donaciones')) {
-                obj['donaciones'] = ApiClient.convertToType(data['donaciones'], [SolicitudDonacion]);
+            if (data.hasOwnProperty('id_solicitud_donacion')) {
+                obj['id_solicitud_donacion'] = ApiClient.convertToType(data['id_solicitud_donacion'], 'String');
             }
         }
         return obj;
@@ -77,10 +77,6 @@ class Solicitud {
                 throw new Error("The required field `" + property + "` is not found in the JSON data: " + JSON.stringify(data));
             }
         }
-        // ensure the json data is a string
-        if (data['id_solicitud_donacion'] && !(typeof data['id_solicitud_donacion'] === 'string' || data['id_solicitud_donacion'] instanceof String)) {
-            throw new Error("Expected the field `id_solicitud_donacion` to be a primitive type in the JSON string but got " + data['id_solicitud_donacion']);
-        }
         if (data['donaciones']) { // data not null
             // ensure the json data is an array
             if (!Array.isArray(data['donaciones'])) {
@@ -91,6 +87,10 @@ class Solicitud {
                 SolicitudDonacion.validateJSON(item);
             };
         }
+        // ensure the json data is a string
+        if (data['id_solicitud_donacion'] && !(typeof data['id_solicitud_donacion'] === 'string' || data['id_solicitud_donacion'] instanceof String)) {
+            throw new Error("Expected the field `id_solicitud_donacion` to be a primitive type in the JSON string but got " + data['id_solicitud_donacion']);
+        }
 
         return true;
     }
@@ -98,12 +98,12 @@ class Solicitud {
 
 }
 
-Solicitud.RequiredProperties = ["id_solicitud_donacion", "id_organizacion_solicitante"];
+Solicitud.RequiredProperties = ["id_organizacion_solicitante", "id_solicitud_donacion"];
 
 /**
- * @member {String} id_solicitud_donacion
+ * @member {Array.<module:model/SolicitudDonacion>} donaciones
  */
-Solicitud.prototype['id_solicitud_donacion'] = undefined;
+Solicitud.prototype['donaciones'] = undefined;
 
 /**
  * @member {Number} id_organizacion_solicitante
@@ -111,9 +111,9 @@ Solicitud.prototype['id_solicitud_donacion'] = undefined;
 Solicitud.prototype['id_organizacion_solicitante'] = undefined;
 
 /**
- * @member {Array.<module:model/SolicitudDonacion>} donaciones
+ * @member {String} id_solicitud_donacion
  */
-Solicitud.prototype['donaciones'] = undefined;
+Solicitud.prototype['id_solicitud_donacion'] = undefined;
 
 
 

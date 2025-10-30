@@ -22,14 +22,14 @@ class SubirFilGraphql {
     /**
      * Constructs a new <code>SubirFilGraphql</code>.
      * @alias module:model/SubirFilGraphql
-     * @param name {String} 
-     * @param valueFilter {String} 
-     * @param usuario {String} 
      * @param filterType {String} 
+     * @param name {String} 
+     * @param usuario {String} 
+     * @param valueFilter {String} 
      */
-    constructor(name, valueFilter, usuario, filterType) { 
+    constructor(filterType, name, usuario, valueFilter) { 
         
-        SubirFilGraphql.initialize(this, name, valueFilter, usuario, filterType);
+        SubirFilGraphql.initialize(this, filterType, name, usuario, valueFilter);
     }
 
     /**
@@ -37,11 +37,11 @@ class SubirFilGraphql {
      * This method is used by the constructors of any subclasses, in order to implement multiple inheritance (mix-ins).
      * Only for internal use.
      */
-    static initialize(obj, name, valueFilter, usuario, filterType) { 
-        obj['name'] = name;
-        obj['valueFilter'] = valueFilter;
-        obj['usuario'] = usuario;
+    static initialize(obj, filterType, name, usuario, valueFilter) { 
         obj['filterType'] = filterType;
+        obj['name'] = name;
+        obj['usuario'] = usuario;
+        obj['valueFilter'] = valueFilter;
     }
 
     /**
@@ -55,17 +55,17 @@ class SubirFilGraphql {
         if (data) {
             obj = obj || new SubirFilGraphql();
 
+            if (data.hasOwnProperty('filterType')) {
+                obj['filterType'] = ApiClient.convertToType(data['filterType'], 'String');
+            }
             if (data.hasOwnProperty('name')) {
                 obj['name'] = ApiClient.convertToType(data['name'], 'String');
-            }
-            if (data.hasOwnProperty('valueFilter')) {
-                obj['valueFilter'] = ApiClient.convertToType(data['valueFilter'], 'String');
             }
             if (data.hasOwnProperty('usuario')) {
                 obj['usuario'] = ApiClient.convertToType(data['usuario'], 'String');
             }
-            if (data.hasOwnProperty('filterType')) {
-                obj['filterType'] = ApiClient.convertToType(data['filterType'], 'String');
+            if (data.hasOwnProperty('valueFilter')) {
+                obj['valueFilter'] = ApiClient.convertToType(data['valueFilter'], 'String');
             }
         }
         return obj;
@@ -84,20 +84,20 @@ class SubirFilGraphql {
             }
         }
         // ensure the json data is a string
-        if (data['name'] && !(typeof data['name'] === 'string' || data['name'] instanceof String)) {
-            throw new Error("Expected the field `name` to be a primitive type in the JSON string but got " + data['name']);
+        if (data['filterType'] && !(typeof data['filterType'] === 'string' || data['filterType'] instanceof String)) {
+            throw new Error("Expected the field `filterType` to be a primitive type in the JSON string but got " + data['filterType']);
         }
         // ensure the json data is a string
-        if (data['valueFilter'] && !(typeof data['valueFilter'] === 'string' || data['valueFilter'] instanceof String)) {
-            throw new Error("Expected the field `valueFilter` to be a primitive type in the JSON string but got " + data['valueFilter']);
+        if (data['name'] && !(typeof data['name'] === 'string' || data['name'] instanceof String)) {
+            throw new Error("Expected the field `name` to be a primitive type in the JSON string but got " + data['name']);
         }
         // ensure the json data is a string
         if (data['usuario'] && !(typeof data['usuario'] === 'string' || data['usuario'] instanceof String)) {
             throw new Error("Expected the field `usuario` to be a primitive type in the JSON string but got " + data['usuario']);
         }
         // ensure the json data is a string
-        if (data['filterType'] && !(typeof data['filterType'] === 'string' || data['filterType'] instanceof String)) {
-            throw new Error("Expected the field `filterType` to be a primitive type in the JSON string but got " + data['filterType']);
+        if (data['valueFilter'] && !(typeof data['valueFilter'] === 'string' || data['valueFilter'] instanceof String)) {
+            throw new Error("Expected the field `valueFilter` to be a primitive type in the JSON string but got " + data['valueFilter']);
         }
 
         return true;
@@ -106,7 +106,12 @@ class SubirFilGraphql {
 
 }
 
-SubirFilGraphql.RequiredProperties = ["name", "valueFilter", "usuario", "filterType"];
+SubirFilGraphql.RequiredProperties = ["filterType", "name", "usuario", "valueFilter"];
+
+/**
+ * @member {String} filterType
+ */
+SubirFilGraphql.prototype['filterType'] = undefined;
 
 /**
  * @member {String} name
@@ -114,19 +119,14 @@ SubirFilGraphql.RequiredProperties = ["name", "valueFilter", "usuario", "filterT
 SubirFilGraphql.prototype['name'] = undefined;
 
 /**
- * @member {String} valueFilter
- */
-SubirFilGraphql.prototype['valueFilter'] = undefined;
-
-/**
  * @member {String} usuario
  */
 SubirFilGraphql.prototype['usuario'] = undefined;
 
 /**
- * @member {String} filterType
+ * @member {String} valueFilter
  */
-SubirFilGraphql.prototype['filterType'] = undefined;
+SubirFilGraphql.prototype['valueFilter'] = undefined;
 
 
 

@@ -8,6 +8,7 @@ Method | HTTP request | Description
 [**deleteDonationById**](DonacionesApi.md#deleteDonationById) | **DELETE** /donacion/delete/{id} | Eliminar donacion
 [**getDonationById**](DonacionesApi.md#getDonationById) | **GET** /donacion/{id} | Obtener Donacion
 [**listDonations**](DonacionesApi.md#listDonations) | **GET** /donacion/ | Obtener todos las donaciones
+[**listDonationsWithoutOfferByOrganization**](DonacionesApi.md#listDonationsWithoutOfferByOrganization) | **GET** /donacion/without/offers/{id} | Obtener todos las donaciones sin ofertas de una organizacion
 [**updateDonationById**](DonacionesApi.md#updateDonationById) | **PUT** /donacion/{id} | Actualizar un donacion
 
 
@@ -189,6 +190,55 @@ apiInstance.listDonations((error, data, response) => {
 ### Parameters
 
 This endpoint does not need any parameter.
+
+### Return type
+
+[**DonacionList**](DonacionList.md)
+
+### Authorization
+
+[Bearer Auth](../README.md#Bearer Auth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## listDonationsWithoutOfferByOrganization
+
+> DonacionList listDonationsWithoutOfferByOrganization(id)
+
+Obtener todos las donaciones sin ofertas de una organizacion
+
+### Example
+
+```javascript
+import ApiDocumentada from 'api_documentada';
+let defaultClient = ApiDocumentada.ApiClient.instance;
+// Configure API key authorization: Bearer Auth
+let Bearer Auth = defaultClient.authentications['Bearer Auth'];
+Bearer Auth.apiKey = 'YOUR API KEY';
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//Bearer Auth.apiKeyPrefix = 'Token';
+
+let apiInstance = new ApiDocumentada.DonacionesApi();
+let id = 56; // Number | 
+apiInstance.listDonationsWithoutOfferByOrganization(id, (error, data, response) => {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+});
+```
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **Number**|  | 
 
 ### Return type
 

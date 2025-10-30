@@ -30,7 +30,42 @@ const RequestDonationService = {
     }
   },
 
-  
+  procesarSolicitudExterna: async (id, transferRequest) => {
+    try {
+      return await solicitudApi.newTransfer(id, transferRequest)
+    } catch (err) {
+      console.error("Error al procesar la solicitud externa", err)
+      throw err
+    }
+  },
+
+  crearOferta: async (nuevaOferta) => {
+    try {
+      return await solicitudApi.newOffer(nuevaOferta)
+    } catch (err) {
+      console.error("Error al crear nueva ofertas", err)
+      throw err
+    }
+  },
+
+  obtenerUltimaOferta: async () => {
+    try {
+      return await solicitudApi.getLastOfferCreated()
+    } catch (err) {
+      console.error("Error al obtener la ultima oferta creada", err)
+      throw err
+    }
+  },
+
+  obtenerListadoDeOfertas: async (idOrganization) => {
+    try {
+      return await solicitudApi.getAllOffersByOrganization(idOrganization)
+    } catch (err) {
+      console.error("Error al obtener ofertas de la organizacion:" + idOrganization, err)
+      throw err
+    }
+  },
+
   obtenerInformeDonaciones: async (Query) => {
     try {
       return await solicitudApi.informeSolicitudesDonaciones(Query)
@@ -60,7 +95,7 @@ const RequestDonationService = {
       console.error("Error al obtener informe:", err);
       throw err;
     }
-  }
+  },
 
 }
  

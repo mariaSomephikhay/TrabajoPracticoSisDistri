@@ -22,12 +22,12 @@ class TraerVarGraphqlDto {
     /**
      * Constructs a new <code>TraerVarGraphqlDto</code>.
      * @alias module:model/TraerVarGraphqlDto
-     * @param usuario {String} 
      * @param tipo {String} 
+     * @param usuario {String} 
      */
-    constructor(usuario, tipo) { 
+    constructor(tipo, usuario) { 
         
-        TraerVarGraphqlDto.initialize(this, usuario, tipo);
+        TraerVarGraphqlDto.initialize(this, tipo, usuario);
     }
 
     /**
@@ -35,9 +35,9 @@ class TraerVarGraphqlDto {
      * This method is used by the constructors of any subclasses, in order to implement multiple inheritance (mix-ins).
      * Only for internal use.
      */
-    static initialize(obj, usuario, tipo) { 
-        obj['usuario'] = usuario;
+    static initialize(obj, tipo, usuario) { 
         obj['tipo'] = tipo;
+        obj['usuario'] = usuario;
     }
 
     /**
@@ -51,11 +51,11 @@ class TraerVarGraphqlDto {
         if (data) {
             obj = obj || new TraerVarGraphqlDto();
 
-            if (data.hasOwnProperty('usuario')) {
-                obj['usuario'] = ApiClient.convertToType(data['usuario'], 'String');
-            }
             if (data.hasOwnProperty('tipo')) {
                 obj['tipo'] = ApiClient.convertToType(data['tipo'], 'String');
+            }
+            if (data.hasOwnProperty('usuario')) {
+                obj['usuario'] = ApiClient.convertToType(data['usuario'], 'String');
             }
         }
         return obj;
@@ -74,12 +74,12 @@ class TraerVarGraphqlDto {
             }
         }
         // ensure the json data is a string
-        if (data['usuario'] && !(typeof data['usuario'] === 'string' || data['usuario'] instanceof String)) {
-            throw new Error("Expected the field `usuario` to be a primitive type in the JSON string but got " + data['usuario']);
-        }
-        // ensure the json data is a string
         if (data['tipo'] && !(typeof data['tipo'] === 'string' || data['tipo'] instanceof String)) {
             throw new Error("Expected the field `tipo` to be a primitive type in the JSON string but got " + data['tipo']);
+        }
+        // ensure the json data is a string
+        if (data['usuario'] && !(typeof data['usuario'] === 'string' || data['usuario'] instanceof String)) {
+            throw new Error("Expected the field `usuario` to be a primitive type in the JSON string but got " + data['usuario']);
         }
 
         return true;
@@ -88,17 +88,17 @@ class TraerVarGraphqlDto {
 
 }
 
-TraerVarGraphqlDto.RequiredProperties = ["usuario", "tipo"];
-
-/**
- * @member {String} usuario
- */
-TraerVarGraphqlDto.prototype['usuario'] = undefined;
+TraerVarGraphqlDto.RequiredProperties = ["tipo", "usuario"];
 
 /**
  * @member {String} tipo
  */
 TraerVarGraphqlDto.prototype['tipo'] = undefined;
+
+/**
+ * @member {String} usuario
+ */
+TraerVarGraphqlDto.prototype['usuario'] = undefined;
 
 
 

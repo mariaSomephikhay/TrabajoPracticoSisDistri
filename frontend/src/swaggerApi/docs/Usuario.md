@@ -4,14 +4,14 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **String** |  | [optional] 
-**username** | **String** |  | 
-**password** | **String** |  | [optional] 
-**email** | **String** |  | 
-**nombre** | **String** |  | 
-**apellido** | **String** |  | 
-**telefono** | **String** |  | [optional] 
 **activo** | **Boolean** |  | 
+**apellido** | **String** |  | 
+**email** | **String** |  | 
+**id** | **String** |  | [optional] 
+**nombre** | **String** |  | 
+**password** | **String** |  | [optional] 
 **rol** | [**Rol**](Rol.md) |  | 
+**telefono** | **String** |  | [optional] 
+**username** | **String** |  | 
 
 

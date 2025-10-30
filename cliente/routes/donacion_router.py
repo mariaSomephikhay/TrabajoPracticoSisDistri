@@ -158,3 +158,23 @@ class DonacionList(Resource):
                 return  {"error": str(e.details())}, 401
             else:
                 return {"error": str(e)}, 500
+            
+@api.route("/without/offers/<int:id>")
+class DonacionList(Resource):
+    @api.doc(security='Bearer Auth') # Esto hace que Swagger agregue el header para el token
+    @SecurityConfig.authRequired("PRESIDENTE", "VOCAL")
+    @api.doc(id="listDonationsWithoutOfferByOrganization") # Esto define el operationId
+    @api.response(200, "Success", model=donacionListDto)
+    @api.response(401, "Unauthorized", model=errorDto)
+    @api.response(500, "Internal server error", model=errorDto)
+    def get(self, id):
+        """Obtener todos las donaciones sin ofertas de una organizacion"""
+        try:
+            payload = {"id": id}  # solo necesitas el id
+            result = cliente.gettAllDonationsWithoutOfferByIdOrganization(payload)
+            return json.loads(result), 200
+        except Exception as e:
+            if e.code() == grpc.StatusCode.UNAUTHENTICATED:
+                return  {"error": str(e.details())}, 401
+            else:
+                return {"error": str(e)}, 500

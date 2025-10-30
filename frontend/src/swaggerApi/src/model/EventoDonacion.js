@@ -23,12 +23,12 @@ class EventoDonacion {
     /**
      * Constructs a new <code>EventoDonacion</code>.
      * @alias module:model/EventoDonacion
-     * @param donacion {module:model/EventoDonacionObjeto} 
      * @param cantidad {Number} 
+     * @param donacion {module:model/EventoDonacionObjeto} 
      */
-    constructor(donacion, cantidad) { 
+    constructor(cantidad, donacion) { 
         
-        EventoDonacion.initialize(this, donacion, cantidad);
+        EventoDonacion.initialize(this, cantidad, donacion);
     }
 
     /**
@@ -36,9 +36,9 @@ class EventoDonacion {
      * This method is used by the constructors of any subclasses, in order to implement multiple inheritance (mix-ins).
      * Only for internal use.
      */
-    static initialize(obj, donacion, cantidad) { 
-        obj['donacion'] = donacion;
+    static initialize(obj, cantidad, donacion) { 
         obj['cantidad'] = cantidad;
+        obj['donacion'] = donacion;
     }
 
     /**
@@ -52,11 +52,11 @@ class EventoDonacion {
         if (data) {
             obj = obj || new EventoDonacion();
 
-            if (data.hasOwnProperty('donacion')) {
-                obj['donacion'] = EventoDonacionObjeto.constructFromObject(data['donacion']);
-            }
             if (data.hasOwnProperty('cantidad')) {
                 obj['cantidad'] = ApiClient.convertToType(data['cantidad'], 'Number');
+            }
+            if (data.hasOwnProperty('donacion')) {
+                obj['donacion'] = EventoDonacionObjeto.constructFromObject(data['donacion']);
             }
         }
         return obj;
@@ -85,17 +85,17 @@ class EventoDonacion {
 
 }
 
-EventoDonacion.RequiredProperties = ["donacion", "cantidad"];
-
-/**
- * @member {module:model/EventoDonacionObjeto} donacion
- */
-EventoDonacion.prototype['donacion'] = undefined;
+EventoDonacion.RequiredProperties = ["cantidad", "donacion"];
 
 /**
  * @member {Number} cantidad
  */
 EventoDonacion.prototype['cantidad'] = undefined;
+
+/**
+ * @member {module:model/EventoDonacionObjeto} donacion
+ */
+EventoDonacion.prototype['donacion'] = undefined;
 
 
 

@@ -15,12 +15,16 @@
 import ApiClient from "../ApiClient";
 import ExcelFileResponse from '../model/ExcelFileResponse';
 import FiltroSolicitudDetalleDto from '../model/FiltroSolicitudDetalleDto';
+import Oferta from '../model/Oferta';
+import OfertaGet from '../model/OfertaGet';
+import OfertaGetList from '../model/OfertaGetList';
 import Solicitud from '../model/Solicitud';
 import SolicitudBaja from '../model/SolicitudBaja';
 import SolicitudError from '../model/SolicitudError';
 import SolicitudGetList from '../model/SolicitudGetList';
 import SolicitudGraphQLResponse from '../model/SolicitudGraphQLResponse';
 import SolicitudQueryInformeSolicitud from '../model/SolicitudQueryInformeSolicitud';
+import SolicitudTransferDonation from '../model/SolicitudTransferDonation';
 
 /**
 * Solicitudes service.
@@ -83,6 +87,48 @@ export default class SolicitudesApi {
     }
 
     /**
+     * Callback function to receive the result of the getAllOffersByOrganization operation.
+     * @callback module:api/SolicitudesApi~getAllOffersByOrganizationCallback
+     * @param {String} error Error message, if any.
+     * @param {module:model/OfertaGetList} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Obtener todos las ofertas de la organizacion donante
+     * @param {Number} id 
+     * @param {module:api/SolicitudesApi~getAllOffersByOrganizationCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link module:model/OfertaGetList}
+     */
+    getAllOffersByOrganization(id, callback) {
+      let postBody = null;
+      // verify the required parameter 'id' is set
+      if (id === undefined || id === null) {
+        throw new Error("Missing the required parameter 'id' when calling getAllOffersByOrganization");
+      }
+
+      let pathParams = {
+        'id': id
+      };
+      let queryParams = {
+      };
+      let headerParams = {
+      };
+      let formParams = {
+      };
+
+      let authNames = ['Bearer Auth'];
+      let contentTypes = [];
+      let accepts = ['application/json'];
+      let returnType = OfertaGetList;
+      return this.apiClient.callApi(
+        '/solicitud/offer/{id}', 'GET',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, null, callback
+      );
+    }
+
+    /**
      * Callback function to receive the result of the getAllRequestDonacion operation.
      * @callback module:api/SolicitudesApi~getAllRequestDonacionCallback
      * @param {String} error Error message, if any.
@@ -113,6 +159,42 @@ export default class SolicitudesApi {
       let returnType = SolicitudGetList;
       return this.apiClient.callApi(
         '/solicitud/', 'GET',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, null, callback
+      );
+    }
+
+    /**
+     * Callback function to receive the result of the getLastOfferCreated operation.
+     * @callback module:api/SolicitudesApi~getLastOfferCreatedCallback
+     * @param {String} error Error message, if any.
+     * @param {module:model/OfertaGet} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Obtener ultima oferta creada del sistema
+     * @param {module:api/SolicitudesApi~getLastOfferCreatedCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link module:model/OfertaGet}
+     */
+    getLastOfferCreated(callback) {
+      let postBody = null;
+
+      let pathParams = {
+      };
+      let queryParams = {
+      };
+      let headerParams = {
+      };
+      let formParams = {
+      };
+
+      let authNames = ['Bearer Auth'];
+      let contentTypes = [];
+      let accepts = ['application/json'];
+      let returnType = OfertaGet;
+      return this.apiClient.callApi(
+        '/solicitud/offer', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, null, callback
       );
@@ -201,6 +283,47 @@ export default class SolicitudesApi {
     }
 
     /**
+     * Callback function to receive the result of the newOffer operation.
+     * @callback module:api/SolicitudesApi~newOfferCallback
+     * @param {String} error Error message, if any.
+     * @param {module:model/Oferta} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Ofrecer donaciones de una organizacion a kafka
+     * @param {module:model/Oferta} payload 
+     * @param {module:api/SolicitudesApi~newOfferCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link module:model/Oferta}
+     */
+    newOffer(payload, callback) {
+      let postBody = payload;
+      // verify the required parameter 'payload' is set
+      if (payload === undefined || payload === null) {
+        throw new Error("Missing the required parameter 'payload' when calling newOffer");
+      }
+
+      let pathParams = {
+      };
+      let queryParams = {
+      };
+      let headerParams = {
+      };
+      let formParams = {
+      };
+
+      let authNames = ['Bearer Auth'];
+      let contentTypes = ['application/json'];
+      let accepts = ['application/json'];
+      let returnType = Oferta;
+      return this.apiClient.callApi(
+        '/solicitud/offer/new', 'POST',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, null, callback
+      );
+    }
+
+    /**
      * Callback function to receive the result of the newRequestDonacion operation.
      * @callback module:api/SolicitudesApi~newRequestDonacionCallback
      * @param {String} error Error message, if any.
@@ -236,6 +359,52 @@ export default class SolicitudesApi {
       let returnType = Solicitud;
       return this.apiClient.callApi(
         '/solicitud/request/new', 'POST',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, null, callback
+      );
+    }
+
+    /**
+     * Callback function to receive the result of the newTransfer operation.
+     * @callback module:api/SolicitudesApi~newTransferCallback
+     * @param {String} error Error message, if any.
+     * @param data This operation does not return a value.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Enviar transferencia de donaciones a organizacion solicitante con kafka
+     * @param {Number} id 
+     * @param {module:model/SolicitudTransferDonation} payload 
+     * @param {module:api/SolicitudesApi~newTransferCallback} callback The callback function, accepting three arguments: error, data, response
+     */
+    newTransfer(id, payload, callback) {
+      let postBody = payload;
+      // verify the required parameter 'id' is set
+      if (id === undefined || id === null) {
+        throw new Error("Missing the required parameter 'id' when calling newTransfer");
+      }
+      // verify the required parameter 'payload' is set
+      if (payload === undefined || payload === null) {
+        throw new Error("Missing the required parameter 'payload' when calling newTransfer");
+      }
+
+      let pathParams = {
+        'id': id
+      };
+      let queryParams = {
+      };
+      let headerParams = {
+      };
+      let formParams = {
+      };
+
+      let authNames = ['Bearer Auth'];
+      let contentTypes = ['application/json'];
+      let accepts = ['application/json'];
+      let returnType = null;
+      return this.apiClient.callApi(
+        '/solicitud/transfer/{id}', 'POST',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, null, callback
       );

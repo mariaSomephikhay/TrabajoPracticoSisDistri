@@ -4,12 +4,12 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **String** |  | [optional] 
-**nombre** | **String** |  | 
+**activo** | **Boolean** |  | [optional] 
 **descripcion** | **String** |  | 
 **fecha** | **Date** |  | 
+**id** | **String** |  | [optional] 
 **idOrganizacion** | **Number** |  | [optional] 
-**activo** | **Boolean** |  | [optional] 
+**nombre** | **String** |  | 
 **publicado** | **Boolean** |  | [optional] 
 
 
