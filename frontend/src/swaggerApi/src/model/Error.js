@@ -22,11 +22,10 @@ class Error {
     /**
      * Constructs a new <code>Error</code>.
      * @alias module:model/Error
-     * @param error {String} 
      */
-    constructor(error) { 
+    constructor() { 
         
-        Error.initialize(this, error);
+        Error.initialize(this);
     }
 
     /**
@@ -34,8 +33,7 @@ class Error {
      * This method is used by the constructors of any subclasses, in order to implement multiple inheritance (mix-ins).
      * Only for internal use.
      */
-    static initialize(obj, error) { 
-        obj['error'] = error;
+    static initialize(obj) { 
     }
 
     /**
@@ -62,12 +60,6 @@ class Error {
      * @return {boolean} to indicate whether the JSON data is valid with respect to <code>Error</code>.
      */
     static validateJSON(data) {
-        // check to make sure all required properties are present in the JSON string
-        for (const property of Error.RequiredProperties) {
-            if (!data.hasOwnProperty(property)) {
-                throw new Error("The required field `" + property + "` is not found in the JSON data: " + JSON.stringify(data));
-            }
-        }
         // ensure the json data is a string
         if (data['error'] && !(typeof data['error'] === 'string' || data['error'] instanceof String)) {
             throw new Error("Expected the field `error` to be a primitive type in the JSON string but got " + data['error']);
@@ -79,7 +71,7 @@ class Error {
 
 }
 
-Error.RequiredProperties = ["error"];
+
 
 /**
  * @member {String} error

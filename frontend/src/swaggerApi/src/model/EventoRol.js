@@ -22,12 +22,12 @@ class EventoRol {
     /**
      * Constructs a new <code>EventoRol</code>.
      * @alias module:model/EventoRol
-     * @param id {Number} 
      * @param descripcion {String} 
+     * @param id {Number} 
      */
-    constructor(id, descripcion) { 
+    constructor(descripcion, id) { 
         
-        EventoRol.initialize(this, id, descripcion);
+        EventoRol.initialize(this, descripcion, id);
     }
 
     /**
@@ -35,9 +35,9 @@ class EventoRol {
      * This method is used by the constructors of any subclasses, in order to implement multiple inheritance (mix-ins).
      * Only for internal use.
      */
-    static initialize(obj, id, descripcion) { 
-        obj['id'] = id;
+    static initialize(obj, descripcion, id) { 
         obj['descripcion'] = descripcion;
+        obj['id'] = id;
     }
 
     /**
@@ -51,11 +51,11 @@ class EventoRol {
         if (data) {
             obj = obj || new EventoRol();
 
-            if (data.hasOwnProperty('id')) {
-                obj['id'] = ApiClient.convertToType(data['id'], 'Number');
-            }
             if (data.hasOwnProperty('descripcion')) {
                 obj['descripcion'] = ApiClient.convertToType(data['descripcion'], 'String');
+            }
+            if (data.hasOwnProperty('id')) {
+                obj['id'] = ApiClient.convertToType(data['id'], 'Number');
             }
         }
         return obj;
@@ -84,17 +84,17 @@ class EventoRol {
 
 }
 
-EventoRol.RequiredProperties = ["id", "descripcion"];
-
-/**
- * @member {Number} id
- */
-EventoRol.prototype['id'] = undefined;
+EventoRol.RequiredProperties = ["descripcion", "id"];
 
 /**
  * @member {String} descripcion
  */
 EventoRol.prototype['descripcion'] = undefined;
+
+/**
+ * @member {Number} id
+ */
+EventoRol.prototype['id'] = undefined;
 
 
 

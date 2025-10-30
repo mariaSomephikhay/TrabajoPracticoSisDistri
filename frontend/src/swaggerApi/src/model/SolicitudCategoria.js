@@ -22,12 +22,12 @@ class SolicitudCategoria {
     /**
      * Constructs a new <code>SolicitudCategoria</code>.
      * @alias module:model/SolicitudCategoria
-     * @param id {Number} 
      * @param descripcion {String} 
+     * @param id {Number} 
      */
-    constructor(id, descripcion) { 
+    constructor(descripcion, id) { 
         
-        SolicitudCategoria.initialize(this, id, descripcion);
+        SolicitudCategoria.initialize(this, descripcion, id);
     }
 
     /**
@@ -35,9 +35,9 @@ class SolicitudCategoria {
      * This method is used by the constructors of any subclasses, in order to implement multiple inheritance (mix-ins).
      * Only for internal use.
      */
-    static initialize(obj, id, descripcion) { 
-        obj['id'] = id;
+    static initialize(obj, descripcion, id) { 
         obj['descripcion'] = descripcion;
+        obj['id'] = id;
     }
 
     /**
@@ -51,11 +51,11 @@ class SolicitudCategoria {
         if (data) {
             obj = obj || new SolicitudCategoria();
 
-            if (data.hasOwnProperty('id')) {
-                obj['id'] = ApiClient.convertToType(data['id'], 'Number');
-            }
             if (data.hasOwnProperty('descripcion')) {
                 obj['descripcion'] = ApiClient.convertToType(data['descripcion'], 'String');
+            }
+            if (data.hasOwnProperty('id')) {
+                obj['id'] = ApiClient.convertToType(data['id'], 'Number');
             }
         }
         return obj;
@@ -84,17 +84,17 @@ class SolicitudCategoria {
 
 }
 
-SolicitudCategoria.RequiredProperties = ["id", "descripcion"];
-
-/**
- * @member {Number} id
- */
-SolicitudCategoria.prototype['id'] = undefined;
+SolicitudCategoria.RequiredProperties = ["descripcion", "id"];
 
 /**
  * @member {String} descripcion
  */
 SolicitudCategoria.prototype['descripcion'] = undefined;
+
+/**
+ * @member {Number} id
+ */
+SolicitudCategoria.prototype['id'] = undefined;
 
 
 

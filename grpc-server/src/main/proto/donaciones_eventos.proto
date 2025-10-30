@@ -149,7 +149,8 @@ message SolicitudDonacion {
     string id = 1;
     Organizacion organizacionSolicitante= 2;
     bool activa = 3;
-    repeated Donacion donaciones = 4;
+    bool procesada = 4;
+    repeated Donacion donaciones = 5;
 }
 
 message ListSolicitudDonacion {
@@ -175,7 +176,8 @@ service ManagerService{
   rpc deleteUser (UserId) returns (Usuario) {};
   rpc insertOrUpdateDonacion (Donacion) returns (Donacion) {};
   rpc getDonacionById (DonacionId) returns (Donacion) {};
-  rpc getAllDonaciones (Empty) returns (DonacionList) {};  
+  rpc getAllDonaciones (Empty) returns (DonacionList) {};
+  rpc getAllDonacionesWithoutOffersByOrganization (OrganizacionId) returns (DonacionList) {};
   rpc deleteDonacion (DonacionIdUsu) returns (Donacion) {};
 
   //------------EVENTO-----------//
@@ -191,6 +193,7 @@ service ManagerService{
   //------------SOLICITUDES-----------//
   rpc getAllSolicitudDonaciones(Empty) returns (ListSolicitudDonacion) {};
   rpc getAllOffersByOrganization (OrganizacionId) returns (ListOferta) {};
+  rpc getLastOffer (Empty) returns (Oferta) {};
 
   //AGREGAR ACA TODOS LOS SERVICIOS
 }

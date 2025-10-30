@@ -4,9 +4,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**name** | **String** |  | 
-**valueFilter** | **String** |  | 
-**usuario** | **String** |  | 
 **filterType** | **String** |  | 
+**name** | **String** |  | 
+**usuario** | **String** |  | 
+**valueFilter** | **String** |  | 
 
 

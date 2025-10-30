@@ -22,12 +22,12 @@ class EventoCategoria {
     /**
      * Constructs a new <code>EventoCategoria</code>.
      * @alias module:model/EventoCategoria
-     * @param id {Number} 
      * @param descripcion {String} 
+     * @param id {Number} 
      */
-    constructor(id, descripcion) { 
+    constructor(descripcion, id) { 
         
-        EventoCategoria.initialize(this, id, descripcion);
+        EventoCategoria.initialize(this, descripcion, id);
     }
 
     /**
@@ -35,9 +35,9 @@ class EventoCategoria {
      * This method is used by the constructors of any subclasses, in order to implement multiple inheritance (mix-ins).
      * Only for internal use.
      */
-    static initialize(obj, id, descripcion) { 
-        obj['id'] = id;
+    static initialize(obj, descripcion, id) { 
         obj['descripcion'] = descripcion;
+        obj['id'] = id;
     }
 
     /**
@@ -51,11 +51,11 @@ class EventoCategoria {
         if (data) {
             obj = obj || new EventoCategoria();
 
-            if (data.hasOwnProperty('id')) {
-                obj['id'] = ApiClient.convertToType(data['id'], 'Number');
-            }
             if (data.hasOwnProperty('descripcion')) {
                 obj['descripcion'] = ApiClient.convertToType(data['descripcion'], 'String');
+            }
+            if (data.hasOwnProperty('id')) {
+                obj['id'] = ApiClient.convertToType(data['id'], 'Number');
             }
         }
         return obj;
@@ -84,17 +84,17 @@ class EventoCategoria {
 
 }
 
-EventoCategoria.RequiredProperties = ["id", "descripcion"];
-
-/**
- * @member {Number} id
- */
-EventoCategoria.prototype['id'] = undefined;
+EventoCategoria.RequiredProperties = ["descripcion", "id"];
 
 /**
  * @member {String} descripcion
  */
 EventoCategoria.prototype['descripcion'] = undefined;
+
+/**
+ * @member {Number} id
+ */
+EventoCategoria.prototype['id'] = undefined;
 
 
 

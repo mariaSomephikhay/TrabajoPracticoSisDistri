@@ -22,15 +22,15 @@ class EventoKafka {
     /**
      * Constructs a new <code>EventoKafka</code>.
      * @alias module:model/EventoKafka
-     * @param idOrganizacion {String} 
-     * @param idEvento {String} 
-     * @param nombre {String} 
      * @param descripcion {String} 
      * @param fecha {Date} 
+     * @param idEvento {String} 
+     * @param idOrganizacion {String} 
+     * @param nombre {String} 
      */
-    constructor(idOrganizacion, idEvento, nombre, descripcion, fecha) { 
+    constructor(descripcion, fecha, idEvento, idOrganizacion, nombre) { 
         
-        EventoKafka.initialize(this, idOrganizacion, idEvento, nombre, descripcion, fecha);
+        EventoKafka.initialize(this, descripcion, fecha, idEvento, idOrganizacion, nombre);
     }
 
     /**
@@ -38,12 +38,12 @@ class EventoKafka {
      * This method is used by the constructors of any subclasses, in order to implement multiple inheritance (mix-ins).
      * Only for internal use.
      */
-    static initialize(obj, idOrganizacion, idEvento, nombre, descripcion, fecha) { 
-        obj['id_organizacion'] = idOrganizacion;
-        obj['id_evento'] = idEvento;
-        obj['nombre'] = nombre;
+    static initialize(obj, descripcion, fecha, idEvento, idOrganizacion, nombre) { 
         obj['descripcion'] = descripcion;
         obj['fecha'] = fecha;
+        obj['id_evento'] = idEvento;
+        obj['id_organizacion'] = idOrganizacion;
+        obj['nombre'] = nombre;
     }
 
     /**
@@ -57,20 +57,20 @@ class EventoKafka {
         if (data) {
             obj = obj || new EventoKafka();
 
-            if (data.hasOwnProperty('id_organizacion')) {
-                obj['id_organizacion'] = ApiClient.convertToType(data['id_organizacion'], 'String');
-            }
-            if (data.hasOwnProperty('id_evento')) {
-                obj['id_evento'] = ApiClient.convertToType(data['id_evento'], 'String');
-            }
-            if (data.hasOwnProperty('nombre')) {
-                obj['nombre'] = ApiClient.convertToType(data['nombre'], 'String');
-            }
             if (data.hasOwnProperty('descripcion')) {
                 obj['descripcion'] = ApiClient.convertToType(data['descripcion'], 'String');
             }
             if (data.hasOwnProperty('fecha')) {
                 obj['fecha'] = ApiClient.convertToType(data['fecha'], 'Date');
+            }
+            if (data.hasOwnProperty('id_evento')) {
+                obj['id_evento'] = ApiClient.convertToType(data['id_evento'], 'String');
+            }
+            if (data.hasOwnProperty('id_organizacion')) {
+                obj['id_organizacion'] = ApiClient.convertToType(data['id_organizacion'], 'String');
+            }
+            if (data.hasOwnProperty('nombre')) {
+                obj['nombre'] = ApiClient.convertToType(data['nombre'], 'String');
             }
         }
         return obj;
@@ -89,20 +89,20 @@ class EventoKafka {
             }
         }
         // ensure the json data is a string
-        if (data['id_organizacion'] && !(typeof data['id_organizacion'] === 'string' || data['id_organizacion'] instanceof String)) {
-            throw new Error("Expected the field `id_organizacion` to be a primitive type in the JSON string but got " + data['id_organizacion']);
+        if (data['descripcion'] && !(typeof data['descripcion'] === 'string' || data['descripcion'] instanceof String)) {
+            throw new Error("Expected the field `descripcion` to be a primitive type in the JSON string but got " + data['descripcion']);
         }
         // ensure the json data is a string
         if (data['id_evento'] && !(typeof data['id_evento'] === 'string' || data['id_evento'] instanceof String)) {
             throw new Error("Expected the field `id_evento` to be a primitive type in the JSON string but got " + data['id_evento']);
         }
         // ensure the json data is a string
-        if (data['nombre'] && !(typeof data['nombre'] === 'string' || data['nombre'] instanceof String)) {
-            throw new Error("Expected the field `nombre` to be a primitive type in the JSON string but got " + data['nombre']);
+        if (data['id_organizacion'] && !(typeof data['id_organizacion'] === 'string' || data['id_organizacion'] instanceof String)) {
+            throw new Error("Expected the field `id_organizacion` to be a primitive type in the JSON string but got " + data['id_organizacion']);
         }
         // ensure the json data is a string
-        if (data['descripcion'] && !(typeof data['descripcion'] === 'string' || data['descripcion'] instanceof String)) {
-            throw new Error("Expected the field `descripcion` to be a primitive type in the JSON string but got " + data['descripcion']);
+        if (data['nombre'] && !(typeof data['nombre'] === 'string' || data['nombre'] instanceof String)) {
+            throw new Error("Expected the field `nombre` to be a primitive type in the JSON string but got " + data['nombre']);
         }
 
         return true;
@@ -111,22 +111,7 @@ class EventoKafka {
 
 }
 
-EventoKafka.RequiredProperties = ["id_organizacion", "id_evento", "nombre", "descripcion", "fecha"];
-
-/**
- * @member {String} id_organizacion
- */
-EventoKafka.prototype['id_organizacion'] = undefined;
-
-/**
- * @member {String} id_evento
- */
-EventoKafka.prototype['id_evento'] = undefined;
-
-/**
- * @member {String} nombre
- */
-EventoKafka.prototype['nombre'] = undefined;
+EventoKafka.RequiredProperties = ["descripcion", "fecha", "id_evento", "id_organizacion", "nombre"];
 
 /**
  * @member {String} descripcion
@@ -137,6 +122,21 @@ EventoKafka.prototype['descripcion'] = undefined;
  * @member {Date} fecha
  */
 EventoKafka.prototype['fecha'] = undefined;
+
+/**
+ * @member {String} id_evento
+ */
+EventoKafka.prototype['id_evento'] = undefined;
+
+/**
+ * @member {String} id_organizacion
+ */
+EventoKafka.prototype['id_organizacion'] = undefined;
+
+/**
+ * @member {String} nombre
+ */
+EventoKafka.prototype['nombre'] = undefined;
 
 
 

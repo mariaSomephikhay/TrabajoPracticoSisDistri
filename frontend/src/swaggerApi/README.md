@@ -131,6 +131,7 @@ Class | Method | HTTP request | Description
 *ApiDocumentada.DonacionesApi* | [**deleteDonationById**](docs/DonacionesApi.md#deleteDonationById) | **DELETE** /donacion/delete/{id} | Eliminar donacion
 *ApiDocumentada.DonacionesApi* | [**getDonationById**](docs/DonacionesApi.md#getDonationById) | **GET** /donacion/{id} | Obtener Donacion
 *ApiDocumentada.DonacionesApi* | [**listDonations**](docs/DonacionesApi.md#listDonations) | **GET** /donacion/ | Obtener todos las donaciones
+*ApiDocumentada.DonacionesApi* | [**listDonationsWithoutOfferByOrganization**](docs/DonacionesApi.md#listDonationsWithoutOfferByOrganization) | **GET** /donacion/without/offers/{id} | Obtener todos las donaciones sin ofertas de una organizacion
 *ApiDocumentada.DonacionesApi* | [**updateDonationById**](docs/DonacionesApi.md#updateDonationById) | **PUT** /donacion/{id} | Actualizar un donacion
 *ApiDocumentada.EventosApi* | [**adhesionEvento**](docs/EventosApi.md#adhesionEvento) | **POST** /evento/adhesion/evento/{id_organization} | Adhesion de voluntario a evento
 *ApiDocumentada.EventosApi* | [**createEvent**](docs/EventosApi.md#createEvent) | **POST** /evento/new | Insertar nuevo evento
@@ -152,9 +153,12 @@ Class | Method | HTTP request | Description
 *ApiDocumentada.FiltrosApi* | [**subirQueryGraphqlDto**](docs/FiltrosApi.md#subirQueryGraphqlDto) | **POST** /filter/guardar/graphql/ | guarda filtros con graphql
 *ApiDocumentada.FiltrosApi* | [**traerFiltrosGraphQL**](docs/FiltrosApi.md#traerFiltrosGraphQL) | **POST** /filter/traer/graphql/ | trae filtros con graphql
 *ApiDocumentada.FiltrosApi* | [**updateFilter**](docs/FiltrosApi.md#updateFilter) | **PUT** /filter/update/{id} | actualizar filtro por id
+*ApiDocumentada.SoapApi* | [**postOngsSoap**](docs/SoapApi.md#postOngsSoap) | **POST** /soap/ongs | Consultar datos de ONGs por IDs (SOAP)
+*ApiDocumentada.SoapApi* | [**postPresidentesSoap**](docs/SoapApi.md#postPresidentesSoap) | **POST** /soap/presidentes | Consultar datos de Presidentes por IDs (SOAP)
 *ApiDocumentada.SolicitudesApi* | [**deleteRequestDonacion**](docs/SolicitudesApi.md#deleteRequestDonacion) | **DELETE** /solicitud/delete | Enviar solicitud de donaciones a kafka
 *ApiDocumentada.SolicitudesApi* | [**getAllOffersByOrganization**](docs/SolicitudesApi.md#getAllOffersByOrganization) | **GET** /solicitud/offer/{id} | Obtener todos las ofertas de la organizacion donante
 *ApiDocumentada.SolicitudesApi* | [**getAllRequestDonacion**](docs/SolicitudesApi.md#getAllRequestDonacion) | **GET** /solicitud/ | Obtener todos las solicitudes donaciones
+*ApiDocumentada.SolicitudesApi* | [**getLastOfferCreated**](docs/SolicitudesApi.md#getLastOfferCreated) | **GET** /solicitud/offer | Obtener ultima oferta creada del sistema
 *ApiDocumentada.SolicitudesApi* | [**informeSolicitudesDetalle**](docs/SolicitudesApi.md#informeSolicitudesDetalle) | **POST** /solicitud/informe/excel | Solcitudes de donaciones en Excel
 *ApiDocumentada.SolicitudesApi* | [**informeSolicitudesDonaciones**](docs/SolicitudesApi.md#informeSolicitudesDonaciones) | **POST** /solicitud/informe/ | Consulta de informe de solicitudes con filtros
 *ApiDocumentada.SolicitudesApi* | [**newOffer**](docs/SolicitudesApi.md#newOffer) | **POST** /solicitud/offer/new | Ofrecer donaciones de una organizacion a kafka
@@ -207,9 +211,12 @@ Class | Method | HTTP request | Description
  - [ApiDocumentada.ListaFiltrosDto](docs/ListaFiltrosDto.md)
  - [ApiDocumentada.ListaValue](docs/ListaValue.md)
  - [ApiDocumentada.Login](docs/Login.md)
+ - [ApiDocumentada.ONG](docs/ONG.md)
  - [ApiDocumentada.Oferta](docs/Oferta.md)
  - [ApiDocumentada.OfertaGet](docs/OfertaGet.md)
  - [ApiDocumentada.OfertaGetList](docs/OfertaGetList.md)
+ - [ApiDocumentada.OrgIds](docs/OrgIds.md)
+ - [ApiDocumentada.Presidente](docs/Presidente.md)
  - [ApiDocumentada.ResDataGraphql](docs/ResDataGraphql.md)
  - [ApiDocumentada.Rol](docs/Rol.md)
  - [ApiDocumentada.Solicitud](docs/Solicitud.md)

@@ -23,13 +23,13 @@ class EventoDonacionObjeto {
     /**
      * Constructs a new <code>EventoDonacionObjeto</code>.
      * @alias module:model/EventoDonacionObjeto
+     * @param cantidad {Number} 
      * @param categoria {module:model/EventoCategoria} 
      * @param descripcion {String} 
-     * @param cantidad {Number} 
      */
-    constructor(categoria, descripcion, cantidad) { 
+    constructor(cantidad, categoria, descripcion) { 
         
-        EventoDonacionObjeto.initialize(this, categoria, descripcion, cantidad);
+        EventoDonacionObjeto.initialize(this, cantidad, categoria, descripcion);
     }
 
     /**
@@ -37,10 +37,10 @@ class EventoDonacionObjeto {
      * This method is used by the constructors of any subclasses, in order to implement multiple inheritance (mix-ins).
      * Only for internal use.
      */
-    static initialize(obj, categoria, descripcion, cantidad) { 
+    static initialize(obj, cantidad, categoria, descripcion) { 
+        obj['cantidad'] = cantidad;
         obj['categoria'] = categoria;
         obj['descripcion'] = descripcion;
-        obj['cantidad'] = cantidad;
     }
 
     /**
@@ -54,8 +54,8 @@ class EventoDonacionObjeto {
         if (data) {
             obj = obj || new EventoDonacionObjeto();
 
-            if (data.hasOwnProperty('id')) {
-                obj['id'] = ApiClient.convertToType(data['id'], 'Number');
+            if (data.hasOwnProperty('cantidad')) {
+                obj['cantidad'] = ApiClient.convertToType(data['cantidad'], 'Number');
             }
             if (data.hasOwnProperty('categoria')) {
                 obj['categoria'] = EventoCategoria.constructFromObject(data['categoria']);
@@ -63,8 +63,8 @@ class EventoDonacionObjeto {
             if (data.hasOwnProperty('descripcion')) {
                 obj['descripcion'] = ApiClient.convertToType(data['descripcion'], 'String');
             }
-            if (data.hasOwnProperty('cantidad')) {
-                obj['cantidad'] = ApiClient.convertToType(data['cantidad'], 'Number');
+            if (data.hasOwnProperty('id')) {
+                obj['id'] = ApiClient.convertToType(data['id'], 'Number');
             }
         }
         return obj;
@@ -97,12 +97,12 @@ class EventoDonacionObjeto {
 
 }
 
-EventoDonacionObjeto.RequiredProperties = ["categoria", "descripcion", "cantidad"];
+EventoDonacionObjeto.RequiredProperties = ["cantidad", "categoria", "descripcion"];
 
 /**
- * @member {Number} id
+ * @member {Number} cantidad
  */
-EventoDonacionObjeto.prototype['id'] = undefined;
+EventoDonacionObjeto.prototype['cantidad'] = undefined;
 
 /**
  * @member {module:model/EventoCategoria} categoria
@@ -115,9 +115,9 @@ EventoDonacionObjeto.prototype['categoria'] = undefined;
 EventoDonacionObjeto.prototype['descripcion'] = undefined;
 
 /**
- * @member {Number} cantidad
+ * @member {Number} id
  */
-EventoDonacionObjeto.prototype['cantidad'] = undefined;
+EventoDonacionObjeto.prototype['id'] = undefined;
 
 
 

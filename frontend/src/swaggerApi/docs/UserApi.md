@@ -81,7 +81,7 @@ Bearer Auth.apiKey = 'YOUR API KEY';
 //Bearer Auth.apiKeyPrefix = 'Token';
 
 let apiInstance = new ApiDocumentada.UserApi();
-let id = 56; // Number | 
+let id = "id_example"; // String | 
 apiInstance.deleteUserById(id, (error, data, response) => {
   if (error) {
     console.error(error);
@@ -96,7 +96,7 @@ apiInstance.deleteUserById(id, (error, data, response) => {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **Number**|  | 
+ **id** | **String**|  | 
 
 ### Return type
 
@@ -130,7 +130,7 @@ Bearer Auth.apiKey = 'YOUR API KEY';
 //Bearer Auth.apiKeyPrefix = 'Token';
 
 let apiInstance = new ApiDocumentada.UserApi();
-let id = 56; // Number | 
+let id = "id_example"; // String | 
 apiInstance.getUserById(id, (error, data, response) => {
   if (error) {
     console.error(error);
@@ -145,7 +145,7 @@ apiInstance.getUserById(id, (error, data, response) => {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **Number**|  | 
+ **id** | **String**|  | 
 
 ### Return type
 
@@ -316,7 +316,7 @@ Bearer Auth.apiKey = 'YOUR API KEY';
 //Bearer Auth.apiKeyPrefix = 'Token';
 
 let apiInstance = new ApiDocumentada.UserApi();
-let id = 56; // Number | 
+let id = "id_example"; // String | 
 let payload = new ApiDocumentada.Usuario(); // Usuario | 
 apiInstance.updateUserById(id, payload, (error, data, response) => {
   if (error) {
@@ -332,7 +332,7 @@ apiInstance.updateUserById(id, payload, (error, data, response) => {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **Number**|  | 
+ **id** | **String**|  | 
  **payload** | [**Usuario**](Usuario.md)|  | 
 
 ### Return type

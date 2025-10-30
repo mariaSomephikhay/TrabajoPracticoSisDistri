@@ -50,11 +50,11 @@ class InformeParticipacionEventos {
         if (data) {
             obj = obj || new InformeParticipacionEventos();
 
-            if (data.hasOwnProperty('mes')) {
-                obj['mes'] = ApiClient.convertToType(data['mes'], 'String');
-            }
             if (data.hasOwnProperty('eventos')) {
                 obj['eventos'] = ApiClient.convertToType(data['eventos'], [EventoDtoInforme]);
+            }
+            if (data.hasOwnProperty('mes')) {
+                obj['mes'] = ApiClient.convertToType(data['mes'], 'String');
             }
         }
         return obj;
@@ -72,10 +72,6 @@ class InformeParticipacionEventos {
                 throw new Error("The required field `" + property + "` is not found in the JSON data: " + JSON.stringify(data));
             }
         }
-        // ensure the json data is a string
-        if (data['mes'] && !(typeof data['mes'] === 'string' || data['mes'] instanceof String)) {
-            throw new Error("Expected the field `mes` to be a primitive type in the JSON string but got " + data['mes']);
-        }
         if (data['eventos']) { // data not null
             // ensure the json data is an array
             if (!Array.isArray(data['eventos'])) {
@@ -85,6 +81,10 @@ class InformeParticipacionEventos {
             for (const item of data['eventos']) {
                 EventoDtoInforme.validateJSON(item);
             };
+        }
+        // ensure the json data is a string
+        if (data['mes'] && !(typeof data['mes'] === 'string' || data['mes'] instanceof String)) {
+            throw new Error("Expected the field `mes` to be a primitive type in the JSON string but got " + data['mes']);
         }
 
         return true;
@@ -96,14 +96,14 @@ class InformeParticipacionEventos {
 InformeParticipacionEventos.RequiredProperties = ["mes"];
 
 /**
- * @member {String} mes
- */
-InformeParticipacionEventos.prototype['mes'] = undefined;
-
-/**
  * @member {Array.<module:model/EventoDtoInforme>} eventos
  */
 InformeParticipacionEventos.prototype['eventos'] = undefined;
+
+/**
+ * @member {String} mes
+ */
+InformeParticipacionEventos.prototype['mes'] = undefined;
 
 
 

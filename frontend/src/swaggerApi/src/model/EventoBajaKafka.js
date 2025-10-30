@@ -22,12 +22,12 @@ class EventoBajaKafka {
     /**
      * Constructs a new <code>EventoBajaKafka</code>.
      * @alias module:model/EventoBajaKafka
-     * @param idOrganizacion {String} 
      * @param idEvento {String} 
+     * @param idOrganizacion {String} 
      */
-    constructor(idOrganizacion, idEvento) { 
+    constructor(idEvento, idOrganizacion) { 
         
-        EventoBajaKafka.initialize(this, idOrganizacion, idEvento);
+        EventoBajaKafka.initialize(this, idEvento, idOrganizacion);
     }
 
     /**
@@ -35,9 +35,9 @@ class EventoBajaKafka {
      * This method is used by the constructors of any subclasses, in order to implement multiple inheritance (mix-ins).
      * Only for internal use.
      */
-    static initialize(obj, idOrganizacion, idEvento) { 
-        obj['id_organizacion'] = idOrganizacion;
+    static initialize(obj, idEvento, idOrganizacion) { 
         obj['id_evento'] = idEvento;
+        obj['id_organizacion'] = idOrganizacion;
     }
 
     /**
@@ -51,11 +51,11 @@ class EventoBajaKafka {
         if (data) {
             obj = obj || new EventoBajaKafka();
 
-            if (data.hasOwnProperty('id_organizacion')) {
-                obj['id_organizacion'] = ApiClient.convertToType(data['id_organizacion'], 'String');
-            }
             if (data.hasOwnProperty('id_evento')) {
                 obj['id_evento'] = ApiClient.convertToType(data['id_evento'], 'String');
+            }
+            if (data.hasOwnProperty('id_organizacion')) {
+                obj['id_organizacion'] = ApiClient.convertToType(data['id_organizacion'], 'String');
             }
         }
         return obj;
@@ -74,12 +74,12 @@ class EventoBajaKafka {
             }
         }
         // ensure the json data is a string
-        if (data['id_organizacion'] && !(typeof data['id_organizacion'] === 'string' || data['id_organizacion'] instanceof String)) {
-            throw new Error("Expected the field `id_organizacion` to be a primitive type in the JSON string but got " + data['id_organizacion']);
-        }
-        // ensure the json data is a string
         if (data['id_evento'] && !(typeof data['id_evento'] === 'string' || data['id_evento'] instanceof String)) {
             throw new Error("Expected the field `id_evento` to be a primitive type in the JSON string but got " + data['id_evento']);
+        }
+        // ensure the json data is a string
+        if (data['id_organizacion'] && !(typeof data['id_organizacion'] === 'string' || data['id_organizacion'] instanceof String)) {
+            throw new Error("Expected the field `id_organizacion` to be a primitive type in the JSON string but got " + data['id_organizacion']);
         }
 
         return true;
@@ -88,17 +88,17 @@ class EventoBajaKafka {
 
 }
 
-EventoBajaKafka.RequiredProperties = ["id_organizacion", "id_evento"];
-
-/**
- * @member {String} id_organizacion
- */
-EventoBajaKafka.prototype['id_organizacion'] = undefined;
+EventoBajaKafka.RequiredProperties = ["id_evento", "id_organizacion"];
 
 /**
  * @member {String} id_evento
  */
 EventoBajaKafka.prototype['id_evento'] = undefined;
+
+/**
+ * @member {String} id_organizacion
+ */
+EventoBajaKafka.prototype['id_organizacion'] = undefined;
 
 
 

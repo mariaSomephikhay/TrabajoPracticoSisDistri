@@ -4,10 +4,10 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**filterType** | **String** |  | 
 **id** | **Number** |  | 
 **name** | **String** |  | 
-**valueFilter** | **String** |  | 
 **usuario** | **String** |  | 
-**filterType** | **String** |  | 
+**valueFilter** | **String** |  | 
 
 

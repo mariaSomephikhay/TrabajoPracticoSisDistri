@@ -24,12 +24,13 @@ class SolicitudGet {
     /**
      * Constructs a new <code>SolicitudGet</code>.
      * @alias module:model/SolicitudGet
-     * @param id {String} 
      * @param activa {Boolean} 
+     * @param id {String} 
+     * @param procesada {Boolean} 
      */
-    constructor(id, activa) { 
+    constructor(activa, id, procesada) { 
         
-        SolicitudGet.initialize(this, id, activa);
+        SolicitudGet.initialize(this, activa, id, procesada);
     }
 
     /**
@@ -37,9 +38,10 @@ class SolicitudGet {
      * This method is used by the constructors of any subclasses, in order to implement multiple inheritance (mix-ins).
      * Only for internal use.
      */
-    static initialize(obj, id, activa) { 
-        obj['id'] = id;
+    static initialize(obj, activa, id, procesada) { 
         obj['activa'] = activa;
+        obj['id'] = id;
+        obj['procesada'] = procesada;
     }
 
     /**
@@ -53,17 +55,20 @@ class SolicitudGet {
         if (data) {
             obj = obj || new SolicitudGet();
 
+            if (data.hasOwnProperty('activa')) {
+                obj['activa'] = ApiClient.convertToType(data['activa'], 'Boolean');
+            }
+            if (data.hasOwnProperty('donaciones')) {
+                obj['donaciones'] = ApiClient.convertToType(data['donaciones'], [SolicitudDonacion]);
+            }
             if (data.hasOwnProperty('id')) {
                 obj['id'] = ApiClient.convertToType(data['id'], 'String');
             }
             if (data.hasOwnProperty('organizacionSolicitante')) {
                 obj['organizacionSolicitante'] = SolicitudOrganizacionDto.constructFromObject(data['organizacionSolicitante']);
             }
-            if (data.hasOwnProperty('activa')) {
-                obj['activa'] = ApiClient.convertToType(data['activa'], 'Boolean');
-            }
-            if (data.hasOwnProperty('donaciones')) {
-                obj['donaciones'] = ApiClient.convertToType(data['donaciones'], [SolicitudDonacion]);
+            if (data.hasOwnProperty('procesada')) {
+                obj['procesada'] = ApiClient.convertToType(data['procesada'], 'Boolean');
             }
         }
         return obj;
@@ -81,14 +86,6 @@ class SolicitudGet {
                 throw new Error("The required field `" + property + "` is not found in the JSON data: " + JSON.stringify(data));
             }
         }
-        // ensure the json data is a string
-        if (data['id'] && !(typeof data['id'] === 'string' || data['id'] instanceof String)) {
-            throw new Error("Expected the field `id` to be a primitive type in the JSON string but got " + data['id']);
-        }
-        // validate the optional field `organizacionSolicitante`
-        if (data['organizacionSolicitante']) { // data not null
-          SolicitudOrganizacionDto.validateJSON(data['organizacionSolicitante']);
-        }
         if (data['donaciones']) { // data not null
             // ensure the json data is an array
             if (!Array.isArray(data['donaciones'])) {
@@ -99,6 +96,14 @@ class SolicitudGet {
                 SolicitudDonacion.validateJSON(item);
             };
         }
+        // ensure the json data is a string
+        if (data['id'] && !(typeof data['id'] === 'string' || data['id'] instanceof String)) {
+            throw new Error("Expected the field `id` to be a primitive type in the JSON string but got " + data['id']);
+        }
+        // validate the optional field `organizacionSolicitante`
+        if (data['organizacionSolicitante']) { // data not null
+          SolicitudOrganizacionDto.validateJSON(data['organizacionSolicitante']);
+        }
 
         return true;
     }
@@ -106,7 +111,17 @@ class SolicitudGet {
 
 }
 
-SolicitudGet.RequiredProperties = ["id", "activa"];
+SolicitudGet.RequiredProperties = ["activa", "id", "procesada"];
+
+/**
+ * @member {Boolean} activa
+ */
+SolicitudGet.prototype['activa'] = undefined;
+
+/**
+ * @member {Array.<module:model/SolicitudDonacion>} donaciones
+ */
+SolicitudGet.prototype['donaciones'] = undefined;
 
 /**
  * @member {String} id
@@ -119,14 +134,9 @@ SolicitudGet.prototype['id'] = undefined;
 SolicitudGet.prototype['organizacionSolicitante'] = undefined;
 
 /**
- * @member {Boolean} activa
+ * @member {Boolean} procesada
  */
-SolicitudGet.prototype['activa'] = undefined;
-
-/**
- * @member {Array.<module:model/SolicitudDonacion>} donaciones
- */
-SolicitudGet.prototype['donaciones'] = undefined;
+SolicitudGet.prototype['procesada'] = undefined;
 
 
 

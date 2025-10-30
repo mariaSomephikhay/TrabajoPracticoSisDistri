@@ -23,12 +23,12 @@ class InformeSolicitudList {
     /**
      * Constructs a new <code>InformeSolicitudList</code>.
      * @alias module:model/InformeSolicitudList
-     * @param status {String} 
      * @param message {String} 
+     * @param status {String} 
      */
-    constructor(status, message) { 
+    constructor(message, status) { 
         
-        InformeSolicitudList.initialize(this, status, message);
+        InformeSolicitudList.initialize(this, message, status);
     }
 
     /**
@@ -36,9 +36,9 @@ class InformeSolicitudList {
      * This method is used by the constructors of any subclasses, in order to implement multiple inheritance (mix-ins).
      * Only for internal use.
      */
-    static initialize(obj, status, message) { 
-        obj['status'] = status;
+    static initialize(obj, message, status) { 
         obj['message'] = message;
+        obj['status'] = status;
     }
 
     /**
@@ -52,14 +52,14 @@ class InformeSolicitudList {
         if (data) {
             obj = obj || new InformeSolicitudList();
 
-            if (data.hasOwnProperty('status')) {
-                obj['status'] = ApiClient.convertToType(data['status'], 'String');
+            if (data.hasOwnProperty('data')) {
+                obj['data'] = ApiClient.convertToType(data['data'], [InformeSolicitud]);
             }
             if (data.hasOwnProperty('message')) {
                 obj['message'] = ApiClient.convertToType(data['message'], 'String');
             }
-            if (data.hasOwnProperty('data')) {
-                obj['data'] = ApiClient.convertToType(data['data'], [InformeSolicitud]);
+            if (data.hasOwnProperty('status')) {
+                obj['status'] = ApiClient.convertToType(data['status'], 'String');
             }
         }
         return obj;
@@ -77,14 +77,6 @@ class InformeSolicitudList {
                 throw new Error("The required field `" + property + "` is not found in the JSON data: " + JSON.stringify(data));
             }
         }
-        // ensure the json data is a string
-        if (data['status'] && !(typeof data['status'] === 'string' || data['status'] instanceof String)) {
-            throw new Error("Expected the field `status` to be a primitive type in the JSON string but got " + data['status']);
-        }
-        // ensure the json data is a string
-        if (data['message'] && !(typeof data['message'] === 'string' || data['message'] instanceof String)) {
-            throw new Error("Expected the field `message` to be a primitive type in the JSON string but got " + data['message']);
-        }
         if (data['data']) { // data not null
             // ensure the json data is an array
             if (!Array.isArray(data['data'])) {
@@ -95,6 +87,14 @@ class InformeSolicitudList {
                 InformeSolicitud.validateJSON(item);
             };
         }
+        // ensure the json data is a string
+        if (data['message'] && !(typeof data['message'] === 'string' || data['message'] instanceof String)) {
+            throw new Error("Expected the field `message` to be a primitive type in the JSON string but got " + data['message']);
+        }
+        // ensure the json data is a string
+        if (data['status'] && !(typeof data['status'] === 'string' || data['status'] instanceof String)) {
+            throw new Error("Expected the field `status` to be a primitive type in the JSON string but got " + data['status']);
+        }
 
         return true;
     }
@@ -102,12 +102,12 @@ class InformeSolicitudList {
 
 }
 
-InformeSolicitudList.RequiredProperties = ["status", "message"];
+InformeSolicitudList.RequiredProperties = ["message", "status"];
 
 /**
- * @member {String} status
+ * @member {Array.<module:model/InformeSolicitud>} data
  */
-InformeSolicitudList.prototype['status'] = undefined;
+InformeSolicitudList.prototype['data'] = undefined;
 
 /**
  * @member {String} message
@@ -115,9 +115,9 @@ InformeSolicitudList.prototype['status'] = undefined;
 InformeSolicitudList.prototype['message'] = undefined;
 
 /**
- * @member {Array.<module:model/InformeSolicitud>} data
+ * @member {String} status
  */
-InformeSolicitudList.prototype['data'] = undefined;
+InformeSolicitudList.prototype['status'] = undefined;
 
 
 

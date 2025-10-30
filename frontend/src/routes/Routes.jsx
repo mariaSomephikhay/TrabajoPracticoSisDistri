@@ -27,6 +27,9 @@ import { ExternalEventManager } from '../pages/private/event/ExternalEventManage
 import { EventFilter } from '../pages/private/event/EventFilter.jsx';
 import { RequestDonationReport } from '../pages/private/donation/DonationRequestReport.jsx';
 import { DonationOffers } from '../pages/private/donation/DonationOffers.jsx';
+import { DonationNewOfferForm } from "../pages/private/donation/DonationNewOfferForm.jsx"
+import { SoapConsult } from "../pages/private/soap/SoapConsult.jsx";
+
 
 export const OperatorRoutes = () => {
     const { notification, clearNotification } = useNotification()
@@ -59,6 +62,7 @@ export const OperatorRoutes = () => {
                 <Route path="/donation-request" element={<PrivateRoute allowedRoles={["PRESIDENTE", "VOCAL"]}><RequestDonationInventory /></PrivateRoute>} />
                 <Route path="/donation-request-report" element={<PrivateRoute allowedRoles={["PRESIDENTE", "VOCAL"]}><RequestDonationReport /></PrivateRoute>} />
                 <Route path="/donation/offers/:id" element={<PrivateRoute allowedRoles={["PRESIDENTE", "VOCAL"]}><DonationOffers /></PrivateRoute>} />
+                <Route path="/donation/offers/new/:id" element={<PrivateRoute allowedRoles={["PRESIDENTE", "VOCAL"]}><DonationNewOfferForm /></PrivateRoute>} />
 
                 {/* RUTAS DEL EVENTO */}
                 <Route path="/events" element={<PrivateRoute allowedRoles={["PRESIDENTE","COORDINADOR","VOLUNTARIO"]}> <EventList /></PrivateRoute>} />
@@ -67,6 +71,10 @@ export const OperatorRoutes = () => {
                 <Route path="/events/:id/users" element={<PrivateRoute allowedRoles={["PRESIDENTE","COORDINADOR","VOLUNTARIO"]}><EventUsersManager /></PrivateRoute>} />
                 <Route path="/events/:id/donaciones" element={<PrivateRoute allowedRoles={["PRESIDENTE","COORDINADOR"]}><EventDonacionesManager /></PrivateRoute>} />
                 <Route path="/events/external/event/:id" element={<PrivateRoute allowedRoles={["PRESIDENTE","COORDINADOR","VOLUNTARIO"]}><ExternalEventManager /></PrivateRoute>} />
+
+                {/* RUTAS PARA CONSULTAR SERVICIOS SOAP */}
+                <Route path="/soap/consult" element={<PrivateRoute allowedRoles={["PRESIDENTE"]}> <SoapConsult /></PrivateRoute>}/>
+
 
                 {/* Ruta catch-all para 404 */} 
                 <Route path="*" element={<NotFound />} />

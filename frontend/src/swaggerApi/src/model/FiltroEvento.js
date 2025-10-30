@@ -22,12 +22,12 @@ class FiltroEvento {
     /**
      * Constructs a new <code>FiltroEvento</code>.
      * @alias module:model/FiltroEvento
-     * @param usuarioId {String} 
      * @param tieneDonacion {Number} 
+     * @param usuarioId {String} 
      */
-    constructor(usuarioId, tieneDonacion) { 
+    constructor(tieneDonacion, usuarioId) { 
         
-        FiltroEvento.initialize(this, usuarioId, tieneDonacion);
+        FiltroEvento.initialize(this, tieneDonacion, usuarioId);
     }
 
     /**
@@ -35,9 +35,9 @@ class FiltroEvento {
      * This method is used by the constructors of any subclasses, in order to implement multiple inheritance (mix-ins).
      * Only for internal use.
      */
-    static initialize(obj, usuarioId, tieneDonacion) { 
-        obj['usuarioId'] = usuarioId;
+    static initialize(obj, tieneDonacion, usuarioId) { 
         obj['tieneDonacion'] = tieneDonacion;
+        obj['usuarioId'] = usuarioId;
     }
 
     /**
@@ -51,9 +51,6 @@ class FiltroEvento {
         if (data) {
             obj = obj || new FiltroEvento();
 
-            if (data.hasOwnProperty('usuarioId')) {
-                obj['usuarioId'] = ApiClient.convertToType(data['usuarioId'], 'String');
-            }
             if (data.hasOwnProperty('fechaDesde')) {
                 obj['fechaDesde'] = ApiClient.convertToType(data['fechaDesde'], 'Date');
             }
@@ -62,6 +59,9 @@ class FiltroEvento {
             }
             if (data.hasOwnProperty('tieneDonacion')) {
                 obj['tieneDonacion'] = ApiClient.convertToType(data['tieneDonacion'], 'Number');
+            }
+            if (data.hasOwnProperty('usuarioId')) {
+                obj['usuarioId'] = ApiClient.convertToType(data['usuarioId'], 'String');
             }
         }
         return obj;
@@ -90,12 +90,7 @@ class FiltroEvento {
 
 }
 
-FiltroEvento.RequiredProperties = ["usuarioId", "tieneDonacion"];
-
-/**
- * @member {String} usuarioId
- */
-FiltroEvento.prototype['usuarioId'] = undefined;
+FiltroEvento.RequiredProperties = ["tieneDonacion", "usuarioId"];
 
 /**
  * @member {Date} fechaDesde
@@ -111,6 +106,11 @@ FiltroEvento.prototype['fechaHasta'] = undefined;
  * @member {Number} tieneDonacion
  */
 FiltroEvento.prototype['tieneDonacion'] = undefined;
+
+/**
+ * @member {String} usuarioId
+ */
+FiltroEvento.prototype['usuarioId'] = undefined;
 
 
 

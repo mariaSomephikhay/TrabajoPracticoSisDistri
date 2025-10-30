@@ -4,8 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**idSolicitudDonacion** | **String** |  | 
-**idOrganizacionSolicitante** | **Number** |  | 
 **donaciones** | [**[SolicitudDonacion]**](SolicitudDonacion.md) |  | [optional] 
+**idOrganizacionSolicitante** | **Number** |  | 
+**idSolicitudDonacion** | **String** |  | 
 
 

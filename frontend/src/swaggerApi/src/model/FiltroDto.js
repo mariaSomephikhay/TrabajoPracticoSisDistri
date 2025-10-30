@@ -23,15 +23,15 @@ class FiltroDto {
     /**
      * Constructs a new <code>FiltroDto</code>.
      * @alias module:model/FiltroDto
+     * @param filterType {String} 
      * @param id {Number} 
      * @param name {String} 
      * @param usuario {String} 
-     * @param filterType {String} 
      * @param valueFilter {Array.<module:model/ListaValue>} 
      */
-    constructor(id, name, usuario, filterType, valueFilter) { 
+    constructor(filterType, id, name, usuario, valueFilter) { 
         
-        FiltroDto.initialize(this, id, name, usuario, filterType, valueFilter);
+        FiltroDto.initialize(this, filterType, id, name, usuario, valueFilter);
     }
 
     /**
@@ -39,11 +39,11 @@ class FiltroDto {
      * This method is used by the constructors of any subclasses, in order to implement multiple inheritance (mix-ins).
      * Only for internal use.
      */
-    static initialize(obj, id, name, usuario, filterType, valueFilter) { 
+    static initialize(obj, filterType, id, name, usuario, valueFilter) { 
+        obj['filterType'] = filterType;
         obj['id'] = id;
         obj['name'] = name;
         obj['usuario'] = usuario;
-        obj['filterType'] = filterType;
         obj['valueFilter'] = valueFilter;
     }
 
@@ -58,6 +58,9 @@ class FiltroDto {
         if (data) {
             obj = obj || new FiltroDto();
 
+            if (data.hasOwnProperty('filterType')) {
+                obj['filterType'] = ApiClient.convertToType(data['filterType'], 'String');
+            }
             if (data.hasOwnProperty('id')) {
                 obj['id'] = ApiClient.convertToType(data['id'], 'Number');
             }
@@ -66,9 +69,6 @@ class FiltroDto {
             }
             if (data.hasOwnProperty('usuario')) {
                 obj['usuario'] = ApiClient.convertToType(data['usuario'], 'String');
-            }
-            if (data.hasOwnProperty('filterType')) {
-                obj['filterType'] = ApiClient.convertToType(data['filterType'], 'String');
             }
             if (data.hasOwnProperty('valueFilter')) {
                 obj['valueFilter'] = ApiClient.convertToType(data['valueFilter'], [ListaValue]);
@@ -90,16 +90,16 @@ class FiltroDto {
             }
         }
         // ensure the json data is a string
+        if (data['filterType'] && !(typeof data['filterType'] === 'string' || data['filterType'] instanceof String)) {
+            throw new Error("Expected the field `filterType` to be a primitive type in the JSON string but got " + data['filterType']);
+        }
+        // ensure the json data is a string
         if (data['name'] && !(typeof data['name'] === 'string' || data['name'] instanceof String)) {
             throw new Error("Expected the field `name` to be a primitive type in the JSON string but got " + data['name']);
         }
         // ensure the json data is a string
         if (data['usuario'] && !(typeof data['usuario'] === 'string' || data['usuario'] instanceof String)) {
             throw new Error("Expected the field `usuario` to be a primitive type in the JSON string but got " + data['usuario']);
-        }
-        // ensure the json data is a string
-        if (data['filterType'] && !(typeof data['filterType'] === 'string' || data['filterType'] instanceof String)) {
-            throw new Error("Expected the field `filterType` to be a primitive type in the JSON string but got " + data['filterType']);
         }
         if (data['valueFilter']) { // data not null
             // ensure the json data is an array
@@ -118,7 +118,12 @@ class FiltroDto {
 
 }
 
-FiltroDto.RequiredProperties = ["id", "name", "usuario", "filterType", "valueFilter"];
+FiltroDto.RequiredProperties = ["filterType", "id", "name", "usuario", "valueFilter"];
+
+/**
+ * @member {String} filterType
+ */
+FiltroDto.prototype['filterType'] = undefined;
 
 /**
  * @member {Number} id
@@ -134,11 +139,6 @@ FiltroDto.prototype['name'] = undefined;
  * @member {String} usuario
  */
 FiltroDto.prototype['usuario'] = undefined;
-
-/**
- * @member {String} filterType
- */
-FiltroDto.prototype['filterType'] = undefined;
 
 /**
  * @member {Array.<module:model/ListaValue>} valueFilter

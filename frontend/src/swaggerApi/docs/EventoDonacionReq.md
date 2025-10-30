@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**donacionId** | **Number** |  | 
 **cantidad** | **Number** |  | 
+**donacionId** | **Number** |  | 
 
 

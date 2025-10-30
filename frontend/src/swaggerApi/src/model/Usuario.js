@@ -23,16 +23,16 @@ class Usuario {
     /**
      * Constructs a new <code>Usuario</code>.
      * @alias module:model/Usuario
-     * @param username {String} 
+     * @param activo {Boolean} 
+     * @param apellido {String} 
      * @param email {String} 
      * @param nombre {String} 
-     * @param apellido {String} 
-     * @param activo {Boolean} 
      * @param rol {module:model/Rol} 
+     * @param username {String} 
      */
-    constructor(username, email, nombre, apellido, activo, rol) { 
+    constructor(activo, apellido, email, nombre, rol, username) { 
         
-        Usuario.initialize(this, username, email, nombre, apellido, activo, rol);
+        Usuario.initialize(this, activo, apellido, email, nombre, rol, username);
     }
 
     /**
@@ -40,13 +40,13 @@ class Usuario {
      * This method is used by the constructors of any subclasses, in order to implement multiple inheritance (mix-ins).
      * Only for internal use.
      */
-    static initialize(obj, username, email, nombre, apellido, activo, rol) { 
-        obj['username'] = username;
+    static initialize(obj, activo, apellido, email, nombre, rol, username) { 
+        obj['activo'] = activo;
+        obj['apellido'] = apellido;
         obj['email'] = email;
         obj['nombre'] = nombre;
-        obj['apellido'] = apellido;
-        obj['activo'] = activo;
         obj['rol'] = rol;
+        obj['username'] = username;
     }
 
     /**
@@ -60,32 +60,32 @@ class Usuario {
         if (data) {
             obj = obj || new Usuario();
 
-            if (data.hasOwnProperty('id')) {
-                obj['id'] = ApiClient.convertToType(data['id'], 'String');
-            }
-            if (data.hasOwnProperty('username')) {
-                obj['username'] = ApiClient.convertToType(data['username'], 'String');
-            }
-            if (data.hasOwnProperty('password')) {
-                obj['password'] = ApiClient.convertToType(data['password'], 'String');
-            }
-            if (data.hasOwnProperty('email')) {
-                obj['email'] = ApiClient.convertToType(data['email'], 'String');
-            }
-            if (data.hasOwnProperty('nombre')) {
-                obj['nombre'] = ApiClient.convertToType(data['nombre'], 'String');
+            if (data.hasOwnProperty('activo')) {
+                obj['activo'] = ApiClient.convertToType(data['activo'], 'Boolean');
             }
             if (data.hasOwnProperty('apellido')) {
                 obj['apellido'] = ApiClient.convertToType(data['apellido'], 'String');
             }
-            if (data.hasOwnProperty('telefono')) {
-                obj['telefono'] = ApiClient.convertToType(data['telefono'], 'String');
+            if (data.hasOwnProperty('email')) {
+                obj['email'] = ApiClient.convertToType(data['email'], 'String');
             }
-            if (data.hasOwnProperty('activo')) {
-                obj['activo'] = ApiClient.convertToType(data['activo'], 'Boolean');
+            if (data.hasOwnProperty('id')) {
+                obj['id'] = ApiClient.convertToType(data['id'], 'String');
+            }
+            if (data.hasOwnProperty('nombre')) {
+                obj['nombre'] = ApiClient.convertToType(data['nombre'], 'String');
+            }
+            if (data.hasOwnProperty('password')) {
+                obj['password'] = ApiClient.convertToType(data['password'], 'String');
             }
             if (data.hasOwnProperty('rol')) {
                 obj['rol'] = Rol.constructFromObject(data['rol']);
+            }
+            if (data.hasOwnProperty('telefono')) {
+                obj['telefono'] = ApiClient.convertToType(data['telefono'], 'String');
+            }
+            if (data.hasOwnProperty('username')) {
+                obj['username'] = ApiClient.convertToType(data['username'], 'String');
             }
         }
         return obj;
@@ -104,36 +104,36 @@ class Usuario {
             }
         }
         // ensure the json data is a string
-        if (data['id'] && !(typeof data['id'] === 'string' || data['id'] instanceof String)) {
-            throw new Error("Expected the field `id` to be a primitive type in the JSON string but got " + data['id']);
-        }
-        // ensure the json data is a string
-        if (data['username'] && !(typeof data['username'] === 'string' || data['username'] instanceof String)) {
-            throw new Error("Expected the field `username` to be a primitive type in the JSON string but got " + data['username']);
-        }
-        // ensure the json data is a string
-        if (data['password'] && !(typeof data['password'] === 'string' || data['password'] instanceof String)) {
-            throw new Error("Expected the field `password` to be a primitive type in the JSON string but got " + data['password']);
+        if (data['apellido'] && !(typeof data['apellido'] === 'string' || data['apellido'] instanceof String)) {
+            throw new Error("Expected the field `apellido` to be a primitive type in the JSON string but got " + data['apellido']);
         }
         // ensure the json data is a string
         if (data['email'] && !(typeof data['email'] === 'string' || data['email'] instanceof String)) {
             throw new Error("Expected the field `email` to be a primitive type in the JSON string but got " + data['email']);
         }
         // ensure the json data is a string
+        if (data['id'] && !(typeof data['id'] === 'string' || data['id'] instanceof String)) {
+            throw new Error("Expected the field `id` to be a primitive type in the JSON string but got " + data['id']);
+        }
+        // ensure the json data is a string
         if (data['nombre'] && !(typeof data['nombre'] === 'string' || data['nombre'] instanceof String)) {
             throw new Error("Expected the field `nombre` to be a primitive type in the JSON string but got " + data['nombre']);
         }
         // ensure the json data is a string
-        if (data['apellido'] && !(typeof data['apellido'] === 'string' || data['apellido'] instanceof String)) {
-            throw new Error("Expected the field `apellido` to be a primitive type in the JSON string but got " + data['apellido']);
+        if (data['password'] && !(typeof data['password'] === 'string' || data['password'] instanceof String)) {
+            throw new Error("Expected the field `password` to be a primitive type in the JSON string but got " + data['password']);
+        }
+        // validate the optional field `rol`
+        if (data['rol']) { // data not null
+          Rol.validateJSON(data['rol']);
         }
         // ensure the json data is a string
         if (data['telefono'] && !(typeof data['telefono'] === 'string' || data['telefono'] instanceof String)) {
             throw new Error("Expected the field `telefono` to be a primitive type in the JSON string but got " + data['telefono']);
         }
-        // validate the optional field `rol`
-        if (data['rol']) { // data not null
-          Rol.validateJSON(data['rol']);
+        // ensure the json data is a string
+        if (data['username'] && !(typeof data['username'] === 'string' || data['username'] instanceof String)) {
+            throw new Error("Expected the field `username` to be a primitive type in the JSON string but got " + data['username']);
         }
 
         return true;
@@ -142,42 +142,7 @@ class Usuario {
 
 }
 
-Usuario.RequiredProperties = ["username", "email", "nombre", "apellido", "activo", "rol"];
-
-/**
- * @member {String} id
- */
-Usuario.prototype['id'] = undefined;
-
-/**
- * @member {String} username
- */
-Usuario.prototype['username'] = undefined;
-
-/**
- * @member {String} password
- */
-Usuario.prototype['password'] = undefined;
-
-/**
- * @member {String} email
- */
-Usuario.prototype['email'] = undefined;
-
-/**
- * @member {String} nombre
- */
-Usuario.prototype['nombre'] = undefined;
-
-/**
- * @member {String} apellido
- */
-Usuario.prototype['apellido'] = undefined;
-
-/**
- * @member {String} telefono
- */
-Usuario.prototype['telefono'] = undefined;
+Usuario.RequiredProperties = ["activo", "apellido", "email", "nombre", "rol", "username"];
 
 /**
  * @member {Boolean} activo
@@ -185,9 +150,44 @@ Usuario.prototype['telefono'] = undefined;
 Usuario.prototype['activo'] = undefined;
 
 /**
+ * @member {String} apellido
+ */
+Usuario.prototype['apellido'] = undefined;
+
+/**
+ * @member {String} email
+ */
+Usuario.prototype['email'] = undefined;
+
+/**
+ * @member {String} id
+ */
+Usuario.prototype['id'] = undefined;
+
+/**
+ * @member {String} nombre
+ */
+Usuario.prototype['nombre'] = undefined;
+
+/**
+ * @member {String} password
+ */
+Usuario.prototype['password'] = undefined;
+
+/**
  * @member {module:model/Rol} rol
  */
 Usuario.prototype['rol'] = undefined;
+
+/**
+ * @member {String} telefono
+ */
+Usuario.prototype['telefono'] = undefined;
+
+/**
+ * @member {String} username
+ */
+Usuario.prototype['username'] = undefined;
 
 
 

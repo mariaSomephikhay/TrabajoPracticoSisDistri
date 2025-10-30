@@ -16,6 +16,7 @@ import ApiClient from "../ApiClient";
 import ExcelFileResponse from '../model/ExcelFileResponse';
 import FiltroSolicitudDetalleDto from '../model/FiltroSolicitudDetalleDto';
 import Oferta from '../model/Oferta';
+import OfertaGet from '../model/OfertaGet';
 import OfertaGetList from '../model/OfertaGetList';
 import Solicitud from '../model/Solicitud';
 import SolicitudBaja from '../model/SolicitudBaja';
@@ -158,6 +159,42 @@ export default class SolicitudesApi {
       let returnType = SolicitudGetList;
       return this.apiClient.callApi(
         '/solicitud/', 'GET',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, null, callback
+      );
+    }
+
+    /**
+     * Callback function to receive the result of the getLastOfferCreated operation.
+     * @callback module:api/SolicitudesApi~getLastOfferCreatedCallback
+     * @param {String} error Error message, if any.
+     * @param {module:model/OfertaGet} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Obtener ultima oferta creada del sistema
+     * @param {module:api/SolicitudesApi~getLastOfferCreatedCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link module:model/OfertaGet}
+     */
+    getLastOfferCreated(callback) {
+      let postBody = null;
+
+      let pathParams = {
+      };
+      let queryParams = {
+      };
+      let headerParams = {
+      };
+      let formParams = {
+      };
+
+      let authNames = ['Bearer Auth'];
+      let contentTypes = [];
+      let accepts = ['application/json'];
+      let returnType = OfertaGet;
+      return this.apiClient.callApi(
+        '/solicitud/offer', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, null, callback
       );

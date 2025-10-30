@@ -4,9 +4,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **Number** |  | [optional] 
+**cantidad** | **Number** |  | 
 **categoria** | [**SolicitudCategoria**](SolicitudCategoria.md) |  | 
 **descripcion** | **String** |  | 
-**cantidad** | **Number** |  | 
+**id** | **Number** |  | [optional] 
 
 

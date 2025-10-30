@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import editIcon from "../../../../public/icons/edit.svg" 
+import processIcon from "../../../../public/icons/process.png" 
 import deleteIcon from "../../../../public/icons/delete.svg"
 import { Loading } from '../../../components/ui/Loading.jsx'
 import { Table } from '../../../components/ui/Table.jsx'
@@ -13,10 +13,16 @@ export const RequestDonationInventory = () => {
   const [solicitudSelected, setSolicitudSelected] = useState(null)
   const [loading, setLoading] = useState(true)
   const [showModal, setShowModal] = useState(false);
+  const [showProcessModal, setShowProcessModal] = useState(false);
   const [error, setError] = useState(null)
   const [bajaSolicitud, setBajaSolicitud] = useState({
       id_solicitud_donacion: '',
       id_organizacion_solicitante: ''
+      });
+  const [processSolicitud, setProcessSolicitud] = useState({
+      id_solicitud: '',
+      id_organizacion_donante: 1,
+      donaciones: []
       });
   
   useEffect(() => {
@@ -25,7 +31,6 @@ export const RequestDonationInventory = () => {
         const data = await RequestDonationService.obtenerListadoSolicitudDonaciones()
         
         setSolicitud(data.solicitudes)
-        //console.log(data) 
       } catch (err) {
         console.error(err)
         setError(err.message)
@@ -53,6 +58,28 @@ const handleDeleteDonationOnClick = (solicitud) => {
   
   setShowModal(true)
 }
+
+const handleProcessOnClick = (solicitud) => {
+  // Guardamos la solicitud completa (por si la necesitás para mostrar info)
+  setSolicitudSelected(solicitud)
+  
+  // Armamos el objeto que se enviará para la baja
+  setProcessSolicitud({
+    id_solicitud: solicitud.id, 
+    id_organizacion_donante: 1, //Es nuestra organizacion
+    donaciones: solicitud.donaciones.map((s) => ({ 
+      categoria: {
+        id : s.categoria.id,
+        descripcion: s.categoria.descripcion
+      },
+      descripcion: s.descripcion,
+      cantidad: s.cantidad
+    }))
+  })
+
+  setShowProcessModal(true)
+}
+
   const handleConfirmDeleteDonation = async() => { 
     try {
       //baja producir en kafka
@@ -70,6 +97,23 @@ const handleDeleteDonationOnClick = (solicitud) => {
     } finally { 
       setShowModal(false) 
     } 
+  }
+
+  const handleConfirmProcess = async() => { 
+    try{
+      //transferir donaciones en kafka
+      const data = await RequestDonationService.procesarSolicitudExterna(solicitudSelected.organizacionSolicitante?.id, processSolicitud)
+      setSolicitudSelected(null) // Se limpia la selección
+
+      // Actualización optimista: cambio eliminado a true inmediatamente
+      setSolicitud(prevRequest => prevRequest.map(d => d.id === solicitudSelected.id ? { ...d, activa: false } : d))
+    }catch (err) {
+      console.error(err) 
+      alert('Error al procesar la solicitud externa')
+      setSolicitud(prevRequest) // Se revierte el cambio si falla
+    }finally{
+      setShowProcessModal(false)
+    }
   }
 
   if (loading) return <Loading />
@@ -109,6 +153,9 @@ const handleDeleteDonationOnClick = (solicitud) => {
           { label: "Eliminar", icon: deleteIcon, onClick: (d) => handleDeleteDonationOnClick(d), 
             hidden: (d) => !d.activa || d.organizacionSolicitante.id !== 1 //La donacion eliminada no tiene sentido que se le renderice el boton de eliminar
           },
+          { label: "Procesar", icon: processIcon, onClick: (d) => handleProcessOnClick(d), 
+            hidden: (d) => !d.organizacionSolicitante.externa || d.procesada //En nuestra pagina solo podemos procesar las solicituds externas
+          },
         ]}
         emptyMessage="No hay donaciones disponibles"
       />
@@ -120,6 +167,15 @@ const handleDeleteDonationOnClick = (solicitud) => {
         message={`¿Estás seguro que desea eliminar la donacion "${solicitudSelected?.id}" ?`}
         onConfirm={handleConfirmDeleteDonation}
         onCancel={() => setShowModal(false)}
+      />
+
+      {/* Popup para procesar la solicitud */} 
+      <Modal
+        show={showProcessModal}
+        title="Procesar solicitud"
+        message={`¿Estás seguro que desea procesar la solicitud externa "${solicitudSelected?.id}" ?`}
+        onConfirm={handleConfirmProcess}
+        onCancel={() => setShowProcessModal(false)}
       />
       
     </div>

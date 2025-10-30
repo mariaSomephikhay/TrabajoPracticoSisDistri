@@ -38,6 +38,15 @@ const DonationService = {
     }
   },
 
+  obtenerDonacionesSinOfertasPorOrganizacion: async (organizacionId) => {
+    try {
+      return await donacionesApi.listDonationsWithoutOfferByOrganization(organizacionId)
+    } catch (err) {
+      console.error("Error al obtener donaciones:", err)
+      throw err
+    }
+  },
+
   eliminarDonacion: async (donacionId) => {
     try {
       return await donacionesApi.deleteDonationById(donacionId)

@@ -41,11 +41,15 @@ docs/InformeSolicitudList.md
 docs/ListaFiltrosDto.md
 docs/ListaValue.md
 docs/Login.md
+docs/ONG.md
 docs/Oferta.md
 docs/OfertaGet.md
 docs/OfertaGetList.md
+docs/OrgIds.md
+docs/Presidente.md
 docs/ResDataGraphql.md
 docs/Rol.md
+docs/SoapApi.md
 docs/Solicitud.md
 docs/SolicitudBaja.md
 docs/SolicitudCategoria.md
@@ -81,6 +85,7 @@ src/ApiClient.js
 src/api/DonacionesApi.js
 src/api/EventosApi.js
 src/api/FiltrosApi.js
+src/api/SoapApi.js
 src/api/SolicitudesApi.js
 src/api/UserApi.js
 src/index.js
@@ -120,9 +125,12 @@ src/model/InformeSolicitudList.js
 src/model/ListaFiltrosDto.js
 src/model/ListaValue.js
 src/model/Login.js
+src/model/ONG.js
 src/model/Oferta.js
 src/model/OfertaGet.js
 src/model/OfertaGetList.js
+src/model/OrgIds.js
+src/model/Presidente.js
 src/model/ResDataGraphql.js
 src/model/Rol.js
 src/model/Solicitud.js

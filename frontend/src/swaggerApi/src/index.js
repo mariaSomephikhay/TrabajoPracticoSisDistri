@@ -49,9 +49,12 @@ import InformeSolicitudList from './model/InformeSolicitudList';
 import ListaFiltrosDto from './model/ListaFiltrosDto';
 import ListaValue from './model/ListaValue';
 import Login from './model/Login';
+import ONG from './model/ONG';
 import Oferta from './model/Oferta';
 import OfertaGet from './model/OfertaGet';
 import OfertaGetList from './model/OfertaGetList';
+import OrgIds from './model/OrgIds';
+import Presidente from './model/Presidente';
 import ResDataGraphql from './model/ResDataGraphql';
 import Rol from './model/Rol';
 import Solicitud from './model/Solicitud';
@@ -83,6 +86,7 @@ import VoluntarioEventoDto from './model/VoluntarioEventoDto';
 import DonacionesApi from './api/DonacionesApi';
 import EventosApi from './api/EventosApi';
 import FiltrosApi from './api/FiltrosApi';
+import SoapApi from './api/SoapApi';
 import SolicitudesApi from './api/SolicitudesApi';
 import UserApi from './api/UserApi';
 
@@ -342,6 +346,12 @@ export {
     Login,
 
     /**
+     * The ONG model constructor.
+     * @property {module:model/ONG}
+     */
+    ONG,
+
+    /**
      * The Oferta model constructor.
      * @property {module:model/Oferta}
      */
@@ -358,6 +368,18 @@ export {
      * @property {module:model/OfertaGetList}
      */
     OfertaGetList,
+
+    /**
+     * The OrgIds model constructor.
+     * @property {module:model/OrgIds}
+     */
+    OrgIds,
+
+    /**
+     * The Presidente model constructor.
+     * @property {module:model/Presidente}
+     */
+    Presidente,
 
     /**
      * The ResDataGraphql model constructor.
@@ -544,6 +566,12 @@ export {
     * @property {module:api/FiltrosApi}
     */
     FiltrosApi,
+
+    /**
+    * The SoapApi service constructor.
+    * @property {module:api/SoapApi}
+    */
+    SoapApi,
 
     /**
     * The SolicitudesApi service constructor.

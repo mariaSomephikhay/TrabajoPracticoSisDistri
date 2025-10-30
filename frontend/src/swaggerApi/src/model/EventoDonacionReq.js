@@ -22,12 +22,12 @@ class EventoDonacionReq {
     /**
      * Constructs a new <code>EventoDonacionReq</code>.
      * @alias module:model/EventoDonacionReq
-     * @param donacionId {Number} 
      * @param cantidad {Number} 
+     * @param donacionId {Number} 
      */
-    constructor(donacionId, cantidad) { 
+    constructor(cantidad, donacionId) { 
         
-        EventoDonacionReq.initialize(this, donacionId, cantidad);
+        EventoDonacionReq.initialize(this, cantidad, donacionId);
     }
 
     /**
@@ -35,9 +35,9 @@ class EventoDonacionReq {
      * This method is used by the constructors of any subclasses, in order to implement multiple inheritance (mix-ins).
      * Only for internal use.
      */
-    static initialize(obj, donacionId, cantidad) { 
-        obj['donacionId'] = donacionId;
+    static initialize(obj, cantidad, donacionId) { 
         obj['cantidad'] = cantidad;
+        obj['donacionId'] = donacionId;
     }
 
     /**
@@ -51,11 +51,11 @@ class EventoDonacionReq {
         if (data) {
             obj = obj || new EventoDonacionReq();
 
-            if (data.hasOwnProperty('donacionId')) {
-                obj['donacionId'] = ApiClient.convertToType(data['donacionId'], 'Number');
-            }
             if (data.hasOwnProperty('cantidad')) {
                 obj['cantidad'] = ApiClient.convertToType(data['cantidad'], 'Number');
+            }
+            if (data.hasOwnProperty('donacionId')) {
+                obj['donacionId'] = ApiClient.convertToType(data['donacionId'], 'Number');
             }
         }
         return obj;
@@ -80,17 +80,17 @@ class EventoDonacionReq {
 
 }
 
-EventoDonacionReq.RequiredProperties = ["donacionId", "cantidad"];
-
-/**
- * @member {Number} donacionId
- */
-EventoDonacionReq.prototype['donacionId'] = undefined;
+EventoDonacionReq.RequiredProperties = ["cantidad", "donacionId"];
 
 /**
  * @member {Number} cantidad
  */
 EventoDonacionReq.prototype['cantidad'] = undefined;
+
+/**
+ * @member {Number} donacionId
+ */
+EventoDonacionReq.prototype['donacionId'] = undefined;
 
 
 

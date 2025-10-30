@@ -11,5 +11,5 @@ import java.util.List;
 @Repository
 public interface IOfertaRepository extends JpaRepository<Oferta, Serializable> {
     List<Oferta> findAllByOrganizacionDonante_Id(@Param("idOrganizacionDonante") Integer idOrganizacionDonante);
-
+    Oferta findTopByOrderByIdDesc();
 }

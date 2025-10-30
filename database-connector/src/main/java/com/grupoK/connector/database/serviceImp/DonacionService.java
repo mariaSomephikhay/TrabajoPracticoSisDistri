@@ -87,8 +87,8 @@ public class DonacionService implements IDonacionService {
 	}
 
     @Override
-    public Usuario getUserCreatorByDonationId(Integer id) {
-        return donacionRepository.findUsuarioAltaByDonacionId(id);
+    public List<Donacion> getAllDonationsWithoutOfferByOrganization(Integer idOrganizacion) {
+        return donacionRepository.findAllWithoutOfferByOrganizacion(idOrganizacion);
     }
 
     private Organizacion obtenerOrganizacionPropia (Integer idOrganizacion) throws  Exception{

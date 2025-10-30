@@ -22,14 +22,14 @@ class InformeSolicitud {
     /**
      * Constructs a new <code>InformeSolicitud</code>.
      * @alias module:model/InformeSolicitud
+     * @param cantidad {Number} 
      * @param categoria {String} 
      * @param eliminado {String} 
-     * @param cantidad {Number} 
      * @param recibida {Boolean} 
      */
-    constructor(categoria, eliminado, cantidad, recibida) { 
+    constructor(cantidad, categoria, eliminado, recibida) { 
         
-        InformeSolicitud.initialize(this, categoria, eliminado, cantidad, recibida);
+        InformeSolicitud.initialize(this, cantidad, categoria, eliminado, recibida);
     }
 
     /**
@@ -37,10 +37,10 @@ class InformeSolicitud {
      * This method is used by the constructors of any subclasses, in order to implement multiple inheritance (mix-ins).
      * Only for internal use.
      */
-    static initialize(obj, categoria, eliminado, cantidad, recibida) { 
+    static initialize(obj, cantidad, categoria, eliminado, recibida) { 
+        obj['cantidad'] = cantidad;
         obj['categoria'] = categoria;
         obj['eliminado'] = eliminado;
-        obj['cantidad'] = cantidad;
         obj['recibida'] = recibida;
     }
 
@@ -55,14 +55,14 @@ class InformeSolicitud {
         if (data) {
             obj = obj || new InformeSolicitud();
 
+            if (data.hasOwnProperty('cantidad')) {
+                obj['cantidad'] = ApiClient.convertToType(data['cantidad'], 'Number');
+            }
             if (data.hasOwnProperty('categoria')) {
                 obj['categoria'] = ApiClient.convertToType(data['categoria'], 'String');
             }
             if (data.hasOwnProperty('eliminado')) {
                 obj['eliminado'] = ApiClient.convertToType(data['eliminado'], 'String');
-            }
-            if (data.hasOwnProperty('cantidad')) {
-                obj['cantidad'] = ApiClient.convertToType(data['cantidad'], 'Number');
             }
             if (data.hasOwnProperty('recibida')) {
                 obj['recibida'] = ApiClient.convertToType(data['recibida'], 'Boolean');
@@ -98,7 +98,12 @@ class InformeSolicitud {
 
 }
 
-InformeSolicitud.RequiredProperties = ["categoria", "eliminado", "cantidad", "recibida"];
+InformeSolicitud.RequiredProperties = ["cantidad", "categoria", "eliminado", "recibida"];
+
+/**
+ * @member {Number} cantidad
+ */
+InformeSolicitud.prototype['cantidad'] = undefined;
 
 /**
  * @member {String} categoria
@@ -109,11 +114,6 @@ InformeSolicitud.prototype['categoria'] = undefined;
  * @member {String} eliminado
  */
 InformeSolicitud.prototype['eliminado'] = undefined;
-
-/**
- * @member {Number} cantidad
- */
-InformeSolicitud.prototype['cantidad'] = undefined;
 
 /**
  * @member {Boolean} recibida

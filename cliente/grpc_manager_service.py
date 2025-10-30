@@ -110,3 +110,13 @@ class ManagerServiceImpl(object):
         pOrganizacion = ParseDict(id, service_pb2.OrganizacionId(), ignore_unknown_fields=True) # Convierte el modelo json a un mensaje protobuf solo con los campos presentes
         response = self.stub.getAllOffersByOrganization(pOrganizacion)
         return MessageToJson(response) 
+    
+    def gettAllDonationsWithoutOfferByIdOrganization(self, id):
+        pOrganizacion = ParseDict(id, service_pb2.OrganizacionId(), ignore_unknown_fields=True) # Convierte el modelo json a un mensaje protobuf solo con los campos presentes
+        response = self.stub.getAllDonacionesWithoutOffersByOrganization(pOrganizacion)
+        return MessageToJson(response) 
+    
+    def getLastOffer(self):
+        param = service_pb2.Empty() 
+        response = self.stub.getLastOffer(param)
+        return MessageToJson(response) 

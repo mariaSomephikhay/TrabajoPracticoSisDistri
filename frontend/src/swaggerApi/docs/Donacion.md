@@ -4,10 +4,10 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **Number** |  | [optional] 
+**cantidad** | **Number** |  | 
 **categoria** | [**Categoria**](Categoria.md) |  | 
 **descripcion** | **String** |  | 
-**cantidad** | **Number** |  | 
 **eliminado** | **Boolean** |  | [optional] 
+**id** | **Number** |  | [optional] 
 
 

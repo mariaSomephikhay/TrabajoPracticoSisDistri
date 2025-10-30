@@ -51,14 +51,14 @@ class SolicitudOrganizacionDto {
         if (data) {
             obj = obj || new SolicitudOrganizacionDto();
 
+            if (data.hasOwnProperty('externa')) {
+                obj['externa'] = ApiClient.convertToType(data['externa'], 'Boolean');
+            }
             if (data.hasOwnProperty('id')) {
                 obj['id'] = ApiClient.convertToType(data['id'], 'Number');
             }
             if (data.hasOwnProperty('nombre')) {
                 obj['nombre'] = ApiClient.convertToType(data['nombre'], 'String');
-            }
-            if (data.hasOwnProperty('externa')) {
-                obj['externa'] = ApiClient.convertToType(data['externa'], 'Boolean');
             }
         }
         return obj;
@@ -90,6 +90,11 @@ class SolicitudOrganizacionDto {
 SolicitudOrganizacionDto.RequiredProperties = ["id", "nombre"];
 
 /**
+ * @member {Boolean} externa
+ */
+SolicitudOrganizacionDto.prototype['externa'] = undefined;
+
+/**
  * @member {Number} id
  */
 SolicitudOrganizacionDto.prototype['id'] = undefined;
@@ -98,11 +103,6 @@ SolicitudOrganizacionDto.prototype['id'] = undefined;
  * @member {String} nombre
  */
 SolicitudOrganizacionDto.prototype['nombre'] = undefined;
-
-/**
- * @member {Boolean} externa
- */
-SolicitudOrganizacionDto.prototype['externa'] = undefined;
 
 
 

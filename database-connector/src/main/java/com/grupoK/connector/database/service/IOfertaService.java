@@ -8,4 +8,6 @@ import java.util.List;
 public interface IOfertaService {
     List<Oferta> findAllByOrganizationId(Integer id);
     Oferta save(Oferta oferta) throws  Exception;
+    Oferta getLast();
+
 }

@@ -22,15 +22,15 @@ class ResDataGraphql {
     /**
      * Constructs a new <code>ResDataGraphql</code>.
      * @alias module:model/ResDataGraphql
+     * @param filterType {String} 
      * @param id {Number} 
      * @param name {String} 
-     * @param valueFilter {String} 
      * @param usuario {String} 
-     * @param filterType {String} 
+     * @param valueFilter {String} 
      */
-    constructor(id, name, valueFilter, usuario, filterType) { 
+    constructor(filterType, id, name, usuario, valueFilter) { 
         
-        ResDataGraphql.initialize(this, id, name, valueFilter, usuario, filterType);
+        ResDataGraphql.initialize(this, filterType, id, name, usuario, valueFilter);
     }
 
     /**
@@ -38,12 +38,12 @@ class ResDataGraphql {
      * This method is used by the constructors of any subclasses, in order to implement multiple inheritance (mix-ins).
      * Only for internal use.
      */
-    static initialize(obj, id, name, valueFilter, usuario, filterType) { 
+    static initialize(obj, filterType, id, name, usuario, valueFilter) { 
+        obj['filterType'] = filterType;
         obj['id'] = id;
         obj['name'] = name;
-        obj['valueFilter'] = valueFilter;
         obj['usuario'] = usuario;
-        obj['filterType'] = filterType;
+        obj['valueFilter'] = valueFilter;
     }
 
     /**
@@ -57,20 +57,20 @@ class ResDataGraphql {
         if (data) {
             obj = obj || new ResDataGraphql();
 
+            if (data.hasOwnProperty('filterType')) {
+                obj['filterType'] = ApiClient.convertToType(data['filterType'], 'String');
+            }
             if (data.hasOwnProperty('id')) {
                 obj['id'] = ApiClient.convertToType(data['id'], 'Number');
             }
             if (data.hasOwnProperty('name')) {
                 obj['name'] = ApiClient.convertToType(data['name'], 'String');
             }
-            if (data.hasOwnProperty('valueFilter')) {
-                obj['valueFilter'] = ApiClient.convertToType(data['valueFilter'], 'String');
-            }
             if (data.hasOwnProperty('usuario')) {
                 obj['usuario'] = ApiClient.convertToType(data['usuario'], 'String');
             }
-            if (data.hasOwnProperty('filterType')) {
-                obj['filterType'] = ApiClient.convertToType(data['filterType'], 'String');
+            if (data.hasOwnProperty('valueFilter')) {
+                obj['valueFilter'] = ApiClient.convertToType(data['valueFilter'], 'String');
             }
         }
         return obj;
@@ -89,20 +89,20 @@ class ResDataGraphql {
             }
         }
         // ensure the json data is a string
-        if (data['name'] && !(typeof data['name'] === 'string' || data['name'] instanceof String)) {
-            throw new Error("Expected the field `name` to be a primitive type in the JSON string but got " + data['name']);
+        if (data['filterType'] && !(typeof data['filterType'] === 'string' || data['filterType'] instanceof String)) {
+            throw new Error("Expected the field `filterType` to be a primitive type in the JSON string but got " + data['filterType']);
         }
         // ensure the json data is a string
-        if (data['valueFilter'] && !(typeof data['valueFilter'] === 'string' || data['valueFilter'] instanceof String)) {
-            throw new Error("Expected the field `valueFilter` to be a primitive type in the JSON string but got " + data['valueFilter']);
+        if (data['name'] && !(typeof data['name'] === 'string' || data['name'] instanceof String)) {
+            throw new Error("Expected the field `name` to be a primitive type in the JSON string but got " + data['name']);
         }
         // ensure the json data is a string
         if (data['usuario'] && !(typeof data['usuario'] === 'string' || data['usuario'] instanceof String)) {
             throw new Error("Expected the field `usuario` to be a primitive type in the JSON string but got " + data['usuario']);
         }
         // ensure the json data is a string
-        if (data['filterType'] && !(typeof data['filterType'] === 'string' || data['filterType'] instanceof String)) {
-            throw new Error("Expected the field `filterType` to be a primitive type in the JSON string but got " + data['filterType']);
+        if (data['valueFilter'] && !(typeof data['valueFilter'] === 'string' || data['valueFilter'] instanceof String)) {
+            throw new Error("Expected the field `valueFilter` to be a primitive type in the JSON string but got " + data['valueFilter']);
         }
 
         return true;
@@ -111,7 +111,12 @@ class ResDataGraphql {
 
 }
 
-ResDataGraphql.RequiredProperties = ["id", "name", "valueFilter", "usuario", "filterType"];
+ResDataGraphql.RequiredProperties = ["filterType", "id", "name", "usuario", "valueFilter"];
+
+/**
+ * @member {String} filterType
+ */
+ResDataGraphql.prototype['filterType'] = undefined;
 
 /**
  * @member {Number} id
@@ -124,19 +129,14 @@ ResDataGraphql.prototype['id'] = undefined;
 ResDataGraphql.prototype['name'] = undefined;
 
 /**
- * @member {String} valueFilter
- */
-ResDataGraphql.prototype['valueFilter'] = undefined;
-
-/**
  * @member {String} usuario
  */
 ResDataGraphql.prototype['usuario'] = undefined;
 
 /**
- * @member {String} filterType
+ * @member {String} valueFilter
  */
-ResDataGraphql.prototype['filterType'] = undefined;
+ResDataGraphql.prototype['valueFilter'] = undefined;
 
 
 

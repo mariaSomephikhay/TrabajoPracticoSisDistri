@@ -4,9 +4,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**cantidad** | **Number** |  | 
 **categoria** | **String** |  | 
 **eliminado** | **String** |  | 
-**cantidad** | **Number** |  | 
 **recibida** | **Boolean** |  | 
 
 

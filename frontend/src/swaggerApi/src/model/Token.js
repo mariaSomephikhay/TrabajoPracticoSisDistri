@@ -22,12 +22,12 @@ class Token {
     /**
      * Constructs a new <code>Token</code>.
      * @alias module:model/Token
-     * @param token {String} 
      * @param expiresIn {Number} 
+     * @param token {String} 
      */
-    constructor(token, expiresIn) { 
+    constructor(expiresIn, token) { 
         
-        Token.initialize(this, token, expiresIn);
+        Token.initialize(this, expiresIn, token);
     }
 
     /**
@@ -35,9 +35,9 @@ class Token {
      * This method is used by the constructors of any subclasses, in order to implement multiple inheritance (mix-ins).
      * Only for internal use.
      */
-    static initialize(obj, token, expiresIn) { 
-        obj['token'] = token;
+    static initialize(obj, expiresIn, token) { 
         obj['expires_in'] = expiresIn;
+        obj['token'] = token;
     }
 
     /**
@@ -51,11 +51,11 @@ class Token {
         if (data) {
             obj = obj || new Token();
 
-            if (data.hasOwnProperty('token')) {
-                obj['token'] = ApiClient.convertToType(data['token'], 'String');
-            }
             if (data.hasOwnProperty('expires_in')) {
                 obj['expires_in'] = ApiClient.convertToType(data['expires_in'], 'Number');
+            }
+            if (data.hasOwnProperty('token')) {
+                obj['token'] = ApiClient.convertToType(data['token'], 'String');
             }
         }
         return obj;
@@ -84,17 +84,17 @@ class Token {
 
 }
 
-Token.RequiredProperties = ["token", "expires_in"];
-
-/**
- * @member {String} token
- */
-Token.prototype['token'] = undefined;
+Token.RequiredProperties = ["expires_in", "token"];
 
 /**
  * @member {Number} expires_in
  */
 Token.prototype['expires_in'] = undefined;
+
+/**
+ * @member {String} token
+ */
+Token.prototype['token'] = undefined;
 
 
 

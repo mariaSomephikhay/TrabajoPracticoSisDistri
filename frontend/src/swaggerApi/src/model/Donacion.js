@@ -23,13 +23,13 @@ class Donacion {
     /**
      * Constructs a new <code>Donacion</code>.
      * @alias module:model/Donacion
+     * @param cantidad {Number} 
      * @param categoria {module:model/Categoria} 
      * @param descripcion {String} 
-     * @param cantidad {Number} 
      */
-    constructor(categoria, descripcion, cantidad) { 
+    constructor(cantidad, categoria, descripcion) { 
         
-        Donacion.initialize(this, categoria, descripcion, cantidad);
+        Donacion.initialize(this, cantidad, categoria, descripcion);
     }
 
     /**
@@ -37,10 +37,10 @@ class Donacion {
      * This method is used by the constructors of any subclasses, in order to implement multiple inheritance (mix-ins).
      * Only for internal use.
      */
-    static initialize(obj, categoria, descripcion, cantidad) { 
+    static initialize(obj, cantidad, categoria, descripcion) { 
+        obj['cantidad'] = cantidad;
         obj['categoria'] = categoria;
         obj['descripcion'] = descripcion;
-        obj['cantidad'] = cantidad;
     }
 
     /**
@@ -54,8 +54,8 @@ class Donacion {
         if (data) {
             obj = obj || new Donacion();
 
-            if (data.hasOwnProperty('id')) {
-                obj['id'] = ApiClient.convertToType(data['id'], 'Number');
+            if (data.hasOwnProperty('cantidad')) {
+                obj['cantidad'] = ApiClient.convertToType(data['cantidad'], 'Number');
             }
             if (data.hasOwnProperty('categoria')) {
                 obj['categoria'] = Categoria.constructFromObject(data['categoria']);
@@ -63,11 +63,11 @@ class Donacion {
             if (data.hasOwnProperty('descripcion')) {
                 obj['descripcion'] = ApiClient.convertToType(data['descripcion'], 'String');
             }
-            if (data.hasOwnProperty('cantidad')) {
-                obj['cantidad'] = ApiClient.convertToType(data['cantidad'], 'Number');
-            }
             if (data.hasOwnProperty('eliminado')) {
                 obj['eliminado'] = ApiClient.convertToType(data['eliminado'], 'Boolean');
+            }
+            if (data.hasOwnProperty('id')) {
+                obj['id'] = ApiClient.convertToType(data['id'], 'Number');
             }
         }
         return obj;
@@ -100,12 +100,12 @@ class Donacion {
 
 }
 
-Donacion.RequiredProperties = ["categoria", "descripcion", "cantidad"];
+Donacion.RequiredProperties = ["cantidad", "categoria", "descripcion"];
 
 /**
- * @member {Number} id
+ * @member {Number} cantidad
  */
-Donacion.prototype['id'] = undefined;
+Donacion.prototype['cantidad'] = undefined;
 
 /**
  * @member {module:model/Categoria} categoria
@@ -118,14 +118,14 @@ Donacion.prototype['categoria'] = undefined;
 Donacion.prototype['descripcion'] = undefined;
 
 /**
- * @member {Number} cantidad
- */
-Donacion.prototype['cantidad'] = undefined;
-
-/**
  * @member {Boolean} eliminado
  */
 Donacion.prototype['eliminado'] = undefined;
+
+/**
+ * @member {Number} id
+ */
+Donacion.prototype['id'] = undefined;
 
 
 

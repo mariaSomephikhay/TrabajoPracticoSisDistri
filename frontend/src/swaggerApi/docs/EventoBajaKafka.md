@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**idOrganizacion** | **String** |  | 
 **idEvento** | **String** |  | 
+**idOrganizacion** | **String** |  | 
 
 

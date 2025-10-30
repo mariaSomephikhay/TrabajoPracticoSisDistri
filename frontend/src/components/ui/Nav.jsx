@@ -76,6 +76,15 @@ export const Nav = () => {
                 </li>
               </>
             )}
+            {isAuthenticated && (userAuthenticated?.rol.descripcion === "PRESIDENTE") &&(
+            <>
+              <li className="nav-item">
+                <NavLink className="nav-link text-white" to="/soap/consult">
+                  Consulta ONGs
+                </NavLink>
+              </li>
+            </>
+          )}
           </ul>
 
           <ul className="navbar-nav ms-auto mb-2 mb-md-0">

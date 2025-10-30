@@ -22,12 +22,12 @@ class SolicitudBaja {
     /**
      * Constructs a new <code>SolicitudBaja</code>.
      * @alias module:model/SolicitudBaja
-     * @param idSolicitudDonacion {String} 
      * @param idOrganizacionSolicitante {Number} 
+     * @param idSolicitudDonacion {String} 
      */
-    constructor(idSolicitudDonacion, idOrganizacionSolicitante) { 
+    constructor(idOrganizacionSolicitante, idSolicitudDonacion) { 
         
-        SolicitudBaja.initialize(this, idSolicitudDonacion, idOrganizacionSolicitante);
+        SolicitudBaja.initialize(this, idOrganizacionSolicitante, idSolicitudDonacion);
     }
 
     /**
@@ -35,9 +35,9 @@ class SolicitudBaja {
      * This method is used by the constructors of any subclasses, in order to implement multiple inheritance (mix-ins).
      * Only for internal use.
      */
-    static initialize(obj, idSolicitudDonacion, idOrganizacionSolicitante) { 
-        obj['id_solicitud_donacion'] = idSolicitudDonacion;
+    static initialize(obj, idOrganizacionSolicitante, idSolicitudDonacion) { 
         obj['id_organizacion_solicitante'] = idOrganizacionSolicitante;
+        obj['id_solicitud_donacion'] = idSolicitudDonacion;
     }
 
     /**
@@ -51,11 +51,11 @@ class SolicitudBaja {
         if (data) {
             obj = obj || new SolicitudBaja();
 
-            if (data.hasOwnProperty('id_solicitud_donacion')) {
-                obj['id_solicitud_donacion'] = ApiClient.convertToType(data['id_solicitud_donacion'], 'String');
-            }
             if (data.hasOwnProperty('id_organizacion_solicitante')) {
                 obj['id_organizacion_solicitante'] = ApiClient.convertToType(data['id_organizacion_solicitante'], 'Number');
+            }
+            if (data.hasOwnProperty('id_solicitud_donacion')) {
+                obj['id_solicitud_donacion'] = ApiClient.convertToType(data['id_solicitud_donacion'], 'String');
             }
         }
         return obj;
@@ -84,17 +84,17 @@ class SolicitudBaja {
 
 }
 
-SolicitudBaja.RequiredProperties = ["id_solicitud_donacion", "id_organizacion_solicitante"];
-
-/**
- * @member {String} id_solicitud_donacion
- */
-SolicitudBaja.prototype['id_solicitud_donacion'] = undefined;
+SolicitudBaja.RequiredProperties = ["id_organizacion_solicitante", "id_solicitud_donacion"];
 
 /**
  * @member {Number} id_organizacion_solicitante
  */
 SolicitudBaja.prototype['id_organizacion_solicitante'] = undefined;
+
+/**
+ * @member {String} id_solicitud_donacion
+ */
+SolicitudBaja.prototype['id_solicitud_donacion'] = undefined;
 
 
 

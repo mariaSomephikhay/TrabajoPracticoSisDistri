@@ -4,8 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**status** | **String** |  | 
-**message** | **String** |  | 
 **data** | [**[InformeSolicitud]**](InformeSolicitud.md) |  | [optional] 
+**message** | **String** |  | 
+**status** | **String** |  | 
 
 

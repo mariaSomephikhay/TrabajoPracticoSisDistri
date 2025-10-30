@@ -51,14 +51,14 @@ class EventoOrganizacionDto {
         if (data) {
             obj = obj || new EventoOrganizacionDto();
 
+            if (data.hasOwnProperty('externa')) {
+                obj['externa'] = ApiClient.convertToType(data['externa'], 'Boolean');
+            }
             if (data.hasOwnProperty('id')) {
                 obj['id'] = ApiClient.convertToType(data['id'], 'Number');
             }
             if (data.hasOwnProperty('nombre')) {
                 obj['nombre'] = ApiClient.convertToType(data['nombre'], 'String');
-            }
-            if (data.hasOwnProperty('externa')) {
-                obj['externa'] = ApiClient.convertToType(data['externa'], 'Boolean');
             }
         }
         return obj;
@@ -90,6 +90,11 @@ class EventoOrganizacionDto {
 EventoOrganizacionDto.RequiredProperties = ["id", "nombre"];
 
 /**
+ * @member {Boolean} externa
+ */
+EventoOrganizacionDto.prototype['externa'] = undefined;
+
+/**
  * @member {Number} id
  */
 EventoOrganizacionDto.prototype['id'] = undefined;
@@ -98,11 +103,6 @@ EventoOrganizacionDto.prototype['id'] = undefined;
  * @member {String} nombre
  */
 EventoOrganizacionDto.prototype['nombre'] = undefined;
-
-/**
- * @member {Boolean} externa
- */
-EventoOrganizacionDto.prototype['externa'] = undefined;
 
 
 

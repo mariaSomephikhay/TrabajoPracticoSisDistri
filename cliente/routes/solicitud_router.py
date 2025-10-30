@@ -51,6 +51,7 @@ SolicitudDonacionGetDto = api.model("SolicitudGet", {
     "id": fields.String(required=True),
     "organizacionSolicitante": fields.Nested(OrganizacionDto),
     "activa": fields.Boolean(required=True),
+    "procesada": fields.Boolean(required=True),
     "donaciones": fields.List(fields.Nested(donacionDto))
 })
 SolicitudDonacionGetListDto = api.model("SolicitudGetList", {
@@ -244,6 +245,22 @@ class Solicitud(Resource):
 
             return 200
         
+        except Exception as e:
+            return {"error": str(e)}, 500
+
+@api.route("/offer")
+class Solicitud(Resource):
+    @api.doc(security='Bearer Auth')
+    @SecurityConfig.authRequired("PRESIDENTE", "VOCAL")
+    @api.doc(id="getLastOfferCreated") # Esto define el operationId
+    @api.response(200, "Success", model=OfertaGetDto)
+    @api.response(401, "Unauthorized", model=errorDto)
+    @api.response(500, "Internal server error", model=errorDto)
+    def get(self):
+        """Obtener ultima oferta creada del sistema"""
+        try:
+            result = cliente.getLastOffer()
+            return json.loads(result), 200
         except Exception as e:
             return {"error": str(e)}, 500
 

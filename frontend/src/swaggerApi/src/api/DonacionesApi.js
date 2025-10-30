@@ -198,6 +198,48 @@ export default class DonacionesApi {
     }
 
     /**
+     * Callback function to receive the result of the listDonationsWithoutOfferByOrganization operation.
+     * @callback module:api/DonacionesApi~listDonationsWithoutOfferByOrganizationCallback
+     * @param {String} error Error message, if any.
+     * @param {module:model/DonacionList} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Obtener todos las donaciones sin ofertas de una organizacion
+     * @param {Number} id 
+     * @param {module:api/DonacionesApi~listDonationsWithoutOfferByOrganizationCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link module:model/DonacionList}
+     */
+    listDonationsWithoutOfferByOrganization(id, callback) {
+      let postBody = null;
+      // verify the required parameter 'id' is set
+      if (id === undefined || id === null) {
+        throw new Error("Missing the required parameter 'id' when calling listDonationsWithoutOfferByOrganization");
+      }
+
+      let pathParams = {
+        'id': id
+      };
+      let queryParams = {
+      };
+      let headerParams = {
+      };
+      let formParams = {
+      };
+
+      let authNames = ['Bearer Auth'];
+      let contentTypes = [];
+      let accepts = ['application/json'];
+      let returnType = DonacionList;
+      return this.apiClient.callApi(
+        '/donacion/without/offers/{id}', 'GET',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, null, callback
+      );
+    }
+
+    /**
      * Callback function to receive the result of the updateDonationById operation.
      * @callback module:api/DonacionesApi~updateDonationByIdCallback
      * @param {String} error Error message, if any.
